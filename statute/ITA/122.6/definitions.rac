@@ -1,0 +1,77 @@
+# Income Tax Act Section 122.6 - CCB definitions
+#
+# Definitions for Canada Child Benefit including:
+# - "adjusted income" (adjusted family net income)
+# - "eligible individual"
+# - "qualified dependant"
+# - "shared-custody parent"
+#
+# Reference: https://laws-lois.justice.gc.ca/eng/acts/I-3.3/section-122.6.html
+
+# Adjusted family net income (AFNI) - key income test for CCB
+# "adjusted income" means the total of all amounts each of which would be the
+# income for the year of the eligible individual or of the person who was the
+# eligible individual's cohabiting spouse or common-law partner at the end of
+# the year
+adjusted_family_net_income:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "Adjusted Family Net Income"
+    description: "Sum of net income of the eligible individual and their cohabiting spouse or common-law partner, used for CCB income testing"
+    source: "ITA 122.6 definition of 'adjusted income'"
+    from 2024-01-01: individual_net_income + spouse_net_income
+
+# Child age (input)
+child_age:
+    entity: Person
+    label: "Child Age"
+    description: "Age of the child in years"
+    from 2024-01-01: 0
+
+# Is child a qualified dependant (under 18)
+is_qualified_dependant:
+    entity: Person
+    label: "Is Qualified Dependant"
+    description: "Whether the person is a qualified dependant for CCB purposes (under 18 and residing with eligible individual)"
+    source: "ITA 122.6 definition of 'qualified dependant'"
+    from 2024-01-01: child_age < gov/cra/ccb/age_threshold/maximum
+
+# Count of qualified dependants under age 6 (input)
+num_qualified_dependants_under_6:
+    entity: TaxUnit
+    label: "Qualified Dependants Under 6"
+    description: "Number of qualified dependants under age 6 at the beginning of the month"
+    source: "ITA 122.61(1)(a)"
+    from 2024-01-01: 0
+
+# Count of qualified dependants age 6 to 17 (input)
+num_qualified_dependants_6_to_17:
+    entity: TaxUnit
+    label: "Qualified Dependants 6-17"
+    description: "Number of qualified dependants aged 6 to 17 at the beginning of the month"
+    source: "ITA 122.61(1)(a)"
+    from 2024-01-01: 0
+
+# Is primary caregiver (input)
+is_primary_caregiver:
+    entity: Person
+    label: "Is Primary Caregiver"
+    description: "Whether the person is primarily responsible for the care and upbringing of the child"
+    source: "ITA 122.6 definition of 'eligible individual' paragraph (b)"
+    from 2024-01-01: false
+
+# Is eligible individual (primary caregiver)
+is_eligible_individual:
+    entity: Person
+    label: "Is Eligible Individual"
+    description: "Whether the person is an eligible individual (primarily responsible for care and upbringing of the child)"
+    source: "ITA 122.6 definition of 'eligible individual'"
+    from 2024-01-01: is_primary_caregiver
+
+# Shared custody indicator (input)
+is_shared_custody:
+    entity: TaxUnit
+    label: "Is Shared Custody"
+    description: "Whether the qualified dependant lives equally with both parents (shared custody arrangement)"
+    source: "ITA 122.6 definition of 'shared-custody parent'"
+    from 2024-01-01: false

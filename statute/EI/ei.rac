@@ -1,0 +1,203 @@
+# Employment Insurance Act - EI premiums and benefits
+#
+# Employment Insurance provides:
+# - Regular benefits for job loss
+# - Special benefits: maternity, parental, sickness, caregiving
+# - Fishing benefits for self-employed fishers
+#
+# Reference: https://laws-lois.justice.gc.ca/eng/acts/E-5.6/
+
+# ==========================================================================
+# EI PREMIUMS
+# ==========================================================================
+
+# Is Quebec resident (different premium rate)
+is_quebec_resident:
+    entity: Person
+    label: "Is Quebec Resident"
+    description: "Whether the person is a Quebec resident (subject to QPIP instead of EI parental)"
+    source: "EI Regulations"
+    from 2024-01-01: province == "QC"
+
+# EI premium rate
+ei_premium_rate:
+    entity: Person
+    label: "EI Premium Rate"
+    description: "Applicable EI employee premium rate"
+    source: "EI Act Section 67"
+    from 2024-01-01: if is_quebec_resident: gov/servicecanada/ei/premium/employee_rate_quebec else: gov/servicecanada/ei/premium/employee_rate
+
+# EI insurable earnings (capped at MIE)
+ei_insurable_earnings:
+    entity: Person
+    unit: "CAD"
+    label: "EI Insurable Earnings"
+    description: "Earnings subject to EI premiums (capped at MIE)"
+    source: "EI Act Section 4"
+    from 2024-01-01: min(insurable_earnings, gov/servicecanada/ei/max_insurable_earnings/annual)
+
+# Employee EI premium
+ei_employee_premium:
+    entity: Person
+    unit: "CAD"
+    label: "EI Employee Premium"
+    description: "Annual EI premium paid by employee"
+    source: "EI Act Section 67"
+    from 2024-01-01: ei_insurable_earnings * ei_premium_rate
+
+# Employer EI premium
+ei_employer_premium:
+    entity: Person
+    unit: "CAD"
+    label: "EI Employer Premium"
+    description: "Annual EI premium paid by employer (1.4x employee premium)"
+    source: "EI Act Section 68"
+    from 2024-01-01: ei_employee_premium * gov/servicecanada/ei/premium/employer_multiplier
+
+# ==========================================================================
+# EI ELIGIBILITY
+# ==========================================================================
+
+# Insurable hours in last 52 weeks (input)
+insurable_hours_last_52_weeks:
+    entity: Person
+    label: "Insurable Hours"
+    description: "Number of insurable hours worked in the last 52 weeks"
+    source: "EI Act Section 7"
+    from 2024-01-01: 0
+
+# Regional unemployment rate (input)
+regional_unemployment_rate:
+    entity: Person
+    label: "Regional Unemployment Rate"
+    description: "Unemployment rate in the economic region"
+    source: "EI Act Section 7, Schedule I"
+    from 2024-01-01: 0.06
+
+# Hours required for regular EI (varies by regional unemployment)
+# Hours requirement varies by unemployment rate:
+# 6% or less: 700 hours, down to 13.1%+: 420 hours
+ei_hours_required:
+    entity: Person
+    label: "EI Hours Required"
+    description: "Insurable hours required for regular EI based on regional unemployment"
+    source: "EI Act Section 7, Schedule I"
+    from 2024-01-01: if regional_unemployment_rate <= 0.06: 700 else: if regional_unemployment_rate <= 0.07: 665 else: if regional_unemployment_rate <= 0.08: 630 else: if regional_unemployment_rate <= 0.09: 595 else: if regional_unemployment_rate <= 0.10: 560 else: if regional_unemployment_rate <= 0.11: 525 else: if regional_unemployment_rate <= 0.12: 490 else: if regional_unemployment_rate <= 0.13: 455 else: 420
+
+# EI claim reason (input)
+ei_claim_reason:
+    entity: Person
+    label: "EI Claim Reason"
+    description: "Reason for EI claim"
+    source: "EI Act"
+    from 2024-01-01: "job_loss"
+
+# Is eligible for regular EI
+is_ei_eligible:
+    entity: Person
+    label: "EI Eligible"
+    description: "Whether the person is eligible for regular EI benefits"
+    source: "EI Act Section 7"
+    from 2024-01-01: insurable_hours_last_52_weeks >= ei_hours_required and ei_claim_reason != "quit_without_cause" and ei_claim_reason != "misconduct"
+
+# ==========================================================================
+# EI BENEFITS CALCULATION
+# ==========================================================================
+
+# Average weekly insurable earnings
+ei_average_weekly_earnings:
+    entity: Person
+    unit: "CAD"
+    label: "EI Average Weekly Earnings"
+    description: "Average weekly insurable earnings used to calculate benefits"
+    source: "EI Act Section 14"
+    from 2024-01-01: ei_insurable_earnings / 52
+
+# EI benefit rate (base or with family supplement)
+ei_benefit_rate:
+    entity: Person
+    label: "EI Benefit Rate"
+    description: "Percentage of earnings for EI benefit (55% base, up to 80% with family supplement)"
+    source: "EI Act Section 14, 16"
+    from 2024-01-01: if num_children > 0 and family_net_income <= gov/servicecanada/ei/family_supplement/income_threshold: gov/servicecanada/ei/benefit/family_supplement_max_rate else: gov/servicecanada/ei/benefit/standard_rate
+
+# Weekly EI benefit amount
+ei_weekly_benefit:
+    entity: Person
+    unit: "CAD"
+    label: "EI Weekly Benefit"
+    description: "Weekly Employment Insurance benefit amount"
+    source: "EI Act Section 14"
+    from 2024-01-01: if not is_ei_eligible: 0 else: min(ei_average_weekly_earnings * ei_benefit_rate, gov/servicecanada/ei/benefit/max_weekly)
+
+# ==========================================================================
+# BENEFIT DURATION
+# ==========================================================================
+
+# Base weeks calculation helper
+ei_base_weeks:
+    entity: Person
+    label: "EI Base Weeks"
+    description: "Raw weeks calculation before clamping"
+    source: "EI Act Section 12, Schedule I"
+    from 2024-01-01: (insurable_hours_last_52_weeks / 35) + ((regional_unemployment_rate - 0.06) * 100)
+
+# Maximum weeks of regular EI
+ei_max_weeks:
+    entity: Person
+    label: "EI Maximum Weeks"
+    description: "Maximum weeks of regular EI benefits based on hours and regional unemployment"
+    source: "EI Act Section 12, Schedule I"
+    from 2024-01-01: min(max(ei_base_weeks, 14), gov/servicecanada/ei/duration/regular_max_weeks)
+
+# ==========================================================================
+# SPECIAL BENEFITS
+# ==========================================================================
+
+# Is claiming maternity benefits
+is_maternity_claim:
+    entity: Person
+    label: "Is Maternity Claim"
+    description: "Whether claiming EI maternity benefits"
+    source: "EI Act Section 22"
+    from 2024-01-01: ei_claim_reason == "maternity"
+
+# Maternity benefit weeks
+ei_maternity_weeks:
+    entity: Person
+    label: "EI Maternity Weeks"
+    description: "Maximum weeks of maternity benefits"
+    source: "EI Act Section 22"
+    from 2024-01-01: if not is_maternity_claim: 0 else: gov/servicecanada/ei/duration/maternity_weeks
+
+# Sickness benefit weeks
+ei_sickness_weeks:
+    entity: Person
+    label: "EI Sickness Weeks"
+    description: "Maximum weeks of sickness benefits"
+    source: "EI Act Section 12"
+    from 2024-01-01: if ei_claim_reason != "sickness": 0 else: gov/servicecanada/ei/duration/sickness_weeks
+
+# Parental benefit option (input)
+parental_benefit_option:
+    entity: Person
+    label: "Parental Benefit Option"
+    description: "Choice between standard (55%, 40 weeks) or extended (33%, 69 weeks) parental benefits"
+    source: "EI Act Section 23"
+    from 2024-01-01: "standard"
+
+# Parental benefit weeks
+ei_parental_weeks:
+    entity: Person
+    label: "EI Parental Weeks"
+    description: "Maximum weeks of parental benefits"
+    source: "EI Act Section 23"
+    from 2024-01-01: if ei_claim_reason != "parental": 0 else: if parental_benefit_option == "extended": gov/servicecanada/ei/duration/parental_extended_weeks else: gov/servicecanada/ei/duration/parental_standard_weeks
+
+# Parental benefit rate (varies by option)
+ei_parental_rate:
+    entity: Person
+    label: "EI Parental Rate"
+    description: "Benefit rate for parental benefits (55% standard, 33% extended)"
+    source: "EI Act Section 23"
+    from 2024-01-01: if parental_benefit_option == "extended": gov/servicecanada/ei/benefit/extended_parental_rate else: gov/servicecanada/ei/benefit/standard_rate

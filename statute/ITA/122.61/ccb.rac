@@ -1,0 +1,108 @@
+# Income Tax Act Section 122.61 - Canada Child Benefit
+#
+# "Where a person is an eligible individual in respect of one or more qualified
+# dependants at the beginning of a month... the person shall be deemed to have
+# paid during the taxation year in which the month falls, on account of their
+# tax payable under this Part for that taxation year, a deemed overpayment of
+# tax equal to 1/12 of the amount determined by the formula..."
+#
+# Formula: (A - B) where:
+#   A = total maximum benefit based on number and ages of children
+#   B = reduction amount based on adjusted family net income
+#
+# Reference: https://laws-lois.justice.gc.ca/eng/acts/I-3.3/section-122.61.html
+
+# Total number of qualified dependants
+num_qualified_dependants:
+    entity: TaxUnit
+    label: "Number of Qualified Dependants"
+    description: "Total number of children under 18 for whom the individual is an eligible individual"
+    source: "ITA 122.6 definition of 'qualified dependant'"
+    from 2024-01-01: num_children_under_6 + num_children_6_to_17
+
+# Maximum CCB amount before income reduction
+ccb_maximum_amount:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "CCB Maximum Amount"
+    description: "Maximum annual CCB amount based on number and ages of qualified dependants"
+    source: "ITA 122.61(1)(a)"
+    from 2024-01-01: (num_children_under_6 * gov/cra/ccb/max_amount/under_6) + (num_children_6_to_17 * gov/cra/ccb/max_amount/age_6_to_17)
+
+# First zone reduction rate (depends on number of children)
+ccb_first_zone_rate:
+    entity: TaxUnit
+    label: "CCB First Zone Reduction Rate"
+    description: "Reduction rate in first income zone, varies by number of children"
+    source: "ITA 122.61(1)(a)(ii)"
+    from 2024-01-01: if num_qualified_dependants == 1: gov/cra/ccb/reduction_rate/first_zone/one_child else: gov/cra/ccb/reduction_rate/first_zone/two_plus_children
+
+# Second zone reduction rate (depends on number of children)
+ccb_second_zone_rate:
+    entity: TaxUnit
+    label: "CCB Second Zone Reduction Rate"
+    description: "Reduction rate in second income zone, varies by number of children"
+    source: "ITA 122.61(1)(a)(iii)"
+    from 2024-01-01: if num_qualified_dependants == 1: gov/cra/ccb/reduction_rate/second_zone/one_child else: gov/cra/ccb/reduction_rate/second_zone/two_plus_children
+
+# First zone income in the reduction range
+ccb_first_zone_income:
+    entity: TaxUnit
+    unit: "CAD"
+    description: "Income in the first CCB reduction zone"
+    source: "ITA 122.61(1)(a)(ii)"
+    from 2024-01-01: max(0, min(adjusted_family_net_income, gov/cra/ccb/income_threshold/second) - gov/cra/ccb/income_threshold/first)
+
+# First zone income reduction amount
+ccb_first_zone_reduction:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "CCB First Zone Reduction"
+    description: "Reduction in CCB based on income in first reduction zone"
+    source: "ITA 122.61(1)(a)(ii)"
+    from 2024-01-01: ccb_first_zone_income * ccb_first_zone_rate
+
+# Second zone income reduction amount
+ccb_second_zone_reduction:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "CCB Second Zone Reduction"
+    description: "Reduction in CCB based on income in second reduction zone"
+    source: "ITA 122.61(1)(a)(iii)"
+    from 2024-01-01: if adjusted_family_net_income <= gov/cra/ccb/income_threshold/second: 0 else: (adjusted_family_net_income - gov/cra/ccb/income_threshold/second) * ccb_second_zone_rate
+
+# Total income reduction
+ccb_income_reduction:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "CCB Income Reduction"
+    description: "Total reduction in CCB based on adjusted family net income"
+    source: "ITA 122.61(1)(a)"
+    from 2024-01-01: ccb_first_zone_reduction + ccb_second_zone_reduction
+
+# Annual CCB amount (before shared custody adjustment)
+ccb_annual_amount_before_shared_custody:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "CCB Annual Amount (Before Shared Custody)"
+    description: "Annual CCB amount after income reduction but before shared custody adjustment"
+    source: "ITA 122.61(1)"
+    from 2024-01-01: max(0, ccb_maximum_amount - ccb_income_reduction)
+
+# Final annual CCB amount
+ccb_amount:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "Canada Child Benefit"
+    description: "Annual Canada Child Benefit amount payable to the eligible individual"
+    source: "ITA 122.61(1)"
+    from 2024-01-01: if is_shared_custody: ccb_annual_amount_before_shared_custody * 0.5 else: ccb_annual_amount_before_shared_custody
+
+# Monthly CCB payment
+ccb_monthly:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "CCB Monthly Payment"
+    description: "Monthly Canada Child Benefit payment (1/12 of annual amount)"
+    source: "ITA 122.61(1)"
+    from 2024-01-01: ccb_amount / 12

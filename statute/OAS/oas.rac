@@ -1,0 +1,266 @@
+# Old Age Security Act - OAS pension and GIS
+#
+# The Old Age Security program provides:
+# - OAS Pension: Monthly payment for seniors 65+ with sufficient Canadian residence
+# - GIS: Income-tested supplement for low-income OAS recipients
+# - Allowance: For spouses (60-64) of OAS/GIS recipients
+# - Survivor Allowance: For widowed persons 60-64
+#
+# Reference: https://laws-lois.justice.gc.ca/eng/acts/O-9/
+
+# ==========================================================================
+# INPUTS
+# ==========================================================================
+
+# Years of residence in Canada (input)
+years_of_residence_in_canada:
+    entity: Person
+    label: "Years of Residence in Canada"
+    description: "Number of years of Canadian residence after age 18"
+    source: "OAS Act Section 3"
+    from 2024-01-01: 0
+
+# Individual net income (input)
+individual_net_income:
+    entity: Person
+    unit: "CAD"
+    label: "Individual Net Income"
+    description: "Net income from line 23600"
+    from 2024-01-01: 0
+
+# Combined income for GIS (input)
+combined_income:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "Combined Income"
+    description: "Combined income for Allowance calculation"
+    from 2024-01-01: 0
+
+# Spouse receives OAS (input)
+spouse_receives_oas:
+    entity: Person
+    label: "Spouse Receives OAS"
+    description: "Whether the spouse is receiving OAS pension"
+    from 2024-01-01: false
+
+# Spouse receives GIS (input)
+spouse_receives_gis:
+    entity: Person
+    label: "Spouse Receives GIS"
+    description: "Whether the spouse is receiving GIS"
+    from 2024-01-01: false
+
+# Is survivor (input)
+is_survivor:
+    entity: Person
+    label: "Is Survivor"
+    description: "Whether the person is a widowed survivor"
+    from 2024-01-01: false
+
+# Employment income for GIS purposes (input)
+employment_income_for_gis:
+    entity: Person
+    unit: "CAD"
+    label: "Employment Income for GIS"
+    description: "Employment income used for GIS employment exemption"
+    from 2024-01-01: 0
+
+# ==========================================================================
+# OAS PENSION
+# ==========================================================================
+
+# OAS eligibility
+is_oas_eligible:
+    entity: Person
+    label: "OAS Eligible"
+    description: "Whether the person is eligible for the Old Age Security pension"
+    source: "OAS Act Section 3"
+    from 2024-01-01: age >= gov/servicecanada/oas/age/minimum and years_of_residence_in_canada >= gov/servicecanada/oas/residence/minimum_years
+
+# OAS partial pension rate (pro-rated by residence years)
+oas_pension_rate:
+    entity: Person
+    label: "OAS Pension Rate"
+    description: "Proportion of full OAS pension based on years of residence"
+    source: "OAS Act Section 3"
+    from 2024-01-01: if years_of_residence_in_canada < gov/servicecanada/oas/residence/minimum_years: 0 else: min(years_of_residence_in_canada, gov/servicecanada/oas/residence/full_pension_years) / gov/servicecanada/oas/residence/full_pension_years
+
+# Maximum OAS monthly amount (depends on age)
+oas_max_monthly:
+    entity: Person
+    unit: "CAD"
+    label: "OAS Maximum Monthly"
+    description: "Maximum monthly OAS based on age (higher for 75+)"
+    source: "OAS Act Section 3"
+    from 2024-01-01: if age >= gov/servicecanada/oas/age/bonus_threshold: gov/servicecanada/oas/oas/max_monthly_75_plus else: gov/servicecanada/oas/oas/max_monthly_65_74
+
+# Gross OAS monthly (before recovery tax)
+oas_gross_monthly:
+    entity: Person
+    unit: "CAD"
+    label: "OAS Gross Monthly"
+    description: "Monthly OAS amount before recovery tax (clawback)"
+    source: "OAS Act Section 3"
+    from 2024-01-01: if not is_oas_eligible: 0 else: oas_max_monthly * oas_pension_rate
+
+# OAS Recovery Tax (clawback) - excess over threshold
+oas_clawback_raw:
+    entity: Person
+    unit: "CAD"
+    label: "OAS Clawback Raw"
+    description: "Raw clawback amount before capping"
+    source: "ITA 180.2"
+    from 2024-01-01: if individual_net_income <= gov/servicecanada/oas/recovery_tax/threshold: 0 else: (individual_net_income - gov/servicecanada/oas/recovery_tax/threshold) * gov/servicecanada/oas/recovery_tax/rate
+
+# OAS Recovery Tax (capped at gross OAS)
+oas_recovery_tax:
+    entity: Person
+    unit: "CAD"
+    label: "OAS Recovery Tax"
+    description: "Amount of OAS pension clawed back due to high income"
+    source: "ITA 180.2"
+    from 2024-01-01: min(oas_clawback_raw, oas_gross_monthly * 12)
+
+# Net OAS monthly (after recovery tax)
+oas_monthly:
+    entity: Person
+    unit: "CAD"
+    label: "OAS Pension"
+    description: "Monthly Old Age Security pension after recovery tax"
+    source: "OAS Act Section 3, ITA 180.2"
+    from 2024-01-01: max(0, oas_gross_monthly - (oas_recovery_tax / 12))
+
+# Annual OAS amount
+oas_annual:
+    entity: Person
+    unit: "CAD"
+    label: "OAS Annual"
+    description: "Annual Old Age Security pension"
+    source: "OAS Act Section 3"
+    from 2024-01-01: oas_monthly * 12
+
+# ==========================================================================
+# GUARANTEED INCOME SUPPLEMENT
+# ==========================================================================
+
+# GIS eligibility
+is_gis_eligible:
+    entity: Person
+    label: "GIS Eligible"
+    description: "Whether the person is eligible for the Guaranteed Income Supplement"
+    source: "OAS Act Section 12"
+    from 2024-01-01: is_oas_eligible and oas_gross_monthly > 0
+
+# Is single pensioner for GIS purposes
+is_single_pensioner:
+    entity: Person
+    label: "Is Single Pensioner"
+    description: "Whether the person is single, widowed, divorced, or separated for GIS"
+    source: "OAS Act Section 2 definitions"
+    from 2024-01-01: not is_married_or_common_law
+
+# GIS employment exemption amount
+gis_employment_exempt:
+    entity: Person
+    unit: "CAD"
+    label: "GIS Employment Exemption"
+    description: "Full exemption applied to employment income for GIS"
+    source: "OAS Regulations"
+    from 2024-01-01: min(employment_income_for_gis, gov/servicecanada/oas/gis/employment_income_exemption)
+
+# GIS partial employment exemption amount
+gis_partial_employment_exempt:
+    entity: Person
+    unit: "CAD"
+    label: "GIS Partial Employment Exemption"
+    description: "50% partial exemption on employment income beyond full exemption"
+    source: "OAS Regulations"
+    from 2024-01-01: min(max(0, employment_income_for_gis - gov/servicecanada/oas/gis/employment_income_exemption), gov/servicecanada/oas/gis/employment_income_partial_exemption) * 0.50
+
+# GIS countable income
+gis_countable_income:
+    entity: Person
+    unit: "CAD"
+    label: "GIS Countable Income"
+    description: "Income used for GIS calculation (excludes OAS, applies employment exemptions)"
+    source: "OAS Regulations"
+    from 2024-01-01: max(0, (individual_net_income - oas_annual) - gis_employment_exempt - gis_partial_employment_exempt)
+
+# Maximum GIS monthly (depends on marital status)
+gis_max_monthly:
+    entity: Person
+    unit: "CAD"
+    label: "GIS Maximum Monthly"
+    description: "Maximum monthly GIS based on marital/pension status"
+    source: "OAS Act Section 12"
+    from 2024-01-01: if is_single_pensioner: gov/servicecanada/oas/gis/max_monthly_single else: if spouse_receives_oas: gov/servicecanada/oas/gis/max_monthly_couple else: gov/servicecanada/oas/gis/max_monthly_single
+
+# GIS reduction
+gis_reduction:
+    entity: Person
+    unit: "CAD"
+    label: "GIS Reduction"
+    description: "Annual reduction in GIS based on income"
+    source: "OAS Act Section 12"
+    from 2024-01-01: gis_countable_income * gov/servicecanada/oas/gis/reduction_rate
+
+# GIS monthly amount
+gis_monthly:
+    entity: Person
+    unit: "CAD"
+    label: "Guaranteed Income Supplement"
+    description: "Monthly Guaranteed Income Supplement payment"
+    source: "OAS Act Section 12"
+    from 2024-01-01: if not is_gis_eligible: 0 else: max(0, gis_max_monthly - (gis_reduction / 12))
+
+# GIS annual amount
+gis_annual:
+    entity: Person
+    unit: "CAD"
+    label: "GIS Annual"
+    description: "Annual Guaranteed Income Supplement"
+    source: "OAS Act Section 12"
+    from 2024-01-01: gis_monthly * 12
+
+# ==========================================================================
+# ALLOWANCE
+# ==========================================================================
+
+# Allowance eligibility
+is_allowance_eligible:
+    entity: Person
+    label: "Allowance Eligible"
+    description: "Whether eligible for Allowance (spouse of OAS/GIS recipient aged 60-64)"
+    source: "OAS Act Section 19"
+    from 2024-01-01: age >= gov/servicecanada/oas/allowance/age_minimum and age <= gov/servicecanada/oas/allowance/age_maximum and spouse_receives_oas and spouse_receives_gis
+
+# Allowance monthly amount
+allowance_monthly:
+    entity: Person
+    unit: "CAD"
+    label: "Allowance"
+    description: "Monthly Allowance for spouse of OAS/GIS recipient"
+    source: "OAS Act Section 19"
+    from 2024-01-01: if not is_allowance_eligible: 0 else: max(0, gov/servicecanada/oas/allowance/max_monthly - ((combined_income * gov/servicecanada/oas/gis/reduction_rate) / 12))
+
+# Survivor Allowance
+survivor_allowance_monthly:
+    entity: Person
+    unit: "CAD"
+    label: "Survivor Allowance"
+    description: "Monthly Allowance for the Survivor (widowed persons aged 60-64)"
+    source: "OAS Act Section 21"
+    from 2024-01-01: if age < gov/servicecanada/oas/allowance/age_minimum or age > gov/servicecanada/oas/allowance/age_maximum: 0 else: if not is_survivor: 0 else: max(0, gov/servicecanada/oas/allowance/survivor_max_monthly - ((gis_countable_income * gov/servicecanada/oas/gis/reduction_rate) / 12))
+
+# ==========================================================================
+# TOTAL OAS BENEFITS
+# ==========================================================================
+
+# Total monthly OAS benefits
+total_oas_benefits_monthly:
+    entity: Person
+    unit: "CAD"
+    label: "Total OAS Benefits"
+    description: "Total monthly Old Age Security program benefits (OAS + GIS + Allowance)"
+    source: "OAS Act"
+    from 2024-01-01: oas_monthly + gis_monthly + allowance_monthly + survivor_allowance_monthly

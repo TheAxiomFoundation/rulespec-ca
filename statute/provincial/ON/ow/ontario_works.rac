@@ -1,0 +1,232 @@
+# Ontario Works Act, 1997 - Ontario Works benefit
+#
+# Ontario Works provides:
+# - Basic needs allowance (food, clothing, personal needs)
+# - Shelter allowance (actual costs up to maximum)
+# - Special benefits (health, employment, emergency)
+#
+# Reference: https://www.ontario.ca/laws/regulation/980134
+
+# ==========================================================================
+# INPUTS
+# ==========================================================================
+
+# Number of adults in household (input)
+num_adults:
+    entity: Household
+    label: "Number of Adults"
+    description: "Number of adults in the benefit unit"
+    from 2024-01-01: 1
+
+# Number of children in household (input)
+num_children:
+    entity: Household
+    label: "Number of Children"
+    description: "Number of children in the benefit unit"
+    from 2024-01-01: 0
+
+# Employment income (input)
+employment_income:
+    entity: Household
+    unit: "CAD"
+    label: "Employment Income"
+    description: "Monthly employment income"
+    from 2024-01-01: 0
+
+# Other income (input)
+other_income:
+    entity: Household
+    unit: "CAD"
+    label: "Other Income"
+    description: "Monthly other income (fully counted)"
+    from 2024-01-01: 0
+
+# Shelter costs (input)
+shelter_costs:
+    entity: Household
+    unit: "CAD"
+    label: "Shelter Costs"
+    description: "Monthly shelter costs"
+    from 2024-01-01: 0
+
+# Liquid assets (input)
+liquid_assets:
+    entity: Household
+    unit: "CAD"
+    label: "Liquid Assets"
+    description: "Total liquid assets"
+    from 2024-01-01: 0
+
+# Province of residence (input)
+province_of_residence:
+    entity: Household
+    label: "Province of Residence"
+    description: "Province of residence code"
+    from 2024-01-01: "ON"
+
+# Is remote community (input)
+is_remote_community:
+    entity: Household
+    label: "Is Remote Community"
+    description: "Whether located in a remote community"
+    from 2024-01-01: false
+
+# Is pregnant (input)
+is_pregnant:
+    entity: Household
+    label: "Is Pregnant"
+    description: "Whether a member is pregnant"
+    from 2024-01-01: false
+
+# ==========================================================================
+# HOUSEHOLD SIZE AND COMPOSITION
+# ==========================================================================
+
+household_size:
+    entity: Household
+    label: "Household Size"
+    description: "Total number of persons in the benefit unit"
+    source: "O. Reg. 134/98"
+    from 2024-01-01: num_adults + num_children
+
+is_single:
+    entity: Household
+    label: "Is Single"
+    description: "Whether the benefit unit is a single person without dependants"
+    source: "O. Reg. 134/98"
+    from 2024-01-01: num_adults == 1 and num_children == 0
+
+is_couple:
+    entity: Household
+    label: "Is Couple"
+    description: "Whether the benefit unit is a couple without dependants"
+    source: "O. Reg. 134/98"
+    from 2024-01-01: num_adults == 2 and num_children == 0
+
+# ==========================================================================
+# ASSET ELIGIBILITY
+# ==========================================================================
+
+ow_asset_limit:
+    entity: Household
+    unit: "CAD"
+    label: "OW Asset Limit"
+    description: "Maximum liquid assets allowed for OW eligibility"
+    source: "O. Reg. 134/98, Section 39"
+    from 2024-01-01: if household_size == 1: gov/ontario/ow/asset_limit/single else: if household_size == 2 and num_children == 0: gov/ontario/ow/asset_limit/couple else: gov/ontario/ow/asset_limit/family_3_plus
+
+is_ow_asset_eligible:
+    entity: Household
+    label: "OW Asset Eligible"
+    description: "Whether assets are below the limit for OW eligibility"
+    source: "O. Reg. 134/98, Section 39"
+    from 2024-01-01: liquid_assets <= ow_asset_limit
+
+# ==========================================================================
+# BASIC NEEDS CALCULATION
+# ==========================================================================
+
+# Basic needs base amount (adults only, simplified)
+ow_basic_needs_base:
+    entity: Household
+    unit: "CAD"
+    label: "OW Basic Needs Base"
+    description: "Base basic needs allowance for adults"
+    source: "O. Reg. 134/98, Schedule 1"
+    from 2024-01-01: if num_adults == 1: gov/ontario/ow/basic_needs/single else: gov/ontario/ow/basic_needs/couple
+
+# Basic needs child amount (simplified: per-child amount)
+# Note: Original has first child at a higher rate and age-differentiated amounts.
+# Simplified to use a flat first_child + additional_child structure with a single age bracket.
+ow_basic_needs_children:
+    entity: Household
+    unit: "CAD"
+    label: "OW Basic Needs Children"
+    description: "Basic needs allowance for children (simplified)"
+    source: "O. Reg. 134/98, Schedule 1"
+    from 2024-01-01: if num_children == 0: 0 else: if num_children == 1: gov/ontario/ow/basic_needs/first_child_0_12 else: gov/ontario/ow/basic_needs/first_child_0_12 + ((num_children - 1) * gov/ontario/ow/basic_needs/additional_child_0_12)
+
+# Total basic needs
+ow_basic_needs:
+    entity: Household
+    unit: "CAD"
+    label: "OW Basic Needs"
+    description: "Monthly basic needs allowance based on household composition"
+    source: "O. Reg. 134/98, Schedule 1"
+    from 2024-01-01: ow_basic_needs_base + ow_basic_needs_children
+
+# ==========================================================================
+# SHELTER CALCULATION
+# ==========================================================================
+
+ow_max_shelter:
+    entity: Household
+    unit: "CAD"
+    label: "OW Max Shelter"
+    description: "Maximum shelter allowance based on household size"
+    source: "O. Reg. 134/98, Schedule 2"
+    from 2024-01-01: if household_size == 1: gov/ontario/ow/max_shelter/single else: if household_size == 2 and num_children == 0: gov/ontario/ow/max_shelter/couple else: if household_size == 3: gov/ontario/ow/max_shelter/family_3 else: if household_size == 4: gov/ontario/ow/max_shelter/family_4 else: if household_size == 5: gov/ontario/ow/max_shelter/family_5 else: gov/ontario/ow/max_shelter/family_6_plus
+
+ow_shelter:
+    entity: Household
+    unit: "CAD"
+    label: "OW Shelter Allowance"
+    description: "Actual shelter allowance (lesser of actual costs or maximum)"
+    source: "O. Reg. 134/98, Schedule 2"
+    from 2024-01-01: min(shelter_costs, ow_max_shelter)
+
+# ==========================================================================
+# INCOME CALCULATION
+# ==========================================================================
+
+ow_countable_employment_income:
+    entity: Household
+    unit: "CAD"
+    label: "OW Countable Employment Income"
+    description: "Employment income counted against OW after exemptions"
+    source: "O. Reg. 134/98, Section 49"
+    from 2024-01-01: max(0, employment_income - gov/ontario/ow/earnings_exemption/flat_exemption) * (1 - gov/ontario/ow/earnings_exemption/rate)
+
+ow_total_countable_income:
+    entity: Household
+    unit: "CAD"
+    label: "OW Total Countable Income"
+    description: "Total income counted against OW benefits"
+    source: "O. Reg. 134/98"
+    from 2024-01-01: ow_countable_employment_income + other_income
+
+# ==========================================================================
+# TOTAL BENEFIT CALCULATION
+# ==========================================================================
+
+ow_maximum_entitlement:
+    entity: Household
+    unit: "CAD"
+    label: "OW Maximum Entitlement"
+    description: "Maximum OW benefit before income deduction"
+    source: "O. Reg. 134/98"
+    from 2024-01-01: ow_basic_needs + ow_shelter
+
+ow_remote_supplement:
+    entity: Household
+    unit: "CAD"
+    label: "OW Remote Supplement"
+    description: "Additional amount for remote community residents"
+    source: "O. Reg. 134/98"
+    from 2024-01-01: if not is_remote_community: 0 else: gov/ontario/ow/remote_supplement/amount
+
+ow_pregnancy_benefit:
+    entity: Household
+    unit: "CAD"
+    label: "OW Pregnancy Benefit"
+    description: "Additional nutritional benefit during pregnancy"
+    source: "O. Reg. 134/98"
+    from 2024-01-01: if not is_pregnant: 0 else: gov/ontario/ow/pregnancy_benefit/amount
+
+ow_total:
+    entity: Household
+    unit: "CAD"
+    label: "Ontario Works"
+    description: "Total monthly Ontario Works benefit"
+    source: "Ontario Works Act, 1997"
+    from 2024-01-01: if not is_ow_asset_eligible: 0 else: max(0, ow_maximum_entitlement + ow_remote_supplement + ow_pregnancy_benefit - ow_total_countable_income)

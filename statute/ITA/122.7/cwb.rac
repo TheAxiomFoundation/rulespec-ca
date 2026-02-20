@@ -1,0 +1,180 @@
+# Income Tax Act Section 122.7 - Canada Workers Benefit
+#
+# "Where a return of income... is filed... for a taxation year, there shall
+# be deemed to be an overpayment... equal to the total of
+# (a) the basic working income tax benefit, and
+# (b) the disability supplement"
+#
+# The CWB is a refundable tax credit for low-income working individuals and families.
+# It phases in based on working income and phases out based on adjusted net income.
+#
+# Reference: https://laws-lois.justice.gc.ca/eng/acts/I-3.3/section-122.7.html
+
+# Is Canadian resident (input)
+is_canadian_resident:
+    entity: Person
+    label: "Is Canadian Resident"
+    description: "Whether the person is a Canadian resident"
+    from 2024-01-01: false
+
+# Has dependants (input)
+has_dependants:
+    entity: TaxUnit
+    label: "Has Dependants"
+    description: "Whether the tax unit has qualified dependants"
+    from 2024-01-01: false
+
+# Is disabled (input)
+is_disabled:
+    entity: Person
+    label: "Is Disabled"
+    description: "Whether the person is eligible for the disability tax credit"
+    source: "ITA 118.3"
+    from 2024-01-01: false
+
+# Days incarcerated (input)
+days_incarcerated:
+    entity: Person
+    label: "Days Incarcerated"
+    description: "Number of days incarcerated in the year"
+    from 2024-01-01: 0
+
+# Employment income (input)
+employment_income:
+    entity: Person
+    unit: "CAD"
+    label: "Employment Income"
+    description: "Employment income for CWB purposes"
+    from 2024-01-01: 0
+
+# Self-employment income (input)
+self_employment_income:
+    entity: Person
+    unit: "CAD"
+    label: "Self-Employment Income"
+    description: "Self-employment income for CWB purposes"
+    from 2024-01-01: 0
+
+# Is the unit a "family" for CWB purposes
+is_cwb_family:
+    entity: TaxUnit
+    label: "Is CWB Family"
+    description: "Whether the unit qualifies as a family (has spouse or qualified dependant)"
+    source: "ITA 122.7 definition of 'eligible individual'"
+    from 2024-01-01: is_married_or_common_law or has_dependants
+
+# CWB eligibility
+is_cwb_eligible:
+    entity: Person
+    label: "CWB Eligible"
+    description: "Whether the individual is eligible for the Canada Workers Benefit"
+    source: "ITA 122.7(1)"
+    from 2024-01-01: is_canadian_resident and (age >= gov/cra/cwb/age/minimum or is_cwb_family) and days_incarcerated < gov/cra/cwb/incarceration/max_days
+
+# Working income for CWB (employment + self-employment income)
+working_income:
+    entity: Person
+    unit: "CAD"
+    label: "Working Income"
+    description: "Total working income from employment and self-employment for CWB purposes"
+    source: "ITA 122.7 definition of 'working income'"
+    from 2024-01-01: employment_income + self_employment_income
+
+# CWB basic benefit - phase-in amount
+cwb_phase_in_amount:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "CWB Phase-in Amount"
+    description: "Amount of CWB earned based on working income"
+    source: "ITA 122.7(1)"
+    from 2024-01-01: if working_income <= gov/cra/cwb/basic/phase_in_threshold: 0 else: (working_income - gov/cra/cwb/basic/phase_in_threshold) * gov/cra/cwb/basic/phase_in_rate
+
+# CWB basic benefit maximum (depends on family status)
+cwb_max_basic:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "CWB Maximum Basic"
+    description: "Maximum basic CWB amount based on family status"
+    source: "ITA 122.7(1.1)"
+    from 2024-01-01: if is_cwb_family: gov/cra/cwb/basic/max_family else: gov/cra/cwb/basic/max_single
+
+# CWB phase-out threshold (depends on family status)
+cwb_phase_out_threshold:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "CWB Phase-out Threshold"
+    description: "Income threshold above which CWB phases out"
+    source: "ITA 122.7(1.1)"
+    from 2024-01-01: if is_cwb_family: gov/cra/cwb/basic/phase_out_threshold_family else: gov/cra/cwb/basic/phase_out_threshold_single
+
+# CWB basic benefit - phase-out reduction
+cwb_phase_out_reduction:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "CWB Phase-out Reduction"
+    description: "Reduction in CWB based on adjusted net income above threshold"
+    source: "ITA 122.7(1.1)"
+    from 2024-01-01: if adjusted_net_income <= cwb_phase_out_threshold: 0 else: (adjusted_net_income - cwb_phase_out_threshold) * gov/cra/cwb/basic/phase_out_rate
+
+# CWB basic benefit earned (capped at maximum)
+cwb_basic_earned:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "CWB Basic Earned"
+    description: "CWB basic phase-in amount capped at maximum"
+    source: "ITA 122.7(1)"
+    from 2024-01-01: min(cwb_phase_in_amount, cwb_max_basic)
+
+# CWB basic benefit
+cwb_basic:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "CWB Basic Benefit"
+    description: "Canada Workers Benefit basic component"
+    source: "ITA 122.7(1)"
+    from 2024-01-01: max(0, cwb_basic_earned - cwb_phase_out_reduction)
+
+# CWB disability supplement - phase-in amount
+cwb_disability_phase_in:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "CWB Disability Phase-in"
+    description: "Disability supplement amount earned based on working income"
+    source: "ITA 122.7(1.2)"
+    from 2024-01-01: if working_income <= gov/cra/cwb/disability/phase_in_threshold: 0 else: (working_income - gov/cra/cwb/disability/phase_in_threshold) * gov/cra/cwb/disability/phase_in_rate
+
+# CWB disability earned (capped at maximum)
+cwb_disability_earned:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "CWB Disability Earned"
+    description: "CWB disability phase-in amount capped at maximum"
+    source: "ITA 122.7(1.2)"
+    from 2024-01-01: min(cwb_disability_phase_in, gov/cra/cwb/disability/max_amount)
+
+# CWB disability phase-out reduction
+cwb_disability_reduction:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "CWB Disability Reduction"
+    description: "Phase-out reduction for CWB disability supplement"
+    source: "ITA 122.7(1.2)"
+    from 2024-01-01: if adjusted_net_income <= cwb_phase_out_threshold: 0 else: (adjusted_net_income - cwb_phase_out_threshold) * gov/cra/cwb/disability/phase_out_rate
+
+# CWB disability supplement
+cwb_disability:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "CWB Disability Supplement"
+    description: "Canada Workers Benefit disability supplement"
+    source: "ITA 122.7(1.2)"
+    from 2024-01-01: if not is_disabled: 0 else: max(0, cwb_disability_earned - cwb_disability_reduction)
+
+# Total CWB
+cwb_total:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "Canada Workers Benefit"
+    description: "Total Canada Workers Benefit (basic + disability supplement)"
+    source: "ITA 122.7"
+    from 2024-01-01: cwb_basic + cwb_disability

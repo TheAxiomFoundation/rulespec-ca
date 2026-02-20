@@ -1,0 +1,113 @@
+# Income Tax Act Section 122.5 - GST/HST credit
+#
+# "If an eligible individual... files a return of income... for the taxation year,
+# there is deemed to be an overpayment... equal to the total of
+# (a) $XXX
+# (b) $XXX if the individual has a qualified relation
+# (c) $XXX for each qualified dependant
+# minus 5% of income exceeding the threshold"
+#
+# Reference: https://laws-lois.justice.gc.ca/eng/acts/I-3.3/section-122.5.html
+
+# Number of qualified dependants for GST/HST credit (input)
+num_gst_qualified_dependants:
+    entity: TaxUnit
+    label: "GST/HST Qualified Dependants"
+    description: "Number of children under 19 who are qualified dependants for GST/HST credit"
+    source: "ITA 122.5(1) definition of 'qualified dependant'"
+    from 2024-01-01: 0
+
+# Has children (input)
+has_children:
+    entity: TaxUnit
+    label: "Has Children"
+    description: "Whether the tax unit has children"
+    from 2024-01-01: false
+
+# Is eligible for GST/HST credit
+is_gst_hst_eligible:
+    entity: Person
+    label: "GST/HST Credit Eligible"
+    description: "Whether the individual is eligible to receive the GST/HST credit"
+    source: "ITA 122.5(2)"
+    from 2024-01-01: is_canadian_resident and (age >= gov/cra/gst_hst/age/minimum or is_married_or_common_law or has_children)
+
+# Single supplement eligibility
+qualifies_for_single_supplement:
+    entity: TaxUnit
+    label: "Qualifies for Single Supplement"
+    description: "Whether the individual qualifies for the additional single supplement"
+    source: "ITA 122.5(3)(b.1)"
+    from 2024-01-01: not is_married_or_common_law and num_children_under_19 == 0
+
+# GST/HST credit base amount for married/common-law
+gst_hst_credit_maximum_coupled:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "GST/HST Maximum Credit (Coupled)"
+    description: "Maximum GST/HST credit for married/common-law filers"
+    source: "ITA 122.5(3)"
+    from 2024-01-01: gov/cra/gst_hst/amount/individual + gov/cra/gst_hst/amount/spouse + (num_children_under_19 * gov/cra/gst_hst/amount/child)
+
+# GST/HST credit base amount for single parent
+gst_hst_credit_maximum_single_parent:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "GST/HST Maximum Credit (Single Parent)"
+    description: "Maximum GST/HST credit for single parent filers"
+    source: "ITA 122.5(3)"
+    from 2024-01-01: gov/cra/gst_hst/amount/individual + gov/cra/gst_hst/amount/spouse + (max(0, num_children_under_19 - 1) * gov/cra/gst_hst/amount/child)
+
+# GST/HST credit base amount for single with supplement
+gst_hst_credit_maximum_single_supplement:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "GST/HST Maximum Credit (Single with Supplement)"
+    description: "Maximum GST/HST credit for single filers with supplement"
+    source: "ITA 122.5(3)"
+    from 2024-01-01: gov/cra/gst_hst/amount/individual + gov/cra/gst_hst/amount/single_supplement
+
+# GST/HST credit maximum amount (before phase-out)
+gst_hst_credit_maximum:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "GST/HST Maximum Credit"
+    description: "Maximum GST/HST credit before income-based reduction"
+    source: "ITA 122.5(3)"
+    from 2024-01-01: if is_married_or_common_law: gst_hst_credit_maximum_coupled else: if num_children_under_19 > 0: gst_hst_credit_maximum_single_parent else: if qualifies_for_single_supplement: gst_hst_credit_maximum_single_supplement else: gov/cra/gst_hst/amount/individual
+
+# GST/HST credit income threshold
+gst_hst_threshold:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "GST/HST Income Threshold"
+    description: "Income threshold above which GST/HST credit is reduced"
+    source: "ITA 122.5(3)"
+    from 2024-01-01: if is_married_or_common_law or num_children_under_19 > 0: gov/cra/gst_hst/threshold/family else: gov/cra/gst_hst/threshold/individual
+
+# GST/HST credit reduction
+gst_hst_credit_reduction:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "GST/HST Credit Reduction"
+    description: "Reduction in GST/HST credit based on income above threshold"
+    source: "ITA 122.5(3)"
+    from 2024-01-01: if adjusted_family_net_income <= gst_hst_threshold: 0 else: (adjusted_family_net_income - gst_hst_threshold) * gov/cra/gst_hst/phaseout/rate
+
+# Annual GST/HST credit
+gst_hst_credit:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "GST/HST Credit"
+    description: "Annual GST/HST credit payable to eligible individuals and families"
+    source: "ITA 122.5"
+    from 2024-01-01: max(0, gst_hst_credit_maximum - gst_hst_credit_reduction)
+
+# Quarterly GST/HST credit payment
+gst_hst_credit_quarterly:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "GST/HST Quarterly Payment"
+    description: "Quarterly GST/HST credit payment (July, October, January, April)"
+    source: "ITA 122.5(3.1)"
+    from 2024-01-01: gst_hst_credit / 4

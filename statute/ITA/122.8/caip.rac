@@ -1,0 +1,104 @@
+# Income Tax Act Section 122.8 - Climate Action Incentive Payment
+#
+# "A person who files a return of income... for the taxation year and who is
+# resident in a province prescribed for the purposes of this section at the
+# end of the year is deemed to have paid... an amount on account of their
+# tax payable under this Part for the year equal to the total of..."
+#
+# CAIP is a tax-free quarterly payment to help offset the cost of federal
+# carbon pricing for residents of provinces using the federal backstop.
+#
+# Reference: https://laws-lois.justice.gc.ca/eng/acts/I-3.3/section-122.8.html
+
+# Province of residence (input)
+province:
+    entity: Person
+    label: "Province of Residence"
+    description: "Province or territory code"
+    from 2024-01-01: "ON"
+
+# Is rural area (input)
+is_rural:
+    entity: Person
+    label: "Is Rural Area"
+    description: "Whether the person resides in a rural or small community"
+    from 2024-01-01: false
+
+# Number of children under 19 (input)
+num_children_under_19:
+    entity: TaxUnit
+    label: "Children Under 19"
+    description: "Number of children under 19"
+    from 2024-01-01: 0
+
+# Is eligible for CAIP (resident of eligible province)
+# Eligible provinces as of 2024: ON, AB, SK, MB
+is_caip_eligible:
+    entity: Person
+    label: "CAIP Eligible"
+    description: "Whether the person is eligible for CAIP (resident of a province using federal carbon pricing)"
+    source: "ITA 122.8(2)"
+    from 2024-01-01: province == "ON" or province == "AB" or province == "SK" or province == "MB"
+
+# Individual CAIP amount (varies by province)
+caip_individual_amount:
+    entity: Person
+    unit: "CAD"
+    label: "CAIP Individual Amount"
+    description: "Base CAIP amount for an individual based on province of residence"
+    source: "ITA 122.8 / Schedule 14"
+    from 2024-01-01: if province == "ON": gov/cra/caip/ontario/individual else: if province == "AB": gov/cra/caip/alberta/individual else: if province == "SK": gov/cra/caip/saskatchewan/individual else: if province == "MB": gov/cra/caip/manitoba/individual else: 0
+
+# Spouse CAIP amount (varies by province)
+caip_spouse_amount:
+    entity: Person
+    unit: "CAD"
+    label: "CAIP Spouse Amount"
+    description: "Additional CAIP amount for a spouse or common-law partner"
+    source: "ITA 122.8 / Schedule 14"
+    from 2024-01-01: if province == "ON": gov/cra/caip/ontario/spouse else: if province == "AB": gov/cra/caip/alberta/spouse else: if province == "SK": gov/cra/caip/saskatchewan/spouse else: if province == "MB": gov/cra/caip/manitoba/spouse else: 0
+
+# Child CAIP amount (varies by province)
+caip_child_amount:
+    entity: Person
+    unit: "CAD"
+    label: "CAIP Child Amount"
+    description: "CAIP amount for each child under 19"
+    source: "ITA 122.8 / Schedule 14"
+    from 2024-01-01: if province == "ON": gov/cra/caip/ontario/child else: if province == "AB": gov/cra/caip/alberta/child else: if province == "SK": gov/cra/caip/saskatchewan/child else: if province == "MB": gov/cra/caip/manitoba/child else: 0
+
+# Base CAIP amount before rural supplement
+caip_base_amount:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "CAIP Base Amount"
+    description: "Total CAIP amount before rural supplement"
+    source: "ITA 122.8"
+    from 2024-01-01: if not is_caip_eligible: 0 else: if is_married_or_common_law: caip_individual_amount + caip_spouse_amount + (num_children_under_19 * caip_child_amount) else: caip_individual_amount + (num_children_under_19 * caip_child_amount)
+
+# Rural supplement amount
+caip_rural_supplement:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "CAIP Rural Supplement"
+    description: "Additional CAIP amount for residents of rural or small communities"
+    source: "ITA 122.8"
+    from 2024-01-01: if not is_rural: 0 else: caip_base_amount * gov/cra/caip/rural_supplement/rate
+
+# Annual CAIP amount
+caip_amount:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "Climate Action Incentive Payment"
+    description: "Annual Climate Action Incentive Payment for eligible individuals and families"
+    source: "ITA 122.8"
+    from 2024-01-01: caip_base_amount + caip_rural_supplement
+
+# Quarterly CAIP payment
+caip_quarterly:
+    entity: TaxUnit
+    unit: "CAD"
+    label: "CAIP Quarterly Payment"
+    description: "Quarterly Climate Action Incentive Payment (April, July, October, January)"
+    source: "ITA 122.8"
+    from 2024-01-01: caip_amount / 4
