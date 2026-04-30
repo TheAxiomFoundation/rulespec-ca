@@ -9,4 +9,5 @@ Canada RuleSpec encodings and source registry metadata.
 - `policies/`: Canadian policy RuleSpec YAML, with tests beside each encoding as `.test.yaml`.
 - `sources/`: source registry or manifest metadata when needed.
 
-Do not add legacy `statute/`, `parameters.yaml`, `tests.yaml`, or `.rac` artifacts.
+Do not add singular rule roots, separate parameter/test fixture files, or
+generated formula artifacts.
