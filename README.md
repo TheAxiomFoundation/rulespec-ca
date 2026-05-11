@@ -1,4 +1,4 @@
-# rules-ca
+# rulespec-ca
 
 Canada RuleSpec encodings and source registry metadata.
 

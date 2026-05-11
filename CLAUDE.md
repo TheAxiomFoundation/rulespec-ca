@@ -1,4 +1,4 @@
-# rules-ca Agent Notes
+# rulespec-ca Agent Notes
 
 This repo stores Canada RuleSpec encodings and source registry metadata.
 
