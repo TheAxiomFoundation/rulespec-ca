@@ -1,0 +1,17 @@
+version: 1
+allowed_root_directories:
+  - .axiom
+  - .github
+allowed_root_files:
+  - CLAUDE.md
+  - README.md
+path_rules:
+  - patterns:
+      - ".axiom/**"
+    allow_extensions:
+      - ".yaml"
+  - patterns:
+      - ".github/**"
+    allow_extensions:
+      - ".yml"
+      - ".yaml"
