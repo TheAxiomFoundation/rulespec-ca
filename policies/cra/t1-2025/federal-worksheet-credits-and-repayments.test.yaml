@@ -1,0 +1,147 @@
+- name: dividends_from_slips_and_without_slips
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.actual_eligible_dividends_without_slip: 1000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.actual_other_than_eligible_dividends_without_slip: 2000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.taxable_other_than_eligible_dividends_from_slips: 300
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.taxable_eligible_and_other_than_eligible_dividends_from_slips: 500
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.dividend_tax_credit_from_t3_slips: 20
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.dividend_tax_credit_from_t4ps_slips: 10
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.dividend_tax_credit_from_t5_slips: 5
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.dividend_tax_credit_from_t5013_slips: 0
+  output:
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_taxable_eligible_dividends_without_slip: 1380
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_taxable_other_than_eligible_dividends_without_slip: 2300
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_taxable_dividends_other_than_eligible_line_12010: 2600
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_taxable_dividends_line_12000: 4180
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_dividend_tax_credit_from_slips: 35
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_dividend_tax_credit_without_slip: 414.96554
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_dividend_tax_credit_line_40425: 449.96554
+
+- name: social_benefits_repayment_oas_and_ei
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.oas_pension_line_11300: 8000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.net_federal_supplements_line_14600: 1000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.oas_overpayment_recovered_t4a_oas_box_20: 500
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.net_income_before_adjustments_line_23400: 100000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.ei_benefits_repayment_from_t4e_chart: 300
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.uccb_income_line_11700: 100
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.rdsp_income_line_12500: 200
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.uccb_repayment_line_21300: 50
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.rdsp_income_repayment_included_line_23200: 0
+  output:
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_oas_and_supplements_after_recovery: 8500
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_social_benefits_repayment_adjusted_net_income: 99450
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_oas_benefits_repayment: 899.4
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_social_benefits_repayment_line_23500_and_42200: 1199.4
+
+- name: home_accessibility_medical_political_and_top_up
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.eligible_home_accessibility_expenses: 25000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.home_accessibility_expenses_claimed_by_others: 3000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.medical_expenses_other_dependant_1: 5000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.medical_expenses_other_dependant_1_income_line_amount: 1200
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.medical_expenses_other_dependant_2: 500
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.medical_expenses_other_dependant_2_income_line_amount: 800
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.medical_expenses_other_dependant_3: 1000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.medical_expenses_other_dependant_3_income_line_amount: 100
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.medical_expenses_other_dependants_additional_allowable: 200
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.federal_political_contributions_line_40900: 900
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.non_refundable_credits_line_33800: 10000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.schedule_9_line_22_donation_first_tier_credit: 29
+  output:
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_home_accessibility_expenses_line_31285: 17000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_medical_other_dependant_1_allowable: 3800
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_medical_other_dependant_2_allowable: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_medical_other_dependant_3_allowable: 900
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_medical_expenses_other_dependants_line_33199: 4900
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_political_contribution_tax_credit_line_41000: 524.995
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_top_up_tax_credit_line_34990: 58.98189
+
+- name: refundable_medical_expense_supplement
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.is_resident_canada_all_year: true
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.age_at_end_of_year: 45
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.claimant_net_income_line_23600: 35000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.claimant_uccb_repayment_line_21300: 100
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.claimant_rdsp_income_repayment_included_line_23200: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.claimant_uccb_income_line_11700: 50
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.claimant_rdsp_income_line_12500: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.spouse_net_income_line_23600: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.spouse_uccb_repayment_line_21300: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.spouse_rdsp_income_repayment_included_line_23200: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.spouse_uccb_income_line_11700: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.spouse_rdsp_income_line_12500: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.employment_income_line_10100: 10000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.other_employment_income_line_10400: 1000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.registered_pension_plan_deduction_line_20700: 500
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.annual_union_professional_dues_line_21200: 100
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.other_employment_expenses_line_22900: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.clergy_residence_deduction_line_23100: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.business_income_line_13500: 2000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.professional_income_line_13700: -100
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.commission_income_line_13900: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.farming_income_line_14100: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.fishing_income_line_14300: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.medical_expenses_line_21500: 4000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.medical_expenses_line_33200: 3000
+  output:
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_refundable_medical_claimant_adjusted_net_income: 35050
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_refundable_medical_spouse_adjusted_net_income: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_refundable_medical_adjusted_family_net_income: 35050
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_refundable_medical_employment_income_component: 10400
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_refundable_medical_self_employment_income_component: 2000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_refundable_medical_earned_income: 12400
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_refundable_medical_expenses_claimed: 7000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_refundable_medical_supplement_before_reduction: 1504
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_refundable_medical_supplement_reduction: 87.8
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_refundable_medical_expense_supplement_line_45200: 1416.2
+
+- name: refundable_medical_expense_supplement_ineligible_income
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.is_resident_canada_all_year: true
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.age_at_end_of_year: 45
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.claimant_net_income_line_23600: 65000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.claimant_uccb_repayment_line_21300: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.claimant_rdsp_income_repayment_included_line_23200: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.claimant_uccb_income_line_11700: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.claimant_rdsp_income_line_12500: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.spouse_net_income_line_23600: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.spouse_uccb_repayment_line_21300: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.spouse_rdsp_income_repayment_included_line_23200: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.spouse_uccb_income_line_11700: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.spouse_rdsp_income_line_12500: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.employment_income_line_10100: 10000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.other_employment_income_line_10400: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.registered_pension_plan_deduction_line_20700: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.annual_union_professional_dues_line_21200: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.other_employment_expenses_line_22900: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.clergy_residence_deduction_line_23100: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.business_income_line_13500: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.professional_income_line_13700: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.commission_income_line_13900: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.farming_income_line_14100: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.fishing_income_line_14300: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.medical_expenses_line_21500: 4000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.medical_expenses_line_33200: 3000
+  output:
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_refundable_medical_expense_supplement_line_45200: 0
