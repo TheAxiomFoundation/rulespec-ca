@@ -18,6 +18,6 @@ source:
       - T4127 Step 4 annual basic provincial or territorial tax using default 2026 TD1 personal amounts
       - T4127 Step 5 provincial and territorial annual tax deduction adjustments for Alberta, British Columbia, Manitoba, New Brunswick, Nova Scotia, Ontario, Saskatchewan, and Yukon
     not_encoded:
-      - non-default claim codes 2 through 10
       - employee-transfer K2RP variants
       - Option 2 cumulative averaging payroll formulas
+      - TD1 line-item eligibility for underlying credits
