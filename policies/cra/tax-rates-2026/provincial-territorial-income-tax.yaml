@@ -1,0 +1,1385 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA's 2026 current-year tax rates page gives provincial and
+    territorial taxable-income brackets for the province or territory of
+    residence on December 31, 2026. This module encodes the 2026
+    provincial and territorial marginal bracket tax before credits.
+    Quebec is sourced from Revenu Quebec's 2026 income tax rates because
+    the CRA page refers Quebec taxpayers to Revenu Quebec.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/tax-rates-2026/provincial-territorial-income-tax
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+        - canada/statute/provincial-territorial-income-tax-acts
+        - canada/policy/cra/tax-rates-2026/provincial-territorial-income-tax
+        - canada/policy/revenu-quebec/tax-rates-2026/income-tax-rates
+      rationale: |-
+        The encoded values are current 2026 personal income tax rate
+        tables published by CRA and Revenu Quebec for return-year use.
+        Province- and territory-specific statutory enactments remain a
+        deeper-source layer for later expansion; this module intentionally
+        encodes the official 2026 administrative rate table before
+        credits, surtaxes, and reductions.
+    source_urls:
+      - https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/current-year.html
+      - https://www.revenuquebec.ca/en/citizens/income-tax-return/completing-your-income-tax-return/income-tax-rates/
+rules:
+  - name: provincial_taxable_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2026 provincial or territorial rates apply to taxable income; Quebec 2026 income tax rates apply to taxable income
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, taxable_income)
+
+  - name: alberta_income_tax_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Alberta tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
+
+  - name: alberta_income_tax_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Alberta tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.08
+
+  - name: alberta_income_tax_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Alberta tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          61200
+
+  - name: alberta_income_tax_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Alberta tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.10
+
+  - name: alberta_income_tax_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Alberta tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          154259
+
+  - name: alberta_income_tax_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Alberta tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.12
+
+  - name: alberta_income_tax_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Alberta tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          185111
+
+  - name: alberta_income_tax_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Alberta tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.13
+
+  - name: alberta_income_tax_bracket_5_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Alberta tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          246813
+
+  - name: alberta_income_tax_bracket_5_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Alberta tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.14
+
+  - name: alberta_income_tax_bracket_6_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Alberta tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          370220
+
+  - name: alberta_income_tax_bracket_6_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Alberta tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.15
+
+  - name: alberta_bracket_tax_before_credits
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2026 Alberta tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          (alberta_income_tax_bracket_1_rate * min(provincial_taxable_income, alberta_income_tax_bracket_2_threshold))
+          + (alberta_income_tax_bracket_2_rate * max(0, min(provincial_taxable_income, alberta_income_tax_bracket_3_threshold) - alberta_income_tax_bracket_2_threshold))
+          + (alberta_income_tax_bracket_3_rate * max(0, min(provincial_taxable_income, alberta_income_tax_bracket_4_threshold) - alberta_income_tax_bracket_3_threshold))
+          + (alberta_income_tax_bracket_4_rate * max(0, min(provincial_taxable_income, alberta_income_tax_bracket_5_threshold) - alberta_income_tax_bracket_4_threshold))
+          + (alberta_income_tax_bracket_5_rate * max(0, min(provincial_taxable_income, alberta_income_tax_bracket_6_threshold) - alberta_income_tax_bracket_5_threshold))
+          + (alberta_income_tax_bracket_6_rate * max(0, provincial_taxable_income - alberta_income_tax_bracket_6_threshold))
+
+  - name: british_columbia_income_tax_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 British Columbia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
+
+  - name: british_columbia_income_tax_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 British Columbia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.056
+
+  - name: british_columbia_income_tax_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 British Columbia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          50363
+
+  - name: british_columbia_income_tax_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 British Columbia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.077
+
+  - name: british_columbia_income_tax_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 British Columbia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          100728
+
+  - name: british_columbia_income_tax_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 British Columbia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.105
+
+  - name: british_columbia_income_tax_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 British Columbia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          115648
+
+  - name: british_columbia_income_tax_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 British Columbia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.1229
+
+  - name: british_columbia_income_tax_bracket_5_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 British Columbia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          140430
+
+  - name: british_columbia_income_tax_bracket_5_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 British Columbia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.147
+
+  - name: british_columbia_income_tax_bracket_6_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 British Columbia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          190405
+
+  - name: british_columbia_income_tax_bracket_6_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 British Columbia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.168
+
+  - name: british_columbia_income_tax_bracket_7_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 British Columbia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          265545
+
+  - name: british_columbia_income_tax_bracket_7_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 British Columbia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.205
+
+  - name: british_columbia_bracket_tax_before_credits
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2026 British Columbia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          (british_columbia_income_tax_bracket_1_rate * min(provincial_taxable_income, british_columbia_income_tax_bracket_2_threshold))
+          + (british_columbia_income_tax_bracket_2_rate * max(0, min(provincial_taxable_income, british_columbia_income_tax_bracket_3_threshold) - british_columbia_income_tax_bracket_2_threshold))
+          + (british_columbia_income_tax_bracket_3_rate * max(0, min(provincial_taxable_income, british_columbia_income_tax_bracket_4_threshold) - british_columbia_income_tax_bracket_3_threshold))
+          + (british_columbia_income_tax_bracket_4_rate * max(0, min(provincial_taxable_income, british_columbia_income_tax_bracket_5_threshold) - british_columbia_income_tax_bracket_4_threshold))
+          + (british_columbia_income_tax_bracket_5_rate * max(0, min(provincial_taxable_income, british_columbia_income_tax_bracket_6_threshold) - british_columbia_income_tax_bracket_5_threshold))
+          + (british_columbia_income_tax_bracket_6_rate * max(0, min(provincial_taxable_income, british_columbia_income_tax_bracket_7_threshold) - british_columbia_income_tax_bracket_6_threshold))
+          + (british_columbia_income_tax_bracket_7_rate * max(0, provincial_taxable_income - british_columbia_income_tax_bracket_7_threshold))
+
+  - name: manitoba_income_tax_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Manitoba tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
+
+  - name: manitoba_income_tax_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Manitoba tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.108
+
+  - name: manitoba_income_tax_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Manitoba tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          47564
+
+  - name: manitoba_income_tax_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Manitoba tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.1275
+
+  - name: manitoba_income_tax_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Manitoba tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          101200
+
+  - name: manitoba_income_tax_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Manitoba tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.174
+
+  - name: manitoba_bracket_tax_before_credits
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2026 Manitoba tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          (manitoba_income_tax_bracket_1_rate * min(provincial_taxable_income, manitoba_income_tax_bracket_2_threshold))
+          + (manitoba_income_tax_bracket_2_rate * max(0, min(provincial_taxable_income, manitoba_income_tax_bracket_3_threshold) - manitoba_income_tax_bracket_2_threshold))
+          + (manitoba_income_tax_bracket_3_rate * max(0, provincial_taxable_income - manitoba_income_tax_bracket_3_threshold))
+
+  - name: new_brunswick_income_tax_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 New Brunswick tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
+
+  - name: new_brunswick_income_tax_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 New Brunswick tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.094
+
+  - name: new_brunswick_income_tax_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 New Brunswick tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          52333
+
+  - name: new_brunswick_income_tax_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 New Brunswick tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.14
+
+  - name: new_brunswick_income_tax_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 New Brunswick tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          104666
+
+  - name: new_brunswick_income_tax_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 New Brunswick tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.16
+
+  - name: new_brunswick_income_tax_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 New Brunswick tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          193861
+
+  - name: new_brunswick_income_tax_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 New Brunswick tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.195
+
+  - name: new_brunswick_bracket_tax_before_credits
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2026 New Brunswick tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          (new_brunswick_income_tax_bracket_1_rate * min(provincial_taxable_income, new_brunswick_income_tax_bracket_2_threshold))
+          + (new_brunswick_income_tax_bracket_2_rate * max(0, min(provincial_taxable_income, new_brunswick_income_tax_bracket_3_threshold) - new_brunswick_income_tax_bracket_2_threshold))
+          + (new_brunswick_income_tax_bracket_3_rate * max(0, min(provincial_taxable_income, new_brunswick_income_tax_bracket_4_threshold) - new_brunswick_income_tax_bracket_3_threshold))
+          + (new_brunswick_income_tax_bracket_4_rate * max(0, provincial_taxable_income - new_brunswick_income_tax_bracket_4_threshold))
+
+  - name: newfoundland_and_labrador_income_tax_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Newfoundland and Labrador tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
+
+  - name: newfoundland_and_labrador_income_tax_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Newfoundland and Labrador tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.087
+
+  - name: newfoundland_and_labrador_income_tax_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Newfoundland and Labrador tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          44678
+
+  - name: newfoundland_and_labrador_income_tax_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Newfoundland and Labrador tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.145
+
+  - name: newfoundland_and_labrador_income_tax_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Newfoundland and Labrador tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          89354
+
+  - name: newfoundland_and_labrador_income_tax_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Newfoundland and Labrador tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.158
+
+  - name: newfoundland_and_labrador_income_tax_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Newfoundland and Labrador tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          159528
+
+  - name: newfoundland_and_labrador_income_tax_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Newfoundland and Labrador tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.178
+
+  - name: newfoundland_and_labrador_income_tax_bracket_5_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Newfoundland and Labrador tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          223340
+
+  - name: newfoundland_and_labrador_income_tax_bracket_5_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Newfoundland and Labrador tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.198
+
+  - name: newfoundland_and_labrador_income_tax_bracket_6_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Newfoundland and Labrador tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          285319
+
+  - name: newfoundland_and_labrador_income_tax_bracket_6_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Newfoundland and Labrador tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.208
+
+  - name: newfoundland_and_labrador_income_tax_bracket_7_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Newfoundland and Labrador tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          570638
+
+  - name: newfoundland_and_labrador_income_tax_bracket_7_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Newfoundland and Labrador tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.213
+
+  - name: newfoundland_and_labrador_income_tax_bracket_8_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Newfoundland and Labrador tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          1141275
+
+  - name: newfoundland_and_labrador_income_tax_bracket_8_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Newfoundland and Labrador tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.218
+
+  - name: newfoundland_and_labrador_bracket_tax_before_credits
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2026 Newfoundland and Labrador tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          (newfoundland_and_labrador_income_tax_bracket_1_rate * min(provincial_taxable_income, newfoundland_and_labrador_income_tax_bracket_2_threshold))
+          + (newfoundland_and_labrador_income_tax_bracket_2_rate * max(0, min(provincial_taxable_income, newfoundland_and_labrador_income_tax_bracket_3_threshold) - newfoundland_and_labrador_income_tax_bracket_2_threshold))
+          + (newfoundland_and_labrador_income_tax_bracket_3_rate * max(0, min(provincial_taxable_income, newfoundland_and_labrador_income_tax_bracket_4_threshold) - newfoundland_and_labrador_income_tax_bracket_3_threshold))
+          + (newfoundland_and_labrador_income_tax_bracket_4_rate * max(0, min(provincial_taxable_income, newfoundland_and_labrador_income_tax_bracket_5_threshold) - newfoundland_and_labrador_income_tax_bracket_4_threshold))
+          + (newfoundland_and_labrador_income_tax_bracket_5_rate * max(0, min(provincial_taxable_income, newfoundland_and_labrador_income_tax_bracket_6_threshold) - newfoundland_and_labrador_income_tax_bracket_5_threshold))
+          + (newfoundland_and_labrador_income_tax_bracket_6_rate * max(0, min(provincial_taxable_income, newfoundland_and_labrador_income_tax_bracket_7_threshold) - newfoundland_and_labrador_income_tax_bracket_6_threshold))
+          + (newfoundland_and_labrador_income_tax_bracket_7_rate * max(0, min(provincial_taxable_income, newfoundland_and_labrador_income_tax_bracket_8_threshold) - newfoundland_and_labrador_income_tax_bracket_7_threshold))
+          + (newfoundland_and_labrador_income_tax_bracket_8_rate * max(0, provincial_taxable_income - newfoundland_and_labrador_income_tax_bracket_8_threshold))
+
+  - name: northwest_territories_income_tax_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Northwest Territories tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
+
+  - name: northwest_territories_income_tax_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Northwest Territories tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.059
+
+  - name: northwest_territories_income_tax_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Northwest Territories tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          53003
+
+  - name: northwest_territories_income_tax_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Northwest Territories tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.086
+
+  - name: northwest_territories_income_tax_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Northwest Territories tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          106009
+
+  - name: northwest_territories_income_tax_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Northwest Territories tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.122
+
+  - name: northwest_territories_income_tax_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Northwest Territories tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          172346
+
+  - name: northwest_territories_income_tax_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Northwest Territories tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.1405
+
+  - name: northwest_territories_bracket_tax_before_credits
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2026 Northwest Territories tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          (northwest_territories_income_tax_bracket_1_rate * min(provincial_taxable_income, northwest_territories_income_tax_bracket_2_threshold))
+          + (northwest_territories_income_tax_bracket_2_rate * max(0, min(provincial_taxable_income, northwest_territories_income_tax_bracket_3_threshold) - northwest_territories_income_tax_bracket_2_threshold))
+          + (northwest_territories_income_tax_bracket_3_rate * max(0, min(provincial_taxable_income, northwest_territories_income_tax_bracket_4_threshold) - northwest_territories_income_tax_bracket_3_threshold))
+          + (northwest_territories_income_tax_bracket_4_rate * max(0, provincial_taxable_income - northwest_territories_income_tax_bracket_4_threshold))
+
+  - name: nova_scotia_income_tax_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Nova Scotia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
+
+  - name: nova_scotia_income_tax_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Nova Scotia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.0879
+
+  - name: nova_scotia_income_tax_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Nova Scotia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          30995
+
+  - name: nova_scotia_income_tax_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Nova Scotia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.1495
+
+  - name: nova_scotia_income_tax_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Nova Scotia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          61991
+
+  - name: nova_scotia_income_tax_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Nova Scotia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.1667
+
+  - name: nova_scotia_income_tax_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Nova Scotia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          97417
+
+  - name: nova_scotia_income_tax_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Nova Scotia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.175
+
+  - name: nova_scotia_income_tax_bracket_5_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Nova Scotia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          157124
+
+  - name: nova_scotia_income_tax_bracket_5_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Nova Scotia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.21
+
+  - name: nova_scotia_bracket_tax_before_credits
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2026 Nova Scotia tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          (nova_scotia_income_tax_bracket_1_rate * min(provincial_taxable_income, nova_scotia_income_tax_bracket_2_threshold))
+          + (nova_scotia_income_tax_bracket_2_rate * max(0, min(provincial_taxable_income, nova_scotia_income_tax_bracket_3_threshold) - nova_scotia_income_tax_bracket_2_threshold))
+          + (nova_scotia_income_tax_bracket_3_rate * max(0, min(provincial_taxable_income, nova_scotia_income_tax_bracket_4_threshold) - nova_scotia_income_tax_bracket_3_threshold))
+          + (nova_scotia_income_tax_bracket_4_rate * max(0, min(provincial_taxable_income, nova_scotia_income_tax_bracket_5_threshold) - nova_scotia_income_tax_bracket_4_threshold))
+          + (nova_scotia_income_tax_bracket_5_rate * max(0, provincial_taxable_income - nova_scotia_income_tax_bracket_5_threshold))
+
+  - name: nunavut_income_tax_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Nunavut tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
+
+  - name: nunavut_income_tax_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Nunavut tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.04
+
+  - name: nunavut_income_tax_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Nunavut tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          55801
+
+  - name: nunavut_income_tax_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Nunavut tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.07
+
+  - name: nunavut_income_tax_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Nunavut tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          111602
+
+  - name: nunavut_income_tax_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Nunavut tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.09
+
+  - name: nunavut_income_tax_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Nunavut tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          181439
+
+  - name: nunavut_income_tax_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Nunavut tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.115
+
+  - name: nunavut_bracket_tax_before_credits
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2026 Nunavut tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          (nunavut_income_tax_bracket_1_rate * min(provincial_taxable_income, nunavut_income_tax_bracket_2_threshold))
+          + (nunavut_income_tax_bracket_2_rate * max(0, min(provincial_taxable_income, nunavut_income_tax_bracket_3_threshold) - nunavut_income_tax_bracket_2_threshold))
+          + (nunavut_income_tax_bracket_3_rate * max(0, min(provincial_taxable_income, nunavut_income_tax_bracket_4_threshold) - nunavut_income_tax_bracket_3_threshold))
+          + (nunavut_income_tax_bracket_4_rate * max(0, provincial_taxable_income - nunavut_income_tax_bracket_4_threshold))
+
+  - name: ontario_income_tax_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Ontario tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
+
+  - name: ontario_income_tax_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Ontario tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.0505
+
+  - name: ontario_income_tax_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Ontario tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          53891
+
+  - name: ontario_income_tax_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Ontario tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.0915
+
+  - name: ontario_income_tax_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Ontario tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          107785
+
+  - name: ontario_income_tax_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Ontario tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.1116
+
+  - name: ontario_income_tax_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Ontario tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          150000
+
+  - name: ontario_income_tax_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Ontario tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.1216
+
+  - name: ontario_income_tax_bracket_5_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Ontario tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          220000
+
+  - name: ontario_income_tax_bracket_5_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Ontario tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.1316
+
+  - name: ontario_bracket_tax_before_credits
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2026 Ontario tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          (ontario_income_tax_bracket_1_rate * min(provincial_taxable_income, ontario_income_tax_bracket_2_threshold))
+          + (ontario_income_tax_bracket_2_rate * max(0, min(provincial_taxable_income, ontario_income_tax_bracket_3_threshold) - ontario_income_tax_bracket_2_threshold))
+          + (ontario_income_tax_bracket_3_rate * max(0, min(provincial_taxable_income, ontario_income_tax_bracket_4_threshold) - ontario_income_tax_bracket_3_threshold))
+          + (ontario_income_tax_bracket_4_rate * max(0, min(provincial_taxable_income, ontario_income_tax_bracket_5_threshold) - ontario_income_tax_bracket_4_threshold))
+          + (ontario_income_tax_bracket_5_rate * max(0, provincial_taxable_income - ontario_income_tax_bracket_5_threshold))
+
+  - name: prince_edward_island_income_tax_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Prince Edward Island tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
+
+  - name: prince_edward_island_income_tax_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Prince Edward Island tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.095
+
+  - name: prince_edward_island_income_tax_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Prince Edward Island tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          33928
+
+  - name: prince_edward_island_income_tax_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Prince Edward Island tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.1347
+
+  - name: prince_edward_island_income_tax_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Prince Edward Island tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          65820
+
+  - name: prince_edward_island_income_tax_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Prince Edward Island tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.166
+
+  - name: prince_edward_island_income_tax_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Prince Edward Island tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          106890
+
+  - name: prince_edward_island_income_tax_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Prince Edward Island tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.1762
+
+  - name: prince_edward_island_income_tax_bracket_5_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Prince Edward Island tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          142520
+
+  - name: prince_edward_island_income_tax_bracket_5_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Prince Edward Island tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.19
+
+  - name: prince_edward_island_income_tax_bracket_6_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Prince Edward Island tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          200000
+
+  - name: prince_edward_island_income_tax_bracket_6_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Prince Edward Island tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.20
+
+  - name: prince_edward_island_bracket_tax_before_credits
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2026 Prince Edward Island tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          (prince_edward_island_income_tax_bracket_1_rate * min(provincial_taxable_income, prince_edward_island_income_tax_bracket_2_threshold))
+          + (prince_edward_island_income_tax_bracket_2_rate * max(0, min(provincial_taxable_income, prince_edward_island_income_tax_bracket_3_threshold) - prince_edward_island_income_tax_bracket_2_threshold))
+          + (prince_edward_island_income_tax_bracket_3_rate * max(0, min(provincial_taxable_income, prince_edward_island_income_tax_bracket_4_threshold) - prince_edward_island_income_tax_bracket_3_threshold))
+          + (prince_edward_island_income_tax_bracket_4_rate * max(0, min(provincial_taxable_income, prince_edward_island_income_tax_bracket_5_threshold) - prince_edward_island_income_tax_bracket_4_threshold))
+          + (prince_edward_island_income_tax_bracket_5_rate * max(0, min(provincial_taxable_income, prince_edward_island_income_tax_bracket_6_threshold) - prince_edward_island_income_tax_bracket_5_threshold))
+          + (prince_edward_island_income_tax_bracket_6_rate * max(0, provincial_taxable_income - prince_edward_island_income_tax_bracket_6_threshold))
+
+  - name: quebec_income_tax_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec 2026 income tax rates
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
+
+  - name: quebec_income_tax_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec 2026 income tax rates
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.14
+
+  - name: quebec_income_tax_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec 2026 income tax rates
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          54345
+
+  - name: quebec_income_tax_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec 2026 income tax rates
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.19
+
+  - name: quebec_income_tax_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec 2026 income tax rates
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          108680
+
+  - name: quebec_income_tax_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec 2026 income tax rates
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.24
+
+  - name: quebec_income_tax_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec 2026 income tax rates
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          132245
+
+  - name: quebec_income_tax_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec 2026 income tax rates
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.2575
+
+  - name: quebec_bracket_tax_before_credits
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec 2026 income tax rates
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          (quebec_income_tax_bracket_1_rate * min(provincial_taxable_income, quebec_income_tax_bracket_2_threshold))
+          + (quebec_income_tax_bracket_2_rate * max(0, min(provincial_taxable_income, quebec_income_tax_bracket_3_threshold) - quebec_income_tax_bracket_2_threshold))
+          + (quebec_income_tax_bracket_3_rate * max(0, min(provincial_taxable_income, quebec_income_tax_bracket_4_threshold) - quebec_income_tax_bracket_3_threshold))
+          + (quebec_income_tax_bracket_4_rate * max(0, provincial_taxable_income - quebec_income_tax_bracket_4_threshold))
+
+  - name: saskatchewan_income_tax_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Saskatchewan tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
+
+  - name: saskatchewan_income_tax_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Saskatchewan tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.105
+
+  - name: saskatchewan_income_tax_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Saskatchewan tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          54532
+
+  - name: saskatchewan_income_tax_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Saskatchewan tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.125
+
+  - name: saskatchewan_income_tax_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Saskatchewan tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          155805
+
+  - name: saskatchewan_income_tax_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Saskatchewan tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.145
+
+  - name: saskatchewan_bracket_tax_before_credits
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2026 Saskatchewan tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          (saskatchewan_income_tax_bracket_1_rate * min(provincial_taxable_income, saskatchewan_income_tax_bracket_2_threshold))
+          + (saskatchewan_income_tax_bracket_2_rate * max(0, min(provincial_taxable_income, saskatchewan_income_tax_bracket_3_threshold) - saskatchewan_income_tax_bracket_2_threshold))
+          + (saskatchewan_income_tax_bracket_3_rate * max(0, provincial_taxable_income - saskatchewan_income_tax_bracket_3_threshold))
+
+  - name: yukon_income_tax_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Yukon tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
+
+  - name: yukon_income_tax_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Yukon tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.064
+
+  - name: yukon_income_tax_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Yukon tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          58523
+
+  - name: yukon_income_tax_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Yukon tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.09
+
+  - name: yukon_income_tax_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Yukon tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          117045
+
+  - name: yukon_income_tax_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Yukon tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.109
+
+  - name: yukon_income_tax_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Yukon tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          181440
+
+  - name: yukon_income_tax_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Yukon tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.128
+
+  - name: yukon_income_tax_bracket_5_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 Yukon tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          500000
+
+  - name: yukon_income_tax_bracket_5_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 Yukon tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.15
+
+  - name: yukon_bracket_tax_before_credits
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2026 Yukon tax rates and income brackets
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          (yukon_income_tax_bracket_1_rate * min(provincial_taxable_income, yukon_income_tax_bracket_2_threshold))
+          + (yukon_income_tax_bracket_2_rate * max(0, min(provincial_taxable_income, yukon_income_tax_bracket_3_threshold) - yukon_income_tax_bracket_2_threshold))
+          + (yukon_income_tax_bracket_3_rate * max(0, min(provincial_taxable_income, yukon_income_tax_bracket_4_threshold) - yukon_income_tax_bracket_3_threshold))
+          + (yukon_income_tax_bracket_4_rate * max(0, min(provincial_taxable_income, yukon_income_tax_bracket_5_threshold) - yukon_income_tax_bracket_4_threshold))
+          + (yukon_income_tax_bracket_5_rate * max(0, provincial_taxable_income - yukon_income_tax_bracket_5_threshold))

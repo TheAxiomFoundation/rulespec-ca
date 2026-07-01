@@ -1,0 +1,64 @@
+- name: first_bracket_amounts_at_50000
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#input.taxable_income: 50000
+  output:
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#provincial_taxable_income: 50000
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#alberta_bracket_tax_before_credits: 4000
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#british_columbia_bracket_tax_before_credits: 2800
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#northwest_territories_bracket_tax_before_credits: 2950
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#nunavut_bracket_tax_before_credits: 2000
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#ontario_bracket_tax_before_credits: 2525
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#quebec_bracket_tax_before_credits: 7000
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#saskatchewan_bracket_tax_before_credits: 5250
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#yukon_bracket_tax_before_credits: 3200
+
+- name: cross_bracket_amounts_at_100000
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#input.taxable_income: 100000
+  output:
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#alberta_bracket_tax_before_credits: 8776
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#british_columbia_bracket_tax_before_credits: 6642.377
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#manitoba_bracket_tax_before_credits: 11822.502
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#new_brunswick_bracket_tax_before_credits: 11592.682
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#newfoundland_and_labrador_bracket_tax_before_credits: 12047.074
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#northwest_territories_bracket_tax_before_credits: 7168.919
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#nova_scotia_bracket_tax_before_credits: 13715.9017
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#nunavut_bracket_tax_before_credits: 5325.97
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#ontario_bracket_tax_before_credits: 6940.469
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#prince_edward_island_bracket_tax_before_credits: 13192.8924
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#quebec_bracket_tax_before_credits: 16282.75
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#saskatchewan_bracket_tax_before_credits: 11409.36
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#yukon_bracket_tax_before_credits: 7478.402
+
+- name: high_income_amounts
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#input.taxable_income: 300000
+  output:
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#alberta_bracket_tax_before_credits: 33371.58
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#british_columbia_bracket_tax_before_credits: 38343.8608
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#newfoundland_and_labrador_bracket_tax_before_credits: 48136.524
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#ontario_bracket_tax_before_credits: 31403.9905
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#quebec_bracket_tax_before_credits: 66784.4625
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#yukon_bracket_tax_before_credits: 31207.187
+
+- name: newfoundland_labrador_highest_bracket
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#input.taxable_income: 1200000
+  output:
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#newfoundland_and_labrador_bracket_tax_before_credits: 238776.959

@@ -1,0 +1,19 @@
+source:
+  jurisdiction: canada
+  agency: Canada Revenue Agency
+  citation_path: canada/policy/cra/tax-rates-2026/provincial-territorial-income-tax
+  title: CRA 2026 provincial and territorial income tax rates
+  effective_from: '2026-01-01'
+  documents:
+    - title: Current year tax rates and income brackets, 2026
+      url: https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/current-year.html
+    - title: Revenu Quebec income tax rates for 2026
+      url: https://www.revenuquebec.ca/en/citizens/income-tax-return/completing-your-income-tax-return/income-tax-rates/
+  coverage:
+    encoded:
+      - 2026 provincial and territorial marginal taxable-income brackets before credits
+      - Quebec 2026 marginal taxable-income brackets before credits
+    not_encoded:
+      - province-specific surtaxes
+      - province-specific tax reductions and credits
+      - provincial payroll-formula claim-code constants
