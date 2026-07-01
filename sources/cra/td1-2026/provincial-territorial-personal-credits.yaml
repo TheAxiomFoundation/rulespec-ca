@@ -1,0 +1,40 @@
+source:
+  id: cra-2026-provincial-territorial-td1-personal-credits
+  citation_path: canada/policy/cra/td1-2026/provincial-territorial-personal-credits
+  title: CRA 2026 provincial and territorial TD1 personal credit amounts
+  documents:
+    - title: TD1AB 2026 Alberta Personal Tax Credits Return
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/td1ab/td1ab-26e.pdf
+    - title: TD1BC 2026 British Columbia Personal Tax Credits Return
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/td1bc/td1bc-26e.pdf
+    - title: TD1MB 2026 Manitoba Personal Tax Credits Return
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/td1mb/td1mb-26e.pdf
+    - title: TD1NB 2026 New Brunswick Personal Tax Credits Return
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/td1nb/td1nb-26e.pdf
+    - title: TD1NL 2026 Newfoundland and Labrador Personal Tax Credits Return
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/td1nl/td1nl-26e.pdf
+    - title: TD1NS 2026 Nova Scotia Personal Tax Credits Return
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/td1ns/td1ns-26e.pdf
+    - title: TD1NT 2026 Northwest Territories Personal Tax Credits Return
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/td1nt/td1nt-26e.pdf
+    - title: TD1NU 2026 Nunavut Personal Tax Credits Return
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/td1nu/td1nu-26e.pdf
+    - title: TD1ON 2026 Ontario Personal Tax Credits Return
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/td1on/td1on-26e.pdf
+    - title: TD1PE 2026 Prince Edward Island Personal Tax Credits Return
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/td1pe/td1pe-26e.pdf
+    - title: TD1SK 2026 Saskatchewan Personal Tax Credits Return
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/td1sk/td1sk-26e.pdf
+    - title: TD1YT 2026 Yukon Personal Tax Credits Return
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/td1yt/td1yt-26e.pdf
+  coverage:
+    encoded:
+      - 2026 provincial and territorial TD1 basic personal amounts for all CRA-administered jurisdictions except Quebec
+      - 2026 provincial and territorial TD1 age amount maximums and income ranges
+      - 2026 provincial and territorial TD1 pension income amount caps
+      - 2026 provincial and territorial TD1 disability amounts
+    not_encoded:
+      - Quebec TP-1015.3 source deduction personal amounts
+      - Provincial and territorial TD1 worksheet partial formulas beyond the published age amount thresholds
+      - Province-specific spouse, dependant, caregiver, family tax benefit, tuition, education, and transfer worksheet formulas
+      - Fact predicates for age, pension income, disability certification, student status, relationship, support, residency, or dependant status
