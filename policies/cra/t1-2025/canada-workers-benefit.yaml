@@ -1,0 +1,397 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Schedule 6 for the 2025 T1 return calculates the Canada Workers
+    Benefit, a refundable personal income tax credit claimed on line
+    45300, and the advanced Canada Workers Benefit amount on line 41500.
+    This module encodes the non-Alberta/Quebec/Nunavut Schedule 6 basic
+    amount, disability supplement, secondary-earner exemption, final CWB
+    amount, and ACWB repayment/offset surface.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/canada-workers-benefit
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act/122.7
+      rationale: |-
+        The Canada Workers Benefit is authorized by the Income Tax Act,
+        and CRA Schedule 6 is the official return calculation worksheet
+        for the 2025 T1 return filed in 2026. This module encodes the
+        published Schedule 6 parameter/formula surface for the current
+        available filing package.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s6/5000-s6-25e.pdf
+rules:
+  - name: cwb_basic_working_income_exclusion
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 6 2025 line 3 excludes the first $3,000 of working income for the basic CWB calculation
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          3000
+
+  - name: cwb_basic_phase_in_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 6 2025 line 5 uses 27% for the basic CWB phase-in calculation
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.27
+
+  - name: cwb_basic_single_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 6 2025 line 7 maximum basic CWB for no eligible spouse and no eligible dependant, $1,633
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          1633
+
+  - name: cwb_basic_family_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 6 2025 line 7 maximum basic CWB with an eligible spouse or eligible dependant, $2,813
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          2813
+
+  - name: cwb_basic_single_reduction_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 6 2025 line 9 threshold with no eligible spouse and no eligible dependant, $26,855
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          26855
+
+  - name: cwb_basic_family_reduction_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 6 2025 line 9 threshold with an eligible spouse or eligible dependant, $30,639
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          30639
+
+  - name: cwb_basic_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 6 2025 line 11 uses 15% for the basic CWB reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.15
+
+  - name: cwb_disability_working_income_exclusion
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 6 2025 line 22 excludes the first $1,150 of working income for the disability supplement phase-in
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          1150
+
+  - name: cwb_disability_phase_in_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 6 2025 line 24 uses 27% for the disability supplement phase-in
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.27
+
+  - name: cwb_disability_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 6 2025 line 26 maximum disability supplement, $843
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          843
+
+  - name: cwb_disability_single_or_one_disabled_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 6 2025 line 33 threshold when there is no eligible spouse or the eligible spouse is not also eligible for the disability tax credit, $37,740
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          37740
+
+  - name: cwb_disability_two_disabled_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 6 2025 line 33 threshold when the eligible spouse is also eligible for the disability tax credit, $49,389
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          49389
+
+  - name: cwb_disability_one_disabled_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 6 2025 line 38 reduction rate of 15% when there is no eligible spouse also eligible for the disability tax credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.15
+
+  - name: cwb_disability_two_disabled_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 6 2025 line 38 reduction rate of 7.5% when the eligible spouse is also eligible for the disability tax credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.075
+
+  - name: cwb_secondary_earner_exemption_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 6 2025 Step 2, maximum secondary-earner exemption, $16,386
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          16386
+
+  - name: cwb_claimant_working_income
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 line 1 uses working income, including working income of an eligible spouse if applicable
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, claimant_working_income)
+
+  - name: cwb_spouse_working_income
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 line 1 includes working income of an eligible spouse if applicable
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, spouse_working_income)
+
+  - name: cwb_family_working_income
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 line 1 total working income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          cwb_claimant_working_income + cwb_spouse_working_income
+
+  - name: cwb_adjusted_family_net_income_before_secondary_earner_exemption
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 line 8 adjusted family net income before the secondary-earner exemption
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, adjusted_family_net_income)
+
+  - name: cwb_secondary_earner_exemption
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 Step 2 secondary-earner exemption calculation
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if has_eligible_spouse:
+            min(
+              cwb_secondary_earner_exemption_maximum,
+              if cwb_claimant_working_income < cwb_spouse_working_income:
+                min(cwb_claimant_working_income, max(0, claimant_adjusted_net_income))
+              else:
+                min(cwb_spouse_working_income, max(0, spouse_adjusted_net_income))
+            )
+          else:
+            0
+
+  - name: cwb_adjusted_family_net_income
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 line 8 minus Step 2 secondary-earner exemption
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, cwb_adjusted_family_net_income_before_secondary_earner_exemption - cwb_secondary_earner_exemption)
+
+  - name: cwb_basic_maximum_for_family_type
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 line 7 maximum basic CWB by eligible-spouse/dependant status
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if has_eligible_spouse_or_eligible_dependant:
+            cwb_basic_family_maximum
+          else:
+            cwb_basic_single_maximum
+
+  - name: cwb_basic_reduction_threshold_for_family_type
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 line 9 threshold by eligible-spouse/dependant status
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if has_eligible_spouse_or_eligible_dependant:
+            cwb_basic_family_reduction_threshold
+          else:
+            cwb_basic_single_reduction_threshold
+
+  - name: cwb_basic_amount_before_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 lines 2 to 7 basic CWB before income reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            cwb_basic_maximum_for_family_type,
+            cwb_basic_phase_in_rate * max(0, cwb_family_working_income - cwb_basic_working_income_exclusion)
+          )
+
+  - name: cwb_basic_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 lines 9 to 12 basic CWB reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          cwb_basic_reduction_rate * max(0, cwb_adjusted_family_net_income - cwb_basic_reduction_threshold_for_family_type)
+
+  - name: cwb_basic_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 line 13 basic CWB after reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, cwb_basic_amount_before_reduction - cwb_basic_reduction)
+
+  - name: cwb_claimant_disability_amount_before_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 lines 21 to 26 disability supplement before reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if claimant_is_eligible_for_disability_tax_credit:
+            min(
+              cwb_disability_maximum,
+              cwb_disability_phase_in_rate * max(0, cwb_claimant_working_income - cwb_disability_working_income_exclusion)
+            )
+          else:
+            0
+
+  - name: cwb_disability_reduction_threshold
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 line 33 threshold for the disability supplement
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if has_eligible_spouse and spouse_is_eligible_for_disability_tax_credit:
+            cwb_disability_two_disabled_threshold
+          else:
+            cwb_disability_single_or_one_disabled_threshold
+
+  - name: cwb_disability_reduction_rate
+    kind: derived
+    entity: Family
+    dtype: Rate
+    period: Year
+    source: CRA Schedule 6 2025 line 38 disability supplement reduction rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if has_eligible_spouse and spouse_is_eligible_for_disability_tax_credit:
+            cwb_disability_two_disabled_reduction_rate
+          else:
+            cwb_disability_one_disabled_reduction_rate
+
+  - name: cwb_claimant_disability_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 lines 33 to 39 disability supplement reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          cwb_disability_reduction_rate * max(0, cwb_adjusted_family_net_income - cwb_disability_reduction_threshold)
+
+  - name: cwb_claimant_disability_supplement
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 line 40 disability supplement after reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, cwb_claimant_disability_amount_before_reduction - cwb_claimant_disability_reduction)
+
+  - name: canada_workers_benefit_line_45300
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 line 43 amount to enter on line 45300 of the return
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          cwb_basic_amount + cwb_claimant_disability_supplement
+
+  - name: advanced_canada_workers_benefit_line_41500
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 line 44 amount to enter on line 41500 for advanced Canada Workers Benefit payments received
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, advanced_canada_workers_benefit_payments_received)
+
+  - name: canada_workers_benefit_refundable_credit_after_acwb
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 line 45300 CWB and line 41500 ACWB payment interaction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, canada_workers_benefit_line_45300 - advanced_canada_workers_benefit_line_41500)
