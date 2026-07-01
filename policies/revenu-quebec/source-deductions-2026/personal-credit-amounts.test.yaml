@@ -1,0 +1,24 @@
+- name: quebec_2026_source_deduction_personal_credit_parameters
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  output:
+    ca:policies/revenu-quebec/source-deductions-2026/personal-credit-amounts#quebec_2026_personal_income_tax_indexation_rate: 0.0205
+    ca:policies/revenu-quebec/source-deductions-2026/personal-credit-amounts#quebec_2026_basic_personal_amount: 18952
+    ca:policies/revenu-quebec/source-deductions-2026/personal-credit-amounts#quebec_2026_spouse_transfer_amount: 18952
+    ca:policies/revenu-quebec/source-deductions-2026/personal-credit-amounts#quebec_2026_other_dependants_amount: 5684
+    ca:policies/revenu-quebec/source-deductions-2026/personal-credit-amounts#quebec_2026_child_under_18_postsecondary_per_term_amount: 3901
+    ca:policies/revenu-quebec/source-deductions-2026/personal-credit-amounts#quebec_2026_living_alone_single_parent_additional_amount: 2681
+    ca:policies/revenu-quebec/source-deductions-2026/personal-credit-amounts#quebec_2026_severe_impairment_amount: 4208
+    ca:policies/revenu-quebec/source-deductions-2026/personal-credit-amounts#quebec_2026_living_alone_amount: 2172
+    ca:policies/revenu-quebec/source-deductions-2026/personal-credit-amounts#quebec_2026_age_amount: 3986
+    ca:policies/revenu-quebec/source-deductions-2026/personal-credit-amounts#quebec_2026_retirement_income_amount: 3541
+    ca:policies/revenu-quebec/source-deductions-2026/personal-credit-amounts#quebec_2026_age_living_alone_retirement_income_reduction_threshold: 42955
+    ca:policies/revenu-quebec/source-deductions-2026/personal-credit-amounts#quebec_2026_career_extension_work_income_exclusion_threshold: 7655
+    ca:policies/revenu-quebec/source-deductions-2026/personal-credit-amounts#quebec_2026_career_extension_maximum_eligible_work_income: 12755
+    ca:policies/revenu-quebec/source-deductions-2026/personal-credit-amounts#quebec_2026_career_extension_reduction_threshold: 57660
+    ca:policies/revenu-quebec/source-deductions-2026/personal-credit-amounts#quebec_2026_gratuities_retroactive_pay_threshold: 18952
+    ca:policies/revenu-quebec/source-deductions-2026/personal-credit-amounts#quebec_2026_worker_deduction_maximum: 1450
+    ca:policies/revenu-quebec/source-deductions-2026/personal-credit-amounts#quebec_2026_emergency_services_volunteer_exemption_maximum: 1450
+    ca:policies/revenu-quebec/source-deductions-2026/personal-credit-amounts#quebec_2026_rdsp_taxable_portion_withholding_threshold: 23160

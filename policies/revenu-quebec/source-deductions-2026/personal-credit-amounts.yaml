@@ -1,0 +1,185 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Québec's principal source-deduction changes for 2026 publish
+    the indexed personal tax credit amounts used on the Source Deductions
+    Return, TP-1015.3-V. This module encodes those Quebec 2026 source
+    deduction personal credit and related withholding parameters.
+  source_verification:
+    corpus_citation_path: canada/policy/revenu-quebec/source-deductions-2026/personal-credit-amounts
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+        - canada/policy/revenu-quebec/source-deductions-2026/personal-credit-amounts
+      rationale: |-
+        Revenu Québec administers Quebec source deductions. Its 2026
+        principal changes page gives the official indexed personal tax
+        credit amounts for TP-1015.3-V and related source-deduction
+        thresholds. This module encodes that administrative parameter
+        table before deeper Quebec statutory expansion.
+    source_urls:
+      - https://www.revenuquebec.ca/en/businesses/source-deductions-and-employer-contributions/employers-principal-changes-for-2026/
+rules:
+  - name: quebec_2026_personal_income_tax_indexation_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Québec principal changes for 2026, personal income tax system indexation rate
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.0205
+
+  - name: quebec_2026_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Québec principal changes for 2026, TP-1015.3 basic personal amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          18952
+
+  - name: quebec_2026_spouse_transfer_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Québec principal changes for 2026, amount transferred from one spouse to the other
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          18952
+
+  - name: quebec_2026_other_dependants_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Québec principal changes for 2026, amount for other dependants
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          5684
+
+  - name: quebec_2026_child_under_18_postsecondary_per_term_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Québec principal changes for 2026, amount for a child under 18 enrolled in post-secondary studies per term
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          3901
+
+  - name: quebec_2026_living_alone_single_parent_additional_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Québec principal changes for 2026, additional amount for a person living alone in a single-parent family
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          2681
+
+  - name: quebec_2026_severe_impairment_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Québec principal changes for 2026, amount for a severe and prolonged impairment in mental or physical functions
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          4208
+
+  - name: quebec_2026_living_alone_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Québec principal changes for 2026, amount for a person living alone
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          2172
+
+  - name: quebec_2026_age_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Québec principal changes for 2026, age amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          3986
+
+  - name: quebec_2026_retirement_income_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Québec principal changes for 2026, amount for retirement income
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          3541
+
+  - name: quebec_2026_age_living_alone_retirement_income_reduction_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Québec principal changes for 2026, reduction threshold for the age amount, amount for a person living alone, and amount for retirement income
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          42955
+
+  - name: quebec_2026_career_extension_work_income_exclusion_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Québec principal changes for 2026, exclusion threshold for eligible work income for the amount for career extension
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          7655
+
+  - name: quebec_2026_career_extension_maximum_eligible_work_income
+    kind: parameter
+    dtype: Money
+    source: Revenu Québec principal changes for 2026, maximum eligible work income for the amount for career extension
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          12755
+
+  - name: quebec_2026_career_extension_reduction_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Québec principal changes for 2026, reduction threshold for the amount for career extension
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          57660
+
+  - name: quebec_2026_gratuities_retroactive_pay_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Québec principal changes for 2026, threshold for determining method for source deduction on gratuities and retroactive pay
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          18952
+
+  - name: quebec_2026_worker_deduction_maximum
+    kind: parameter
+    dtype: Money
+    source: Revenu Québec principal changes for 2026, maximum deduction for workers
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          1450
+
+  - name: quebec_2026_emergency_services_volunteer_exemption_maximum
+    kind: parameter
+    dtype: Money
+    source: Revenu Québec principal changes for 2026, maximum exemption for emergency services volunteers
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          1450
+
+  - name: quebec_2026_rdsp_taxable_portion_withholding_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Québec principal changes for 2026, taxable RDSP disability assistance payment withholding threshold
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          23160
+
