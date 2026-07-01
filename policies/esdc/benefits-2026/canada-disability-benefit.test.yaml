@@ -1,0 +1,96 @@
+- name: single_beneficiary_full_indexed_2026_amount
+  period:
+    period_kind: tax_year
+    start: '2026-07-01'
+    end: '2027-06-30'
+  input:
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.adjusted_family_net_income: 20000
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.beneficiary_working_income: 0
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.spouse_or_common_law_partner_working_income: 0
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.has_cohabiting_spouse_or_common_law_partner: false
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.spouse_or_common_law_partner_is_canada_disability_benefit_beneficiary: false
+  output:
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_indexing_factor_2026: 1.021
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_maximum_annual_amount: 2450.4
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_adjusted_family_net_income: 20000
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_working_income: 0
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_has_cohabiting_spouse_or_partner: not_holds
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_spouse_or_partner_is_beneficiary: not_holds
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_income_threshold: 23483
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_working_income_exemption: 10210
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_income_after_working_exemption: 20000
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_reduction_rate: 0.20
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_annual_reduction: 0
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_annual_amount: 2450.4
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_monthly_amount: 204.2
+
+- name: single_beneficiary_reduced_by_income_after_work_exemption
+  period:
+    period_kind: tax_year
+    start: '2026-07-01'
+    end: '2027-06-30'
+  input:
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.adjusted_family_net_income: 40000
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.beneficiary_working_income: 12000
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.spouse_or_common_law_partner_working_income: 0
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.has_cohabiting_spouse_or_common_law_partner: false
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.spouse_or_common_law_partner_is_canada_disability_benefit_beneficiary: false
+  output:
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_income_after_working_exemption: 29790
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_annual_reduction: 1261.4
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_annual_amount: 1189
+
+- name: couple_one_beneficiary_full_benefit_under_threshold
+  period:
+    period_kind: tax_year
+    start: '2026-07-01'
+    end: '2027-06-30'
+  input:
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.adjusted_family_net_income: 45000
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.beneficiary_working_income: 0
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.spouse_or_common_law_partner_working_income: 15000
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.has_cohabiting_spouse_or_common_law_partner: true
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.spouse_or_common_law_partner_is_canada_disability_benefit_beneficiary: false
+  output:
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_has_cohabiting_spouse_or_partner: holds
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_spouse_or_partner_is_beneficiary: not_holds
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_income_threshold: 33182.5
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_working_income_exemption: 14294
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_income_after_working_exemption: 30706
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_reduction_rate: 0.20
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_annual_amount: 2450.4
+
+- name: couple_both_beneficiaries_uses_ten_percent_reduction_each
+  period:
+    period_kind: tax_year
+    start: '2026-07-01'
+    end: '2027-06-30'
+  input:
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.adjusted_family_net_income: 50000
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.beneficiary_working_income: 5000
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.spouse_or_common_law_partner_working_income: 0
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.has_cohabiting_spouse_or_common_law_partner: true
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.spouse_or_common_law_partner_is_canada_disability_benefit_beneficiary: true
+  output:
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_has_cohabiting_spouse_or_partner: holds
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_spouse_or_partner_is_beneficiary: holds
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_income_after_working_exemption: 45000
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_reduction_rate: 0.10
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_annual_reduction: 1181.75
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_annual_amount: 1268.65
+
+- name: high_income_floors_benefit_at_zero
+  period:
+    period_kind: tax_year
+    start: '2026-07-01'
+    end: '2027-06-30'
+  input:
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.adjusted_family_net_income: 100000
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.beneficiary_working_income: 0
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.spouse_or_common_law_partner_working_income: 0
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.has_cohabiting_spouse_or_common_law_partner: false
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#input.spouse_or_common_law_partner_is_canada_disability_benefit_beneficiary: false
+  output:
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_annual_reduction: 15303.4
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_annual_amount: 0
+    ca:policies/esdc/benefits-2026/canada-disability-benefit#canada_disability_benefit_monthly_amount: 0
