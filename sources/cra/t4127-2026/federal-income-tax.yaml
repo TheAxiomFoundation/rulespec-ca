@@ -1,0 +1,23 @@
+source:
+  jurisdiction: canada
+  agency: Canada Revenue Agency
+  citation_path: canada/policy/cra/t4127-2026/federal-income-tax
+  title: CRA 2026 federal income tax rates and T4127 payroll formulas
+  effective_from: '2026-01-01'
+  documents:
+    - title: Current year tax rates and income brackets, 2026
+      url: https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/current-year.html
+    - title: T4127 Payroll Deductions Formulas, 122nd Edition, effective January 1, 2026
+      url: https://www.canada.ca/en/revenue-agency/services/forms-publications/payroll/t4127-payroll-deductions-formulas/t4127-jan/t4127-jan-payroll-deductions-formulas-computer-programs.html
+  coverage:
+    encoded:
+      - 2026 federal personal income tax brackets and rates
+      - T4127 federal K constants
+      - federal basic personal amount claim code 1 amount
+      - Canada employment amount
+      - Quebec federal abatement rate
+      - annual federal tax before and after non-refundable credits
+    not_encoded:
+      - provincial and territorial income tax schedules
+      - CPP, QPP, EI, and QPIP contribution formulas
+      - payroll period withholding factors outside the annual federal tax spine

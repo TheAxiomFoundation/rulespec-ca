@@ -1,0 +1,388 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA T4127, 122nd edition, effective January 1, 2026, gives the
+    approved payroll formulas and federal rates for calculating annual
+    basic federal income tax. This module encodes the 2026 federal
+    personal income tax spine: annual taxable income, the federal
+    marginal rate schedule, basic federal tax before credits, the
+    federal basic personal amount default claim amount, non-refundable
+    credits, Quebec abatement, labour-sponsored funds credit, and final
+    annual federal tax payable.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t4127-2026/federal-income-tax
+    source_urls:
+      - https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/current-year.html
+      - https://www.canada.ca/en/revenue-agency/services/forms-publications/payroll/t4127-payroll-deductions-formulas/t4127-jan/t4127-jan-payroll-deductions-formulas-computer-programs.html
+rules:
+  - name: federal_income_tax_first_bracket_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 tax rates and income brackets; T4127 Table 8.1
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
+
+  - name: federal_income_tax_second_bracket_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 tax rates and income brackets; T4127 Table 8.1
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          58523
+
+  - name: federal_income_tax_third_bracket_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 tax rates and income brackets; T4127 Table 8.1
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          117045
+
+  - name: federal_income_tax_fourth_bracket_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 tax rates and income brackets; T4127 Table 8.1
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          181440
+
+  - name: federal_income_tax_fifth_bracket_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2026 tax rates and income brackets; T4127 Table 8.1
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          258482
+
+  - name: federal_income_tax_first_bracket_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 tax rates and income brackets; T4127 Table 8.1
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.14
+
+  - name: federal_income_tax_second_bracket_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 tax rates and income brackets; T4127 Table 8.1
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.205
+
+  - name: federal_income_tax_third_bracket_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 tax rates and income brackets; T4127 Table 8.1
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.26
+
+  - name: federal_income_tax_fourth_bracket_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 tax rates and income brackets; T4127 Table 8.1
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.29
+
+  - name: federal_income_tax_fifth_bracket_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 tax rates and income brackets; T4127 Table 8.1
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.33
+
+  - name: federal_income_tax_second_bracket_constant
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.1, federal K row
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          3804
+
+  - name: federal_income_tax_third_bracket_constant
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.1, federal K row
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          10241
+
+  - name: federal_income_tax_fourth_bracket_constant
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.1, federal K row
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          15685
+
+  - name: federal_income_tax_fifth_bracket_constant
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.1, federal K row
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          26024
+
+  - name: federal_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.9, federal claim code 1 using maximum BPAF
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          16452
+
+  - name: federal_lowest_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Step 2 and Table 8.1
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.14
+
+  - name: federal_canada_employment_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.2, federal CEA amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          1501
+
+  - name: quebec_federal_abatement_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Step 3 and Table 8.2
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.165
+
+  - name: annual_taxable_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 1, annual taxable income factor A
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, taxable_income)
+
+  - name: federal_bracket_tax_before_credits
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2026 federal rates; T4127 Step 2 and Table 8.1
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          (federal_income_tax_first_bracket_rate * min(annual_taxable_income, federal_income_tax_second_bracket_threshold))
+          + (federal_income_tax_second_bracket_rate * max(0, min(annual_taxable_income, federal_income_tax_third_bracket_threshold) - federal_income_tax_second_bracket_threshold))
+          + (federal_income_tax_third_bracket_rate * max(0, min(annual_taxable_income, federal_income_tax_fourth_bracket_threshold) - federal_income_tax_third_bracket_threshold))
+          + (federal_income_tax_fourth_bracket_rate * max(0, min(annual_taxable_income, federal_income_tax_fifth_bracket_threshold) - federal_income_tax_fourth_bracket_threshold))
+          + (federal_income_tax_fifth_bracket_rate * max(0, annual_taxable_income - federal_income_tax_fifth_bracket_threshold))
+
+  - name: federal_bracket_rate_for_annual_income
+    kind: derived
+    entity: Person
+    dtype: Rate
+    period: Year
+    source: CRA T4127 Table 8.1, federal R row
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if annual_taxable_income <= federal_income_tax_second_bracket_threshold:
+            federal_income_tax_first_bracket_rate
+          else:
+            if annual_taxable_income <= federal_income_tax_third_bracket_threshold:
+              federal_income_tax_second_bracket_rate
+            else:
+              if annual_taxable_income <= federal_income_tax_fourth_bracket_threshold:
+                federal_income_tax_third_bracket_rate
+              else:
+                if annual_taxable_income <= federal_income_tax_fifth_bracket_threshold:
+                  federal_income_tax_fourth_bracket_rate
+                else:
+                  federal_income_tax_fifth_bracket_rate
+
+  - name: federal_bracket_constant_for_annual_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Table 8.1, federal K row
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if annual_taxable_income <= federal_income_tax_second_bracket_threshold:
+            0
+          else:
+            if annual_taxable_income <= federal_income_tax_third_bracket_threshold:
+              federal_income_tax_second_bracket_constant
+            else:
+              if annual_taxable_income <= federal_income_tax_fourth_bracket_threshold:
+                federal_income_tax_third_bracket_constant
+              else:
+                if annual_taxable_income <= federal_income_tax_fifth_bracket_threshold:
+                  federal_income_tax_fourth_bracket_constant
+                else:
+                  federal_income_tax_fifth_bracket_constant
+
+  - name: federal_tax_from_t4127_r_minus_k
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 2, T3 = (R x A) - K before credits
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, (federal_bracket_rate_for_annual_income * annual_taxable_income) - federal_bracket_constant_for_annual_income)
+
+  - name: federal_basic_personal_amount_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 2, K1 = 0.14 x TC; Table 8.9 default maximum BPAF claim
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          federal_lowest_tax_rate * federal_basic_personal_amount
+
+  - name: canada_employment_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 2, K4 is lesser of 0.14 x employment income and 0.14 x CEA
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          min(federal_lowest_tax_rate * max(0, employment_income), federal_lowest_tax_rate * federal_canada_employment_amount)
+
+  - name: cpp_ei_and_qpip_federal_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 2, K2/K2Q/K2R/K2RQ federal credits
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, cpp_ei_and_qpip_credit_amount)
+
+  - name: other_federal_non_refundable_tax_credits
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 2, K3 other federal non-refundable tax credits
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, other_non_refundable_credit_amount)
+
+  - name: total_federal_non_refundable_tax_credits
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 2, K1, K2/K2Q, K3, and K4 credits
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          federal_basic_personal_amount_credit
+          + cpp_ei_and_qpip_federal_credit
+          + other_federal_non_refundable_tax_credits
+          + canada_employment_credit
+
+  - name: annual_basic_federal_tax
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 2, annual basic federal tax T3 floored at zero
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, federal_bracket_tax_before_credits - total_federal_non_refundable_tax_credits)
+
+  - name: annual_basic_federal_tax_using_t4127_constant_method
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 2, T3 = (R x A) - K - K1 - K2 - K3 - K4 floored at zero
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, federal_tax_from_t4127_r_minus_k - total_federal_non_refundable_tax_credits)
+
+  - name: labour_sponsored_funds_credit_reduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 3, T1 subtracts P x LCF
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, labour_sponsored_funds_tax_credit)
+
+  - name: federal_income_tax_before_quebec_abatement
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 3, annual federal tax before Quebec abatement
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, annual_basic_federal_tax - labour_sponsored_funds_credit_reduction)
+
+  - name: quebec_federal_abatement
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 3, Quebec federal abatement is 0.165 x T3
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if resident_of_quebec:
+            quebec_federal_abatement_rate * annual_basic_federal_tax
+          else:
+            0
+
+  - name: annual_federal_income_tax
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 3, annual federal tax payable T1 floored at zero
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, federal_income_tax_before_quebec_abatement - quebec_federal_abatement)

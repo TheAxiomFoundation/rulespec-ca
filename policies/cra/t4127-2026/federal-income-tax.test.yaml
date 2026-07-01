@@ -1,0 +1,88 @@
+- name: first_bracket_with_default_bpa_and_employment_credit
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    ca:policies/cra/t4127-2026/federal-income-tax#input.taxable_income: 50000
+    ca:policies/cra/t4127-2026/federal-income-tax#input.employment_income: 20000
+    ca:policies/cra/t4127-2026/federal-income-tax#input.cpp_ei_and_qpip_credit_amount: 500
+    ca:policies/cra/t4127-2026/federal-income-tax#input.other_non_refundable_credit_amount: 100
+    ca:policies/cra/t4127-2026/federal-income-tax#input.labour_sponsored_funds_tax_credit: 50
+    ca:policies/cra/t4127-2026/federal-income-tax#input.resident_of_quebec: false
+  output:
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_income_tax_first_bracket_threshold: 0
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_income_tax_second_bracket_threshold: 58523
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_income_tax_third_bracket_threshold: 117045
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_income_tax_fourth_bracket_threshold: 181440
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_income_tax_fifth_bracket_threshold: 258482
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_income_tax_first_bracket_rate: 0.14
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_income_tax_second_bracket_rate: 0.205
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_income_tax_third_bracket_rate: 0.26
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_income_tax_fourth_bracket_rate: 0.29
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_income_tax_fifth_bracket_rate: 0.33
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_income_tax_second_bracket_constant: 3804
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_income_tax_third_bracket_constant: 10241
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_income_tax_fourth_bracket_constant: 15685
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_income_tax_fifth_bracket_constant: 26024
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_basic_personal_amount: 16452
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_lowest_tax_rate: 0.14
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_canada_employment_amount: 1501
+    ca:policies/cra/t4127-2026/federal-income-tax#quebec_federal_abatement_rate: 0.165
+    ca:policies/cra/t4127-2026/federal-income-tax#annual_taxable_income: 50000
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_bracket_tax_before_credits: 7000
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_bracket_rate_for_annual_income: 0.14
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_bracket_constant_for_annual_income: 0
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_tax_from_t4127_r_minus_k: 7000
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_basic_personal_amount_credit: 2303.28
+    ca:policies/cra/t4127-2026/federal-income-tax#canada_employment_credit: 210.14
+    ca:policies/cra/t4127-2026/federal-income-tax#cpp_ei_and_qpip_federal_credit: 500
+    ca:policies/cra/t4127-2026/federal-income-tax#other_federal_non_refundable_tax_credits: 100
+    ca:policies/cra/t4127-2026/federal-income-tax#total_federal_non_refundable_tax_credits: 3113.42
+    ca:policies/cra/t4127-2026/federal-income-tax#annual_basic_federal_tax: 3886.58
+    ca:policies/cra/t4127-2026/federal-income-tax#annual_basic_federal_tax_using_t4127_constant_method: 3886.58
+    ca:policies/cra/t4127-2026/federal-income-tax#labour_sponsored_funds_credit_reduction: 50
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_income_tax_before_quebec_abatement: 3836.58
+    ca:policies/cra/t4127-2026/federal-income-tax#quebec_federal_abatement: 0
+    ca:policies/cra/t4127-2026/federal-income-tax#annual_federal_income_tax: 3836.58
+
+- name: quebec_resident_gets_federal_abatement
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    ca:policies/cra/t4127-2026/federal-income-tax#input.taxable_income: 50000
+    ca:policies/cra/t4127-2026/federal-income-tax#input.employment_income: 0
+    ca:policies/cra/t4127-2026/federal-income-tax#input.cpp_ei_and_qpip_credit_amount: 0
+    ca:policies/cra/t4127-2026/federal-income-tax#input.other_non_refundable_credit_amount: 0
+    ca:policies/cra/t4127-2026/federal-income-tax#input.labour_sponsored_funds_tax_credit: 0
+    ca:policies/cra/t4127-2026/federal-income-tax#input.resident_of_quebec: true
+  output:
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_bracket_tax_before_credits: 7000
+    ca:policies/cra/t4127-2026/federal-income-tax#total_federal_non_refundable_tax_credits: 2303.28
+    ca:policies/cra/t4127-2026/federal-income-tax#annual_basic_federal_tax: 4696.72
+    ca:policies/cra/t4127-2026/federal-income-tax#quebec_federal_abatement: 774.9588
+    ca:policies/cra/t4127-2026/federal-income-tax#annual_federal_income_tax: 3921.7612
+
+- name: top_bracket_schedule
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    ca:policies/cra/t4127-2026/federal-income-tax#input.taxable_income: 300000
+    ca:policies/cra/t4127-2026/federal-income-tax#input.employment_income: 0
+    ca:policies/cra/t4127-2026/federal-income-tax#input.cpp_ei_and_qpip_credit_amount: 0
+    ca:policies/cra/t4127-2026/federal-income-tax#input.other_non_refundable_credit_amount: 0
+    ca:policies/cra/t4127-2026/federal-income-tax#input.labour_sponsored_funds_tax_credit: 0
+    ca:policies/cra/t4127-2026/federal-income-tax#input.resident_of_quebec: false
+  output:
+    ca:policies/cra/t4127-2026/federal-income-tax#annual_taxable_income: 300000
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_bracket_tax_before_credits: 72976.05
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_bracket_rate_for_annual_income: 0.33
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_bracket_constant_for_annual_income: 26024
+    ca:policies/cra/t4127-2026/federal-income-tax#federal_tax_from_t4127_r_minus_k: 72976
+    ca:policies/cra/t4127-2026/federal-income-tax#annual_basic_federal_tax: 70672.77
+    ca:policies/cra/t4127-2026/federal-income-tax#annual_basic_federal_tax_using_t4127_constant_method: 70672.72
+    ca:policies/cra/t4127-2026/federal-income-tax#annual_federal_income_tax: 70672.77

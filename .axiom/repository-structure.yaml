@@ -2,6 +2,10 @@ version: 1
 allowed_root_directories:
   - .axiom
   - .github
+  - policies
+  - regulations
+  - sources
+  - statutes
 allowed_root_files:
   - CLAUDE.md
   - README.md
@@ -14,4 +18,15 @@ path_rules:
       - ".github/**"
     allow_extensions:
       - ".yml"
+      - ".yaml"
+  - patterns:
+      - "policies/**"
+      - "regulations/**"
+      - "statutes/**"
+    allow_extensions:
+      - ".yaml"
+  - patterns:
+      - "sources/**"
+    allow_extensions:
+      - ".json"
       - ".yaml"
