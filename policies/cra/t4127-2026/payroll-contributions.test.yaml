@@ -1,0 +1,35 @@
+- name: contributions_below_maximums
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    ca:policies/cra/t4127-2026/payroll-contributions#input.cpp_pensionable_earnings: 50000
+    ca:policies/cra/t4127-2026/payroll-contributions#input.qpp_pensionable_earnings: 50000
+    ca:policies/cra/t4127-2026/payroll-contributions#input.ei_insurable_earnings: 50000
+    ca:policies/cra/t4127-2026/payroll-contributions#input.qpip_insurable_earnings: 50000
+  output:
+    ca:policies/cra/t4127-2026/payroll-contributions#cpp_employee_contribution: 2766.75
+    ca:policies/cra/t4127-2026/payroll-contributions#qpp_employee_contribution: 2929.5
+    ca:policies/cra/t4127-2026/payroll-contributions#cpp2_employee_contribution: 0
+    ca:policies/cra/t4127-2026/payroll-contributions#ei_employee_premium_outside_quebec: 815
+    ca:policies/cra/t4127-2026/payroll-contributions#ei_employee_premium_quebec: 650
+    ca:policies/cra/t4127-2026/payroll-contributions#qpip_employee_premium: 215
+
+- name: contributions_at_or_above_maximums
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    ca:policies/cra/t4127-2026/payroll-contributions#input.cpp_pensionable_earnings: 100000
+    ca:policies/cra/t4127-2026/payroll-contributions#input.qpp_pensionable_earnings: 100000
+    ca:policies/cra/t4127-2026/payroll-contributions#input.ei_insurable_earnings: 100000
+    ca:policies/cra/t4127-2026/payroll-contributions#input.qpip_insurable_earnings: 120000
+  output:
+    ca:policies/cra/t4127-2026/payroll-contributions#cpp_employee_contribution: 4230.45
+    ca:policies/cra/t4127-2026/payroll-contributions#qpp_employee_contribution: 4479.3
+    ca:policies/cra/t4127-2026/payroll-contributions#cpp2_employee_contribution: 416
+    ca:policies/cra/t4127-2026/payroll-contributions#ei_employee_premium_outside_quebec: 1123.07
+    ca:policies/cra/t4127-2026/payroll-contributions#ei_employee_premium_quebec: 895.7
+    ca:policies/cra/t4127-2026/payroll-contributions#qpip_employee_premium: 442.9

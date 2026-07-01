@@ -1,0 +1,19 @@
+source:
+  jurisdiction: canada
+  agency: Canada Revenue Agency
+  citation_path: canada/policy/cra/t4127-2026/payroll-contributions
+  title: CRA T4127 2026 CPP, QPP, EI, and QPIP contribution rates
+  effective_from: '2026-01-01'
+  documents:
+    - title: T4127 Payroll Deductions Formulas, 122nd Edition, effective January 1, 2026
+      url: https://www.canada.ca/en/revenue-agency/services/forms-publications/payroll/t4127-payroll-deductions-formulas/t4127-jan/t4127-jan-payroll-deductions-formulas-computer-programs.html
+  coverage:
+    encoded:
+      - CPP and QPP YMPE/basic exemption/total employee rates
+      - CPP/QPP second additional contribution parameters
+      - EI employee contribution rates and annual maxima
+      - QPIP employee contribution rate and annual maximum
+    not_encoded:
+      - pay-period proration
+      - province-change annual maximum allocation
+      - commission-only special cases
