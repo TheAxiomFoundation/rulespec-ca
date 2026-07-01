@@ -62,3 +62,87 @@
     ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#input.taxable_income: 1200000
   output:
     ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#newfoundland_and_labrador_bracket_tax_before_credits: 238776.959
+
+- name: t4127_default_provincial_tax_deductions_at_50000
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#input.taxable_income: 50000
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#input.cpp_ei_provincial_credit_amount: 0
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#input.other_provincial_non_refundable_credit_amount: 0
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#input.labour_sponsored_venture_capital_share_amount: 12000
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#input.ontario_tax_reduction_y_amount: 0
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#input.employment_income: 20000
+  output:
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#provincial_cpp_ei_credit: 0
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#other_provincial_non_refundable_tax_credits: 0
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#provincial_labour_sponsored_funds_share_amount: 12000
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#alberta_basic_personal_amount_credit: 1821.52
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#alberta_supplemental_non_refundable_tax_credit: 0
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#alberta_annual_basic_provincial_tax: 2178.48
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#alberta_annual_provincial_tax_deduction: 2178.48
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#british_columbia_basic_personal_amount_credit: 740.096
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#british_columbia_annual_basic_provincial_tax: 2059.904
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#british_columbia_tax_reduction: 0
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#british_columbia_annual_provincial_tax_deduction: 2059.904
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#manitoba_basic_personal_amount_credit: 1704.24
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#manitoba_labour_sponsored_funds_credit: 1800
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#manitoba_annual_basic_provincial_tax: 3743.262
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#manitoba_annual_provincial_tax_deduction: 1943.262
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#new_brunswick_basic_personal_amount_credit: 1284.416
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#new_brunswick_labour_sponsored_funds_credit: 2000
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#new_brunswick_annual_basic_provincial_tax: 3415.584
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#new_brunswick_annual_provincial_tax_deduction: 1415.584
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#newfoundland_and_labrador_basic_personal_amount_credit: 973.356
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#newfoundland_and_labrador_annual_basic_provincial_tax: 3685.32
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#newfoundland_and_labrador_annual_provincial_tax_deduction: 3685.32
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#nova_scotia_basic_personal_amount_credit: 1048.8228
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#nova_scotia_labour_sponsored_funds_credit: 2000
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#nova_scotia_annual_basic_provincial_tax: 4516.8852
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#nova_scotia_annual_provincial_tax_deduction: 2516.8852
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#northwest_territories_basic_personal_amount_credit: 1073.682
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#northwest_territories_annual_basic_territorial_tax: 1876.318
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#northwest_territories_annual_territorial_tax_deduction: 1876.318
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#nunavut_basic_personal_amount_credit: 786.36
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#nunavut_annual_basic_territorial_tax: 1213.64
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#nunavut_annual_territorial_tax_deduction: 1213.64
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#ontario_basic_personal_amount_credit: 655.9445
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#ontario_annual_basic_provincial_tax: 1869.0555
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#ontario_surtax: 0
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#ontario_health_premium: 600
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#ontario_tax_reduction_dependant_amount: 0
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#ontario_tax_reduction: 0
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#ontario_annual_provincial_tax_deduction: 2469.0555
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#prince_edward_island_basic_personal_amount_credit: 1425
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#prince_edward_island_annual_basic_provincial_tax: 3963.0584
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#prince_edward_island_annual_provincial_tax_deduction: 3963.0584
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#saskatchewan_basic_personal_amount_credit: 2140.005
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#saskatchewan_labour_sponsored_funds_credit: 875
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#saskatchewan_annual_basic_provincial_tax: 3109.995
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#saskatchewan_annual_provincial_tax_deduction: 2234.995
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#yukon_basic_personal_amount_credit: 1052.928
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#yukon_employment_amount_base: 20000
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#yukon_employment_amount_credit: 96.064
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#yukon_annual_basic_territorial_tax: 2051.008
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#yukon_annual_territorial_tax_deduction: 2051.008
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#quebec_t4127_annual_provincial_tax_deduction: 0
+
+- name: british_columbia_low_income_reduction_eliminates_tax
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#input.taxable_income: 20000
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#input.cpp_ei_provincial_credit_amount: 0
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#input.other_provincial_non_refundable_credit_amount: 0
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#input.labour_sponsored_venture_capital_share_amount: 0
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#input.ontario_tax_reduction_y_amount: 0
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#input.employment_income: 0
+  output:
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#british_columbia_annual_basic_provincial_tax: 379.904
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#british_columbia_tax_reduction: 379.904
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#british_columbia_annual_provincial_tax_deduction: 0
+    ca:policies/cra/tax-rates-2026/provincial-territorial-income-tax#ontario_health_premium: 0

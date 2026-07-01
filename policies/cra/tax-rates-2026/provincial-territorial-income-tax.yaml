@@ -4,9 +4,13 @@ module:
     CRA's 2026 current-year tax rates page gives provincial and
     territorial taxable-income brackets for the province or territory of
     residence on December 31, 2026. This module encodes the 2026
-    provincial and territorial marginal bracket tax before credits.
-    Quebec is sourced from Revenu Quebec's 2026 income tax rates because
-    the CRA page refers Quebec taxpayers to Revenu Quebec.
+    provincial and territorial marginal bracket tax before credits. It
+    also encodes the CRA T4127 Step 4 and Step 5 annual provincial or
+    territorial tax deduction formulas for the default 2026 TD1
+    personal-amount claim. Quebec is sourced from Revenu Quebec's 2026
+    income tax rates because the CRA page refers Quebec taxpayers to
+    Revenu Quebec, while T4127 sets the payroll factor T2 to zero for
+    Quebec because Revenu Quebec administers Quebec tax withholding.
   source_verification:
     corpus_citation_path: canada/policy/cra/tax-rates-2026/provincial-territorial-income-tax
     upstream_source_check:
@@ -25,6 +29,7 @@ module:
         credits, surtaxes, and reductions.
     source_urls:
       - https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/current-year.html
+      - https://www.canada.ca/en/revenue-agency/services/forms-publications/payroll/t4127-payroll-deductions-formulas/t4127-jan/t4127-jan-payroll-deductions-formulas-computer-programs.html
       - https://www.revenuquebec.ca/en/citizens/income-tax-return/completing-your-income-tax-return/income-tax-rates/
 rules:
   - name: provincial_taxable_income
@@ -1383,3 +1388,1010 @@ rules:
           + (yukon_income_tax_bracket_3_rate * max(0, min(provincial_taxable_income, yukon_income_tax_bracket_4_threshold) - yukon_income_tax_bracket_3_threshold))
           + (yukon_income_tax_bracket_4_rate * max(0, min(provincial_taxable_income, yukon_income_tax_bracket_5_threshold) - yukon_income_tax_bracket_4_threshold))
           + (yukon_income_tax_bracket_5_rate * max(0, provincial_taxable_income - yukon_income_tax_bracket_5_threshold))
+
+  - name: provincial_cpp_ei_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 K2P provincial or territorial CPP/EI credit
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, cpp_ei_provincial_credit_amount)
+
+  - name: other_provincial_non_refundable_tax_credits
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 K3P other provincial or territorial non-refundable tax credits
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, other_provincial_non_refundable_credit_amount)
+
+  - name: provincial_labour_sponsored_funds_share_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 LCP labour-sponsored venture capital share purchase amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, labour_sponsored_venture_capital_share_amount)
+
+  - name: alberta_supplemental_credit_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 4 Alberta K5P threshold, $4,896.00 (4896)
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          4896
+
+  - name: alberta_supplemental_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Step 4 Alberta K5P rate, 0.25
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.25
+
+  - name: british_columbia_tax_reduction_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 British Columbia tax reduction maximum, $575
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          575
+
+  - name: british_columbia_tax_reduction_first_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 British Columbia tax reduction first taxable-income threshold, $25,570
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          25570
+
+  - name: british_columbia_tax_reduction_second_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 British Columbia tax reduction second taxable-income threshold, $41,722
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          41722
+
+  - name: british_columbia_tax_reduction_phaseout_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Step 5 British Columbia tax reduction phaseout rate, 0.0356
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.0356
+
+  - name: manitoba_labour_sponsored_funds_credit_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 Manitoba LCP maximum, $1,800
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          1800
+
+  - name: manitoba_labour_sponsored_funds_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Step 5 Manitoba LCP rate, 0.15
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.15
+
+  - name: new_brunswick_labour_sponsored_funds_credit_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 New Brunswick LCP maximum, $2,000
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          2000
+
+  - name: new_brunswick_labour_sponsored_funds_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Step 5 New Brunswick LCP rate, 0.20
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.20
+
+  - name: nova_scotia_labour_sponsored_funds_credit_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 Nova Scotia LCP maximum, $2,000
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          2000
+
+  - name: nova_scotia_labour_sponsored_funds_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Step 5 Nova Scotia LCP rate, 0.20
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.20
+
+  - name: ontario_surtax_first_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 Ontario surtax first threshold, $5,818
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          5818
+
+  - name: ontario_surtax_second_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 Ontario surtax second threshold, $7,446
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          7446
+
+  - name: ontario_surtax_first_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Step 5 Ontario first surtax rate, 0.20
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.20
+
+  - name: ontario_surtax_second_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Step 5 Ontario second surtax rate, 0.36
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.36
+
+  - name: ontario_health_premium_first_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 Ontario Health Premium first taxable-income threshold, $20,000
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          20000
+
+  - name: ontario_health_premium_second_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 Ontario Health Premium second taxable-income threshold, $36,000
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          36000
+
+  - name: ontario_health_premium_third_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 Ontario Health Premium third taxable-income threshold, $48,000
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          48000
+
+  - name: ontario_health_premium_fourth_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 Ontario Health Premium fourth taxable-income threshold, $72,000
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          72000
+
+  - name: ontario_health_premium_fifth_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 Ontario Health Premium fifth taxable-income threshold, $200,000
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          200000
+
+  - name: ontario_health_premium_first_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 Ontario Health Premium first maximum, $300
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          300
+
+  - name: ontario_health_premium_second_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 Ontario Health Premium second maximum, $450
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          450
+
+  - name: ontario_health_premium_third_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 Ontario Health Premium third maximum, $600
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          600
+
+  - name: ontario_health_premium_fourth_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 Ontario Health Premium fourth maximum, $750
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          750
+
+  - name: ontario_health_premium_fifth_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 Ontario Health Premium fifth maximum, $900
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          900
+
+  - name: ontario_health_premium_six_percent_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Step 5 Ontario Health Premium six percent rate, 0.06
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.06
+
+  - name: ontario_health_premium_twenty_five_percent_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Step 5 Ontario Health Premium twenty-five percent rate, 0.25
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.25
+
+  - name: ontario_tax_reduction_base_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 Ontario tax reduction base amount, $300
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          300
+
+  - name: ontario_tax_reduction_multiplier
+    kind: parameter
+    dtype: Number
+    source: CRA T4127 Step 5 Ontario tax reduction multiplier, 2
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          2
+
+  - name: saskatchewan_labour_sponsored_funds_credit_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Step 5 Saskatchewan LCP maximum, $875
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          875
+
+  - name: saskatchewan_labour_sponsored_funds_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Step 5 Saskatchewan LCP rate, 0.175
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.175
+
+  - name: alberta_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.2, Alberta basic amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          22769
+
+  - name: alberta_basic_personal_amount_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Alberta K1P default TCP
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          alberta_income_tax_bracket_1_rate * alberta_basic_personal_amount
+
+  - name: alberta_supplemental_non_refundable_tax_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Alberta K5P supplemental non-refundable tax credit
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, ((alberta_basic_personal_amount_credit + provincial_cpp_ei_credit) - alberta_supplemental_credit_threshold) * alberta_supplemental_credit_rate)
+
+  - name: alberta_annual_basic_provincial_tax
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Alberta annual basic provincial tax T4
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, alberta_bracket_tax_before_credits - alberta_basic_personal_amount_credit - provincial_cpp_ei_credit - other_provincial_non_refundable_tax_credits - alberta_supplemental_non_refundable_tax_credit)
+
+  - name: alberta_annual_provincial_tax_deduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 Alberta annual provincial tax deduction T2
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          alberta_annual_basic_provincial_tax
+
+  - name: british_columbia_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.2, British Columbia basic amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          13216
+
+  - name: british_columbia_basic_personal_amount_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 British Columbia K1P default TCP
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          british_columbia_income_tax_bracket_1_rate * british_columbia_basic_personal_amount
+
+  - name: british_columbia_annual_basic_provincial_tax
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 British Columbia annual basic provincial tax T4
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, british_columbia_bracket_tax_before_credits - british_columbia_basic_personal_amount_credit - provincial_cpp_ei_credit - other_provincial_non_refundable_tax_credits)
+
+  - name: british_columbia_tax_reduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 British Columbia tax reduction S
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if provincial_taxable_income <= british_columbia_tax_reduction_first_threshold:
+            min(british_columbia_annual_basic_provincial_tax, british_columbia_tax_reduction_maximum)
+          else:
+            if provincial_taxable_income <= british_columbia_tax_reduction_second_threshold:
+              min(british_columbia_annual_basic_provincial_tax, max(0, british_columbia_tax_reduction_maximum - ((provincial_taxable_income - british_columbia_tax_reduction_first_threshold) * british_columbia_tax_reduction_phaseout_rate)))
+            else:
+              0
+
+  - name: british_columbia_annual_provincial_tax_deduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 British Columbia annual provincial tax deduction T2
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, british_columbia_annual_basic_provincial_tax - british_columbia_tax_reduction)
+
+  - name: manitoba_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.12, Manitoba claim code 1 using maximum BPAMB
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          15780
+
+  - name: manitoba_basic_personal_amount_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Manitoba K1P default TCP
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          manitoba_income_tax_bracket_1_rate * manitoba_basic_personal_amount
+
+  - name: manitoba_labour_sponsored_funds_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 Manitoba LCP annual maximum and rate
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          min(manitoba_labour_sponsored_funds_credit_maximum, manitoba_labour_sponsored_funds_credit_rate * provincial_labour_sponsored_funds_share_amount)
+
+  - name: manitoba_annual_basic_provincial_tax
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Manitoba annual basic provincial tax T4
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, manitoba_bracket_tax_before_credits - manitoba_basic_personal_amount_credit - provincial_cpp_ei_credit - other_provincial_non_refundable_tax_credits)
+
+  - name: manitoba_annual_provincial_tax_deduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 Manitoba annual provincial tax deduction T2
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, manitoba_annual_basic_provincial_tax - manitoba_labour_sponsored_funds_credit)
+
+  - name: new_brunswick_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.2, New Brunswick basic amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          13664
+
+  - name: new_brunswick_basic_personal_amount_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 New Brunswick K1P default TCP
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          new_brunswick_income_tax_bracket_1_rate * new_brunswick_basic_personal_amount
+
+  - name: new_brunswick_labour_sponsored_funds_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 New Brunswick LCP annual maximum and rate
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          min(new_brunswick_labour_sponsored_funds_credit_maximum, new_brunswick_labour_sponsored_funds_credit_rate * provincial_labour_sponsored_funds_share_amount)
+
+  - name: new_brunswick_annual_basic_provincial_tax
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 New Brunswick annual basic provincial tax T4
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, new_brunswick_bracket_tax_before_credits - new_brunswick_basic_personal_amount_credit - provincial_cpp_ei_credit - other_provincial_non_refundable_tax_credits)
+
+  - name: new_brunswick_annual_provincial_tax_deduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 New Brunswick annual provincial tax deduction T2
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, new_brunswick_annual_basic_provincial_tax - new_brunswick_labour_sponsored_funds_credit)
+
+  - name: newfoundland_and_labrador_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.2, Newfoundland and Labrador basic amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          11188
+
+  - name: newfoundland_and_labrador_basic_personal_amount_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Newfoundland and Labrador K1P default TCP
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          newfoundland_and_labrador_income_tax_bracket_1_rate * newfoundland_and_labrador_basic_personal_amount
+
+  - name: newfoundland_and_labrador_annual_basic_provincial_tax
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Newfoundland and Labrador annual basic provincial tax T4
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, newfoundland_and_labrador_bracket_tax_before_credits - newfoundland_and_labrador_basic_personal_amount_credit - provincial_cpp_ei_credit - other_provincial_non_refundable_tax_credits)
+
+  - name: newfoundland_and_labrador_annual_provincial_tax_deduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 Newfoundland and Labrador annual provincial tax deduction T2
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          newfoundland_and_labrador_annual_basic_provincial_tax
+
+  - name: nova_scotia_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.2, Nova Scotia basic amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          11932
+
+  - name: nova_scotia_basic_personal_amount_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Nova Scotia K1P default TCP
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          nova_scotia_income_tax_bracket_1_rate * nova_scotia_basic_personal_amount
+
+  - name: nova_scotia_labour_sponsored_funds_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 Nova Scotia LCP annual maximum and rate
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          min(nova_scotia_labour_sponsored_funds_credit_maximum, nova_scotia_labour_sponsored_funds_credit_rate * provincial_labour_sponsored_funds_share_amount)
+
+  - name: nova_scotia_annual_basic_provincial_tax
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Nova Scotia annual basic provincial tax T4
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, nova_scotia_bracket_tax_before_credits - nova_scotia_basic_personal_amount_credit - provincial_cpp_ei_credit - other_provincial_non_refundable_tax_credits)
+
+  - name: nova_scotia_annual_provincial_tax_deduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 Nova Scotia annual provincial tax deduction T2
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, nova_scotia_annual_basic_provincial_tax - nova_scotia_labour_sponsored_funds_credit)
+
+  - name: northwest_territories_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.2, Northwest Territories basic amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          18198
+
+  - name: northwest_territories_basic_personal_amount_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Northwest Territories K1P default TCP
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          northwest_territories_income_tax_bracket_1_rate * northwest_territories_basic_personal_amount
+
+  - name: northwest_territories_annual_basic_territorial_tax
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Northwest Territories annual basic territorial tax T4
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, northwest_territories_bracket_tax_before_credits - northwest_territories_basic_personal_amount_credit - provincial_cpp_ei_credit - other_provincial_non_refundable_tax_credits)
+
+  - name: northwest_territories_annual_territorial_tax_deduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 Northwest Territories annual territorial tax deduction T2
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          northwest_territories_annual_basic_territorial_tax
+
+  - name: nunavut_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.2, Nunavut basic amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          19659
+
+  - name: nunavut_basic_personal_amount_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Nunavut K1P default TCP
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          nunavut_income_tax_bracket_1_rate * nunavut_basic_personal_amount
+
+  - name: nunavut_annual_basic_territorial_tax
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Nunavut annual basic territorial tax T4
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, nunavut_bracket_tax_before_credits - nunavut_basic_personal_amount_credit - provincial_cpp_ei_credit - other_provincial_non_refundable_tax_credits)
+
+  - name: nunavut_annual_territorial_tax_deduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 Nunavut annual territorial tax deduction T2
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          nunavut_annual_basic_territorial_tax
+
+  - name: ontario_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.2, Ontario basic amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          12989
+
+  - name: ontario_basic_personal_amount_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Ontario K1P default TCP
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          ontario_income_tax_bracket_1_rate * ontario_basic_personal_amount
+
+  - name: ontario_annual_basic_provincial_tax
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Ontario annual basic provincial tax T4
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, ontario_bracket_tax_before_credits - ontario_basic_personal_amount_credit - provincial_cpp_ei_credit - other_provincial_non_refundable_tax_credits)
+
+  - name: ontario_surtax
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 Ontario surtax V1
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if ontario_annual_basic_provincial_tax <= ontario_surtax_first_threshold:
+            0
+          else:
+            if ontario_annual_basic_provincial_tax <= ontario_surtax_second_threshold:
+              ontario_surtax_first_rate * (ontario_annual_basic_provincial_tax - ontario_surtax_first_threshold)
+            else:
+              (ontario_surtax_first_rate * (ontario_annual_basic_provincial_tax - ontario_surtax_first_threshold)) + (ontario_surtax_second_rate * (ontario_annual_basic_provincial_tax - ontario_surtax_second_threshold))
+
+  - name: ontario_health_premium
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 Ontario Health Premium V2
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if provincial_taxable_income <= ontario_health_premium_first_threshold:
+            0
+          else:
+            if provincial_taxable_income <= ontario_health_premium_second_threshold:
+              min(ontario_health_premium_first_maximum, ontario_health_premium_six_percent_rate * (provincial_taxable_income - ontario_health_premium_first_threshold))
+            else:
+              if provincial_taxable_income <= ontario_health_premium_third_threshold:
+                min(ontario_health_premium_second_maximum, ontario_health_premium_first_maximum + (ontario_health_premium_six_percent_rate * (provincial_taxable_income - ontario_health_premium_second_threshold)))
+              else:
+                if provincial_taxable_income <= ontario_health_premium_fourth_threshold:
+                  min(ontario_health_premium_third_maximum, ontario_health_premium_second_maximum + (ontario_health_premium_twenty_five_percent_rate * (provincial_taxable_income - ontario_health_premium_third_threshold)))
+                else:
+                  if provincial_taxable_income <= ontario_health_premium_fifth_threshold:
+                    min(ontario_health_premium_fourth_maximum, ontario_health_premium_third_maximum + (ontario_health_premium_twenty_five_percent_rate * (provincial_taxable_income - ontario_health_premium_fourth_threshold)))
+                  else:
+                    min(ontario_health_premium_fifth_maximum, ontario_health_premium_fourth_maximum + (ontario_health_premium_twenty_five_percent_rate * (provincial_taxable_income - ontario_health_premium_fifth_threshold)))
+
+  - name: ontario_tax_reduction_dependant_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 Ontario tax reduction Y factor
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, ontario_tax_reduction_y_amount)
+
+  - name: ontario_tax_reduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 Ontario tax reduction S
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, min(ontario_annual_basic_provincial_tax + ontario_surtax, (ontario_tax_reduction_multiplier * (ontario_tax_reduction_base_amount + ontario_tax_reduction_dependant_amount)) - (ontario_annual_basic_provincial_tax + ontario_surtax)))
+
+  - name: ontario_annual_provincial_tax_deduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 Ontario annual provincial tax deduction T2
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, ontario_annual_basic_provincial_tax + ontario_surtax + ontario_health_premium - ontario_tax_reduction)
+
+  - name: prince_edward_island_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.2, Prince Edward Island basic amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          15000
+
+  - name: prince_edward_island_basic_personal_amount_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Prince Edward Island K1P default TCP
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          prince_edward_island_income_tax_bracket_1_rate * prince_edward_island_basic_personal_amount
+
+  - name: prince_edward_island_annual_basic_provincial_tax
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Prince Edward Island annual basic provincial tax T4
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, prince_edward_island_bracket_tax_before_credits - prince_edward_island_basic_personal_amount_credit - provincial_cpp_ei_credit - other_provincial_non_refundable_tax_credits)
+
+  - name: prince_edward_island_annual_provincial_tax_deduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 Prince Edward Island annual provincial tax deduction T2
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          prince_edward_island_annual_basic_provincial_tax
+
+  - name: saskatchewan_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.2, Saskatchewan basic amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          20381
+
+  - name: saskatchewan_basic_personal_amount_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Saskatchewan K1P default TCP
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          saskatchewan_income_tax_bracket_1_rate * saskatchewan_basic_personal_amount
+
+  - name: saskatchewan_labour_sponsored_funds_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 Saskatchewan LCP annual maximum and rate
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          min(saskatchewan_labour_sponsored_funds_credit_maximum, saskatchewan_labour_sponsored_funds_credit_rate * provincial_labour_sponsored_funds_share_amount)
+
+  - name: saskatchewan_annual_basic_provincial_tax
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Saskatchewan annual basic provincial tax T4
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, saskatchewan_bracket_tax_before_credits - saskatchewan_basic_personal_amount_credit - provincial_cpp_ei_credit - other_provincial_non_refundable_tax_credits)
+
+  - name: saskatchewan_annual_provincial_tax_deduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 Saskatchewan annual provincial tax deduction T2
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, saskatchewan_annual_basic_provincial_tax - saskatchewan_labour_sponsored_funds_credit)
+
+  - name: yukon_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.21, Yukon claim code 1 using maximum BPAYT
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          16452
+
+  - name: yukon_canada_employment_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.2, Yukon Canada employment amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          1501
+
+  - name: yukon_basic_personal_amount_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Yukon K1P default TCP
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          yukon_income_tax_bracket_1_rate * yukon_basic_personal_amount
+
+  - name: yukon_employment_amount_base
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 Yukon K4P uses annual gross employment income before deductions
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, employment_income)
+
+  - name: yukon_employment_amount_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 Yukon K4P territorial employment amount credit
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if yukon_income_tax_bracket_1_rate * yukon_employment_amount_base <= yukon_income_tax_bracket_1_rate * yukon_canada_employment_amount:
+            yukon_income_tax_bracket_1_rate * yukon_employment_amount_base
+          else:
+            yukon_income_tax_bracket_1_rate * yukon_canada_employment_amount
+
+  - name: yukon_annual_basic_territorial_tax
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 4 Yukon annual basic territorial tax T4
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, yukon_bracket_tax_before_credits - yukon_basic_personal_amount_credit - provincial_cpp_ei_credit - other_provincial_non_refundable_tax_credits - yukon_employment_amount_credit)
+
+  - name: yukon_annual_territorial_tax_deduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 Yukon annual territorial tax deduction T2
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          yukon_annual_basic_territorial_tax
+
+  - name: quebec_t4127_annual_provincial_tax_deduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Step 5 sets annual provincial or territorial tax deduction T2 to zero for Quebec payroll withholding
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0

@@ -7,13 +7,17 @@ source:
   documents:
     - title: Current year tax rates and income brackets, 2026
       url: https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/current-year.html
+    - title: T4127 Payroll Deductions Formulas, 122nd Edition, effective January 1, 2026
+      url: https://www.canada.ca/en/revenue-agency/services/forms-publications/payroll/t4127-payroll-deductions-formulas/t4127-jan/t4127-jan-payroll-deductions-formulas-computer-programs.html
     - title: Revenu Quebec income tax rates for 2026
       url: https://www.revenuquebec.ca/en/citizens/income-tax-return/completing-your-income-tax-return/income-tax-rates/
   coverage:
     encoded:
       - 2026 provincial and territorial marginal taxable-income brackets before credits
       - Quebec 2026 marginal taxable-income brackets before credits
+      - T4127 Step 4 annual basic provincial or territorial tax using default 2026 TD1 personal amounts
+      - T4127 Step 5 provincial and territorial annual tax deduction adjustments for Alberta, British Columbia, Manitoba, New Brunswick, Nova Scotia, Ontario, Saskatchewan, and Yukon
     not_encoded:
-      - province-specific surtaxes
-      - province-specific tax reductions and credits
-      - provincial payroll-formula claim-code constants
+      - non-default claim codes 2 through 10
+      - employee-transfer K2RP variants
+      - Option 2 cumulative averaging payroll formulas
