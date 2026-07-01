@@ -1,0 +1,406 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA 2026 benefit guidance defines the July 2026 to June 2027
+    Canada child benefit, child disability benefit, and Canada Groceries
+    and Essentials Benefit amounts using 2025 adjusted family net income.
+    The same CRA guidance states that the Canada Carbon Rebate for
+    individuals is closed and that no quarterly payments continue after
+    the April 2025 payment. This module encodes those federal
+    tax-return-administered personal benefit surfaces.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/benefits-2026/federal-family-and-climate-benefits
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+        - canada/statute/canada-child-benefit
+        - canada/statute/canada-disability-benefit-act
+        - canada/statute/greenhouse-gas-pollution-pricing-act
+      rationale: |-
+        CRA publishes the current official benefit amounts and calculation
+        parameters used for tax-return-administered benefits. This module
+        encodes the published 2026 administrative benefit formulas before
+        deeper statutory source expansion.
+    source_urls:
+      - https://www.canada.ca/en/revenue-agency/services/child-family-benefits/canada-child-benefit/how-much.html
+      - https://www.canada.ca/en/revenue-agency/services/child-family-benefits/child-disability-benefit.html
+      - https://www.canada.ca/en/revenue-agency/services/child-family-benefits/canada-groceries-essentials-benefit/how-much/payments-chart.html
+      - https://www.canada.ca/en/revenue-agency/services/child-family-benefits/canada-carbon-rebate.html
+rules:
+  - name: benefit_adjusted_family_net_income
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA benefit guidance uses adjusted family net income from the 2025 tax return for July 2026 to June 2027 payments
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          max(0, adjusted_family_net_income)
+
+  - name: ccb_amount_under_6
+    kind: parameter
+    dtype: Money
+    source: CRA CCB July 2026 to June 2027 maximum amount for each child under 6, $8,157
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          8157
+
+  - name: ccb_amount_6_to_17
+    kind: parameter
+    dtype: Money
+    source: CRA CCB July 2026 to June 2027 maximum amount for each child aged 6 to 17, $6,883
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          6883
+
+  - name: ccb_first_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA CCB July 2026 to June 2027 first AFNI threshold, $38,237
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          38237
+
+  - name: ccb_second_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA CCB July 2026 to June 2027 second AFNI threshold, $82,847
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          82847
+
+  - name: ccb_first_phaseout_rate
+    kind: parameter
+    dtype: Rate
+    indexed_by: ccb_reduction_child_count
+    source: CRA CCB first phaseout rates by number of eligible children
+    versions:
+      - effective_from: '2026-07-01'
+        values:
+          0: 0
+          1: 0.07
+          2: 0.135
+          3: 0.19
+          4: 0.23
+
+  - name: ccb_second_phaseout_fixed_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: ccb_reduction_child_count
+    source: CRA CCB fixed reduction amounts above $82,847 by number of eligible children
+    versions:
+      - effective_from: '2026-07-01'
+        values:
+          0: 0
+          1: 3123
+          2: 6022
+          3: 8476
+          4: 10260
+
+  - name: ccb_second_phaseout_rate
+    kind: parameter
+    dtype: Rate
+    indexed_by: ccb_reduction_child_count
+    source: CRA CCB second phaseout rates above $82,847 by number of eligible children
+    versions:
+      - effective_from: '2026-07-01'
+        values:
+          0: 0
+          1: 0.032
+          2: 0.057
+          3: 0.08
+          4: 0.095
+
+  - name: ccb_reduction_child_count_cap
+    kind: parameter
+    dtype: Integer
+    source: CRA CCB uses the four-or-more-children reduction row for four or more eligible children
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          4
+
+  - name: ccb_reduction_child_count
+    kind: derived
+    entity: Family
+    dtype: Integer
+    period: Year
+    source: CRA CCB uses separate reduction rates for one, two, three, and four or more eligible children
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          min(ccb_reduction_child_count_cap, max(0, ccb_children_under_6_count + ccb_children_6_to_17_count))
+
+  - name: ccb_maximum_annual_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA CCB maximum is the sum of the under-6 and 6-to-17 child amounts
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          (max(0, ccb_children_under_6_count) * ccb_amount_under_6)
+          + (max(0, ccb_children_6_to_17_count) * ccb_amount_6_to_17)
+
+  - name: ccb_annual_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA CCB reduction over $38,237 and over $82,847 by eligible child count
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          if benefit_adjusted_family_net_income <= ccb_first_threshold:
+            0
+          else:
+            if benefit_adjusted_family_net_income <= ccb_second_threshold:
+              ccb_first_phaseout_rate[ccb_reduction_child_count] * (benefit_adjusted_family_net_income - ccb_first_threshold)
+            else:
+              ccb_second_phaseout_fixed_amount[ccb_reduction_child_count] + (ccb_second_phaseout_rate[ccb_reduction_child_count] * (benefit_adjusted_family_net_income - ccb_second_threshold))
+
+  - name: canada_child_benefit_annual_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA CCB annual payment is maximum amount minus the AFNI-based reduction
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          max(0, ccb_maximum_annual_amount - ccb_annual_reduction)
+
+  - name: child_disability_benefit_amount_per_child
+    kind: parameter
+    dtype: Money
+    source: CRA Child Disability Benefit July 2026 to June 2027 maximum, $3,480 for each eligible child
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          3480
+
+  - name: child_disability_benefit_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Child Disability Benefit reduction starts when AFNI is greater than $82,847
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          82847
+
+  - name: child_disability_benefit_one_child_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Child Disability Benefit one eligible child phaseout rate, 3.2%
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          0.032
+
+  - name: child_disability_benefit_multiple_children_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Child Disability Benefit two or more eligible children phaseout rate, 5.7%
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          0.057
+
+  - name: child_disability_benefit_maximum_annual_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Child Disability Benefit maximum is $3,480 for each child eligible for the DTC
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          max(0, child_disability_benefit_eligible_child_count) * child_disability_benefit_amount_per_child
+
+  - name: child_disability_benefit_phaseout_rate
+    kind: derived
+    entity: Family
+    dtype: Rate
+    period: Year
+    source: CRA Child Disability Benefit uses 3.2% for one eligible child and 5.7% for two or more eligible children
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          if child_disability_benefit_eligible_child_count <= 0:
+            0
+          else:
+            if child_disability_benefit_eligible_child_count == 1:
+              child_disability_benefit_one_child_rate
+            else:
+              child_disability_benefit_multiple_children_rate
+
+  - name: child_disability_benefit_annual_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Child Disability Benefit reduction applies above $82,847 AFNI
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          child_disability_benefit_phaseout_rate * max(0, benefit_adjusted_family_net_income - child_disability_benefit_threshold)
+
+  - name: child_disability_benefit_annual_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Child Disability Benefit amount is maximum benefit minus AFNI-based reduction
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          max(0, child_disability_benefit_maximum_annual_amount - child_disability_benefit_annual_reduction)
+
+  - name: cgeb_spouse_or_child_base_amount
+    kind: parameter
+    dtype: Money
+    source: CRA CGEB July 2026 to June 2027 amount under $46,432 for married/common-law households with no children, $890
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          890
+
+  - name: cgeb_child_amount
+    kind: parameter
+    dtype: Money
+    source: CRA CGEB July 2026 to June 2027 child increment, $234 per child up to four or more children
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          234
+
+  - name: cgeb_single_no_child_minimum
+    kind: parameter
+    dtype: Money
+    source: CRA CGEB July 2026 to June 2027 single no-child amount under $11,564, $445
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          445
+
+  - name: cgeb_single_no_child_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA CGEB July 2026 to June 2027 single no-child maximum amount, $679
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          679
+
+  - name: cgeb_single_no_child_income_floor
+    kind: parameter
+    dtype: Money
+    source: CRA CGEB July 2026 to June 2027 single no-child amount starts increasing above $11,564
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          11564
+
+  - name: cgeb_single_no_child_phasein_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA CGEB July 2026 to June 2027 single no-child amount increases by 2% of AFNI above $11,564
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          0.02
+
+  - name: cgeb_reduction_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA CGEB July 2026 to June 2027 reduction threshold, $46,432
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          46432
+
+  - name: cgeb_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA CGEB July 2026 to June 2027 reduction rate shown by payment chart, 5%
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          0.05
+
+  - name: cgeb_child_count_cap
+    kind: parameter
+    dtype: Integer
+    source: CRA CGEB table uses the four-children-or-more row for four or more children
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          4
+
+  - name: cgeb_child_count_for_formula
+    kind: derived
+    entity: Family
+    dtype: Integer
+    period: Year
+    source: CRA CGEB table gives separate amounts for no children, one, two, three, and four children or more
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          min(cgeb_child_count_cap, max(0, cgeb_child_count))
+
+  - name: cgeb_base_annual_amount_before_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA CGEB July 2026 to June 2027 annual table before AFNI reduction
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          if cgeb_has_spouse_or_common_law_partner:
+            cgeb_spouse_or_child_base_amount + (cgeb_child_amount * cgeb_child_count_for_formula)
+          else:
+            if cgeb_child_count_for_formula > 0:
+              cgeb_spouse_or_child_base_amount + (cgeb_child_amount * cgeb_child_count_for_formula)
+            else:
+              min(cgeb_single_no_child_maximum, cgeb_single_no_child_minimum + (cgeb_single_no_child_phasein_rate * max(0, benefit_adjusted_family_net_income - cgeb_single_no_child_income_floor)))
+
+  - name: cgeb_annual_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA CGEB July 2026 to June 2027 table phases out amounts by 5% above $46,432 AFNI
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          cgeb_reduction_rate * max(0, benefit_adjusted_family_net_income - cgeb_reduction_threshold)
+
+  - name: canada_groceries_and_essentials_benefit_annual_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA CGEB annual entitlement from July 2026 to June 2027
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          max(0, cgeb_base_annual_amount_before_reduction - cgeb_annual_reduction)
+
+  - name: canada_carbon_rebate_annual_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA states the Canada Carbon Rebate for individuals is closed and there are no further quarterly payments after April 2025
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
