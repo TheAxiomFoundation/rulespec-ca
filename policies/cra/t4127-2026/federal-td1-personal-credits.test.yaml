@@ -1,0 +1,225 @@
+cases:
+  - name: basic_personal_amount_low_income_only
+    period:
+      period_kind: tax_year
+      start: '2026-01-01'
+      end: '2026-12-31'
+    input:
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.net_income: 40000
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.infirm_children_under_18_count: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.is_age_65_or_older_at_end_of_2026: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_pension_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_tuition_fees: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.claims_disability_amount: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.supports_spouse_or_common_law_partner: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.spouse_or_common_law_partner_is_infirm: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.spouse_or_common_law_partner_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.supports_eligible_dependant: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_dependant_is_infirm: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_dependant_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.claims_caregiver_amount_for_spouse_or_eligible_dependant: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.caregiver_spouse_or_eligible_dependant_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.spouse_or_eligible_dependant_base_amount_claimed_for_this_dependant: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.other_infirm_dependants_age_18_or_older_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.other_caregiver_claimed_amount_for_same_dependant: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.other_infirm_dependants_age_18_or_older_count: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.unused_spouse_or_common_law_partner_transferable_amount: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.unused_dependant_transferable_amount: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.northern_prescribed_zone_days: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.lives_in_prescribed_intermediate_zone: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.maintains_sole_claimed_dwelling_in_northern_zone: false
+    output:
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_net_income: 40000
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_basic_personal_amount: 16452
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_caregiver_infirm_child_amount_claim: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_age_amount_claim: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_pension_income_amount_claim: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_tuition_amount_claim: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_disability_amount_claim: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_spouse_or_common_law_partner_amount_claim: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_eligible_dependant_amount_claim: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_caregiver_spouse_or_eligible_dependant_amount_claim: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_other_infirm_dependants_age_18_or_older_amount_claim: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_spouse_transfer_amount_claim: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_dependant_transfer_amount_claim: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_total_claim_amount: 16452
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_total_personal_credit_value: 2303.28
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_northern_residents_deduction_amount: 0
+
+  - name: partial_basic_personal_amount_phaseout_and_full_age_amount
+    period:
+      period_kind: tax_year
+      start: '2026-01-01'
+      end: '2026-12-31'
+    input:
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.net_income: 219961
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.infirm_children_under_18_count: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.is_age_65_or_older_at_end_of_2026: true
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_pension_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_tuition_fees: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.claims_disability_amount: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.supports_spouse_or_common_law_partner: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.spouse_or_common_law_partner_is_infirm: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.spouse_or_common_law_partner_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.supports_eligible_dependant: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_dependant_is_infirm: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_dependant_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.claims_caregiver_amount_for_spouse_or_eligible_dependant: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.caregiver_spouse_or_eligible_dependant_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.spouse_or_eligible_dependant_base_amount_claimed_for_this_dependant: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.other_infirm_dependants_age_18_or_older_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.other_caregiver_claimed_amount_for_same_dependant: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.other_infirm_dependants_age_18_or_older_count: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.unused_spouse_or_common_law_partner_transferable_amount: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.unused_dependant_transferable_amount: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.northern_prescribed_zone_days: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.lives_in_prescribed_intermediate_zone: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.maintains_sole_claimed_dwelling_in_northern_zone: false
+    output:
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_basic_personal_amount: 15640.5
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_age_amount_claim: 0
+
+  - name: full_age_amount_under_income_ceiling
+    period:
+      period_kind: tax_year
+      start: '2026-01-01'
+      end: '2026-12-31'
+    input:
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.net_income: 30000
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.infirm_children_under_18_count: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.is_age_65_or_older_at_end_of_2026: true
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_pension_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_tuition_fees: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.claims_disability_amount: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.supports_spouse_or_common_law_partner: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.spouse_or_common_law_partner_is_infirm: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.spouse_or_common_law_partner_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.supports_eligible_dependant: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_dependant_is_infirm: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_dependant_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.claims_caregiver_amount_for_spouse_or_eligible_dependant: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.caregiver_spouse_or_eligible_dependant_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.spouse_or_eligible_dependant_base_amount_claimed_for_this_dependant: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.other_infirm_dependants_age_18_or_older_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.other_caregiver_claimed_amount_for_same_dependant: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.other_infirm_dependants_age_18_or_older_count: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.unused_spouse_or_common_law_partner_transferable_amount: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.unused_dependant_transferable_amount: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.northern_prescribed_zone_days: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.lives_in_prescribed_intermediate_zone: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.maintains_sole_claimed_dwelling_in_northern_zone: false
+    output:
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_age_amount_claim: 9208
+
+  - name: high_income_basic_personal_amount_floor_and_disabled_senior
+    period:
+      period_kind: tax_year
+      start: '2026-01-01'
+      end: '2026-12-31'
+    input:
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.net_income: 300000
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.infirm_children_under_18_count: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.is_age_65_or_older_at_end_of_2026: true
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_pension_income: 3500
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_tuition_fees: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.claims_disability_amount: true
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.supports_spouse_or_common_law_partner: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.spouse_or_common_law_partner_is_infirm: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.spouse_or_common_law_partner_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.supports_eligible_dependant: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_dependant_is_infirm: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_dependant_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.claims_caregiver_amount_for_spouse_or_eligible_dependant: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.caregiver_spouse_or_eligible_dependant_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.spouse_or_eligible_dependant_base_amount_claimed_for_this_dependant: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.other_infirm_dependants_age_18_or_older_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.other_caregiver_claimed_amount_for_same_dependant: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.other_infirm_dependants_age_18_or_older_count: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.unused_spouse_or_common_law_partner_transferable_amount: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.unused_dependant_transferable_amount: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.northern_prescribed_zone_days: 100
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.lives_in_prescribed_intermediate_zone: true
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.maintains_sole_claimed_dwelling_in_northern_zone: true
+    output:
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_basic_personal_amount: 14829
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_age_amount_claim: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_pension_income_amount_claim: 2000
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_disability_amount_claim: 10341
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_total_claim_amount: 27170
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_northern_residents_deduction_amount: 1100
+
+  - name: partial_basic_personal_amount_and_partial_age_amount
+    period:
+      period_kind: tax_year
+      start: '2026-01-01'
+      end: '2026-12-31'
+    input:
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.net_income: 50000
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.infirm_children_under_18_count: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.is_age_65_or_older_at_end_of_2026: true
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_pension_income: 1200
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_tuition_fees: 3000
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.claims_disability_amount: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.supports_spouse_or_common_law_partner: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.spouse_or_common_law_partner_is_infirm: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.spouse_or_common_law_partner_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.supports_eligible_dependant: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_dependant_is_infirm: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_dependant_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.claims_caregiver_amount_for_spouse_or_eligible_dependant: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.caregiver_spouse_or_eligible_dependant_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.spouse_or_eligible_dependant_base_amount_claimed_for_this_dependant: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.other_infirm_dependants_age_18_or_older_net_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.other_caregiver_claimed_amount_for_same_dependant: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.other_infirm_dependants_age_18_or_older_count: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.unused_spouse_or_common_law_partner_transferable_amount: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.unused_dependant_transferable_amount: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.northern_prescribed_zone_days: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.lives_in_prescribed_intermediate_zone: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.maintains_sole_claimed_dwelling_in_northern_zone: false
+    output:
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_basic_personal_amount: 16452
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_age_amount_claim: 8672.8
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_pension_income_amount_claim: 1200
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_tuition_amount_claim: 3000
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_total_claim_amount: 29324.8
+
+  - name: family_dependant_caregiver_and_transfer_amounts
+    period:
+      period_kind: tax_year
+      start: '2026-01-01'
+      end: '2026-12-31'
+    input:
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.net_income: 70000
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.infirm_children_under_18_count: 2
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.is_age_65_or_older_at_end_of_2026: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_pension_income: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_tuition_fees: 0
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.claims_disability_amount: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.supports_spouse_or_common_law_partner: true
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.spouse_or_common_law_partner_is_infirm: true
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.spouse_or_common_law_partner_net_income: 12000
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.supports_eligible_dependant: true
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_dependant_is_infirm: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.eligible_dependant_net_income: 10000
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.claims_caregiver_amount_for_spouse_or_eligible_dependant: true
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.caregiver_spouse_or_eligible_dependant_net_income: 12000
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.spouse_or_eligible_dependant_base_amount_claimed_for_this_dependant: 7192
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.other_infirm_dependants_age_18_or_older_net_income: 25000
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.other_caregiver_claimed_amount_for_same_dependant: 1000
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.other_infirm_dependants_age_18_or_older_count: 1
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.unused_spouse_or_common_law_partner_transferable_amount: 500
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.unused_dependant_transferable_amount: 750
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.northern_prescribed_zone_days: 10
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.lives_in_prescribed_intermediate_zone: false
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#input.maintains_sole_claimed_dwelling_in_northern_zone: false
+    output:
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_caregiver_infirm_child_amount_claim: 5480
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_spouse_or_common_law_partner_amount_claim: 7192
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_eligible_dependant_amount_claim: 6452
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_caregiver_spouse_or_eligible_dependant_amount_claim: 1581
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_other_infirm_dependants_age_18_or_older_amount_claim: 3374
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_spouse_transfer_amount_claim: 500
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_dependant_transfer_amount_claim: 750
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_total_claim_amount: 41781
+      ca:policies/cra/t4127-2026/federal-td1-personal-credits#federal_td1_northern_residents_deduction_amount: 110

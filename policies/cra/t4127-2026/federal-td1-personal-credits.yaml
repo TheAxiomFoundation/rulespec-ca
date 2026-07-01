@@ -1,0 +1,434 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form TD1 and TD1-WS for 2026 define the federal personal tax
+    credit claim amounts that employers and payers use for payroll
+    deduction calculations. This module encodes the federal TD1 line
+    amount surfaces for the basic personal amount, infirm child caregiver
+    amount, age amount, pension income amount, tuition amount, disability
+    amount, spouse or common-law partner amount, eligible dependant
+    amount, caregiver amounts, transferred amounts, and northern residents
+    TD1 deduction amount.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t4127-2026/federal-td1-personal-credits
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA publishes the official 2026 TD1 and TD1-WS forms used to
+        determine federal personal tax credit claim amounts for payroll
+        withholding. This module encodes those published administrative
+        2026 amount formulas without adding eligibility predicates that
+        require taxpayer facts beyond the form inputs.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/td1/td1-26e.pdf
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/td1-ws/td1-ws-26e.pdf
+rules:
+  - name: federal_td1_lowest_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2026 federal lowest tax rate used to convert TD1 claim amounts into non-refundable credit value
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.14
+
+  - name: federal_td1_basic_personal_amount_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA TD1 2026 line 1 maximum basic personal amount, $16,452
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          16452
+
+  - name: federal_td1_basic_personal_amount_minimum
+    kind: parameter
+    dtype: Money
+    source: CRA TD1-WS 2026 line 1 minimum amount, $14,829
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          14829
+
+  - name: federal_td1_basic_personal_amount_phaseout_start
+    kind: parameter
+    dtype: Money
+    source: CRA TD1 2026 line 1 and TD1-WS line 1 income threshold, $181,440
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          181440
+
+  - name: federal_td1_basic_personal_amount_phaseout_range
+    kind: parameter
+    dtype: Money
+    source: CRA TD1-WS 2026 line 1 amount, $77,042
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          77042
+
+  - name: federal_td1_basic_personal_amount_increment
+    kind: parameter
+    dtype: Money
+    source: CRA TD1-WS 2026 line 1 applicable amount, $1,623
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          1623
+
+  - name: federal_td1_caregiver_infirm_child_amount
+    kind: parameter
+    dtype: Money
+    source: CRA TD1 2026 line 2 Canada caregiver amount for infirm children under age 18, $2,740 per child
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          2740
+
+  - name: federal_td1_age_amount_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA TD1 2026 line 3 age amount maximum, $9,208
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          9208
+
+  - name: federal_td1_age_amount_phaseout_start
+    kind: parameter
+    dtype: Money
+    source: CRA TD1 2026 line 3 age amount full-claim income ceiling, $46,432
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          46432
+
+  - name: federal_td1_age_amount_phaseout_end
+    kind: parameter
+    dtype: Money
+    source: CRA TD1 2026 line 3 age amount partial-claim upper income, $107,819
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          107819
+
+  - name: federal_td1_age_amount_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA TD1-WS 2026 line 3 age amount applicable rate, 15%
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.15
+
+  - name: federal_td1_pension_income_amount_cap
+    kind: parameter
+    dtype: Money
+    source: CRA TD1 2026 line 4 pension income amount cap, $2,000
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          2000
+
+  - name: federal_td1_disability_amount
+    kind: parameter
+    dtype: Money
+    source: CRA TD1 2026 line 6 disability amount, $10,341
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          10341
+
+  - name: federal_td1_caregiver_base_income_amount
+    kind: parameter
+    dtype: Money
+    source: CRA TD1-WS 2026 line 9 and line 10 base amount, $29,374
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          29374
+
+  - name: federal_td1_caregiver_amount_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA TD1 2026 line 10 and TD1-WS line 9/10 maximum Canada caregiver amount, $8,773
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          8773
+
+  - name: federal_td1_other_infirm_dependant_full_amount_income_ceiling
+    kind: parameter
+    dtype: Money
+    source: CRA TD1 2026 line 10 full amount income ceiling, $20,601
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          20601
+
+  - name: federal_td1_northern_zone_daily_amount
+    kind: parameter
+    dtype: Money
+    source: CRA TD1 2026 prescribed northern zone amount, $11.00 for each day
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          11
+
+  - name: federal_td1_northern_zone_sole_dwelling_daily_amount
+    kind: parameter
+    dtype: Money
+    source: CRA TD1 2026 prescribed northern zone amount, $22.00 for each day if the dwelling-maintenance condition is met
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          22
+
+  - name: federal_td1_intermediate_zone_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA TD1 2026 intermediate zone uses 50% of the northern zone amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.5
+
+  - name: federal_td1_net_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TD1 uses estimated net income from all sources for the personal amount calculations
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, net_income)
+
+  - name: federal_td1_basic_personal_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TD1 2026 line 1 and TD1-WS line 1 partial basic personal amount formula
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if federal_td1_net_income <= federal_td1_basic_personal_amount_phaseout_start:
+            federal_td1_basic_personal_amount_maximum
+          else:
+            federal_td1_basic_personal_amount_minimum
+            + (
+              federal_td1_basic_personal_amount_increment
+              * max(0, federal_td1_basic_personal_amount_phaseout_range - (federal_td1_net_income - federal_td1_basic_personal_amount_phaseout_start))
+              / federal_td1_basic_personal_amount_phaseout_range
+            )
+
+  - name: federal_td1_caregiver_infirm_child_amount_claim
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TD1 2026 line 2 allows $2,740 for each qualifying infirm child under age 18
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, infirm_children_under_18_count) * federal_td1_caregiver_infirm_child_amount
+
+  - name: federal_td1_age_amount_claim
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TD1 2026 line 3 and TD1-WS line 3 age amount formula
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if is_age_65_or_older_at_end_of_2026:
+            if federal_td1_net_income <= federal_td1_age_amount_phaseout_start:
+              federal_td1_age_amount_maximum
+            else:
+              if federal_td1_net_income >= federal_td1_age_amount_phaseout_end:
+                0
+              else:
+                max(0, federal_td1_age_amount_maximum - (federal_td1_age_amount_reduction_rate * max(0, federal_td1_net_income - federal_td1_age_amount_phaseout_start)))
+          else:
+            0
+
+  - name: federal_td1_pension_income_amount_claim
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TD1 2026 line 4 allows the lesser of $2,000 and estimated annual eligible pension income
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          min(federal_td1_pension_income_amount_cap, max(0, eligible_pension_income))
+
+  - name: federal_td1_tuition_amount_claim
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TD1 2026 line 5 uses total tuition fees where the student pays more than $100 per institution
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, eligible_tuition_fees)
+
+  - name: federal_td1_disability_amount_claim
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TD1 2026 line 6 disability amount when Form T2201 supports the claim
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if claims_disability_amount:
+            federal_td1_disability_amount
+          else:
+            0
+
+  - name: federal_td1_spouse_or_common_law_partner_amount_claim
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TD1 2026 line 7 spouse or common-law partner amount formula
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if supports_spouse_or_common_law_partner:
+            max(0, federal_td1_basic_personal_amount + (if spouse_or_common_law_partner_is_infirm: federal_td1_caregiver_infirm_child_amount else: 0) - max(0, spouse_or_common_law_partner_net_income))
+          else:
+            0
+
+  - name: federal_td1_eligible_dependant_amount_claim
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TD1 2026 line 8 amount for an eligible dependant formula
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if supports_eligible_dependant:
+            max(0, federal_td1_basic_personal_amount + (if eligible_dependant_is_infirm: federal_td1_caregiver_infirm_child_amount else: 0) - max(0, eligible_dependant_net_income))
+          else:
+            0
+
+  - name: federal_td1_caregiver_spouse_or_eligible_dependant_amount_claim
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TD1 2026 line 9 and TD1-WS line 9 Canada caregiver formula for infirm spouse or eligible dependant age 18 or older
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if claims_caregiver_amount_for_spouse_or_eligible_dependant:
+            max(
+              0,
+              min(federal_td1_caregiver_amount_maximum, max(0, federal_td1_caregiver_base_income_amount - max(0, caregiver_spouse_or_eligible_dependant_net_income)))
+              - max(0, spouse_or_eligible_dependant_base_amount_claimed_for_this_dependant)
+            )
+          else:
+            0
+
+  - name: federal_td1_other_infirm_dependants_age_18_or_older_amount_claim
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TD1 2026 line 10 and TD1-WS line 10 Canada caregiver formula for other infirm dependants age 18 or older
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(
+            0,
+            min(federal_td1_caregiver_amount_maximum, max(0, federal_td1_caregiver_base_income_amount - max(0, other_infirm_dependants_age_18_or_older_net_income)))
+            - max(0, other_caregiver_claimed_amount_for_same_dependant)
+          )
+          * max(0, other_infirm_dependants_age_18_or_older_count)
+
+  - name: federal_td1_spouse_transfer_amount_claim
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TD1 2026 line 11 amounts transferred from spouse or common-law partner
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, unused_spouse_or_common_law_partner_transferable_amount)
+
+  - name: federal_td1_dependant_transfer_amount_claim
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TD1 2026 line 12 amounts transferred from a dependant
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, unused_dependant_transferable_amount)
+
+  - name: federal_td1_total_claim_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TD1 2026 line 13 total claim amount is the sum of lines 1 to 12
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          federal_td1_basic_personal_amount
+          + federal_td1_caregiver_infirm_child_amount_claim
+          + federal_td1_age_amount_claim
+          + federal_td1_pension_income_amount_claim
+          + federal_td1_tuition_amount_claim
+          + federal_td1_disability_amount_claim
+          + federal_td1_spouse_or_common_law_partner_amount_claim
+          + federal_td1_eligible_dependant_amount_claim
+          + federal_td1_caregiver_spouse_or_eligible_dependant_amount_claim
+          + federal_td1_other_infirm_dependants_age_18_or_older_amount_claim
+          + federal_td1_spouse_transfer_amount_claim
+          + federal_td1_dependant_transfer_amount_claim
+
+  - name: federal_td1_total_personal_credit_value
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 uses the lowest federal tax rate to calculate federal non-refundable personal credit value from TD1 claim amounts
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          federal_td1_lowest_tax_rate * federal_td1_total_claim_amount
+
+  - name: federal_td1_northern_residents_deduction_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TD1 2026 prescribed zone deduction amounts for northern residents
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, northern_prescribed_zone_days)
+          * (
+            if lives_in_prescribed_intermediate_zone:
+              federal_td1_intermediate_zone_rate
+            else:
+              1
+          )
+          * (
+            if maintains_sole_claimed_dwelling_in_northern_zone:
+              federal_td1_northern_zone_sole_dwelling_daily_amount
+            else:
+              federal_td1_northern_zone_daily_amount
+          )
