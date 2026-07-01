@@ -1,0 +1,279 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Schedule 11 for the 2025 T1 return calculates the federal
+    tuition amount on line 32300, the Canada training credit on line
+    45350, the current-year tuition amount available to transfer, and the
+    unused federal tuition amount available to carry forward. This module
+    encodes those Schedule 11 calculation surfaces for the current
+    federal filing package available in 2026.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/federal-tuition-and-training-credit
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Schedule 11 is the official 2025 T1 return schedule for the
+        federal tuition amount and Canada training credit. This module
+        encodes the published schedule calculations while leaving
+        education-institution and certificate eligibility predicates to a
+        deeper fact layer.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s11/5000-s11-25e.pdf
+rules:
+  - name: federal_2025_canada_training_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 11 2025 line 2 multiplies eligible Canadian tuition fees by 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.50
+
+  - name: federal_2025_tuition_low_taxable_income_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 11 2025 line 11 uses line 26000 directly if taxable income is $57,375 or less
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          57375
+
+  - name: federal_2025_tuition_credit_lowest_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 11 2025 line 11 divides line 76 of the return by 14.5% when taxable income is more than $57,375
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.145
+
+  - name: federal_2025_tuition_transfer_cap
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 11 2025 line 21 caps the current-year amount available to transfer at $5,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          5000
+
+  - name: federal_2025_canadian_tuition_fees
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 11 2025 line 1 eligible tuition fees paid to Canadian educational institutions
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, eligible_canadian_tuition_fees)
+
+  - name: federal_2025_canada_training_credit_limit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 11 2025 line 3 Canada training credit limit from the latest notice of assessment or reassessment
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, canada_training_credit_limit_from_notice)
+
+  - name: federal_2025_canada_training_credit_maximum_claim
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 11 2025 line 4 is the lesser of 50% of Canadian tuition and the Canada training credit limit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_canadian_tuition_fees * federal_2025_canada_training_credit_rate,
+            federal_2025_canada_training_credit_limit
+          )
+
+  - name: canada_training_credit_line_45350
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 11 2025 line 5 Canada training credit claimed on line 45350
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(max(0, canada_training_credit_amount_claimed), federal_2025_canada_training_credit_maximum_claim)
+
+  - name: federal_2025_canadian_tuition_available_after_training_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 11 2025 line 6 Canadian tuition amount available is line 1 minus the Canada training credit claimed
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_2025_canadian_tuition_fees - canada_training_credit_line_45350)
+
+  - name: federal_2025_foreign_tuition_fees
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 11 2025 line 7 eligible tuition fees paid to foreign educational institutions
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, eligible_foreign_tuition_fees)
+
+  - name: federal_2025_current_year_tuition_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 11 2025 line 8 current-year tuition amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_canadian_tuition_available_after_training_credit
+          + federal_2025_foreign_tuition_fees
+
+  - name: federal_2025_unused_prior_year_tuition_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 11 2025 line 9 unused federal tuition from the 2024 notice of assessment or reassessment
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, unused_federal_tuition_from_prior_notice)
+
+  - name: federal_2025_total_tuition_amount_available
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 11 2025 line 10 total tuition amount available
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_current_year_tuition_amount
+          + federal_2025_unused_prior_year_tuition_amount
+
+  - name: federal_2025_tuition_tax_capacity_before_tuition
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 11 2025 line 11 tax capacity before line 101 of the return
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income <= federal_2025_tuition_low_taxable_income_threshold:
+            max(0, taxable_income)
+          else:
+            max(0, federal_tax_line_76_amount / federal_2025_tuition_credit_lowest_rate)
+
+  - name: federal_2025_tuition_capacity_after_prior_credits
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 11 2025 line 13 subtracts line 101 of the return from line 11 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_2025_tuition_tax_capacity_before_tuition - max(0, federal_non_refundable_credits_before_tuition_line_101))
+
+  - name: federal_2025_unused_prior_year_tuition_claimed
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 11 2025 line 14 unused prior-year tuition claimed in 2025
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_unused_prior_year_tuition_amount,
+            federal_2025_tuition_capacity_after_prior_credits
+          )
+
+  - name: federal_2025_current_year_tuition_claimed
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 11 2025 line 16 current-year tuition amount claimed in 2025
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_current_year_tuition_amount,
+            max(0, federal_2025_tuition_capacity_after_prior_credits - federal_2025_unused_prior_year_tuition_claimed)
+          )
+
+  - name: federal_tuition_amount_line_32300
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 11 2025 line 17 federal tuition amount claimed on line 32300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_unused_prior_year_tuition_claimed
+          + federal_2025_current_year_tuition_claimed
+
+  - name: federal_2025_total_unused_tuition_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 11 2025 line 20 total unused federal tuition amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_2025_total_tuition_amount_available - federal_tuition_amount_line_32300)
+
+  - name: federal_2025_unused_current_year_tuition_available_to_transfer
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 11 2025 line 23 unused current-year federal tuition amount available to transfer
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            min(federal_2025_current_year_tuition_amount, federal_2025_tuition_transfer_cap)
+            - federal_2025_current_year_tuition_claimed
+          )
+
+  - name: federal_tuition_amount_transferred_line_32700
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 11 2025 line 24 federal tuition amount transferred
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            max(0, federal_tuition_amount_transferred_to_designated_individual),
+            federal_2025_unused_current_year_tuition_available_to_transfer
+          )
+
+  - name: federal_2025_unused_tuition_available_to_carry_forward
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 11 2025 line 25 unused federal tuition amount available to carry forward
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_2025_total_unused_tuition_amount - federal_tuition_amount_transferred_line_32700)
