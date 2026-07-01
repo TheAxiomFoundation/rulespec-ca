@@ -1,0 +1,312 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Schedule 9 for the 2025 T1 return calculates the federal
+    donations and gifts non-refundable tax credit entered on line 34900.
+    This module encodes the Schedule 9 eligible donation limit, ecological
+    and cultural gift inclusion, first-$200 credit tier, high-income
+    33 percent tier, 29 percent tier, and the resulting allowable federal
+    donations amount.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/federal-donations-and-gifts
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Schedule 9 is the official 2025 T1 return schedule for the
+        federal donations and gifts credit. This module encodes the
+        published Schedule 9 arithmetic while leaving qualified-donee,
+        receipt, carry-forward, and property-disposition eligibility facts
+        to deeper source/fact layers.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s9/5000-s9-25e.pdf
+rules:
+  - name: federal_2025_donation_net_income_limit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 9 2025 line 6 limits charitable donations by 75% of net income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.75
+
+  - name: federal_2025_donation_capital_property_limit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 9 2025 line 7 adds 25% of capital-property gift amounts to the donation limit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.25
+
+  - name: federal_2025_donation_first_tier_limit
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 9 2025 line 13 first donations tier is the lesser of line 12 and $200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          200
+
+  - name: federal_2025_donation_high_income_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 9 2025 line 18 income threshold, $253,414
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          253414
+
+  - name: federal_2025_donation_first_tier_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 9 2025 line 22 applies 14.5% to the first-tier amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.145
+
+  - name: federal_2025_donation_middle_tier_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 9 2025 line 21 applies 29% to the amount remaining after the high-income tier
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.29
+
+  - name: federal_2025_donation_high_income_tier_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 9 2025 line 20 applies 33% to the high-income eligible donation tier
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.33
+
+  - name: federal_2025_total_charitable_donations
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 9 2025 line 5 total eligible charitable donations
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, donations_registered_charities)
+          + max(0, donations_government_municipal_or_public_bodies)
+          + max(0, donations_registered_universities_outside_canada)
+          + max(0, donations_united_nations_agencies_and_foreign_charities)
+
+  - name: federal_2025_net_income_donation_limit_component
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 9 2025 line 6 amount A is net income multiplied by 75%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, net_income) * federal_2025_donation_net_income_limit_rate
+
+  - name: federal_2025_capital_property_gift_limit_base
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 9 2025 line 7 amount D is depreciable-property gifts plus capital-property gifts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, gifts_depreciable_capital_property_amount)
+          + max(0, gifts_capital_property_amount)
+
+  - name: federal_2025_capital_property_gift_limit_component
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 9 2025 line 7 adds 25% of amount D to the donation limit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_capital_property_gift_limit_base
+          * federal_2025_donation_capital_property_limit_rate
+
+  - name: federal_2025_total_charitable_donation_limit
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 9 2025 line 9 total charitable donations limit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_total_charitable_donations,
+            federal_2025_net_income_donation_limit_component
+            + federal_2025_capital_property_gift_limit_component
+          )
+
+  - name: federal_2025_ecological_and_cultural_gifts
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 9 2025 line 11 eligible ecological gifts and cultural gifts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, ecological_and_cultural_gifts_amount)
+
+  - name: federal_2025_total_donations_after_gifts
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 9 2025 line 12 is charitable donations within limit plus ecological and cultural gifts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_total_charitable_donation_limit
+          + federal_2025_ecological_and_cultural_gifts
+
+  - name: federal_2025_donation_first_tier_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 9 2025 line 13 first tier amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_total_donations_after_gifts,
+            federal_2025_donation_first_tier_limit
+          )
+
+  - name: federal_2025_donations_above_first_tier
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 9 2025 line 14 donations above first tier
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_2025_total_donations_after_gifts - federal_2025_donation_first_tier_amount)
+
+  - name: federal_2025_ecological_gifts_excluded_from_high_income_tier
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 9 2025 line 15 ecological gifts made after February 10, 2014 and before 2016 included on line 11
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_donations_above_first_tier,
+            max(0, ecological_gifts_after_2014_before_2016_amount)
+          )
+
+  - name: federal_2025_donations_eligible_for_high_income_tier
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 9 2025 line 16 donations eligible for the high-income tier
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_donations_above_first_tier
+            - federal_2025_ecological_gifts_excluded_from_high_income_tier
+          )
+
+  - name: federal_2025_taxable_income_above_donation_threshold
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 9 2025 line 19 taxable income above the high-income threshold
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, taxable_income - federal_2025_donation_high_income_threshold)
+
+  - name: federal_2025_donation_high_income_tier_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 9 2025 line 20 amount F, the lesser of line 16 and line 19
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_donations_eligible_for_high_income_tier,
+            federal_2025_taxable_income_above_donation_threshold
+          )
+
+  - name: federal_2025_donation_middle_tier_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 9 2025 line 21 amount G, line 14 minus amount F
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_2025_donations_above_first_tier - federal_2025_donation_high_income_tier_amount)
+
+  - name: federal_2025_donation_high_income_tier_credit
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 9 2025 line 20 high-income tier credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_donation_high_income_tier_amount
+          * federal_2025_donation_high_income_tier_rate
+
+  - name: federal_2025_donation_middle_tier_credit
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 9 2025 line 21 middle tier credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_donation_middle_tier_amount
+          * federal_2025_donation_middle_tier_rate
+
+  - name: federal_2025_donation_first_tier_credit
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 9 2025 line 22 first tier credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_donation_first_tier_amount
+          * federal_2025_donation_first_tier_rate
+
+  - name: federal_donations_and_gifts_credit_line_34900
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 9 2025 line 23 allowable donations for 2025 entered on line 34900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_donation_high_income_tier_credit
+          + federal_2025_donation_middle_tier_credit
+          + federal_2025_donation_first_tier_credit

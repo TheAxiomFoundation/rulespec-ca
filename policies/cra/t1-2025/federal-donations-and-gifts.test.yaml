@@ -1,0 +1,100 @@
+- name: low_income_regular_donations
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_registered_charities: 1000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_government_municipal_or_public_bodies: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_registered_universities_outside_canada: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_united_nations_agencies_and_foreign_charities: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.net_income: 50000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.gifts_depreciable_capital_property_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.gifts_capital_property_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.ecological_and_cultural_gifts_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.ecological_gifts_after_2014_before_2016_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.taxable_income: 50000
+  output:
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_total_charitable_donations: 1000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_net_income_donation_limit_component: 37500
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_capital_property_gift_limit_base: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_capital_property_gift_limit_component: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_total_charitable_donation_limit: 1000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_ecological_and_cultural_gifts: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_total_donations_after_gifts: 1000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_donation_first_tier_amount: 200
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_donations_above_first_tier: 800
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_ecological_gifts_excluded_from_high_income_tier: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_donations_eligible_for_high_income_tier: 800
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_taxable_income_above_donation_threshold: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_donation_high_income_tier_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_donation_middle_tier_amount: 800
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_donation_high_income_tier_credit: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_donation_middle_tier_credit: 232
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_donation_first_tier_credit: 29
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_donations_and_gifts_credit_line_34900: 261
+
+- name: high_income_donations_use_33_percent_tier
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_registered_charities: 10000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_government_municipal_or_public_bodies: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_registered_universities_outside_canada: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_united_nations_agencies_and_foreign_charities: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.net_income: 300000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.gifts_depreciable_capital_property_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.gifts_capital_property_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.ecological_and_cultural_gifts_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.ecological_gifts_after_2014_before_2016_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.taxable_income: 300000
+  output:
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_donation_high_income_tier_amount: 9800
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_donation_middle_tier_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_donations_and_gifts_credit_line_34900: 3263
+
+- name: donation_limit_with_capital_property_gifts
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_registered_charities: 1200
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_government_municipal_or_public_bodies: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_registered_universities_outside_canada: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_united_nations_agencies_and_foreign_charities: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.net_income: 1000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.gifts_depreciable_capital_property_amount: 400
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.gifts_capital_property_amount: 200
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.ecological_and_cultural_gifts_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.ecological_gifts_after_2014_before_2016_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.taxable_income: 1000
+  output:
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_net_income_donation_limit_component: 750
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_capital_property_gift_limit_base: 600
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_capital_property_gift_limit_component: 150
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_total_charitable_donation_limit: 900
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_donations_and_gifts_credit_line_34900: 232
+
+- name: ecological_gifts_excluded_from_high_income_tier
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_registered_charities: 1000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_government_municipal_or_public_bodies: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_registered_universities_outside_canada: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_united_nations_agencies_and_foreign_charities: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.net_income: 10000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.gifts_depreciable_capital_property_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.gifts_capital_property_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.ecological_and_cultural_gifts_amount: 500
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.ecological_gifts_after_2014_before_2016_amount: 300
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.taxable_income: 254000
+  output:
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_donation_high_income_tier_amount: 586
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_donation_middle_tier_amount: 714
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_donations_and_gifts_credit_line_34900: 429.44
