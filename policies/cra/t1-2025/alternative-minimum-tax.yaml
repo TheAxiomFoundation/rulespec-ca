@@ -1,0 +1,663 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T691 for 2025 calculates federal alternative minimum tax
+    (AMT), special foreign tax credit, AMT payable, minimum-tax carryover,
+    and resource property/flow-through share adjustments.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/alternative-minimum-tax
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Form T691 is the official 2025 T1 form for calculating
+        federal alternative minimum tax.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t691/t691-25e.pdf
+rules:
+  - name: federal_2025_t691_public_securities_gift_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T691 2025 Part 1 line 26 multiplies line 24 minus line 25 by 30%, encoded as 0.30
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.30
+
+  - name: federal_2025_t691_security_option_gift_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T691 2025 Part 1 line 31 multiplies gifts of publicly listed securities acquired under a security option plan by 40%, encoded as 0.40
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.40
+
+  - name: federal_2025_t691_property_expense_adjustment_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T691 2025 Part 1 line 79 uses 50%, encoded as 0.50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.50
+
+  - name: federal_2025_t691_other_than_eligible_dividend_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T691 2025 Part 1 line 84 uses 13.0435%, encoded as 0.130435
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.130435
+
+  - name: federal_2025_t691_eligible_dividend_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T691 2025 Part 1 line 85 uses 27.5362%, encoded as 0.275362
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.275362
+
+  - name: federal_2025_t691_capital_gains_exemption_addback_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T691 2025 Part 1 line 87 multiplies line 25400 by 40%, encoded as 0.40
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.40
+
+  - name: federal_2025_t691_basic_exemption
+    kind: parameter
+    dtype: Money
+    source: CRA T691 2025 Part 1 line 94 sets the basic exemption at $177,882.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          177882.00
+
+  - name: federal_2025_t691_federal_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T691 2025 Part 1 line 96 uses 20.5%, encoded as 0.205
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.205
+
+  - name: federal_2025_t691_net_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T691 2025 Part 1 line 98 multiplies net non-refundable tax credits by 50%, encoded as 0.50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.50
+
+  - name: federal_2025_t691_donations_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T691 2025 Part 1 line 99 multiplies donations and gifts by 80%, encoded as 0.80
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.80
+
+  - name: federal_2025_t691_surtax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T691 2025 Parts 3 and 6 multiply federal tax by 48%, encoded as 0.48
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.48
+
+  - name: federal_2025_t691_special_foreign_non_business_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T691 2025 Part 4 line 7 multiplies non-business income tax paid to a foreign country by 66.6666%, encoded as 0.666666
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.666666
+
+  - name: federal_2025_t691_quebec_business_foreign_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T691 2025 Part 4 note 13 says Quebec residents multiply business income tax paid by 55%, encoded as 0.55
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.55
+
+  - name: federal_2025_t691_film_property_adjustment_line_4
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 4 subtracts line 3 from line 2 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, film_property_cca_and_carrying_charges_line_2 - max(0, film_property_net_income_before_cca_line_3))
+
+  - name: federal_2025_t691_rental_leasing_adjustment_line_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 7 subtracts line 6 from line 5 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, rental_leasing_cca_and_carrying_charges_line_5 - max(0, rental_leasing_net_income_before_cca_line_6))
+
+  - name: federal_2025_t691_tax_shelter_adjustment_line_11
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 11 adds lines 8 to 10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, tax_shelter_partnership_losses_line_8)
+          + max(0, tax_shelter_property_deductions_line_9)
+          + max(0, limited_partnership_carrying_charges_line_10)
+
+  - name: federal_2025_t691_line_12
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 12 adds lines 1, 4, 7, and 11
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          taxable_income_line_26000
+          + federal_2025_t691_film_property_adjustment_line_4
+          + federal_2025_t691_rental_leasing_adjustment_line_7
+          + federal_2025_t691_tax_shelter_adjustment_line_11
+
+  - name: federal_2025_t691_part9_resource_property_line_6
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 9 line 6 subtracts line 5 from line 1 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            resource_expenditures_depletion_and_carrying_charges_line_1
+            - (
+              max(0, petroleum_minerals_income_before_resource_deductions_line_2)
+              + max(0, foreign_resource_property_income_line_3)
+              + max(0, class_43_1_43_2_property_income_line_4)
+            )
+          )
+
+  - name: federal_2025_t691_capital_gains_line_20
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 20 subtracts line 19 from line 15 and may be negative
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          schedule_3_line_19700_non_taxable_capital_gains
+          - (
+            max(0, mortgage_foreclosure_capital_gains_lines_12400_15500)
+            + max(0, treaty_exempt_capital_gains_line_67880)
+            + max(0, graduated_rate_estate_capital_gains_line_67870)
+          )
+
+  - name: federal_2025_t691_capital_gains_adjustment_line_23
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 23 uses line 22 if line 20 is positive, otherwise the lesser of line 21 and line 22
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if federal_2025_t691_capital_gains_line_20 > 0:
+            federal_2025_t691_capital_gains_line_20 - taxable_capital_gains_line_12700
+          else:
+            min(taxable_capital_gains_line_12700, federal_2025_t691_capital_gains_line_20 - taxable_capital_gains_line_12700)
+
+  - name: federal_2025_t691_public_securities_gift_line_26
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 26 multiplies line 24 minus line 25 by 30%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          (max(0, t1170_column_7_lines_68230_68250) - max(0, t1170_line_68231))
+          * federal_2025_t691_public_securities_gift_rate
+
+  - name: federal_2025_t691_security_options_adjustment_line_32
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 32 subtracts line 31 from line 30 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, security_options_boxes_39_91_line_28)
+            + max(0, t1212_deferred_security_options_line_29)
+            - (
+              max(0, security_option_public_securities_gifts_line_67914)
+              * federal_2025_t691_security_option_gift_rate
+            )
+          )
+
+  - name: federal_2025_t691_line_33
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 33 adds line 27 and line 32
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t691_line_12
+          + federal_2025_t691_part9_resource_property_line_6
+          + federal_2025_t691_capital_gains_adjustment_line_23
+          + federal_2025_t691_public_securities_gift_line_26
+          + federal_2025_t691_security_options_adjustment_line_32
+
+  - name: federal_2025_t691_line_44
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 44 adds line 34, line 38, and line 43
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t691_line_33
+          + max(0, security_option_110_1_d1_adjustment_line_38)
+          + max(0, limited_partnership_loss_difference_line_39_or_40)
+          + max(0, non_capital_loss_difference_line_41)
+          + max(0, net_capital_loss_difference_line_42)
+
+  - name: federal_2025_t691_line_53
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 53 adds line 47, line 50, line 51, and line 52
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, limited_partnership_losses_other_years_line_25100 - max(0, limited_partnership_loss_difference_line_39_or_40))
+          + max(0, non_capital_losses_other_years_line_25200 - max(0, non_capital_loss_difference_line_41))
+          + max(0, union_professional_dues_line_21200)
+          + max(0, child_care_expenses_line_21400)
+
+  - name: federal_2025_t691_line_63
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 63 adds lines 54 to 62
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t691_line_53
+          + max(0, disability_supports_deduction_line_21500)
+          + max(0, moving_expenses_deduction_line_21900)
+          + max(0, cpp_qpp_self_employment_deduction_line_22200)
+          + max(0, cpp_qpp_enhanced_employment_deduction_line_22215)
+          + max(0, ppip_self_employment_deduction_line_22300)
+          + max(0, clergy_residence_deduction_line_23100)
+          + max(0, canadian_forces_police_deduction_line_24400)
+          + max(0, northern_residents_deductions_line_25500)
+
+  - name: federal_2025_t691_line_78
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 78 adds line 63, line 68, and line 77
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t691_line_63
+          + max(0, non_deductible_property_expenses_line_68)
+          + max(0, other_employment_expenses_line_22900 - max(0, excluded_employment_expenses_line_76))
+
+  - name: federal_2025_t691_line_82
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 82 adds line 80 and line 81
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          (federal_2025_t691_line_78 * federal_2025_t691_property_expense_adjustment_rate)
+          + federal_2025_t691_line_44
+
+  - name: federal_2025_t691_dividend_and_capital_gains_deduction_line_92
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 92 subtracts line 88 plus line 91 from line 83
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          (
+            max(0, taxable_dividends_line_12010)
+            * federal_2025_t691_other_than_eligible_dividend_rate
+          )
+          + (
+            max(0, taxable_dividends_line_12000 - max(0, taxable_dividends_line_12010))
+            * federal_2025_t691_eligible_dividend_rate
+          )
+          + (max(0, capital_gains_deduction_line_25400) * federal_2025_t691_capital_gains_exemption_addback_rate)
+          + max(0, capital_gains_deduction_qbt_qcc_line_25395)
+
+  - name: federal_2025_t691_adjusted_taxable_income_line_93
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 93 subtracts line 92 from line 83 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_2025_t691_line_82 - federal_2025_t691_dividend_and_capital_gains_deduction_line_92)
+
+  - name: federal_2025_t691_net_adjusted_taxable_income_line_95
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 95 subtracts the basic exemption on line 94 from line 93 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_2025_t691_adjusted_taxable_income_line_93 - federal_2025_t691_basic_exemption)
+
+  - name: federal_2025_t691_gross_minimum_amount_line_97
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 97 multiplies line 95 by 20.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t691_net_adjusted_taxable_income_line_95 * federal_2025_t691_federal_tax_rate
+
+  - name: federal_2025_t691_credit_reduction_line_102
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 102 adds lines 98 to 101
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          (max(0, net_non_refundable_tax_credits_line_33800) * federal_2025_t691_net_credit_rate)
+          + (max(0, donations_and_gifts_line_34900) * federal_2025_t691_donations_credit_rate)
+          + max(0, federal_logging_tax_credit)
+          + max(0, section_119_former_resident_credit)
+
+  - name: minimum_amount_line_103
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 1 line 103 subtracts line 102 from line 97 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_2025_t691_gross_minimum_amount_line_97 - federal_2025_t691_credit_reduction_line_102)
+
+  - name: federal_2025_t691_basic_federal_tax_line_7_part_2
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 2 line 7 subtracts minimum tax carryover applied from tax payable before carryover
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, tax_amount_line_40400)
+            - (max(0, total_non_refundable_tax_credits_line_35000) + max(0, dividend_tax_credit_line_40425))
+            - max(0, t691_minimum_tax_carryover_applied_in_2025_line_6_part_2)
+          )
+
+  - name: federal_2025_t691_part_3_federal_surtax_line_4
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 3 line 4 uses the T2203 allocation amount, non-resident surtax, or zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t691_use_t2203_surtax_allocation:
+            federal_2025_t691_basic_federal_tax_line_7_part_2
+            * federal_2025_t691_surtax_rate
+            * max(0, t2203_column_5_line_52220_percentage)
+          else:
+            if t691_nonresident_or_deemed_resident:
+              federal_2025_t691_basic_federal_tax_line_7_part_2 * federal_2025_t691_surtax_rate
+            else:
+              0
+
+  - name: regular_net_federal_tax_payable_line_15_part_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 3 line 15 calculates regular net federal tax payable
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t691_basic_federal_tax_line_7_part_2
+            + federal_2025_t691_part_3_federal_surtax_line_4
+            + max(0, recapture_of_investment_tax_credit)
+            - max(0, federal_foreign_tax_credit_line_40500)
+            - max(0, federal_logging_tax_credit)
+            - max(0, federal_political_contribution_tax_credit_line_41000)
+            - max(0, investment_tax_credit_line_12_part_3)
+            - max(0, labour_sponsored_funds_tax_credit_line_41400)
+          )
+
+  - name: special_foreign_tax_credit_line_11_part_4
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 4 line 11 is the greater of Part 3 line 7 and line 10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            max(0, federal_foreign_tax_credit_line_40500),
+            min(
+              max(
+                0,
+                (
+                  max(0, foreign_business_income_line_1_part_4)
+                  + max(0, foreign_non_business_income_line_2_part_4)
+                  + min(max(0, non_taxable_foreign_capital_gains_line_67940), max(0, federal_2025_t691_capital_gains_adjustment_line_23))
+                )
+                * federal_2025_t691_federal_tax_rate
+              ),
+              max(
+                0,
+                (max(0, total_non_business_foreign_tax_paid_part_4) * federal_2025_t691_special_foreign_non_business_tax_rate)
+                + max(0, total_business_foreign_tax_paid_part_4)
+              )
+            )
+          )
+
+  - name: net_minimum_tax_payable_line_3_part_5
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 5 line 3 subtracts special foreign tax credit from minimum amount and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, minimum_amount_line_103 - special_foreign_tax_credit_line_11_part_4)
+
+  - name: alternative_minimum_tax_obligation_line_11_part_5
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 5 line 11 determines whether the taxpayer is subject to alternative minimum tax
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            net_minimum_tax_payable_line_3_part_5
+            - max(0, regular_net_federal_tax_payable_line_15_part_3 - federal_2025_t691_part_3_federal_surtax_line_4)
+            - max(0, investment_tax_credit_line_12_part_3 - max(0, t2038_part_d_line_15))
+          )
+
+  - name: federal_minimum_tax_line_41700
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 6 line 14 is entered on line 41700 of the return
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            max(0, net_minimum_tax_payable_line_3_part_5)
+            + federal_2025_t691_part_6_federal_surtax_line_11,
+            max(0, t1206_line_24)
+          )
+
+  - name: federal_2025_t691_part_6_line_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 6 line 7 adds line 5 and line 6
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            max(
+              max(0, federal_2025_t691_basic_federal_tax_line_7_part_2 - max(0, t1206_line_22)),
+              minimum_amount_line_103
+            )
+            + max(0, t1206_line_22),
+            0
+          )
+
+  - name: federal_2025_t691_part_6_federal_surtax_line_11
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 6 line 11 uses the T2203 allocation amount, non-resident surtax, or zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t691_use_t2203_surtax_allocation:
+            federal_2025_t691_part_6_line_7
+            * federal_2025_t691_surtax_rate
+            * max(0, t2203_column_5_line_52220_percentage)
+          else:
+            if t691_nonresident_or_deemed_resident:
+              federal_2025_t691_part_6_line_7 * federal_2025_t691_surtax_rate
+            else:
+              0
+
+  - name: additional_taxes_paid_for_minimum_tax_carryover_line_14_part_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 7 line 14 calculates additional taxes paid for minimum tax carryover
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            minimum_amount_line_103
+            - (
+              max(
+                0,
+                federal_2025_t691_basic_federal_tax_line_7_part_2
+                + max(0, recapture_of_investment_tax_credit)
+                - max(0, federal_logging_tax_credit)
+                - max(0, tax_credit_line_41600)
+              )
+              + max(
+                0,
+                special_foreign_tax_credit_line_11_part_4 - max(0, federal_foreign_tax_credit_line_40500)
+              )
+            )
+          )
+
+  - name: minimum_tax_carryover_applied_line_40427
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 8 line 12 claims an amount not more than line 1 or line 11, whichever is less, on line 40427
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            max(0, minimum_tax_carryover_from_previous_years_line_1_part_8),
+            max(
+              0,
+              max(
+                0,
+                max(0, tax_amount_line_40400)
+                - (max(0, total_non_refundable_tax_credits_line_35000) + max(0, dividend_tax_credit_line_40425))
+                + max(0, recapture_of_investment_tax_credit)
+                - max(0, federal_tax_on_split_income_line_40424)
+                - max(0, federal_logging_tax_credit)
+                - max(0, tax_credit_line_41600)
+              )
+              - minimum_amount_line_103
+            )
+          )
+
+  - name: minimum_tax_carryover_available_for_2026_line_17_part_8
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T691 2025 Part 8 line 17 calculates total minimum tax carryover available for 2026
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, minimum_tax_carryover_from_previous_years_line_1_part_8)
+            - minimum_tax_carryover_applied_line_40427
+            + additional_taxes_paid_for_minimum_tax_carryover_line_14_part_7
+            - max(0, unapplied_2018_minimum_tax_carryover_line_16_part_8)
+          )
