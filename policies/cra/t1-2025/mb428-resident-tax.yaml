@@ -1,0 +1,767 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form MB428 for 2025 calculates ordinary Manitoba resident tax:
+    Manitoba tax on taxable income, Manitoba non-refundable tax credits,
+    minimum tax carryover, additional minimum tax, Manitoba political
+    contribution credit, investment and foreign tax credits, and final
+    Manitoba tax entered on T1 line 42800.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/mb428-resident-tax
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Form MB428 and Worksheet MB428 are the official 2025 Manitoba
+        tax calculation documents for Manitoba residents. This module encodes
+        the ordinary resident MB428 arithmetic while leaving detailed
+        dependant worksheet calculations, schedule eligibility, residency
+        predicates, and component line values to dedicated modules or fact
+        inputs.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5007-c/5007-c-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5007-c/5007-c-25e.pdf
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5007-d/5007-d-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5007-d/5007-d-25e.pdf
+rules:
+  - name: mb428_2025_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA MB428 2025 Part A column 1 applies to taxable income of $47,000 or less
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 47000
+
+  - name: mb428_2025_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA MB428 2025 Part A column 2 applies above $47,000 and not more than $100,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 100000
+
+  - name: mb428_2025_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA MB428 2025 Part A column 1 line 5 gives the rate as 10.8%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.108
+
+  - name: mb428_2025_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA MB428 2025 Part A column 2 line 5 gives the rate as 12.75%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.1275
+
+  - name: mb428_2025_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA MB428 2025 Part A column 3 line 5 gives the rate as 17.4%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.174
+
+  - name: mb428_2025_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA MB428 2025 Part A column 2 line 7 gives base tax of $5,076.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5076
+
+  - name: mb428_2025_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA MB428 2025 Part A column 3 line 7 gives base tax of $11,833.50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 11833.50
+
+  - name: mb428_2025_basic_personal_base_amount
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet MB428 2025 line 58040 base amount is $15,780
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 15780
+
+  - name: mb428_2025_basic_personal_phaseout_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet MB428 2025 line 58040 starts reducing the basic personal amount above $200,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 200000
+
+  - name: mb428_2025_basic_personal_zero_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet MB428 2025 line 58040 gives zero basic personal amount at $400,000 or more
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 400000
+
+  - name: mb428_2025_age_amount_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA MB428 2025 line 58080 maximum age amount is $3,728
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 3728
+
+  - name: mb428_2025_age_amount_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet MB428 2025 line 58080 starts reducing the age amount above $27,749
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 27749
+
+  - name: mb428_2025_age_amount_zero_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet MB428 2025 line 58080 gives zero age amount at $52,602 or more
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 52602
+
+  - name: mb428_2025_age_amount_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet MB428 2025 line 58080 uses a 15% age amount reduction rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.15
+
+  - name: mb428_2025_spouse_or_dependant_base_amount
+    kind: parameter
+    dtype: Money
+    source: CRA MB428 2025 lines 11 and 14 use a base amount of $9,134
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 9134
+
+  - name: mb428_2025_medical_expense_income_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA MB428 2025 line 45 gives the medical expense income rate as 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.03
+
+  - name: mb428_2025_medical_expense_threshold_cap
+    kind: parameter
+    dtype: Money
+    source: CRA MB428 2025 line 47 uses the lesser of $1,728 and line 46
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1728
+
+  - name: mb428_2025_low_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA MB428 2025 line 52 gives the Manitoba non-refundable tax credit rate as 10.8%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.108
+
+  - name: mb428_2025_high_donation_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA MB428 2025 line 55 multiplies Schedule 9 line 14 by 17.4%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.174
+
+  - name: mb428_2025_minimum_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA MB428 2025 lines 63 and 66 multiply minimum tax amounts by 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.50
+
+  - name: mb428_2025_other_than_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet MB428 2025 line 61520 multiplies line 12010 by 0.7835%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.007835
+
+  - name: mb428_2025_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet MB428 2025 line 61520 multiplies line 12000 minus line 12010 by 8%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.08
+
+  - name: mb428_2025_political_first_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet MB428 2025 line 69 first political contribution threshold is $400
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 400
+
+  - name: mb428_2025_political_second_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet MB428 2025 line 69 second political contribution threshold is $750
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 750
+
+  - name: mb428_2025_political_cap_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet MB428 2025 line 69 gives the maximum credit directly when contributions are more than $2,325
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2325
+
+  - name: mb428_2025_political_cap
+    kind: parameter
+    dtype: Money
+    source: CRA MB428 2025 line 69 maximum Manitoba political contribution tax credit is $1,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1000
+
+  - name: mb428_2025_political_first_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet MB428 2025 line 69 first political contribution rate is 75%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.75
+
+  - name: mb428_2025_political_second_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet MB428 2025 line 69 second political contribution rate is 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.50
+
+  - name: mb428_2025_political_third_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet MB428 2025 line 69 third political contribution rate is 33.33%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.3333
+
+  - name: mb428_2025_political_second_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet MB428 2025 line 69 second column base credit is $300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 300
+
+  - name: mb428_2025_political_third_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet MB428 2025 line 69 third column base credit is $475
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 475
+
+  - name: mb428_2025_small_business_venture_capital_credit_cap
+    kind: parameter
+    dtype: Money
+    source: CRA MB428 2025 line 77 caps the Manitoba small business venture capital tax credit at $120,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 120000
+
+  - name: mb428_tax_on_taxable_income_line_8
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 Part A line 8 calculates Manitoba tax on taxable income using the selected bracket column
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= mb428_2025_bracket_1_threshold:
+            max(0, taxable_income_line_26000) * mb428_2025_bracket_1_rate
+          else:
+            if taxable_income_line_26000 <= mb428_2025_bracket_2_threshold:
+              (taxable_income_line_26000 - mb428_2025_bracket_1_threshold)
+              * mb428_2025_bracket_2_rate
+              + mb428_2025_bracket_2_base_tax
+            else:
+              (taxable_income_line_26000 - mb428_2025_bracket_2_threshold)
+              * mb428_2025_bracket_3_rate
+              + mb428_2025_bracket_3_base_tax
+
+  - name: mb428_basic_personal_amount_line_58040
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet MB428 2025 line 58040 calculates the Manitoba basic personal amount from net income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if net_income_line_23600 < mb428_2025_basic_personal_phaseout_threshold:
+            mb428_2025_basic_personal_base_amount
+          else:
+            if net_income_line_23600 >= mb428_2025_basic_personal_zero_threshold:
+              0
+            else:
+              max(
+                0,
+                mb428_2025_basic_personal_base_amount
+                - (
+                  (net_income_line_23600 - mb428_2025_basic_personal_phaseout_threshold)
+                  / mb428_2025_basic_personal_phaseout_threshold
+                )
+                * mb428_2025_basic_personal_base_amount
+              )
+
+  - name: mb428_age_amount_line_58080
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet MB428 2025 line 58080 calculates the Manitoba age amount for persons born in 1960 or earlier
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if mb428_age_amount_eligible:
+            if net_income_line_23600 <= mb428_2025_age_amount_threshold:
+              mb428_2025_age_amount_maximum
+            else:
+              if net_income_line_23600 >= mb428_2025_age_amount_zero_threshold:
+                0
+              else:
+                max(
+                  0,
+                  mb428_2025_age_amount_maximum
+                  - (net_income_line_23600 - mb428_2025_age_amount_threshold)
+                  * mb428_2025_age_amount_reduction_rate
+                )
+          else:
+            0
+
+  - name: mb428_spouse_or_partner_amount_line_58120
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 13 subtracts spouse or common-law partner net income from the base amount and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, mb428_2025_spouse_or_dependant_base_amount - max(0, spouse_net_income_line_23600))
+
+  - name: mb428_eligible_dependant_amount_line_58160
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 16 subtracts eligible dependant net income from the base amount and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, mb428_2025_spouse_or_dependant_base_amount - max(0, eligible_dependant_net_income_line_23600))
+
+  - name: mb428_credit_subtotal_line_18
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 18 adds lines 9, 10, 13, 16, and 17
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          mb428_basic_personal_amount_line_58040
+          + mb428_age_amount_line_58080
+          + mb428_spouse_or_partner_amount_line_58120
+          + mb428_eligible_dependant_amount_line_58160
+          + max(0, mb428_infirm_dependants_age_18_or_older_line_58200)
+
+  - name: mb428_credit_subtotal_line_28
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 28 adds lines 19 to 27
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, cpp_qpp_contributions_employment_line_30800)
+          + max(0, cpp_qpp_contributions_self_employment_line_31000)
+          + max(0, employment_insurance_premiums_line_31200)
+          + max(0, self_employment_ei_premiums_line_31217)
+          + max(0, volunteer_firefighters_amount_line_58315)
+          + max(0, search_and_rescue_volunteers_amount_line_58316)
+          + max(0, fitness_amount_line_58325)
+          + max(0, childrens_arts_amount_line_58326)
+          + max(0, adoption_expenses_line_58330)
+
+  - name: mb428_credit_subtotal_line_29
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 29 adds line 18 and line 28
+    versions:
+      - effective_from: '2025-01-01'
+        formula: mb428_credit_subtotal_line_18 + mb428_credit_subtotal_line_28
+
+  - name: mb428_credit_subtotal_line_33
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 33 adds lines 30 to 32
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          mb428_credit_subtotal_line_29
+          + max(0, pension_income_amount_line_58360)
+          + max(0, caregiver_amount_line_58400)
+
+  - name: mb428_credit_subtotal_line_36
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 36 adds lines 33 to 35
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          mb428_credit_subtotal_line_33
+          + max(0, disability_amount_for_self_line_58440)
+          + max(0, disability_amount_transferred_from_dependant_line_58480)
+
+  - name: mb428_credit_subtotal_line_42
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 42 adds lines 36 to 41
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          mb428_credit_subtotal_line_36
+          + max(0, student_loan_interest_line_58520)
+          + max(0, tuition_and_education_amounts_line_58560)
+          + max(0, tuition_and_education_amounts_transferred_line_58600)
+          + max(0, spouse_or_partner_transfers_line_58640)
+          + max(0, family_tax_benefit_line_61470)
+
+  - name: mb428_medical_expense_income_base_line_46
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 46 multiplies net income line 23600 by 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, net_income_line_23600) * mb428_2025_medical_expense_income_rate
+
+  - name: mb428_medical_expense_threshold_line_47
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 47 uses the lesser of $1,728 and line 46
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(mb428_2025_medical_expense_threshold_cap, mb428_medical_expense_income_base_line_46)
+
+  - name: mb428_allowable_family_medical_expenses_line_48
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 48 subtracts line 47 from line 43 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, max(0, medical_expenses_line_58689) - mb428_medical_expense_threshold_line_47)
+
+  - name: mb428_total_medical_expenses_line_58769
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 50 and line 58769 add line 48 and line 49
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          mb428_allowable_family_medical_expenses_line_48
+          + max(0, medical_expenses_other_dependants_line_58729)
+
+  - name: mb428_total_claim_amount_line_58800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 51 and line 58800 add line 42 and line 50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: mb428_credit_subtotal_line_42 + mb428_total_medical_expenses_line_58769
+
+  - name: mb428_net_non_refundable_tax_credits_line_58840
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 53 and line 58840 multiply line 51 by the 10.8% credit rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: mb428_total_claim_amount_line_58800 * mb428_2025_low_credit_rate
+
+  - name: mb428_donations_and_gifts_line_58969
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 56 and line 58969 add low-rate and high-rate donations from federal Schedule 9
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_schedule_9_line_13_amount)
+          * mb428_2025_low_credit_rate
+          + max(0, federal_schedule_9_line_14_amount)
+          * mb428_2025_high_donation_rate
+
+  - name: mb428_total_non_refundable_tax_credits_line_61500
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 57 and line 61500 add Manitoba net non-refundable tax credits and Manitoba donations and gifts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          mb428_net_non_refundable_tax_credits_line_58840
+          + mb428_donations_and_gifts_line_58969
+
+  - name: mb428_tax_plus_tax_on_split_income_line_60
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 60 adds Manitoba tax on taxable income and Manitoba tax on split income line 61510
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          mb428_tax_on_taxable_income_line_8
+          + max(0, manitoba_tax_on_split_income_line_61510)
+
+  - name: mb428_dividend_tax_credit_line_61520
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet MB428 2025 line 61520 calculates the Manitoba dividend tax credit from line 12000 and line 12010
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, taxable_dividends_other_than_eligible_line_12010)
+          * mb428_2025_other_than_eligible_dividend_credit_rate
+          + max(
+            0,
+            taxable_dividends_line_12000
+            - max(0, taxable_dividends_other_than_eligible_line_12010)
+          )
+          * mb428_2025_eligible_dividend_credit_rate
+
+  - name: mb428_minimum_tax_carryover_line_61540
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 63 and line 61540 multiply federal minimum tax carryover line 40427 by 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, minimum_tax_carryover_line_40427) * mb428_2025_minimum_tax_rate
+
+  - name: mb428_credit_and_carryover_subtotal_line_64
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 64 adds lines 61 to 63
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          mb428_total_non_refundable_tax_credits_line_61500
+          + mb428_dividend_tax_credit_line_61520
+          + mb428_minimum_tax_carryover_line_61540
+
+  - name: mb428_tax_after_credits_and_carryover_line_65
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 65 subtracts line 64 from line 60 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, mb428_tax_plus_tax_on_split_income_line_60 - mb428_credit_and_carryover_subtotal_line_64)
+
+  - name: mb428_additional_tax_for_minimum_tax_purposes_line_66
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 66 multiplies Form T691 Part 7 line 1 minus line 2 by 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, t691_part_7_line_1_minus_line_2) * mb428_2025_minimum_tax_rate
+
+  - name: mb428_tax_after_additional_minimum_tax_line_67
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 67 adds line 65 and line 66
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          mb428_tax_after_credits_and_carryover_line_65
+          + mb428_additional_tax_for_minimum_tax_purposes_line_66
+
+  - name: mb428_political_contribution_tax_credit_line_69
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet MB428 2025 line 69 calculates the Manitoba political contribution tax credit capped at $1,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if manitoba_political_contributions_line_61794 > mb428_2025_political_cap_threshold:
+            mb428_2025_political_cap
+          else:
+            min(
+              mb428_2025_political_cap,
+              if manitoba_political_contributions_line_61794 <= mb428_2025_political_first_threshold:
+                max(0, manitoba_political_contributions_line_61794)
+                * mb428_2025_political_first_rate
+              else:
+                if manitoba_political_contributions_line_61794 <= mb428_2025_political_second_threshold:
+                  (manitoba_political_contributions_line_61794 - mb428_2025_political_first_threshold)
+                  * mb428_2025_political_second_rate
+                  + mb428_2025_political_second_base_credit
+                else:
+                  (manitoba_political_contributions_line_61794 - mb428_2025_political_second_threshold)
+                  * mb428_2025_political_third_rate
+                  + mb428_2025_political_third_base_credit
+            )
+
+  - name: mb428_tax_after_political_contribution_credit_line_70
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 70 subtracts the Manitoba political contribution tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            mb428_tax_after_additional_minimum_tax_line_67
+            - mb428_political_contribution_tax_credit_line_69
+          )
+
+  - name: mb428_tax_after_labour_sponsored_funds_credit_line_72
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 72 subtracts the labour-sponsored funds tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, mb428_tax_after_political_contribution_credit_line_70 - max(0, manitoba_labour_sponsored_funds_tax_credit_line_60800))
+
+  - name: mb428_tax_after_foreign_tax_credit_line_74
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 74 subtracts the provincial foreign tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, mb428_tax_after_labour_sponsored_funds_credit_line_72 - max(0, provincial_foreign_tax_credit_line_73))
+
+  - name: mb428_tax_after_community_enterprise_credit_line_76
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 76 subtracts the Manitoba community enterprise development tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            mb428_tax_after_foreign_tax_credit_line_74
+            - max(0, manitoba_community_enterprise_development_tax_credit_line_60830)
+          )
+
+  - name: mb428_small_business_venture_capital_credit_line_77
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 77 caps the Manitoba small business venture capital tax credit at $120,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            mb428_2025_small_business_venture_capital_credit_cap,
+            max(0, manitoba_small_business_venture_capital_tax_credit_line_60850)
+          )
+
+  - name: mb428_tax_after_small_business_credit_line_78
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 78 subtracts the Manitoba small business venture capital tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, mb428_tax_after_community_enterprise_credit_line_76 - mb428_small_business_venture_capital_credit_line_77)
+
+  - name: mb428_tax_after_employee_share_purchase_credit_line_80
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 80 subtracts the Manitoba employee share purchase tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            mb428_tax_after_small_business_credit_line_78
+            - max(0, manitoba_employee_share_purchase_tax_credit_line_60860)
+          )
+
+  - name: manitoba_tax_line_42800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA MB428 2025 line 82 subtracts the Manitoba mineral exploration tax credit and enters Manitoba tax on T1 line 42800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            mb428_tax_after_employee_share_purchase_credit_line_80
+            - max(0, manitoba_mineral_exploration_tax_credit_line_60920)
+          )
