@@ -1,0 +1,18 @@
+source:
+  id: cra-2025-federal-spouse-and-dependant-amounts
+  citation_path: canada/policy/cra/t1-2025/federal-spouse-and-dependant-amounts
+  title: CRA Schedule 5 2025 Amounts for Spouse or Common-Law Partner and Dependants
+  documents:
+    - title: Schedule 5 Amounts for Spouse or Common-Law Partner and Dependants 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s5/5000-s5-25e.pdf
+  coverage:
+    encoded:
+      - Spouse or common-law partner amount line 30300
+      - Eligible dependant amount line 30400
+      - Canada caregiver amount for spouse/common-law partner or eligible dependant age 18 or older line 30425
+      - Canada caregiver amount for other infirm dependants age 18 or older line 30450
+      - Canada caregiver amount for infirm children under 18 line 30500
+    not_encoded:
+      - Relationship, support, household, residency, custody, infirmity, and medical-practitioner predicates
+      - Child support payment exceptions and shared-custody agreement predicates
+      - Schedule 2 transfer of infirm child amounts between spouses
