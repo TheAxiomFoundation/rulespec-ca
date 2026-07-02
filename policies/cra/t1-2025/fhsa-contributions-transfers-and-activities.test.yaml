@@ -1,0 +1,81 @@
+- name: fhsa_room_deduction_and_unused_contributions
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_total_contributions_2025_line_1: 6000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_contributions_after_first_qualifying_withdrawal_2025_line_2: 1000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_annual_limit_2024_variable_b_amount_line_4: 500
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_total_designated_withdrawals_2025_line_6: 1500
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_total_contributions_2024_line_7: 3000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_contributions_2024_before_first_qualifying_withdrawal_line_8: 2000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_carryforward_for_2025_line_15: 2000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.rrsp_to_fhsa_transfers_prior_years_line_17: 4000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.rrsp_to_fhsa_transfers_2025_line_18: 1000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_to_rrsp_rrif_designated_transfers_prior_years_line_20: 500
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_to_rrsp_rrif_designated_transfers_2025_line_21: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_annual_limit_2024_variable_h_amount_line_28: 1000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_carryforward_for_2024_line_31: 3000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_annual_limit_2024_variable_f_amount_line_34: 2000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_maximum_participation_period_ended_before_2025: false
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_total_annual_limits_prior_years_line_42: 8000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_total_deductions_prior_years_line_44: 3000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_unused_contributions_available_prior_line_52: 1000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_deduction_claimed_for_2025: 7000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_qualifying_withdrawals_2025_line_59: 12000
+  output:
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_contributions_before_qualifying_withdrawal_line_3: 5000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_line_5: 5500
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_prior_year_post_withdrawal_contributions_line_9: 1000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_line_11: 2000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_designated_withdrawal_offset_line_12: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_line_13: 5500
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_line_16: 10000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_net_rrsp_to_fhsa_transfer_line_23: 4500
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_prior_year_net_transfer_line_27: 3500
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_line_29: 2500
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_line_32: 11000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_line_33: 2500
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_line_35: 4500
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_line_36: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_line_39: 10000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_annual_limit_line_40: 5500
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_line_45: 10500
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_line_50: 32500
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_maximum_deduction_available_line_51: 10500
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_line_56: 6000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#fhsa_deduction_line_20805: 7000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_unused_contributions_available_future_line_58: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_qualifying_withdrawals_line_68960: 12000
+
+- name: fhsa_mpp_ended_zero_annual_limit
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_total_contributions_2025_line_1: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_contributions_after_first_qualifying_withdrawal_2025_line_2: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_annual_limit_2024_variable_b_amount_line_4: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_total_designated_withdrawals_2025_line_6: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_total_contributions_2024_line_7: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_contributions_2024_before_first_qualifying_withdrawal_line_8: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_carryforward_for_2025_line_15: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.rrsp_to_fhsa_transfers_prior_years_line_17: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.rrsp_to_fhsa_transfers_2025_line_18: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_to_rrsp_rrif_designated_transfers_prior_years_line_20: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_to_rrsp_rrif_designated_transfers_2025_line_21: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_annual_limit_2024_variable_h_amount_line_28: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_carryforward_for_2024_line_31: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_annual_limit_2024_variable_f_amount_line_34: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_maximum_participation_period_ended_before_2025: true
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_total_annual_limits_prior_years_line_42: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_total_deductions_prior_years_line_44: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_unused_contributions_available_prior_line_52: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_deduction_claimed_for_2025: 1000
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#input.fhsa_qualifying_withdrawals_2025_line_59: 0
+  output:
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_annual_limit_line_40: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#federal_2025_fhsa_maximum_deduction_available_line_51: 0
+    ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities#fhsa_deduction_line_20805: 0

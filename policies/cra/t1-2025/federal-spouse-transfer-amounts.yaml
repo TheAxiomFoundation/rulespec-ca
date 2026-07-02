@@ -1,0 +1,136 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Schedule 2 for the 2025 T1 return calculates federal amounts
+    transferred from a spouse or common-law partner and entered on line
+    32600. This module encodes the Schedule 2 arithmetic for transferable
+    age, caregiver, pension, disability, and tuition amounts, the spouse's
+    adjusted taxable income, and the final federal transfer amount.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/federal-spouse-transfer-amounts
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Schedule 2 is the official 2025 T1 return schedule for
+        federal amounts transferred from a spouse or common-law partner.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s2/5000-s2-25e.pdf
+rules:
+  - name: federal_2025_schedule_2_taxable_income_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 2 2025 line 7 uses taxable income directly if it is $57,375 or less
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          57375
+
+  - name: federal_2025_schedule_2_lowest_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 2 2025 line 7 divides line 76 by 14.5% when spouse taxable income is more than $57,375
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.145
+
+  - name: federal_2025_schedule_2_pension_income_amount_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 2 2025 line 3 caps the pension income amount at $2,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          2000
+
+  - name: federal_2025_schedule_2_transferable_pension_income_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 2 2025 line 3 transfers spouse pension income amount from line 31400, maximum $2,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_2_pension_income_amount_maximum,
+            max(0, spouse_pension_income_amount_line_31400)
+          )
+
+  - name: federal_2025_schedule_2_total_transferable_amounts_line_6
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 2 2025 line 6 adds transferable age, caregiver, pension, disability, and tuition amounts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, spouse_age_amount_line_30100)
+          + max(0, spouse_caregiver_infirm_children_amount_line_30500)
+          + federal_2025_schedule_2_transferable_pension_income_amount
+          + max(0, spouse_disability_amount_line_31600)
+          + max(0, spouse_designated_tuition_amount)
+
+  - name: federal_2025_schedule_2_spouse_tax_capacity_line_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 2 2025 line 7 uses spouse taxable income if $57,375 or less, otherwise line 76 divided by 14.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if max(0, spouse_taxable_income_line_26000) <= federal_2025_schedule_2_taxable_income_threshold:
+            max(0, spouse_taxable_income_line_26000)
+          else:
+            max(0, spouse_return_line_76_amount)
+            / federal_2025_schedule_2_lowest_rate
+
+  - name: federal_2025_schedule_2_spouse_non_refundable_base_line_11
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 2 2025 line 11 adds spouse line 30000, line 96, and line 32300 amounts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, spouse_basic_personal_amount_line_30000)
+          + max(0, spouse_return_line_96_amount)
+          + max(0, spouse_tuition_amount_line_32300)
+
+  - name: federal_2025_schedule_2_spouse_adjusted_taxable_income_line_12
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 2 2025 line 12 subtracts line 11 from line 7 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_schedule_2_spouse_tax_capacity_line_7
+            - federal_2025_schedule_2_spouse_non_refundable_base_line_11
+          )
+
+  - name: federal_amounts_transferred_from_spouse_line_32600
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 2 2025 line 13 subtracts adjusted taxable income from total transferable amounts and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if spouse_transfer_allowed:
+            max(
+              0,
+              federal_2025_schedule_2_total_transferable_amounts_line_6
+              - federal_2025_schedule_2_spouse_adjusted_taxable_income_line_12
+            )
+          else:
+            0
