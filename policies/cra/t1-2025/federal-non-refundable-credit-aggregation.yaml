@@ -1,0 +1,263 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA 2025 T1 return Step 5 Part B aggregates federal
+    non-refundable tax credit claim lines, calculates selected return
+    worksheet surfaces printed on the return, applies the 14.5% federal
+    non-refundable tax credit rate, and adds donations and the top-up
+    tax credit to produce line 35000.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/federal-non-refundable-credit-aggregation
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Form 5000-R is the official 2025 T1 return for residents of
+        PE, NS, NB, MB, and SK, and its federal Step 5 Part B gives the
+        common line aggregation for total federal non-refundable tax
+        credits. This module encodes the printed arithmetic while
+        leaving detailed schedule eligibility and worksheet row
+        calculations to dedicated modules or fact inputs.
+    source_urls:
+      - https://www.canada.ca/en/revenue-agency/services/forms-publications/tax-packages-years/general-income-tax-benefit-package/5000-r.html
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-r/5000-r-25e.txt
+rules:
+  - name: federal_2025_infirm_child_caregiver_amount
+    kind: parameter
+    dtype: Money
+    source: CRA 2025 T1 Step 5 Part B line 83 multiplies children claimed on line 30499 by $2,687
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          2687
+
+  - name: federal_2025_canada_employment_amount_limit
+    kind: parameter
+    dtype: Money
+    source: CRA 2025 T1 Step 5 Part B line 92 and line 31260 limit the Canada employment amount to $1,471
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          1471
+
+  - name: federal_2025_medical_expense_income_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2025 T1 Step 5 Part B line 108 multiplies line 23600 by 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.03
+
+  - name: federal_2025_medical_expense_income_limit
+    kind: parameter
+    dtype: Money
+    source: CRA 2025 T1 Step 5 Part B line 109 uses the lesser of $2,834 and line 108
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          2834
+
+  - name: federal_2025_non_refundable_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2025 T1 Step 5 Part B line 114 gives the federal non-refundable tax credit rate as 14.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.145
+
+  - name: canada_caregiver_amount_for_infirm_children_line_30500
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part B line 83 and line 30500 multiply line 30499 by $2,687
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, infirm_children_under_18_count_line_30499)
+          * federal_2025_infirm_child_caregiver_amount
+
+  - name: federal_2025_t1_credit_subtotal_line_84
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part B line 84 adds lines 77 to 83
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, basic_personal_amount_line_30000)
+          + max(0, age_amount_line_30100)
+          + max(0, spouse_or_common_law_partner_amount_line_30300)
+          + max(0, eligible_dependant_amount_line_30400)
+          + max(0, caregiver_amount_spouse_or_eligible_dependant_line_30425)
+          + max(0, caregiver_amount_other_infirm_dependants_line_30450)
+          + canada_caregiver_amount_for_infirm_children_line_30500
+
+  - name: canada_employment_amount_line_31260
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part B line 92 and line 31260 enter the lesser of $1,471 and the employment-income line base
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_canada_employment_amount_limit,
+            max(0, canada_employment_amount_income_base_line_1_plus_2)
+          )
+
+  - name: federal_2025_t1_credit_subtotal_line_96
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part B line 96 adds lines 86 to 95
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, cpp_qpp_contributions_employment_line_30800)
+          + max(0, cpp_qpp_contributions_self_employment_line_31000)
+          + max(0, employment_insurance_premiums_line_31200)
+          + max(0, self_employment_ei_premiums_line_31217)
+          + max(0, volunteer_firefighters_amount_line_31220)
+          + max(0, search_and_rescue_volunteers_amount_line_31240)
+          + canada_employment_amount_line_31260
+          + max(0, home_buyers_amount_line_31270)
+          + max(0, home_accessibility_expenses_line_31285)
+          + max(0, adoption_expenses_line_31300)
+
+  - name: federal_2025_t1_credit_subtotal_line_98
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part B line 98 adds lines 85, 96, and 97
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1_credit_subtotal_line_84
+          + federal_2025_t1_credit_subtotal_line_96
+          + max(0, pension_income_amount_line_31400)
+
+  - name: federal_2025_t1_credit_subtotal_line_101
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part B line 101 adds lines 98 to 100
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1_credit_subtotal_line_98
+          + max(0, disability_amount_for_self_line_31600)
+          + max(0, disability_amount_transferred_from_dependant_line_31800)
+
+  - name: federal_2025_t1_credit_subtotal_line_106
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part B line 106 adds lines 101 to 105
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1_credit_subtotal_line_101
+          + max(0, student_loan_interest_line_31900)
+          + max(0, federal_tuition_amount_line_32300)
+          + max(0, tuition_transferred_from_child_or_grandchild_line_32400)
+          + max(0, spouse_or_common_law_partner_transfers_line_32600)
+
+  - name: federal_2025_medical_expense_income_base_line_108
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part B line 108 multiplies line 23600 by 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, net_income_line_23600)
+          * federal_2025_medical_expense_income_rate
+
+  - name: federal_2025_medical_expense_threshold_line_109
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part B line 109 uses the lesser of $2,834 or line 108
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_medical_expense_income_limit,
+            federal_2025_medical_expense_income_base_line_108
+          )
+
+  - name: federal_2025_allowable_family_medical_expenses_line_110
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part B line 110 subtracts line 109 from line 107 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, medical_expenses_self_spouse_children_line_33099)
+            - federal_2025_medical_expense_threshold_line_109
+          )
+
+  - name: federal_2025_total_medical_expenses_line_112
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part B line 112 adds line 110 and medical expenses for other dependants line 33199
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_allowable_family_medical_expenses_line_110
+          + max(0, allowable_medical_expenses_other_dependants_line_33199)
+
+  - name: federal_2025_total_claim_amount_line_113
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part B line 113 and line 33500 add line 106 and line 112
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1_credit_subtotal_line_106
+          + federal_2025_total_medical_expenses_line_112
+
+  - name: net_federal_non_refundable_tax_credits_line_33800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part B line 115 and line 33800 multiply line 113 by the 14.5% federal credit rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_total_claim_amount_line_113
+          * federal_2025_non_refundable_credit_rate
+
+  - name: total_federal_non_refundable_tax_credits_line_35000
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part B line 118 and line 35000 add line 115, donations and gifts line 34900, and top-up tax credit line 34990
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          net_federal_non_refundable_tax_credits_line_33800
+          + max(0, donations_and_gifts_line_34900)
+          + max(0, top_up_tax_credit_line_34990)
