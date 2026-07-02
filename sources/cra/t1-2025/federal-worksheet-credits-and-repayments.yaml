@@ -5,11 +5,13 @@ source:
   documents:
     - title: Federal Worksheet 2025
       url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-d1/5000-d1-25e.pdf
+    - title: Line 23500 Social benefits repayment
+      url: https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/line-23500-social-benefits-repayment.html
   coverage:
     encoded:
       - Taxable Canadian dividend gross-up lines 12000 and 12010 for slip and no-slip dividends
       - Federal dividend tax credit line 40425
-      - Social benefits repayment lines 23500 and 42200 using OAS and EI repayment inputs
+      - Social benefits repayment lines 23500 and 42200 using OAS repayment and encoded T4E EI repayment chart internals
       - Home accessibility expenses line 31285
       - Medical expenses for other dependants line 33199
       - Federal political contribution tax credit line 41000
@@ -17,6 +19,5 @@ source:
       - Refundable medical expense supplement line 45200
     not_encoded:
       - Information-slip box extraction beyond aggregate input amounts
-      - T4E EI repayment chart internals
       - Receipt, dependant, residence, disability, dwelling, renovation, medical practitioner, and political contribution eligibility predicates
       - Full medical expense eligibility catalogue from Guide RC4065

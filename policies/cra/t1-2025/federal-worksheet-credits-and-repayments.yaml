@@ -22,6 +22,7 @@ module:
         and eligibility layers.
     source_urls:
       - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-d1/5000-d1-25e.pdf
+      - https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/line-23500-social-benefits-repayment.html
 rules:
   - name: federal_2025_eligible_dividend_gross_up_rate
     kind: parameter
@@ -76,6 +77,22 @@ rules:
       - effective_from: '2025-01-01'
         formula: |-
           0.15
+
+  - name: federal_2025_ei_benefits_repayment_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA line 23500 2025 says EI repayment applies when adjusted income is more than $82,125
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 82125
+
+  - name: federal_2025_ei_benefits_repayment_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA line 23500 2025 says the T4E box 7 repayment rate is 30%, encoded as 0.30
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.30
 
   - name: federal_2025_home_accessibility_expense_limit
     kind: parameter
@@ -364,13 +381,59 @@ rules:
         formula: |-
           max(0, net_income_before_adjustments_line_23400)
           - (
-            max(0, ei_benefits_repayment_from_t4e_chart)
+            federal_2025_ei_benefits_repayment_line_7
             + max(0, uccb_income_line_11700)
             + max(0, rdsp_income_line_12500)
           )
           + (
             max(0, uccb_repayment_line_21300)
             + max(0, rdsp_income_repayment_included_line_23200)
+          )
+
+  - name: federal_2025_ei_benefits_repayment_adjusted_income_for_t4e
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA line 23500 EI repayment condition uses line 23400 minus UCCB and RDSP income plus UCCB and RDSP repayments
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, net_income_before_adjustments_line_23400)
+          - max(0, uccb_income_line_11700)
+          - max(0, rdsp_income_line_12500)
+          + max(0, uccb_repayment_line_21300)
+          + max(0, rdsp_income_repayment_included_line_23200)
+
+  - name: federal_2025_ei_benefits_repayment_from_t4e_chart
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA line 23500 and the T4E repayment chart calculate EI repayment when box 15 exists, box 7 is 30%, and adjusted income exceeds $82,125
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t4e_box7_repayment_rate_is_30_percent:
+            min(
+              max(0, t4e_box15_regular_and_other_benefits_paid),
+              max(0, federal_2025_ei_benefits_repayment_adjusted_income_for_t4e - federal_2025_ei_benefits_repayment_threshold)
+            ) * federal_2025_ei_benefits_repayment_rate
+          else:
+            0
+
+  - name: federal_2025_ei_benefits_repayment_line_7
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 23500 line 7 enters the EI repayment from the T4E repayment chart
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            max(0, ei_benefits_repayment_from_t4e_chart),
+            federal_2025_ei_benefits_repayment_from_t4e_chart
           )
 
   - name: federal_2025_oas_benefits_repayment
@@ -401,7 +464,7 @@ rules:
       - effective_from: '2025-01-01'
         formula: |-
           federal_2025_oas_benefits_repayment
-          + max(0, ei_benefits_repayment_from_t4e_chart)
+          + federal_2025_ei_benefits_repayment_line_7
 
   - name: federal_home_accessibility_expenses_line_31285
     kind: derived

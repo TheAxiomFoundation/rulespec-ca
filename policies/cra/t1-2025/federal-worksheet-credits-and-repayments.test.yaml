@@ -32,15 +32,45 @@
     ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.oas_overpayment_recovered_t4a_oas_box_20: 500
     ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.net_income_before_adjustments_line_23400: 100000
     ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.ei_benefits_repayment_from_t4e_chart: 300
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.t4e_box7_repayment_rate_is_30_percent: false
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.t4e_box15_regular_and_other_benefits_paid: 0
     ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.uccb_income_line_11700: 100
     ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.rdsp_income_line_12500: 200
     ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.uccb_repayment_line_21300: 50
     ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.rdsp_income_repayment_included_line_23200: 0
   output:
     ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_oas_and_supplements_after_recovery: 8500
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_ei_benefits_repayment_adjusted_income_for_t4e: 99750
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_ei_benefits_repayment_from_t4e_chart: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_ei_benefits_repayment_line_7: 300
     ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_social_benefits_repayment_adjusted_net_income: 99450
     ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_oas_benefits_repayment: 899.4
     ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_social_benefits_repayment_line_23500_and_42200: 1199.4
+
+- name: computed_t4e_ei_benefits_repayment_chart
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.oas_pension_line_11300: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.net_federal_supplements_line_14600: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.oas_overpayment_recovered_t4a_oas_box_20: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.net_income_before_adjustments_line_23400: 90000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.ei_benefits_repayment_from_t4e_chart: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.t4e_box7_repayment_rate_is_30_percent: true
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.t4e_box15_regular_and_other_benefits_paid: 5000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.uccb_income_line_11700: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.rdsp_income_line_12500: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.uccb_repayment_line_21300: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#input.rdsp_income_repayment_included_line_23200: 0
+  output:
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_ei_benefits_repayment_adjusted_income_for_t4e: 90000
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_ei_benefits_repayment_from_t4e_chart: 1500
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_ei_benefits_repayment_line_7: 1500
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_social_benefits_repayment_adjusted_net_income: 88500
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_2025_oas_benefits_repayment: 0
+    ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments#federal_social_benefits_repayment_line_23500_and_42200: 1500
 
 - name: home_accessibility_medical_political_and_top_up
   period:
