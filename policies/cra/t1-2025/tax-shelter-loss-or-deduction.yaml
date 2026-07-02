@@ -1,0 +1,161 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T5004 for 2025 reports tax shelter losses, deductions,
+    donations, political contributions, and tax credits claimed by an
+    investor. This module encodes the total amount claimed and the T1 routing
+    surfaces named on the form.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/tax-shelter-loss-or-deduction
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Form T5004 is the official 2025 form for claiming a tax shelter
+        loss or deduction year amount.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t5004/t5004-25e.pdf
+rules:
+  - name: tax_shelter_gifts_line_34900
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T5004 2025 notes say if the tax shelter claim is for a gift, use line 34900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t5004_tax_shelter_gift_claims)
+
+  - name: tax_shelter_political_contributions_line_40900
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T5004 2025 notes say if the tax shelter claim is for a political contribution, use line 40900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t5004_tax_shelter_political_contribution_claims)
+
+  - name: tax_shelter_limited_partner_net_partnership_income_line_12200
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T5004 2025 notes say a limited partner of a partnership that invested in a tax shelter uses line 12200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t5004_tax_shelter_limited_partner_claims)
+
+  - name: tax_shelter_rental_income_line_12600
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T5004 2025 examples include line 12600 for rental income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t5004_tax_shelter_rental_claims)
+
+  - name: tax_shelter_business_investment_loss_line_21700
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T5004 2025 examples include line 21700 for business investment loss
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t5004_tax_shelter_business_investment_loss_claims)
+
+  - name: tax_shelter_business_income_line_13500
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T5004 2025 examples include line 13500 for business income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t5004_tax_shelter_business_income_claims)
+
+  - name: tax_shelter_carrying_charges_line_22100
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T5004 2025 examples include line 22100 for carrying charges and interest expenses
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t5004_tax_shelter_carrying_charges_claims)
+
+  - name: tax_shelter_farming_income_line_14100
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T5004 2025 examples include line 14100 for farming income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t5004_tax_shelter_farming_claims)
+
+  - name: tax_shelter_exploration_and_development_expenses_line_22400
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T5004 2025 examples include line 22400 for exploration and development expenses
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t5004_tax_shelter_exploration_and_development_claims)
+
+  - name: tax_shelter_fishing_income_line_14300
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T5004 2025 examples include line 14300 for fishing income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t5004_tax_shelter_fishing_claims)
+
+  - name: tax_shelter_other_deductions_line_23200
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T5004 2025 examples include line 23200 for other deductions
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t5004_tax_shelter_other_deduction_claims)
+
+  - name: tax_shelter_total_amount_claimed_line_67650
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T5004 2025 line 67650 is the total amount claimed for tax shelter losses or deductions
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          tax_shelter_gifts_line_34900
+          + tax_shelter_political_contributions_line_40900
+          + tax_shelter_limited_partner_net_partnership_income_line_12200
+          + tax_shelter_rental_income_line_12600
+          + tax_shelter_business_investment_loss_line_21700
+          + tax_shelter_business_income_line_13500
+          + tax_shelter_carrying_charges_line_22100
+          + tax_shelter_farming_income_line_14100
+          + tax_shelter_exploration_and_development_expenses_line_22400
+          + tax_shelter_fishing_income_line_14300
+          + tax_shelter_other_deductions_line_23200
+          + max(0, t5004_tax_shelter_other_claims)
