@@ -1,0 +1,192 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA 2025 T1 return Steps 2, 3, and 4 aggregate income lines,
+    self-employment income, social benefit inclusions, deductions, net
+    income adjustments, and taxable-income deductions to calculate total
+    income line 15000, net income line 23600, and taxable income line
+    26000.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/t1-income-net-taxable-income
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Form 5000-R is the official 2025 T1 return for residents of
+        PE, NS, NB, MB, and SK, and Steps 2 through 4 provide the common
+        resident-return aggregation arithmetic for total income, net
+        income, and taxable income. This module encodes those line
+        aggregations while leaving slip extraction, schedule-specific
+        calculations, and eligibility predicates to dedicated modules or
+        fact inputs.
+    source_urls:
+      - https://www.canada.ca/en/revenue-agency/services/forms-publications/tax-packages-years/general-income-tax-benefit-package/5000-r.html
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-r/5000-r-25e.txt
+rules:
+  - name: federal_2025_t1_income_subtotal_line_21
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 2 line 21 adds income lines 1 to 20
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          employment_income_line_10100
+          + other_employment_income_line_10400
+          + old_age_security_pension_line_11300
+          + cpp_or_qpp_benefits_line_11400
+          + other_pensions_and_superannuation_line_11500
+          + elected_split_pension_amount_line_11600
+          + universal_child_care_benefit_line_11700
+          + employment_insurance_and_other_benefits_line_11900
+          + taxable_dividends_line_12000
+          + interest_and_other_investment_income_line_12100
+          + net_partnership_income_line_12200
+          + rdsp_income_line_12500
+          + net_rental_income_line_12600
+          + taxable_capital_gains_line_12700
+          + taxable_support_payments_received_line_12800
+          + rrsp_income_line_12900
+          + taxable_fhsa_income_line_12905
+          + taxable_fhsa_income_other_line_12906
+          + other_income_line_13000
+          + taxable_scholarships_line_13010
+
+  - name: net_self_employment_income_line_27
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 2 line 27 adds net business, professional, commission, farming, and fishing income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          net_business_income_line_13500
+          + net_professional_income_line_13700
+          + net_commission_income_line_13900
+          + net_farming_income_line_14100
+          + net_fishing_income_line_14300
+
+  - name: federal_2025_t1_income_before_social_benefits_line_28
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 2 line 28 adds line 21 and line 27
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1_income_subtotal_line_21
+          + net_self_employment_income_line_27
+
+  - name: social_benefit_inclusions_line_14700
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 2 line 32 and line 14700 add workers' compensation benefits, social assistance payments, and net federal supplements
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, workers_compensation_benefits_line_14400)
+          + max(0, social_assistance_payments_line_14500)
+          + max(0, net_federal_supplements_line_14600)
+
+  - name: total_income_line_15000
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 2 line 33 and line 15000 add line 28 and line 32 as total income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1_income_before_social_benefits_line_28
+          + social_benefit_inclusions_line_14700
+
+  - name: total_deductions_line_23300
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 3 line 53 and line 23300 add deduction lines 35 to 52
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, registered_pension_plan_deduction_line_20700)
+          + max(0, rrsp_deduction_line_20800)
+          + max(0, fhsa_deduction_line_20805)
+          + max(0, elected_split_pension_deduction_line_21000)
+          + max(0, union_professional_dues_line_21200)
+          + max(0, uccb_repayment_line_21300)
+          + max(0, child_care_expenses_line_21400)
+          + max(0, disability_supports_deduction_line_21500)
+          + max(0, allowable_business_investment_loss_line_21700)
+          + max(0, moving_expenses_line_21900)
+          + max(0, allowable_support_payments_made_line_22000)
+          + max(0, carrying_charges_line_22100)
+          + max(0, cpp_qpp_self_employment_deduction_line_22200)
+          + max(0, cpp_qpp_enhanced_employment_deduction_line_22215)
+          + max(0, exploration_and_development_expenses_line_22400)
+          + max(0, other_employment_expenses_line_22900)
+          + max(0, clergy_residence_deduction_line_23100)
+          + max(0, other_deductions_line_23200)
+
+  - name: net_income_before_adjustments_line_23400
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 3 line 54 and line 23400 subtract line 53 from line 34 and may be negative
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          total_income_line_15000 - total_deductions_line_23300
+
+  - name: net_income_line_23600
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 3 line 56 and line 23600 subtract social benefits repayment line 23500 from line 54 and floor negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            net_income_before_adjustments_line_23400
+            - max(0, social_benefits_repayment_line_23500)
+          )
+
+  - name: taxable_income_deductions_line_25700
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 4 line 68 and line 25700 add taxable-income deduction lines 58 to 67
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, canadian_forces_police_deduction_line_24400)
+          + max(0, security_options_deductions_line_24900)
+          + max(0, other_payments_deduction_line_25000)
+          + max(0, limited_partnership_losses_other_years_line_25100)
+          + max(0, non_capital_losses_other_years_line_25200)
+          + max(0, net_capital_losses_other_years_line_25300)
+          + max(0, qbt_qcc_capital_gains_deduction_line_25395)
+          + max(0, capital_gains_deduction_line_25400)
+          + max(0, northern_residents_deductions_line_25500)
+          + max(0, additional_deductions_line_25600)
+
+  - name: taxable_income_line_26000
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 4 line 69 and line 26000 subtract line 68 from line 57 and floor negative amounts at zero as taxable income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, net_income_line_23600 - taxable_income_deductions_line_25700)
