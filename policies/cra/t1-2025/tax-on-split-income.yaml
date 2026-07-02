@@ -1,0 +1,450 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T1206 for 2025 calculates tax on split income. This module
+    encodes Part 1 TOSI-adjusted net income, Part 2 federal tax on split
+    income, and the non-multiple-jurisdiction Part 3 provincial or
+    territorial tax surface.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/tax-on-split-income
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Form T1206 is the official 2025 T1 form for calculating tax
+        on split income and related TOSI-adjusted income amounts.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t1206/t1206-25e.pdf
+rules:
+  - name: federal_2025_t1206_tosi_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T1206 2025 Part 2 line 8 multiplies total split income by 33%, encoded as 0.33
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.33
+
+  - name: federal_2025_t1206_lowest_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T1206 2025 Part 2 lines 8A and 14 use 14.5%, encoded as 0.145
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.145
+
+  - name: federal_2025_t1206_other_than_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T1206 2025 Part 2 line 19 uses 9.0301%, encoded as 0.090301
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.090301
+
+  - name: federal_2025_t1206_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T1206 2025 Part 2 line 20 uses 15.0198%, encoded as 0.150198
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.150198
+
+  - name: federal_2025_t1206_taxable_dividends_line_1
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 1 line 1 uses the taxable amount of eligible and other-than-eligible dividends subject to TOSI
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t1206_taxable_dividends_subject_to_tosi_line_68330)
+
+  - name: federal_2025_t1206_other_than_eligible_dividends_line_2
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 1 line 2 uses the part of line 1 that is other-than-eligible dividends
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_t1206_taxable_dividends_line_1,
+            max(0, t1206_other_than_eligible_dividends_subject_to_tosi_line_68340)
+          )
+
+  - name: federal_2025_t1206_other_split_income_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 1 line 3 uses all other split income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t1206_all_other_split_income_line_3)
+
+  - name: total_split_income_line_68360
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 1 line 4 adds line 1 and line 3 and enters the amount on line 23200 and line 68360
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1206_taxable_dividends_line_1
+          + federal_2025_t1206_other_split_income_line_3
+
+  - name: tosi_adjusted_net_income_line_6
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 1 line 6 adds total split income line 4 and net income line 5 and may be negative
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          total_split_income_line_68360 + net_income_line_23600
+
+  - name: federal_tax_on_split_income_line_40424
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 2 line 8 multiplies total split income by 33% and enters it on line 40424
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          total_split_income_line_68360 * federal_2025_t1206_tosi_rate
+
+  - name: federal_2025_t1206_tosi_adjusted_taxable_income_line_8a
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 2 line 8A divides line 8 by 14.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_tax_on_split_income_line_40424 / federal_2025_t1206_lowest_tax_rate
+
+  - name: federal_2025_t1206_line_10
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 2 line 10 adds line 8 and line 9
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_tax_on_split_income_line_40424
+          + max(0, additional_tax_line_41500)
+
+  - name: federal_2025_t1206_disability_credit_base_line_13
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 2 line 13 adds federal disability amount line 31600 and transferred disability amount line 31800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, disability_amount_line_31600)
+          + max(0, disability_amount_transferred_line_31800)
+
+  - name: federal_2025_t1206_disability_credit_reduction_line_14
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 2 line 14 multiplies line 13 by 14.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1206_disability_credit_base_line_13
+          * federal_2025_t1206_lowest_tax_rate
+
+  - name: federal_2025_t1206_line_15
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 2 line 15 subtracts line 14 from line 10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1206_line_10
+          - federal_2025_t1206_disability_credit_reduction_line_14
+
+  - name: federal_2025_t1206_eligible_dividend_amount_line_18
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 2 line 18 subtracts line 17 from line 16 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t1206_taxable_dividends_line_1
+            - federal_2025_t1206_other_than_eligible_dividends_line_2
+          )
+
+  - name: federal_2025_t1206_other_than_eligible_dividend_credit_line_19
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 2 line 19 multiplies line 17 by 9.0301%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1206_other_than_eligible_dividends_line_2
+          * federal_2025_t1206_other_than_eligible_dividend_credit_rate
+
+  - name: federal_2025_t1206_eligible_dividend_credit_line_20
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 2 line 20 multiplies line 18 by 15.0198%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1206_eligible_dividend_amount_line_18
+          * federal_2025_t1206_eligible_dividend_credit_rate
+
+  - name: federal_2025_t1206_dividend_tax_credit_line_21
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 2 line 21 adds line 19 and line 20
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1206_other_than_eligible_dividend_credit_line_19
+          + federal_2025_t1206_eligible_dividend_credit_line_20
+
+  - name: federal_2025_t1206_line_22
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 2 line 22 subtracts line 21 from line 15
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1206_line_15 - federal_2025_t1206_dividend_tax_credit_line_21
+
+  - name: federal_2025_t1206_foreign_tax_credit_on_split_income_line_23
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 2 line 23 prorates line 40500 by split income from foreign sources divided by total income from foreign sources
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if max(0, total_income_from_foreign_sources_line_68380) <= 0:
+            0
+          else:
+            (
+              min(max(0, split_income_from_foreign_sources_line_68370), max(0, total_income_from_foreign_sources_line_68380))
+              / max(0, total_income_from_foreign_sources_line_68380)
+            )
+            * max(0, federal_foreign_tax_credit_line_40500)
+
+  - name: federal_2025_t1206_line_24
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 2 line 24 subtracts line 23 from line 22 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t1206_line_22
+            - federal_2025_t1206_foreign_tax_credit_on_split_income_line_23
+          )
+
+  - name: federal_2025_t1206_line_27
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 2 line 27 subtracts line 26 from line 25 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, tax_payable_before_line_40600 - max(0, tax_credit_line_41600))
+
+  - name: federal_2025_t1206_line_29
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 2 line 29 adds line 27 and line 28
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1206_line_27 + max(0, additional_tax_line_41500)
+
+  - name: federal_2025_t1206_line_30
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 2 line 30 is the greater of line 24 and line 29
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(federal_2025_t1206_line_24, federal_2025_t1206_line_29)
+
+  - name: total_federal_tax_line_42000_with_tosi
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 2 adds line 30 to line 41800 and enters the result on line 42000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1206_line_30 + max(0, special_taxes_line_41800)
+
+  - name: provincial_territorial_2025_t1206_tax_on_split_income_line_33
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 3 line 33 multiplies total split income by the high tax rate from Chart C
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          total_split_income_line_68360
+          * max(0, t1206_provincial_or_territorial_high_tax_rate_line_32)
+
+  - name: provincial_territorial_2025_t1206_adjusted_taxable_income_line_33c
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 3 line 33C divides line 33A by the low tax rate from Chart C
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if max(0, t1206_provincial_or_territorial_low_tax_rate_line_33b) <= 0:
+            0
+          else:
+            provincial_territorial_2025_t1206_tax_on_split_income_line_33
+            / max(0, t1206_provincial_or_territorial_low_tax_rate_line_33b)
+
+  - name: provincial_territorial_2025_t1206_disability_credit_line_38
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 3 line 38 multiplies provincial disability credit base line 36 by the low tax rate from Chart C
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          (
+            max(0, provincial_disability_tax_credit_line_58440)
+            + max(0, provincial_disability_tax_credit_transferred_line_58480)
+          )
+          * max(0, t1206_provincial_or_territorial_low_tax_rate_line_37)
+
+  - name: provincial_territorial_2025_t1206_line_39
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 3 line 39 subtracts line 38 from line 33
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          provincial_territorial_2025_t1206_tax_on_split_income_line_33
+          - provincial_territorial_2025_t1206_disability_credit_line_38
+
+  - name: provincial_territorial_2025_t1206_dividend_credit_line_46
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 3 line 46 adds the eligible and other-than-eligible provincial dividend tax credits
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          (
+            federal_2025_t1206_eligible_dividend_amount_line_18
+            * max(0, t1206_provincial_eligible_dividend_credit_rate_line_41)
+          )
+          + (
+            federal_2025_t1206_other_than_eligible_dividends_line_2
+            * max(0, t1206_provincial_other_than_eligible_dividend_credit_rate_line_44)
+          )
+
+  - name: provincial_territorial_2025_t1206_line_47
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 3 line 47 subtracts line 46 from line 39
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          provincial_territorial_2025_t1206_line_39
+          - provincial_territorial_2025_t1206_dividend_credit_line_46
+
+  - name: provincial_territorial_2025_t1206_foreign_tax_credit_line_49
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 3 line 49 prorates the provincial or territorial foreign tax credit by split foreign non-business income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if max(0, total_non_business_income_from_foreign_sources_for_t1206) <= 0:
+            0
+          else:
+            (
+              min(max(0, split_non_business_income_from_foreign_sources_for_t1206), max(0, total_non_business_income_from_foreign_sources_for_t1206))
+              / max(0, total_non_business_income_from_foreign_sources_for_t1206)
+            )
+            * max(0, provincial_or_territorial_foreign_tax_credit_for_t1206)
+
+  - name: provincial_territorial_2025_t1206_line_50
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 3 line 50 subtracts line 49 from line 48
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          provincial_territorial_2025_t1206_line_47
+          - provincial_territorial_2025_t1206_foreign_tax_credit_line_49
+
+  - name: provincial_territorial_tax_line_42800_with_tosi
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1206 2025 Part 3 line 52 is the greater of line 50 and line 51 and is entered on line 42800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            provincial_territorial_2025_t1206_line_50,
+            max(0, provincial_or_territorial_tax_floor_line_51)
+          )
