@@ -943,6 +943,143 @@ rules:
         formula: |-
           max(0, cwb_claimant_disability_amount_before_reduction - cwb_claimant_disability_reduction)
 
+  - name: cwb_spouse_disability_amount_before_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 Step 3 requires an eligible spouse who is eligible for the DTC to complete a separate disability supplement calculation
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if has_eligible_spouse and spouse_is_eligible_for_disability_tax_credit:
+            min(
+              if is_quebec_resident:
+                cwb_qc_disability_maximum
+              else:
+                if is_nunavut_resident:
+                  cwb_nu_disability_maximum
+                else:
+                  cwb_disability_maximum,
+              (
+                if is_quebec_resident:
+                  if has_eligible_spouse_or_eligible_dependant:
+                    cwb_qc_disability_family_phase_in_rate
+                  else:
+                    cwb_qc_disability_single_phase_in_rate
+                else:
+                  if is_alberta_resident:
+                    cwb_ab_disability_phase_in_rate
+                  else:
+                    if is_nunavut_resident:
+                      cwb_nu_disability_phase_in_rate
+                    else:
+                      cwb_disability_phase_in_rate
+              ) * max(0, cwb_spouse_working_income - (
+                if is_quebec_resident:
+                  cwb_qc_disability_working_income_exclusion
+                else:
+                  if is_alberta_resident:
+                    cwb_ab_disability_working_income_exclusion
+                  else:
+                    if is_nunavut_resident:
+                      cwb_nu_disability_working_income_exclusion
+                    else:
+                      cwb_disability_working_income_exclusion
+              ))
+            )
+          else:
+            0
+
+  - name: cwb_spouse_disability_reduction_threshold
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 Step 3 spouse-side disability supplement threshold
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if is_quebec_resident:
+            if has_eligible_spouse and has_eligible_dependant:
+              cwb_qc_disability_spouse_and_dependant_threshold
+            else:
+              if has_eligible_spouse:
+                cwb_qc_disability_spouse_only_threshold
+              else:
+                if has_eligible_dependant:
+                  cwb_qc_disability_dependant_only_threshold
+                else:
+                  cwb_qc_disability_single_threshold
+          else:
+            if is_alberta_resident:
+              if has_eligible_spouse_or_eligible_dependant:
+                cwb_ab_disability_family_threshold
+              else:
+                cwb_ab_disability_single_threshold
+            else:
+              if is_nunavut_resident:
+                if has_eligible_spouse_or_eligible_dependant:
+                  cwb_nu_disability_family_threshold
+                else:
+                  cwb_nu_disability_single_threshold
+              else:
+                if has_eligible_spouse and claimant_is_eligible_for_disability_tax_credit:
+                  cwb_disability_two_disabled_threshold
+                else:
+                  cwb_disability_single_or_one_disabled_threshold
+
+  - name: cwb_spouse_disability_reduction_rate
+    kind: derived
+    entity: Family
+    dtype: Rate
+    period: Year
+    source: CRA Schedule 6 2025 Step 3 spouse-side disability supplement reduction rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if is_quebec_resident:
+            if has_eligible_spouse and claimant_is_eligible_for_disability_tax_credit:
+              cwb_qc_disability_two_disabled_reduction_rate
+            else:
+              cwb_qc_disability_one_disabled_reduction_rate
+          else:
+            if is_nunavut_resident:
+              if has_eligible_spouse and claimant_is_eligible_for_disability_tax_credit:
+                cwb_nu_disability_two_disabled_reduction_rate
+              else:
+                cwb_nu_disability_one_disabled_reduction_rate
+            else:
+              if has_eligible_spouse and claimant_is_eligible_for_disability_tax_credit:
+                cwb_disability_two_disabled_reduction_rate
+              else:
+                cwb_disability_one_disabled_reduction_rate
+
+  - name: cwb_spouse_disability_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 Step 3 spouse-side disability supplement reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if has_eligible_spouse and spouse_is_eligible_for_disability_tax_credit:
+            cwb_spouse_disability_reduction_rate * max(0, cwb_adjusted_family_net_income - cwb_spouse_disability_reduction_threshold)
+          else:
+            0
+
+  - name: cwb_spouse_disability_supplement
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 separate spouse-side disability supplement after reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, cwb_spouse_disability_amount_before_reduction - cwb_spouse_disability_reduction)
+
   - name: canada_workers_benefit_line_45300
     kind: derived
     entity: Family

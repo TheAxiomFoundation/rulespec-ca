@@ -35,6 +35,11 @@
     ca:policies/cra/t1-2025/canada-workers-benefit#cwb_disability_reduction_rate: 0.15
     ca:policies/cra/t1-2025/canada-workers-benefit#cwb_claimant_disability_reduction: 0
     ca:policies/cra/t1-2025/canada-workers-benefit#cwb_claimant_disability_supplement: 0
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_spouse_disability_amount_before_reduction: 0
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_spouse_disability_reduction_threshold: 37740
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_spouse_disability_reduction_rate: 0.15
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_spouse_disability_reduction: 0
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_spouse_disability_supplement: 0
     ca:policies/cra/t1-2025/canada-workers-benefit#canada_workers_benefit_line_45300: 1620
     ca:policies/cra/t1-2025/canada-workers-benefit#advanced_canada_workers_benefit_line_41500: 0
     ca:policies/cra/t1-2025/canada-workers-benefit#canada_workers_benefit_refundable_credit_after_acwb: 1620
@@ -124,6 +129,11 @@
     ca:policies/cra/t1-2025/canada-workers-benefit#cwb_disability_reduction_rate: 0.075
     ca:policies/cra/t1-2025/canada-workers-benefit#cwb_claimant_disability_reduction: 0
     ca:policies/cra/t1-2025/canada-workers-benefit#cwb_claimant_disability_supplement: 843
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_spouse_disability_amount_before_reduction: 843
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_spouse_disability_reduction_threshold: 49389
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_spouse_disability_reduction_rate: 0.075
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_spouse_disability_reduction: 0
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_spouse_disability_supplement: 843
 
 - name: alberta_custom_basic_cwb_amount
   period:
@@ -192,6 +202,11 @@
     ca:policies/cra/t1-2025/canada-workers-benefit#cwb_disability_reduction_rate: 0.1
     ca:policies/cra/t1-2025/canada-workers-benefit#cwb_claimant_disability_reduction: 0
     ca:policies/cra/t1-2025/canada-workers-benefit#cwb_claimant_disability_supplement: 851.31
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_spouse_disability_amount_before_reduction: 851.31
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_spouse_disability_reduction_threshold: 41048.9
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_spouse_disability_reduction_rate: 0.1
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_spouse_disability_reduction: 0
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_spouse_disability_supplement: 851.31
     ca:policies/cra/t1-2025/canada-workers-benefit#canada_workers_benefit_line_45300: 4061.09
 
 - name: nunavut_custom_family_cwb_with_disability

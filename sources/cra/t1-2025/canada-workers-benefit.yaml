@@ -17,7 +17,7 @@ source:
       - Alberta, Quebec, and Nunavut custom Schedule 6 basic and disability supplement amounts
       - Secondary-earner exemption
       - Disability supplement for the claimant, including two-DTC-couple threshold and rate
+      - Separate spouse-side disability supplement calculation
       - Advanced Canada Workers Benefit line 41500 amount and post-ACWB net refundable credit surface
     not_encoded:
-      - Spouse-side separate disability supplement calculation
       - Detailed eligibility predicates for working income, eligible spouse, eligible dependant, DTC, and excluded full-time student/inmate/death cases
