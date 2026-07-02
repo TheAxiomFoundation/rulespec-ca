@@ -1,0 +1,865 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T2203 for 2025 includes Form NS428MJ and Form NB428MJ for
+    Nova Scotia and New Brunswick multiple-jurisdiction tax. This module
+    encodes their Part 4 bracket tax, proration, resident adjustments,
+    low-income reductions, selected credits, and final Part 5 tax lines.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/t2203-nova-scotia-new-brunswick-tax
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Form T2203 is the official 2025 form for provincial and
+        territorial taxes for multiple jurisdictions, including NS428MJ and
+        NB428MJ.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t2203/t2203-25e.pdf
+rules:
+  - name: federal_2025_t2203_ns_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NS428MJ bracket table first threshold is $30,507
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          30507
+
+  - name: federal_2025_t2203_ns_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NS428MJ bracket table threshold is $61,015
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          61015
+
+  - name: federal_2025_t2203_ns_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NS428MJ bracket table threshold is $95,883
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          95883
+
+  - name: federal_2025_t2203_ns_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NS428MJ bracket table threshold is $154,650
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          154650
+
+  - name: federal_2025_t2203_ns_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NS428MJ bracket table first rate is 8.79%, encoded as 0.0879
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.0879
+
+  - name: federal_2025_t2203_ns_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NS428MJ bracket table second rate is 14.95%, encoded as 0.1495
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.1495
+
+  - name: federal_2025_t2203_ns_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NS428MJ bracket table third rate is 16.67%, encoded as 0.1667
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.1667
+
+  - name: federal_2025_t2203_ns_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NS428MJ bracket table fourth rate is 17.5%, encoded as 0.175
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.175
+
+  - name: federal_2025_t2203_ns_bracket_5_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NS428MJ bracket table fifth rate is 21%, encoded as 0.21
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.21
+
+  - name: federal_2025_t2203_ns_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NS428MJ bracket table second base tax amount is $2,681.57
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          2681.57
+
+  - name: federal_2025_t2203_ns_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NS428MJ bracket table third base tax amount is $7,242.51
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          7242.51
+
+  - name: federal_2025_t2203_ns_bracket_4_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NS428MJ bracket table fourth base tax amount is $13,055.01
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          13055.01
+
+  - name: federal_2025_t2203_ns_bracket_5_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NS428MJ bracket table fifth base tax amount is $23,339.23
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          23339.23
+
+  - name: federal_2025_t2203_ns_minimum_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NS428MJ lines 14 and 17 use 57.5%, encoded as 0.575
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.575
+
+  - name: federal_2025_t2203_ns_low_income_basic_reduction
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NS428MJ line 41 basic low-income reduction is $300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          300
+
+  - name: federal_2025_t2203_ns_low_income_spouse_reduction
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NS428MJ line 42 spouse or common-law partner reduction is $300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          300
+
+  - name: federal_2025_t2203_ns_low_income_dependant_reduction
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NS428MJ line 43 eligible dependant reduction is $300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          300
+
+  - name: federal_2025_t2203_ns_low_income_maximum_reduction
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NS428MJ line 44 maximum low-income reduction is $600
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          600
+
+  - name: federal_2025_t2203_ns_low_income_child_reduction
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NS428MJ line 45 dependent child reduction is $165 per child
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          165
+
+  - name: federal_2025_t2203_ns_low_income_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NS428MJ line 48 base amount is $15,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          15000
+
+  - name: federal_2025_t2203_ns_low_income_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NS428MJ line 50 applicable low-income reduction rate is 5%, encoded as 0.05
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.05
+
+  - name: federal_2025_t2203_ns_political_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NS428MJ line 55 political contribution tax credit rate is 75%, encoded as 0.75
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.75
+
+  - name: federal_2025_t2203_ns_political_credit_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NS428MJ line 55 political contribution tax credit maximum is $750
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          750
+
+  - name: federal_2025_t2203_ns_food_bank_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NS428MJ line 57 food bank tax credit for farmers rate is 25%, encoded as 0.25
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.25
+
+  - name: federal_2025_t2203_ns_labour_sponsored_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NS428MJ line 59 labour-sponsored venture-capital tax credit rate is 20%, encoded as 0.20
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.20
+
+  - name: federal_2025_t2203_ns_labour_sponsored_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NS428MJ line 59 labour-sponsored venture-capital tax credit maximum is $2,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          2000
+
+  - name: federal_2025_t2203_ns_age_tax_credit
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NS428MJ line 67 age tax credit is $1,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          1000
+
+  - name: federal_2025_t2203_nb_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB428MJ bracket table first threshold is $51,306
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          51306
+
+  - name: federal_2025_t2203_nb_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB428MJ bracket table threshold is $102,614
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          102614
+
+  - name: federal_2025_t2203_nb_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB428MJ bracket table threshold is $190,060
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          190060
+
+  - name: federal_2025_t2203_nb_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NB428MJ bracket table first rate is 9.40%, encoded as 0.094
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.094
+
+  - name: federal_2025_t2203_nb_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NB428MJ bracket table second rate is 14%, encoded as 0.14
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.14
+
+  - name: federal_2025_t2203_nb_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NB428MJ bracket table third rate is 16%, encoded as 0.16
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.16
+
+  - name: federal_2025_t2203_nb_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NB428MJ bracket table fourth rate is 19.50%, encoded as 0.195
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.195
+
+  - name: federal_2025_t2203_nb_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB428MJ bracket table second base tax amount is $4,822.76
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          4822.76
+
+  - name: federal_2025_t2203_nb_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB428MJ bracket table third base tax amount is $12,005.88
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          12005.88
+
+  - name: federal_2025_t2203_nb_bracket_4_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB428MJ bracket table fourth base tax amount is $25,997.24
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          25997.24
+
+  - name: federal_2025_t2203_nb_minimum_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NB428MJ lines 14 and 17 use 57%, encoded as 0.57
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.57
+
+  - name: federal_2025_t2203_nb_low_income_basic_reduction
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB428MJ line 41 basic low-income reduction is $802
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          802
+
+  - name: federal_2025_t2203_nb_low_income_spouse_reduction
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB428MJ line 42 spouse or common-law partner reduction is $802
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          802
+
+  - name: federal_2025_t2203_nb_low_income_dependant_reduction
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB428MJ line 43 eligible dependant reduction is $802
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          802
+
+  - name: federal_2025_t2203_nb_low_income_maximum_reduction
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB428MJ line 44 maximum low-income reduction is $1,604
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          1604
+
+  - name: federal_2025_t2203_nb_low_income_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB428MJ line 46 low-income base amount is $21,920
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          21920
+
+  - name: federal_2025_t2203_nb_low_income_single_eligibility_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB428MJ says a single taxpayer is eligible if net income is less than $48,653
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          48653
+
+  - name: federal_2025_t2203_nb_low_income_family_eligibility_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB428MJ says a taxpayer with spouse or eligible dependant is eligible if adjusted family income is less than $75,387
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          75387
+
+  - name: federal_2025_t2203_nb_low_income_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NB428MJ line 48 applicable low-income reduction rate is 3%, encoded as 0.03
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.03
+
+  - name: federal_2025_t2203_nb_labour_sponsored_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB428MJ line 59 labour-sponsored venture capital fund tax credit maximum is $2,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          2000
+
+  - name: federal_2025_t2203_nb_small_business_investor_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB428MJ line 61 small business investor tax credit maximum is $125,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          125000
+
+  - name: federal_2025_t2203_ns_tax_on_taxable_income_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NS428MJ line 9 is Nova Scotia tax on taxable income from the bracket table
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= federal_2025_t2203_ns_bracket_1_threshold:
+            max(0, taxable_income_line_26000) * federal_2025_t2203_ns_bracket_1_rate
+          else:
+            if taxable_income_line_26000 <= federal_2025_t2203_ns_bracket_2_threshold:
+              (taxable_income_line_26000 - federal_2025_t2203_ns_bracket_1_threshold)
+              * federal_2025_t2203_ns_bracket_2_rate
+              + federal_2025_t2203_ns_bracket_2_base_tax
+            else:
+              if taxable_income_line_26000 <= federal_2025_t2203_ns_bracket_3_threshold:
+                (taxable_income_line_26000 - federal_2025_t2203_ns_bracket_2_threshold)
+                * federal_2025_t2203_ns_bracket_3_rate
+                + federal_2025_t2203_ns_bracket_3_base_tax
+              else:
+                if taxable_income_line_26000 <= federal_2025_t2203_ns_bracket_4_threshold:
+                  (taxable_income_line_26000 - federal_2025_t2203_ns_bracket_3_threshold)
+                  * federal_2025_t2203_ns_bracket_4_rate
+                  + federal_2025_t2203_ns_bracket_4_base_tax
+                else:
+                  (taxable_income_line_26000 - federal_2025_t2203_ns_bracket_4_threshold)
+                  * federal_2025_t2203_ns_bracket_5_rate
+                  + federal_2025_t2203_ns_bracket_5_base_tax
+
+  - name: federal_2025_t2203_ns_tax_after_non_refundable_credits_line_16
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NS428MJ lines 11 to 16 add tax on split income, subtract non-refundable credits, dividend credit, and minimum tax carryover, and floor at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2203_ns_tax_on_taxable_income_line_9
+            + max(0, ns_unallocated_tax_on_split_income_t1206_line_10)
+            - (
+              max(0, ns_non_refundable_tax_credits_part_3_line_d)
+              + max(0, ns_dividend_tax_credit_line_13)
+              + max(0, minimum_tax_carryover_line_40427)
+              * federal_2025_t2203_ns_minimum_tax_rate
+            )
+          )
+
+  - name: federal_2025_t2203_ns_tax_allocated_line_20
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NS428MJ line 20 multiplies line 18 by the percentage of income allocated to NS
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          (
+            federal_2025_t2203_ns_tax_after_non_refundable_credits_line_16
+            + max(0, t691_part_7_line_14)
+            * federal_2025_t2203_ns_minimum_tax_rate
+          ) * max(0, t2203_nova_scotia_income_allocation_percentage)
+
+  - name: federal_2025_t2203_ns_adjusted_income_tax_line_28
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NS428MJ line 28 subtracts the resident adjustment from allocated tax and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t2203_resident_of_nova_scotia:
+            max(
+              0,
+              federal_2025_t2203_ns_tax_allocated_line_20
+              - (
+                max(0, ns_resident_adjustment_credit_base_lines_58230_58360)
+                * federal_2025_t2203_ns_bracket_1_rate
+                + max(0, ns_dividend_tax_credit_line_13)
+              ) * max(0, 1 - max(0, t2203_nova_scotia_income_allocation_percentage))
+            )
+          else:
+            federal_2025_t2203_ns_tax_allocated_line_20
+
+  - name: federal_2025_t2203_ns_tax_after_foreign_credit_and_recapture_line_33
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NS428MJ lines 31 to 33 subtract provincial foreign tax credit and add R&D tax credit recapture
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2203_ns_adjusted_income_tax_line_28
+            - max(0, ns_provincial_foreign_tax_credit_t2036_line_30)
+          ) + max(0, ns_research_and_development_tax_credit_recapture_line_52480)
+
+  - name: federal_2025_t2203_ns_adjusted_family_income_line_39
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NS428MJ lines 34 to 39 calculate adjusted family income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, ns_taxpayer_net_income_line_23600 + max(0, ns_taxpayer_uccb_and_rdsp_repayments) - max(0, ns_taxpayer_uccb_and_rdsp_income))
+          + max(0, ns_spouse_net_income_line_23600 + max(0, ns_spouse_uccb_and_rdsp_repayments) - max(0, ns_spouse_uccb_and_rdsp_income))
+
+  - name: federal_2025_t2203_ns_low_income_reduction_line_52
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NS428MJ lines 41 to 52 calculate the Nova Scotia low-income tax reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t2203_resident_of_nova_scotia:
+            max(
+              0,
+              min(
+                federal_2025_t2203_ns_low_income_maximum_reduction,
+                federal_2025_t2203_ns_low_income_basic_reduction
+                + (if ns_claims_spouse_low_income_reduction:
+                    federal_2025_t2203_ns_low_income_spouse_reduction
+                  else:
+                    0)
+                + (if ns_claims_eligible_dependant_low_income_reduction:
+                    federal_2025_t2203_ns_low_income_dependant_reduction
+                  else:
+                    0)
+              )
+              + max(0, ns_number_of_dependent_children_for_low_income_reduction)
+              * federal_2025_t2203_ns_low_income_child_reduction
+              - max(
+                0,
+                federal_2025_t2203_ns_adjusted_family_income_line_39
+                - federal_2025_t2203_ns_low_income_threshold
+              ) * federal_2025_t2203_ns_low_income_reduction_rate
+            )
+          else:
+            0
+
+  - name: federal_2025_t2203_ns_tax_after_low_income_reduction_line_53
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NS428MJ line 53 subtracts the low-income tax reduction from line 40 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2203_ns_tax_after_foreign_credit_and_recapture_line_33
+            - federal_2025_t2203_ns_low_income_reduction_line_52
+          )
+
+  - name: t2203_nova_scotia_tax_part_5_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NS428MJ line 68 subtracts Nova Scotia credits and enters Nova Scotia tax on Part 5 line 3
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(
+              0,
+              max(
+                0,
+                max(
+                  0,
+                  max(
+                    0,
+                    federal_2025_t2203_ns_tax_after_low_income_reduction_line_53
+                    - min(
+                      federal_2025_t2203_ns_political_credit_cap,
+                      max(0, ns_political_contributions_line_62100)
+                      * federal_2025_t2203_ns_political_credit_rate
+                    )
+                  ) - max(0, ns_food_bank_qualifying_donations_line_62150)
+                  * federal_2025_t2203_ns_food_bank_credit_rate
+                ) - min(
+                  federal_2025_t2203_ns_labour_sponsored_cap,
+                  max(0, ns_labour_sponsored_venture_capital_cost)
+                  * federal_2025_t2203_ns_labour_sponsored_rate
+                )
+              ) - max(0, ns_equity_tax_credit_t1285_line_61)
+            ) - max(0, ns_innovation_equity_tax_credit_t225_line_63)
+            - max(0, ns_venture_capital_tax_credit_t224_line_65)
+            - (if ns_age_tax_credit_eligible:
+                federal_2025_t2203_ns_age_tax_credit
+              else:
+                0)
+          )
+
+  - name: federal_2025_t2203_nb_tax_on_taxable_income_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NB428MJ line 9 is New Brunswick tax on taxable income from the bracket table
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= federal_2025_t2203_nb_bracket_1_threshold:
+            max(0, taxable_income_line_26000) * federal_2025_t2203_nb_bracket_1_rate
+          else:
+            if taxable_income_line_26000 <= federal_2025_t2203_nb_bracket_2_threshold:
+              (taxable_income_line_26000 - federal_2025_t2203_nb_bracket_1_threshold)
+              * federal_2025_t2203_nb_bracket_2_rate
+              + federal_2025_t2203_nb_bracket_2_base_tax
+            else:
+              if taxable_income_line_26000 <= federal_2025_t2203_nb_bracket_3_threshold:
+                (taxable_income_line_26000 - federal_2025_t2203_nb_bracket_2_threshold)
+                * federal_2025_t2203_nb_bracket_3_rate
+                + federal_2025_t2203_nb_bracket_3_base_tax
+              else:
+                (taxable_income_line_26000 - federal_2025_t2203_nb_bracket_3_threshold)
+                * federal_2025_t2203_nb_bracket_4_rate
+                + federal_2025_t2203_nb_bracket_4_base_tax
+
+  - name: federal_2025_t2203_nb_tax_after_non_refundable_credits_line_16
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NB428MJ lines 11 to 16 add tax on split income, subtract non-refundable credits, dividend credit, and minimum tax carryover, and floor at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2203_nb_tax_on_taxable_income_line_9
+            + max(0, nb_unallocated_tax_on_split_income_t1206_line_10)
+            - (
+              max(0, nb_non_refundable_tax_credits_part_3_line_d)
+              + max(0, nb_dividend_tax_credit_line_13)
+              + max(0, minimum_tax_carryover_line_40427)
+              * federal_2025_t2203_nb_minimum_tax_rate
+            )
+          )
+
+  - name: federal_2025_t2203_nb_tax_allocated_line_20
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NB428MJ line 20 multiplies line 18 by the percentage of income allocated to NB
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          (
+            federal_2025_t2203_nb_tax_after_non_refundable_credits_line_16
+            + max(0, nb_t691_part_7_line_1_minus_line_2)
+            * federal_2025_t2203_nb_minimum_tax_rate
+          ) * max(0, t2203_new_brunswick_income_allocation_percentage)
+
+  - name: federal_2025_t2203_nb_adjusted_income_tax_line_28
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NB428MJ line 28 subtracts the resident adjustment from allocated tax and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t2203_resident_of_new_brunswick:
+            max(
+              0,
+              federal_2025_t2203_nb_tax_allocated_line_20
+              - (
+                max(0, nb_resident_adjustment_credit_base_line_58360)
+                * federal_2025_t2203_nb_bracket_1_rate
+                + max(0, nb_dividend_tax_credit_line_13)
+              ) * max(0, 1 - max(0, t2203_new_brunswick_income_allocation_percentage))
+            )
+          else:
+            federal_2025_t2203_nb_tax_allocated_line_20
+
+  - name: federal_2025_t2203_nb_tax_after_foreign_credit_line_30
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NB428MJ line 30 subtracts provincial foreign tax credit and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2203_nb_adjusted_income_tax_line_28
+            - max(0, nb_provincial_foreign_tax_credit_t2036_line_29)
+          )
+
+  - name: federal_2025_t2203_nb_adjusted_family_income_line_39
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NB428MJ lines 34 to 39 calculate adjusted family income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, nb_taxpayer_net_income_line_23600 + max(0, nb_taxpayer_uccb_and_rdsp_repayments) - max(0, nb_taxpayer_uccb_and_rdsp_income))
+          + max(0, nb_spouse_net_income_line_23600 + max(0, nb_spouse_uccb_and_rdsp_repayments) - max(0, nb_spouse_uccb_and_rdsp_income))
+
+  - name: federal_2025_t2203_nb_low_income_reduction_line_50
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NB428MJ lines 41 to 50 calculate New Brunswick low-income tax reduction if eligibility thresholds are met
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if nb_claimed_unused_low_income_reduction_from_spouse:
+            0
+          else:
+            if (
+              nb_claims_spouse_low_income_reduction
+              or nb_claims_eligible_dependant_low_income_reduction
+            ) and federal_2025_t2203_nb_adjusted_family_income_line_39 < federal_2025_t2203_nb_low_income_family_eligibility_threshold:
+              max(
+                0,
+                min(
+                  federal_2025_t2203_nb_low_income_maximum_reduction,
+                  federal_2025_t2203_nb_low_income_basic_reduction
+                  + (if nb_claims_spouse_low_income_reduction:
+                      federal_2025_t2203_nb_low_income_spouse_reduction
+                    else:
+                      0)
+                  + (if nb_claims_eligible_dependant_low_income_reduction:
+                      federal_2025_t2203_nb_low_income_dependant_reduction
+                    else:
+                      0)
+                )
+                - max(
+                  0,
+                  federal_2025_t2203_nb_adjusted_family_income_line_39
+                  - federal_2025_t2203_nb_low_income_threshold
+                ) * federal_2025_t2203_nb_low_income_reduction_rate
+              )
+            else:
+              if nb_taxpayer_net_income_line_23600 < federal_2025_t2203_nb_low_income_single_eligibility_threshold:
+                max(
+                  0,
+                  federal_2025_t2203_nb_low_income_basic_reduction
+                  - max(
+                    0,
+                    federal_2025_t2203_nb_adjusted_family_income_line_39
+                    - federal_2025_t2203_nb_low_income_threshold
+                  ) * federal_2025_t2203_nb_low_income_reduction_rate
+                )
+              else:
+                0
+
+  - name: federal_2025_t2203_nb_tax_after_low_income_reduction_line_52
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NB428MJ lines 32 to 52 subtract unused spouse low-income reduction or calculated low-income reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if nb_claimed_unused_low_income_reduction_from_spouse:
+            max(
+              0,
+              federal_2025_t2203_nb_tax_after_foreign_credit_line_30
+              - max(0, nb_unused_low_income_reduction_from_spouse_line_32)
+            )
+          else:
+            max(
+              0,
+              federal_2025_t2203_nb_tax_after_foreign_credit_line_30
+              - federal_2025_t2203_nb_low_income_reduction_line_50
+            )
+
+  - name: t2203_new_brunswick_tax_part_5_line_4
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NB428MJ line 62 subtracts New Brunswick credits and enters New Brunswick tax on Part 5 line 4
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(
+              0,
+              federal_2025_t2203_nb_tax_after_low_income_reduction_line_52
+              - max(0, nb_political_contribution_tax_credit_line_57)
+            ) - min(
+              federal_2025_t2203_nb_labour_sponsored_cap,
+              max(0, nb_labour_sponsored_venture_capital_fund_tax_credit_line_59)
+            ) - min(
+              federal_2025_t2203_nb_small_business_investor_cap,
+              max(0, nb_small_business_investor_tax_credit_t1258_line_61)
+            )
+          )
