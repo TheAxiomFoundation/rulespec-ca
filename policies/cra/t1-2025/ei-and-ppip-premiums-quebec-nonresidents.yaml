@@ -1,0 +1,352 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Schedule 10 for the 2025 T1 return calculates Employment
+    Insurance and Provincial Parental Insurance Plan premium amounts for
+    Quebec residents and non-residents. This module encodes the Schedule
+    10 Part A PPIP self-employment premium, Part B PPIP employment
+    premium, and Part C EI overpayment and credit calculations.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/employment-insurance-act
+      rationale: |-
+        CRA Schedule 10 is the official 2025 T1 schedule for EI and PPIP
+        premium calculations for Quebec and non-resident filing packages.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5005-s10/5005-s10-25e.pdf
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5005-s10/5005-s10-25e.txt
+rules:
+  - name: federal_2025_schedule_10_ppip_maximum_insurable_income
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 10 2025 Part A line 2 and Part B line 12 set maximum PPIP insurable income at $98,000.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          98000
+
+  - name: federal_2025_schedule_10_ppip_self_employment_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 10 2025 Part A line 6 sets the PPIP rate on self-employment income at 0.878%, encoded as 0.00878
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.00878
+
+  - name: federal_2025_schedule_10_ppip_self_employment_premium_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 10 2025 Part A line 7 caps PPIP premiums on self-employment income at $860.44
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          860.44
+
+  - name: federal_2025_schedule_10_ppip_self_employment_deduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 10 2025 Part A line 8 sets the applicable rate at 43.736%, encoded as 0.43736
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.43736
+
+  - name: federal_2025_schedule_10_ppip_self_employment_deduction_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 10 2025 Part A line 9 caps the PPIP self-employment deduction at $376.32
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          376.32
+
+  - name: federal_2025_schedule_10_ppip_credit_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 10 2025 Part A line 10 and Part B line 17 cap PPIP non-refundable credits at $484.12
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          484.12
+
+  - name: federal_2025_schedule_10_ppip_employment_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 10 2025 Part B line 16 sets the PPIP rate on employment income at 0.494%, encoded as 0.00494
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.00494
+
+  - name: federal_2025_schedule_10_ei_low_earnings_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 10 2025 Part C line 18 enters zero if total EI insurable earnings are $2,000 or less
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          2000
+
+  - name: federal_2025_schedule_10_ei_maximum_insurable_earnings
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 10 2025 Part C line 18 caps total EI insurable earnings at $65,700
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          65700
+
+  - name: federal_2025_schedule_10_ei_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 10 2025 Part C line 19 sets the EI rate on self-employment and other earnings at 1.31%, encoded as 0.0131
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.0131
+
+  - name: federal_2025_schedule_10_ei_maximum_premium
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 10 2025 Part C line 20 caps EI premiums at $860.67
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          860.67
+
+  - name: federal_2025_schedule_10_part_a_net_business_income_line_1
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 10 2025 Part A line 1 uses net business income from line 27 of Schedule L of the Revenu Quebec return
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, schedule_l_line_27_net_business_income_for_ppip)
+
+  - name: federal_2025_schedule_10_part_a_employment_income_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 10 2025 Part A line 3 uses T4 box 14 employment income, including outside Canada and income without a T4, or box 56 if applicable
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, ppip_total_employment_income_for_part_a_line_3)
+
+  - name: federal_2025_schedule_10_part_a_remaining_ppip_room_line_4
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 10 2025 Part A line 4 subtracts line 3 from line 2 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_schedule_10_ppip_maximum_insurable_income
+            - federal_2025_schedule_10_part_a_employment_income_line_3
+          )
+
+  - name: federal_2025_schedule_10_part_a_self_employment_income_subject_to_ppip_line_5
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 10 2025 Part A line 5 is the lesser of line 1 and line 4
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_10_part_a_net_business_income_line_1,
+            federal_2025_schedule_10_part_a_remaining_ppip_room_line_4
+          )
+
+  - name: federal_2025_schedule_10_part_a_ppip_premium_line_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 10 2025 Part A line 7 multiplies line 5 by the line 6 rate and applies the $860.44 maximum
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_10_part_a_self_employment_income_subject_to_ppip_line_5
+            * federal_2025_schedule_10_ppip_self_employment_rate,
+            federal_2025_schedule_10_ppip_self_employment_premium_maximum
+          )
+
+  - name: ppip_self_employment_deduction_line_22300
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 10 2025 Part A line 9 multiplies line 7 by the line 8 applicable rate and enters the amount on line 22300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_10_part_a_ppip_premium_line_7
+            * federal_2025_schedule_10_ppip_self_employment_deduction_rate,
+            federal_2025_schedule_10_ppip_self_employment_deduction_maximum
+          )
+
+  - name: ppip_self_employment_credit_line_31215
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 10 2025 Part A line 10 subtracts line 9 from line 7 and enters the amount on line 31215
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            max(0, federal_2025_schedule_10_part_a_ppip_premium_line_7 - ppip_self_employment_deduction_line_22300),
+            federal_2025_schedule_10_ppip_credit_maximum
+          )
+
+  - name: federal_2025_schedule_10_part_b_employment_income_line_11
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 10 2025 Part B line 11 uses employment income from T4 slips where province of employment is outside Quebec, outside-Canada income, exempt outside-Quebec income, and income without a T4
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, employment_income_outside_quebec_for_ppip_line_54377)
+
+  - name: federal_2025_schedule_10_part_b_quebec_ppip_insurable_earnings_line_13
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 10 2025 Part B line 13 uses PPIP insurable earnings from Quebec T4 slips box 56, or box 14 if box 56 is blank
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, quebec_ppip_insurable_earnings_box_56_or_14_line_54388)
+
+  - name: federal_2025_schedule_10_part_b_remaining_ppip_room_line_14
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 10 2025 Part B line 14 subtracts line 13 from line 12 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_schedule_10_ppip_maximum_insurable_income
+            - federal_2025_schedule_10_part_b_quebec_ppip_insurable_earnings_line_13
+          )
+
+  - name: federal_2025_schedule_10_part_b_employment_income_subject_to_ppip_line_15
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 10 2025 Part B line 15 is the lesser of line 11 and line 14
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_10_part_b_employment_income_line_11,
+            federal_2025_schedule_10_part_b_remaining_ppip_room_line_14
+          )
+
+  - name: ppip_employment_credit_line_31210
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 10 2025 Part B line 17 multiplies line 15 by the line 16 rate and enters the amount on line 31210
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            max(0, federal_2025_schedule_10_part_b_employment_income_subject_to_ppip_line_15)
+            * federal_2025_schedule_10_ppip_employment_rate,
+            federal_2025_schedule_10_ppip_credit_maximum
+          )
+
+  - name: federal_2025_schedule_10_part_c_ei_insurable_earnings_line_18
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 10 2025 Part C line 18 uses EI insurable earnings from box 24 or box 14, enters zero if $2,000 or less, and caps the amount at $65,700
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if total_ei_insurable_earnings_for_schedule_10 <= federal_2025_schedule_10_ei_low_earnings_threshold:
+            0
+          else:
+            min(
+              max(0, total_ei_insurable_earnings_for_schedule_10),
+              federal_2025_schedule_10_ei_maximum_insurable_earnings
+            )
+
+  - name: federal_2025_schedule_10_part_c_required_ei_premium_line_20
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 10 2025 Part C line 20 multiplies line 18 by the line 19 EI rate and applies the $860.67 maximum
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_10_part_c_ei_insurable_earnings_line_18
+            * federal_2025_schedule_10_ei_rate,
+            federal_2025_schedule_10_ei_maximum_premium
+          )
+
+  - name: federal_2025_schedule_10_part_c_total_ei_premiums_line_21
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 10 2025 Part C line 21 uses total EI premiums from T4 box 18 and pay stubs for employment income without a T4
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, total_ei_premiums_box_18_and_pay_stub_for_schedule_10)
+
+  - name: employment_insurance_overpayment_line_45000
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 10 2025 Part C line 23 subtracts line 22 from line 21, floors at zero, and enters the amount on line 45000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_schedule_10_part_c_total_ei_premiums_line_21
+            - federal_2025_schedule_10_part_c_required_ei_premium_line_20
+          )
+
+  - name: employment_insurance_premiums_credit_line_31200
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 10 2025 Part C line 24 enters the lesser of line 20 and line 21 on line 31200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_10_part_c_required_ei_premium_line_20,
+            federal_2025_schedule_10_part_c_total_ei_premiums_line_21
+          )

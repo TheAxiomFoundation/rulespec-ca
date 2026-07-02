@@ -1,0 +1,51 @@
+- name: schedule_10_ppip_and_ei_full_calculation
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#input.schedule_l_line_27_net_business_income_for_ppip: 60000
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#input.ppip_total_employment_income_for_part_a_line_3: 20000
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#input.employment_income_outside_quebec_for_ppip_line_54377: 30000
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#input.quebec_ppip_insurable_earnings_box_56_or_14_line_54388: 50000
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#input.total_ei_insurable_earnings_for_schedule_10: 70000
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#input.total_ei_premiums_box_18_and_pay_stub_for_schedule_10: 1000
+  output:
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#federal_2025_schedule_10_part_a_net_business_income_line_1: 60000
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#federal_2025_schedule_10_part_a_employment_income_line_3: 20000
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#federal_2025_schedule_10_part_a_remaining_ppip_room_line_4: 78000
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#federal_2025_schedule_10_part_a_self_employment_income_subject_to_ppip_line_5: 60000
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#federal_2025_schedule_10_part_a_ppip_premium_line_7: 526.8
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#ppip_self_employment_deduction_line_22300: 230.401248
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#ppip_self_employment_credit_line_31215: 296.398752
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#federal_2025_schedule_10_part_b_employment_income_line_11: 30000
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#federal_2025_schedule_10_part_b_quebec_ppip_insurable_earnings_line_13: 50000
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#federal_2025_schedule_10_part_b_remaining_ppip_room_line_14: 48000
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#federal_2025_schedule_10_part_b_employment_income_subject_to_ppip_line_15: 30000
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#ppip_employment_credit_line_31210: 148.2
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#federal_2025_schedule_10_part_c_ei_insurable_earnings_line_18: 65700
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#federal_2025_schedule_10_part_c_required_ei_premium_line_20: 860.67
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#federal_2025_schedule_10_part_c_total_ei_premiums_line_21: 1000
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#employment_insurance_overpayment_line_45000: 139.33
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#employment_insurance_premiums_credit_line_31200: 860.67
+
+- name: schedule_10_low_ei_earnings_zero_branch
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#input.schedule_l_line_27_net_business_income_for_ppip: 0
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#input.ppip_total_employment_income_for_part_a_line_3: 98000
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#input.employment_income_outside_quebec_for_ppip_line_54377: 0
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#input.quebec_ppip_insurable_earnings_box_56_or_14_line_54388: 98000
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#input.total_ei_insurable_earnings_for_schedule_10: 2000
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#input.total_ei_premiums_box_18_and_pay_stub_for_schedule_10: 50
+  output:
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#federal_2025_schedule_10_part_a_remaining_ppip_room_line_4: 0
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#federal_2025_schedule_10_part_a_self_employment_income_subject_to_ppip_line_5: 0
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#federal_2025_schedule_10_part_b_remaining_ppip_room_line_14: 0
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#federal_2025_schedule_10_part_c_ei_insurable_earnings_line_18: 0
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#federal_2025_schedule_10_part_c_required_ei_premium_line_20: 0
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#employment_insurance_overpayment_line_45000: 50
+    ca:policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents#employment_insurance_premiums_credit_line_31200: 0
