@@ -1,0 +1,29 @@
+- name: lsvcc_educator_and_gst_hst_rebate_lines
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-other-refundable-credits#input.labour_sponsored_venture_capital_net_cost_line_41300: 6000
+    ca:policies/cra/t1-2025/federal-other-refundable-credits#input.gst370_total_employee_and_partner_rebate_line_15: 1254.17
+    ca:policies/cra/t1-2025/federal-other-refundable-credits#input.eligible_educator_school_supply_expenses_line_46800: 1200
+  output:
+    ca:policies/cra/t1-2025/federal-other-refundable-credits#federal_2025_lsvcc_net_cost_line_41300: 6000
+    ca:policies/cra/t1-2025/federal-other-refundable-credits#labour_sponsored_funds_tax_credit_line_41400: 750
+    ca:policies/cra/t1-2025/federal-other-refundable-credits#employee_and_partner_gst_hst_rebate_line_45700: 1254.17
+    ca:policies/cra/t1-2025/federal-other-refundable-credits#federal_2025_eligible_educator_supplies_line_46800: 1000
+    ca:policies/cra/t1-2025/federal-other-refundable-credits#eligible_educator_school_supply_tax_credit_line_46900: 250
+
+- name: negative_inputs_floor_to_zero
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-other-refundable-credits#input.labour_sponsored_venture_capital_net_cost_line_41300: -100
+    ca:policies/cra/t1-2025/federal-other-refundable-credits#input.gst370_total_employee_and_partner_rebate_line_15: -50
+    ca:policies/cra/t1-2025/federal-other-refundable-credits#input.eligible_educator_school_supply_expenses_line_46800: -25
+  output:
+    ca:policies/cra/t1-2025/federal-other-refundable-credits#labour_sponsored_funds_tax_credit_line_41400: 0
+    ca:policies/cra/t1-2025/federal-other-refundable-credits#employee_and_partner_gst_hst_rebate_line_45700: 0
+    ca:policies/cra/t1-2025/federal-other-refundable-credits#eligible_educator_school_supply_tax_credit_line_46900: 0
