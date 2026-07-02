@@ -1,0 +1,564 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T2203 Part 3 for 2025 calculates Saskatchewan, Alberta, and
+    British Columbia non-refundable tax credits for multiple-jurisdiction
+    returns.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/t2203-sk-ab-bc-part3-credits
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: CRA Form T2203 is the official 2025 Part 3 source for SK, AB, and BC multiple-jurisdiction non-refundable credits.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t2203/t2203-25e.pdf
+rules:
+  - name: federal_2025_t2203_sk_part3_basic_personal_amount_58040
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Part 3 SK basic personal amount line 58040 is $19,491
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 19491
+  - name: federal_2025_t2203_ab_part3_basic_personal_amount_58040
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Part 3 AB basic personal amount line 58040 is $22,323
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 22323
+  - name: federal_2025_t2203_bc_part3_basic_personal_amount_58040
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Part 3 BC basic personal amount line 58040 is $12,932
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 12932
+  - name: federal_2025_t2203_sk_part3_low_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 Part 3 SK subtotal uses 10.5%, encoded as 0.105
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.105
+  - name: federal_2025_t2203_ab_part3_low_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 Part 3 AB subtotal uses 8%, encoded as 0.08
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.08
+  - name: federal_2025_t2203_bc_part3_low_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 Part 3 BC subtotal uses 5.06%, encoded as 0.0506
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0506
+  - name: federal_2025_t2203_sk_part3_schedule9_high_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 Part 3 SK Schedule 9 line 14 uses 14.5%, encoded as 0.145
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.145
+  - name: federal_2025_t2203_ab_part3_schedule9_line13_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 Part 3 AB Schedule 9 line 13 uses 60%, encoded as 0.60
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.60
+  - name: federal_2025_t2203_ab_part3_schedule9_high_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 Part 3 AB Schedule 9 line 14 uses 21%, encoded as 0.21
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.21
+  - name: federal_2025_t2203_part3_sk_ab_bc_age_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 SK, AB, and BC worksheets line 58080 use a 15% age-amount reduction rate, encoded as 0.15
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.15
+  - name: federal_2025_t2203_sk_part3_age_maximum_58080
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 SK worksheet line 58080 maximum age amount is $5,785
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5785
+  - name: federal_2025_t2203_sk_part3_age_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 SK worksheet line 58080 income threshold is $43,066
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 43066
+  - name: federal_2025_t2203_ab_part3_age_maximum_58080
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 AB worksheet line 58080 maximum age amount is $6,221
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 6221
+  - name: federal_2025_t2203_ab_part3_age_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 AB worksheet line 58080 income threshold is $46,308
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 46308
+  - name: federal_2025_t2203_bc_part3_age_maximum_58080
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC worksheet line 58080 maximum age amount is $5,799
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5799
+  - name: federal_2025_t2203_bc_part3_age_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC worksheet line 58080 income threshold is $43,169
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 43169
+  - name: federal_2025_t2203_sk_part3_spouse_base
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 SK worksheet line 58120 base amount is $21,440
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 21440
+  - name: federal_2025_t2203_sk_part3_spouse_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 SK worksheet line 58120 maximum is $19,491
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 19491
+  - name: federal_2025_t2203_ab_part3_spouse_base
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 AB worksheet line 58120 base amount is $22,323
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 22323
+  - name: federal_2025_t2203_bc_part3_spouse_base
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC worksheet line 58120 base amount is $12,181
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 12181
+  - name: federal_2025_t2203_bc_part3_spouse_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC worksheet line 58120 maximum is $11,073
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 11073
+  - name: federal_2025_t2203_sk_part3_dependant_child_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 SK line 58210 is number of children multiplied by $7,704
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 7704
+  - name: federal_2025_t2203_sk_part3_senior_supplement_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 SK senior supplementary amount line 58220 is $2,028
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2028
+  - name: federal_2025_t2203_sk_bc_part3_volunteer_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Part 3 note says SK and BC VFA or SRVA amount is $3,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 3000
+  - name: federal_2025_t2203_sk_part3_first_time_home_buyer_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Part 3 SK first-time home buyers' amount maximum is $15,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 15000
+  - name: federal_2025_t2203_ab_part3_adoption_expense_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Part 3 note says AB adoption expenses are capped at $19,354 per child
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 19354
+  - name: federal_2025_t2203_bc_part3_adoption_expense_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Part 3 note says BC adoption expenses are capped at $19,580 per child
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 19580
+  - name: federal_2025_t2203_sk_bc_part3_pension_income_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Part 3 SK and BC line 31400 maximum is $1,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1000
+  - name: federal_2025_t2203_ab_part3_pension_income_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Part 3 AB line 31400 maximum is $1,719
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1719
+  - name: federal_2025_t2203_sk_part3_medical_threshold_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 SK worksheet line ME threshold cap is $2,681
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2681
+  - name: federal_2025_t2203_ab_part3_medical_threshold_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 AB worksheet line ME threshold cap is $2,884
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2884
+  - name: federal_2025_t2203_bc_part3_medical_threshold_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC worksheet line ME threshold cap is $2,689
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2689
+  - name: federal_2025_t2203_part3_sk_ab_bc_medical_income_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 SK, AB, and BC worksheets line ME use 3% of net income, encoded as 0.03
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.03
+  - name: federal_2025_t2203_bc_part3_donation_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC worksheet line 58969 separates the first $200 of donations
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 200
+  - name: federal_2025_t2203_bc_part3_donation_income_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC worksheet line 58969 income threshold is $259,829
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 259829
+  - name: federal_2025_t2203_bc_part3_donation_high_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 BC worksheet line 58969 high donation rate is 20.5%, encoded as 0.205
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.205
+  - name: federal_2025_t2203_bc_part3_donation_middle_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 BC worksheet line 58969 middle donation rate is 16.8%, encoded as 0.168
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.168
+  - name: federal_2025_t2203_bc_part3_farmers_food_donation_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 BC farmers' food donation tax credit is 25% of eligible qualifying gifts, encoded as 0.25
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.25
+  - name: federal_2025_t2203_sk_part3_age_amount_58080
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 SK worksheet line 58080 calculates the age amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, federal_2025_t2203_sk_part3_age_maximum_58080 - max(0, sk_net_income_line_23600 - federal_2025_t2203_sk_part3_age_threshold) * federal_2025_t2203_part3_sk_ab_bc_age_reduction_rate)
+  - name: federal_2025_t2203_ab_part3_age_amount_58080
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 AB worksheet line 58080 calculates the age amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, federal_2025_t2203_ab_part3_age_maximum_58080 - max(0, ab_net_income_line_23600 - federal_2025_t2203_ab_part3_age_threshold) * federal_2025_t2203_part3_sk_ab_bc_age_reduction_rate)
+  - name: federal_2025_t2203_bc_part3_age_amount_58080
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 BC worksheet line 58080 calculates the age amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, federal_2025_t2203_bc_part3_age_maximum_58080 - max(0, bc_net_income_line_23600 - federal_2025_t2203_bc_part3_age_threshold) * federal_2025_t2203_part3_sk_ab_bc_age_reduction_rate)
+  - name: federal_2025_t2203_sk_part3_spouse_amount_58120
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 SK worksheet line 58120 calculates spouse or common-law partner amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(federal_2025_t2203_sk_part3_spouse_cap, max(0, federal_2025_t2203_sk_part3_spouse_base - max(0, sk_spouse_net_income_line_23600)))
+  - name: federal_2025_t2203_ab_part3_spouse_amount_58120
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 AB worksheet line 58120 calculates spouse or common-law partner amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, federal_2025_t2203_ab_part3_spouse_base - max(0, ab_spouse_net_income_line_23600))
+  - name: federal_2025_t2203_bc_part3_spouse_amount_58120
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 BC worksheet line 58120 calculates spouse or common-law partner amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(federal_2025_t2203_bc_part3_spouse_cap, max(0, federal_2025_t2203_bc_part3_spouse_base - max(0, bc_spouse_net_income_line_23600)))
+  - name: federal_2025_t2203_sk_part3_eligible_dependant_amount_58160
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 SK worksheet line 58160 calculates eligible dependant amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(federal_2025_t2203_sk_part3_spouse_cap, max(0, federal_2025_t2203_sk_part3_spouse_base - max(0, sk_eligible_dependant_net_income_line_23600)))
+  - name: federal_2025_t2203_ab_part3_eligible_dependant_amount_58160
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 AB worksheet line 58160 calculates eligible dependant amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, federal_2025_t2203_ab_part3_spouse_base - max(0, ab_eligible_dependant_net_income_line_23600))
+  - name: federal_2025_t2203_bc_part3_eligible_dependant_amount_58160
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 BC worksheet line 58160 calculates eligible dependant amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(federal_2025_t2203_bc_part3_spouse_cap, max(0, federal_2025_t2203_bc_part3_spouse_base - max(0, bc_eligible_dependant_net_income_line_23600)))
+  - name: federal_2025_t2203_sk_part3_dependant_children_amount_58210
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 SK line 58210 is number of children multiplied by $7,704
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, sk_dependent_children_count_line_58209) * federal_2025_t2203_sk_part3_dependant_child_amount
+  - name: federal_2025_t2203_sk_part3_senior_supplementary_amount_58220
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 SK line 58220 claims $2,028 if born in 1960 or earlier
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if sk_born_1960_or_earlier: federal_2025_t2203_sk_part3_senior_supplement_amount else: 0
+  - name: federal_2025_t2203_sk_part3_medical_expenses_line_me
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 SK worksheet line ME subtracts the lesser of $2,681 or 3% of net income from eligible medical expenses
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, sk_medical_expenses_line_33099 - min(federal_2025_t2203_sk_part3_medical_threshold_cap, max(0, sk_net_income_line_23600) * federal_2025_t2203_part3_sk_ab_bc_medical_income_rate))
+  - name: federal_2025_t2203_ab_part3_medical_expenses_line_me
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 AB worksheet line ME subtracts the lesser of $2,884 or 3% of net income from eligible medical expenses
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, ab_medical_expenses_line_33099 - min(federal_2025_t2203_ab_part3_medical_threshold_cap, max(0, ab_net_income_line_23600) * federal_2025_t2203_part3_sk_ab_bc_medical_income_rate))
+  - name: federal_2025_t2203_bc_part3_medical_expenses_line_me
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 BC worksheet line ME subtracts the lesser of $2,689 or 3% of net income from eligible medical expenses
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, bc_medical_expenses_line_33099 - min(federal_2025_t2203_bc_part3_medical_threshold_cap, max(0, bc_net_income_line_23600) * federal_2025_t2203_part3_sk_ab_bc_medical_income_rate))
+  - name: federal_2025_t2203_bc_part3_donations_and_gifts_line_58969
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 BC worksheet line 58969 calculates donations and gifts using 5.06%, 16.8%, and 20.5% tiers
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(max(0, bc_schedule9_line_12), federal_2025_t2203_bc_part3_donation_threshold) * federal_2025_t2203_bc_part3_low_credit_rate
+          + min(max(0, bc_schedule9_line_12) - min(max(0, bc_schedule9_line_12), federal_2025_t2203_bc_part3_donation_threshold), max(0, bc_taxable_income_line_26000 - federal_2025_t2203_bc_part3_donation_income_threshold)) * federal_2025_t2203_bc_part3_donation_high_rate
+          + max(0, max(0, bc_schedule9_line_12) - min(max(0, bc_schedule9_line_12), federal_2025_t2203_bc_part3_donation_threshold) - min(max(0, bc_schedule9_line_12) - min(max(0, bc_schedule9_line_12), federal_2025_t2203_bc_part3_donation_threshold), max(0, bc_taxable_income_line_26000 - federal_2025_t2203_bc_part3_donation_income_threshold))) * federal_2025_t2203_bc_part3_donation_middle_rate
+  - name: federal_2025_t2203_bc_part3_farmers_food_donation_tax_credit_58980
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 BC farmers' food donation tax credit is 25% of eligible qualifying gifts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, bc_eligible_farmers_food_donations) * federal_2025_t2203_bc_part3_farmers_food_donation_rate
+  - name: federal_2025_t2203_sk_part3_subtotal_s11_mj
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 Part 3 SK subtotal before tuition, transfer, and medical lines
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2203_sk_part3_basic_personal_amount_58040
+          + federal_2025_t2203_sk_part3_age_amount_58080
+          + federal_2025_t2203_sk_part3_spouse_amount_58120
+          + federal_2025_t2203_sk_part3_eligible_dependant_amount_58160
+          + max(0, sk_infirm_dependants_amount_58200)
+          + federal_2025_t2203_sk_part3_dependant_children_amount_58210
+          + federal_2025_t2203_sk_part3_senior_supplementary_amount_58220
+          + max(0, sk_cpp_or_qpp_contributions_line_58240)
+          + max(0, sk_cpp_or_qpp_enhanced_contributions_line_58280)
+          + max(0, sk_employment_insurance_premiums_line_58300)
+          + max(0, sk_employment_insurance_enhanced_premiums_line_58305)
+          + (if sk_claimed_volunteer_firefighters_amount_line_31220: federal_2025_t2203_sk_bc_part3_volunteer_amount else: 0)
+          + (if sk_claimed_search_and_rescue_volunteers_amount_line_31240: federal_2025_t2203_sk_bc_part3_volunteer_amount else: 0)
+          + (if sk_claimed_volunteer_emergency_medical_first_responders_amount: federal_2025_t2203_sk_bc_part3_volunteer_amount else: 0)
+          + max(0, sk_schedule_s12_mj_line_58340)
+          + min(federal_2025_t2203_sk_part3_first_time_home_buyer_cap, max(0, sk_first_time_home_buyers_amount_line_58357))
+          + min(federal_2025_t2203_sk_bc_part3_pension_income_cap, max(0, sk_pension_income_amount_line_31400))
+          + max(0, sk_caregiver_amount_58400)
+          + max(0, sk_disability_self_amount_58440)
+          + max(0, sk_disability_dependant_transfer_amount_58480)
+  - name: federal_2025_t2203_ab_part3_subtotal_s11_mj
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 Part 3 AB subtotal before tuition, transfer, and medical lines
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2203_ab_part3_basic_personal_amount_58040
+          + federal_2025_t2203_ab_part3_age_amount_58080
+          + federal_2025_t2203_ab_part3_spouse_amount_58120
+          + federal_2025_t2203_ab_part3_eligible_dependant_amount_58160
+          + max(0, ab_infirm_dependants_amount_58200)
+          + max(0, ab_cpp_or_qpp_contributions_line_58240)
+          + max(0, ab_cpp_or_qpp_enhanced_contributions_line_58280)
+          + max(0, ab_employment_insurance_premiums_line_58300)
+          + max(0, ab_employment_insurance_enhanced_premiums_line_58305)
+          + min(federal_2025_t2203_ab_part3_adoption_expense_cap, max(0, ab_adoption_expenses_line_58330))
+          + min(federal_2025_t2203_ab_part3_pension_income_cap, max(0, ab_pension_income_amount_line_31400))
+          + max(0, ab_caregiver_amount_58400)
+          + max(0, ab_disability_self_amount_58440)
+          + max(0, ab_disability_dependant_transfer_amount_58480)
+  - name: federal_2025_t2203_bc_part3_subtotal_s11_mj
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 Part 3 BC subtotal before tuition, transfer, and medical lines
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2203_bc_part3_basic_personal_amount_58040
+          + federal_2025_t2203_bc_part3_age_amount_58080
+          + federal_2025_t2203_bc_part3_spouse_amount_58120
+          + federal_2025_t2203_bc_part3_eligible_dependant_amount_58160
+          + max(0, bc_caregiver_amount_58175)
+          + max(0, bc_cpp_or_qpp_contributions_line_58240)
+          + max(0, bc_cpp_or_qpp_enhanced_contributions_line_58280)
+          + max(0, bc_employment_insurance_premiums_line_58300)
+          + max(0, bc_employment_insurance_enhanced_premiums_line_58305)
+          + (if bc_claimed_volunteer_firefighters_amount_line_31220: federal_2025_t2203_sk_bc_part3_volunteer_amount else: 0)
+          + (if bc_claimed_search_and_rescue_volunteers_amount_line_31240: federal_2025_t2203_sk_bc_part3_volunteer_amount else: 0)
+          + min(federal_2025_t2203_bc_part3_adoption_expense_cap, max(0, bc_adoption_expenses_line_58330))
+          + min(federal_2025_t2203_sk_bc_part3_pension_income_cap, max(0, bc_pension_income_amount_line_31400))
+          + max(0, bc_disability_self_amount_58440)
+          + max(0, bc_disability_dependant_transfer_amount_58480)
+  - name: federal_2025_t2203_sk_part3_total_non_refundable_tax_credits_line_c
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 Part 3 SK line C is line A plus line B after applying the 10.5% and 14.5% rates
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          (
+            federal_2025_t2203_sk_part3_subtotal_s11_mj
+            + max(0, sk_disability_supports_line_58520)
+            + max(0, sk_schedule_s11_or_s11_mj_line_58560)
+            + max(0, sk_schedule_s2_mj_line_58640)
+            + federal_2025_t2203_sk_part3_medical_expenses_line_me
+            + max(0, sk_medical_expenses_other_dependants_line_33199)
+            + max(0, sk_schedule9_line_13)
+          ) * federal_2025_t2203_sk_part3_low_credit_rate
+          + max(0, sk_schedule9_line_14) * federal_2025_t2203_sk_part3_schedule9_high_rate
+  - name: federal_2025_t2203_ab_part3_total_non_refundable_tax_credits_line_c
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 Part 3 AB line C adds line A, Schedule 9 line 13 at 60%, and Schedule 9 line 14 at 21%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          (
+            federal_2025_t2203_ab_part3_subtotal_s11_mj
+            + max(0, ab_disability_supports_line_58520)
+            + max(0, ab_schedule_s11_or_s11_mj_line_58560)
+            + max(0, ab_schedule_s2_mj_line_58640)
+            + federal_2025_t2203_ab_part3_medical_expenses_line_me
+            + max(0, ab_medical_expenses_other_dependants_line_58729)
+          ) * federal_2025_t2203_ab_part3_low_credit_rate
+          + max(0, ab_schedule9_line_13) * federal_2025_t2203_ab_part3_schedule9_line13_rate
+          + max(0, ab_schedule9_line_14) * federal_2025_t2203_ab_part3_schedule9_high_rate
+  - name: federal_2025_t2203_bc_part3_total_non_refundable_tax_credits_line_c
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 Part 3 BC line C adds line A, donations and gifts, and BC farmers' food donation credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          (
+            federal_2025_t2203_bc_part3_subtotal_s11_mj
+            + max(0, bc_disability_supports_line_58520)
+            + max(0, bc_schedule_s11_or_s11_mj_line_58560)
+            + max(0, bc_student_designated_amounts_line_58600)
+            + max(0, bc_schedule_s2_mj_line_58640)
+            + federal_2025_t2203_bc_part3_medical_expenses_line_me
+            + max(0, bc_medical_expenses_other_dependants_line_58729)
+          ) * federal_2025_t2203_bc_part3_low_credit_rate
+          + federal_2025_t2203_bc_part3_donations_and_gifts_line_58969
+          + federal_2025_t2203_bc_part3_farmers_food_donation_tax_credit_58980
