@@ -1,0 +1,64 @@
+- name: positive_capital_gains_with_partnership_full_inclusion
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.qsbc_shares_gain_or_loss_line_10700: 10000
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.qualified_farm_fishing_property_gain_or_loss_line_11000: 5000
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.qffp_foreclosures_repossessions_gain_or_loss_line_12400: 0
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.publicly_traded_shares_gain_or_loss_line_13200: 2000
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.real_estate_depreciable_other_property_gain_or_loss_line_13800: 3000
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.bonds_debentures_notes_gain_or_loss_line_15300: 0
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.crypto_assets_gain_or_loss_line_15301: 1000
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.other_foreclosures_repossessions_gain_or_loss_line_15500: 0
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.personal_use_property_total_gain_only_line_15800: 500
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.listed_personal_property_gain_line_15900_before_prior_losses: 1000
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.unapplied_lpp_losses_from_other_years: 300
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.capital_gains_deferral_line_16100: 1000
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.capital_gains_losses_from_t5_t5013_t4ps_slips_line_17400: 200
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.capital_gains_losses_from_t3_slips_line_17600: -100
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.capital_loss_from_reduction_business_investment_loss_line_17800: 400
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.reserves_included_or_deducted_line_19200: 300
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.partnership_interest_100_percent_inclusion_gain_line_19890: 250
+  output:
+    ca:policies/cra/t1-2025/capital-gains-or-losses#federal_2025_schedule_3_total_property_gains_line_11: 22200
+    ca:policies/cra/t1-2025/capital-gains-or-losses#federal_2025_schedule_3_line_14: 21200
+    ca:policies/cra/t1-2025/capital-gains-or-losses#federal_2025_schedule_3_line_17: 21300
+    ca:policies/cra/t1-2025/capital-gains-or-losses#federal_2025_schedule_3_total_before_reserves_line_19100: 20900
+    ca:policies/cra/t1-2025/capital-gains-or-losses#federal_2025_schedule_3_total_capital_gains_or_losses_line_19700: 21200
+    ca:policies/cra/t1-2025/capital-gains-or-losses#federal_2025_schedule_3_inclusion_amount_line_24: 10600
+    ca:policies/cra/t1-2025/capital-gains-or-losses#federal_2025_schedule_3_partnership_interest_full_inclusion_line_19890: 250
+    ca:policies/cra/t1-2025/capital-gains-or-losses#federal_2025_schedule_3_taxable_capital_gains_or_net_loss_line_19900: 10850
+    ca:policies/cra/t1-2025/capital-gains-or-losses#taxable_capital_gains_line_12700: 10850
+    ca:policies/cra/t1-2025/capital-gains-or-losses#federal_2025_net_capital_loss: 0
+
+- name: net_capital_loss_not_reported_on_line_12700
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.qsbc_shares_gain_or_loss_line_10700: -10000
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.qualified_farm_fishing_property_gain_or_loss_line_11000: 0
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.qffp_foreclosures_repossessions_gain_or_loss_line_12400: 0
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.publicly_traded_shares_gain_or_loss_line_13200: -2000
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.real_estate_depreciable_other_property_gain_or_loss_line_13800: 0
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.bonds_debentures_notes_gain_or_loss_line_15300: 0
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.crypto_assets_gain_or_loss_line_15301: 0
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.other_foreclosures_repossessions_gain_or_loss_line_15500: 0
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.personal_use_property_total_gain_only_line_15800: 0
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.listed_personal_property_gain_line_15900_before_prior_losses: 0
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.unapplied_lpp_losses_from_other_years: 0
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.capital_gains_deferral_line_16100: 0
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.capital_gains_losses_from_t5_t5013_t4ps_slips_line_17400: -4000
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.capital_gains_losses_from_t3_slips_line_17600: -1000
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.capital_loss_from_reduction_business_investment_loss_line_17800: 0
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.reserves_included_or_deducted_line_19200: 0
+    ca:policies/cra/t1-2025/capital-gains-or-losses#input.partnership_interest_100_percent_inclusion_gain_line_19890: 0
+  output:
+    ca:policies/cra/t1-2025/capital-gains-or-losses#federal_2025_schedule_3_total_property_gains_line_11: -12000
+    ca:policies/cra/t1-2025/capital-gains-or-losses#federal_2025_schedule_3_line_17: -17000
+    ca:policies/cra/t1-2025/capital-gains-or-losses#federal_2025_schedule_3_taxable_capital_gains_or_net_loss_line_19900: -8500
+    ca:policies/cra/t1-2025/capital-gains-or-losses#taxable_capital_gains_line_12700: 0
+    ca:policies/cra/t1-2025/capital-gains-or-losses#federal_2025_net_capital_loss: 8500
