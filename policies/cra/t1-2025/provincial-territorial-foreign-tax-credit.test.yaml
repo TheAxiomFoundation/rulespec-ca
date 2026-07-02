@@ -1,0 +1,58 @@
+- name: t2036_standard_non_minimum_tax_credit
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.t2209_non_business_income_tax_paid_to_foreign_country_line_1: 5000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.t2036_minimum_tax_special_calculation_applies: false
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.t2036_special_foreign_tax_credit_related_to_non_business_income_line_2: 0
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.t2209_federal_non_business_foreign_tax_credit_line_3: 3000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.t2036_net_foreign_non_business_income: 20000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.t2036_net_income_for_credit: 100000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.provincial_or_territorial_tax_otherwise_payable: 8000
+  output:
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#provincial_territorial_2025_t2036_foreign_non_business_tax_line_1: 5000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#provincial_territorial_2025_t2036_federal_credit_line_2: 3000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#provincial_territorial_2025_t2036_excess_foreign_tax_line_3: 2000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#provincial_territorial_2025_t2036_tax_otherwise_payable_line_4: 1600
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#provincial_territorial_foreign_tax_credit_line_5: 1600
+
+- name: t2036_minimum_tax_special_line_2_and_tax_cap
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.t2209_non_business_income_tax_paid_to_foreign_country_line_1: 10000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.t2036_minimum_tax_special_calculation_applies: true
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.t2036_special_foreign_tax_credit_related_to_non_business_income_line_2: 2000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.t2209_federal_non_business_foreign_tax_credit_line_3: 5000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.t2036_net_foreign_non_business_income: 90000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.t2036_net_income_for_credit: 60000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.provincial_or_territorial_tax_otherwise_payable: 7000
+  output:
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#provincial_territorial_2025_t2036_federal_credit_line_2: 2000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#provincial_territorial_2025_t2036_excess_foreign_tax_line_3: 8000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#provincial_territorial_2025_t2036_tax_otherwise_payable_line_4: 7000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#provincial_territorial_foreign_tax_credit_line_5: 7000
+
+- name: t2036_zero_net_income_and_excess_floor
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.t2209_non_business_income_tax_paid_to_foreign_country_line_1: 1000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.t2036_minimum_tax_special_calculation_applies: false
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.t2036_special_foreign_tax_credit_related_to_non_business_income_line_2: 0
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.t2209_federal_non_business_foreign_tax_credit_line_3: 2000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.t2036_net_foreign_non_business_income: 10000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.t2036_net_income_for_credit: 0
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#input.provincial_or_territorial_tax_otherwise_payable: 3000
+  output:
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#provincial_territorial_2025_t2036_foreign_non_business_tax_line_1: 1000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#provincial_territorial_2025_t2036_federal_credit_line_2: 2000
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#provincial_territorial_2025_t2036_excess_foreign_tax_line_3: 0
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#provincial_territorial_2025_t2036_tax_otherwise_payable_line_4: 0
+    ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit#provincial_territorial_foreign_tax_credit_line_5: 0

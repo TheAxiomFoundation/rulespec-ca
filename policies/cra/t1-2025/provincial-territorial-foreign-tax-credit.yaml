@@ -1,0 +1,90 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T2036 for 2025 calculates the provincial or territorial
+    foreign tax credit for non-Quebec residents. This module encodes the
+    line 1 to line 5 arithmetic and the minimum-tax line 2 override surface.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/provincial-territorial-foreign-tax-credit
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Form T2036 is the official 2025 form for calculating the
+        provincial or territorial foreign tax credit.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t2036/t2036-25e.pdf
+rules:
+  - name: provincial_territorial_2025_t2036_foreign_non_business_tax_line_1
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2036 2025 line 1 uses the amount from line 1 of Form T2209
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t2209_non_business_income_tax_paid_to_foreign_country_line_1)
+
+  - name: provincial_territorial_2025_t2036_federal_credit_line_2
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2036 2025 line 2 uses line 3 of Form T2209 unless a minimum-tax special calculation applies
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t2036_minimum_tax_special_calculation_applies:
+            max(0, t2036_special_foreign_tax_credit_related_to_non_business_income_line_2)
+          else:
+            max(0, t2209_federal_non_business_foreign_tax_credit_line_3)
+
+  - name: provincial_territorial_2025_t2036_excess_foreign_tax_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2036 2025 line 3 subtracts line 2 from line 1
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            provincial_territorial_2025_t2036_foreign_non_business_tax_line_1
+            - provincial_territorial_2025_t2036_federal_credit_line_2
+          )
+
+  - name: provincial_territorial_2025_t2036_tax_otherwise_payable_line_4
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2036 2025 line 4 multiplies net foreign non-business income divided by net income by provincial or territorial tax otherwise payable
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t2036_net_income_for_credit <= 0:
+            0
+          else:
+            (
+              min(max(0, t2036_net_foreign_non_business_income), max(0, t2036_net_income_for_credit))
+              / max(0, t2036_net_income_for_credit)
+            )
+            * max(0, provincial_or_territorial_tax_otherwise_payable)
+
+  - name: provincial_territorial_foreign_tax_credit_line_5
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2036 2025 line 5 is the lesser of line 3 and line 4 and should not exceed provincial or territorial tax otherwise payable
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            provincial_territorial_2025_t2036_excess_foreign_tax_line_3,
+            provincial_territorial_2025_t2036_tax_otherwise_payable_line_4,
+            max(0, provincial_or_territorial_tax_otherwise_payable)
+          )
