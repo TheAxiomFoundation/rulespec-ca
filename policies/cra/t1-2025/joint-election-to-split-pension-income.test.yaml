@@ -1,0 +1,98 @@
+- name: t1032_prorated_split_pension_with_rca_and_veterans_amounts
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.transferring_spouse_eligible_pension_income_line_68020: 100000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.transferring_spouse_t4a_box_128_veterans_benefits_line_68025: 10000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.transferring_spouse_t4a_rca_box_17_life_annuity_payments_line_68026: 20000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.t1032_months_married_or_common_law_line_68030: 6
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.t1032_months_in_tax_year_for_proration: 12
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.t1032_marital_status_proration_applies: true
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.elected_split_pension_amount_line_22: 25000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.receiving_spouse_federal_worksheet_line_8_for_31400: 500
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.t1032_receiving_spouse_special_line_33_conditions_apply: false
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.t1032_transferor_payments_excluded_for_line_33_note_1: 0
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.transferor_tax_deducted_from_eligible_pension_income_line_68040: 12000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.transferor_total_tax_deducted_before_split_line_37: 15000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.receiving_spouse_total_tax_deducted_before_split_line_40: 1000
+  output:
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_eligible_pension_income_line_1: 100000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_veterans_benefits_line_2: 10000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_line_3: 90000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_rca_payments_line_4: 20000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_rca_room_line_7: 41483.45
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_rca_eligible_amount_line_8: 20000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_line_12: 110000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_veterans_room_line_15: 21483.45
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_veterans_eligible_amount_line_16: 10000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_total_eligible_pension_income_line_17: 120000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_prorated_eligible_income_line_18: 60000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_eligible_income_after_proration_line_19: 60000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_maximum_split_pension_amount_line_21: 30000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#split_pension_amount_line_21000_and_11600: 25000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_line_30: '20833.333333333333333333333332'
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_transferor_pension_income_after_split_line_31: '79166.666666666666666666666668'
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#transferor_pension_income_amount_line_31400: 2000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_receiving_spouse_line_32: 500
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_receiving_spouse_line_33: '20833.333333333333333333333332'
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_receiving_spouse_line_34: '21333.333333333333333333333332'
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#receiving_spouse_pension_income_amount_line_31400: 2000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_eligible_tax_deducted_line_35: 12000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_tax_deducted_split_amount_line_36: 2500
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#transferor_income_tax_deducted_line_43700: 12500
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#receiving_spouse_income_tax_deducted_line_43700: 3500
+
+- name: t1032_zero_eligible_income_and_special_line_33
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.transferring_spouse_eligible_pension_income_line_68020: 3000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.transferring_spouse_t4a_box_128_veterans_benefits_line_68025: 3000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.transferring_spouse_t4a_rca_box_17_life_annuity_payments_line_68026: 0
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.t1032_months_married_or_common_law_line_68030: 12
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.t1032_months_in_tax_year_for_proration: 12
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.t1032_marital_status_proration_applies: false
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.elected_split_pension_amount_line_22: 10000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.receiving_spouse_federal_worksheet_line_8_for_31400: 0
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.t1032_receiving_spouse_special_line_33_conditions_apply: true
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.t1032_transferor_payments_excluded_for_line_33_note_1: 3000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.transferor_tax_deducted_from_eligible_pension_income_line_68040: 500
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.transferor_total_tax_deducted_before_split_line_37: 500
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.receiving_spouse_total_tax_deducted_before_split_line_40: 0
+  output:
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_line_3: 0
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_total_eligible_pension_income_line_17: 3000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_eligible_income_after_proration_line_19: 3000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_maximum_split_pension_amount_line_21: 1500
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#split_pension_amount_line_21000_and_11600: 1500
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_line_30: 1500
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_receiving_spouse_line_33: 1500
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_tax_deducted_split_amount_line_36: 250
+
+- name: t1032_zero_eligible_income_zeroes_tax_deducted_split
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.transferring_spouse_eligible_pension_income_line_68020: 0
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.transferring_spouse_t4a_box_128_veterans_benefits_line_68025: 0
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.transferring_spouse_t4a_rca_box_17_life_annuity_payments_line_68026: 0
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.t1032_months_married_or_common_law_line_68030: 0
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.t1032_months_in_tax_year_for_proration: 12
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.t1032_marital_status_proration_applies: false
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.elected_split_pension_amount_line_22: 1000
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.receiving_spouse_federal_worksheet_line_8_for_31400: 0
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.t1032_receiving_spouse_special_line_33_conditions_apply: false
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.t1032_transferor_payments_excluded_for_line_33_note_1: 0
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.transferor_tax_deducted_from_eligible_pension_income_line_68040: 100
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.transferor_total_tax_deducted_before_split_line_37: 100
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#input.receiving_spouse_total_tax_deducted_before_split_line_40: 0
+  output:
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_total_eligible_pension_income_line_17: 0
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#split_pension_amount_line_21000_and_11600: 0
+    ca:policies/cra/t1-2025/joint-election-to-split-pension-income#federal_2025_t1032_tax_deducted_split_amount_line_36: 0
