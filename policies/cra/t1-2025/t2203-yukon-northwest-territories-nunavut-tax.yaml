@@ -1,0 +1,418 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T2203 for 2025 includes YT428MJ, NT428MJ, and NU428MJ for
+    Yukon, Northwest Territories, and Nunavut multiple-jurisdiction tax.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/t2203-yukon-northwest-territories-nunavut-tax
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: CRA Form T2203 is the official 2025 form for territorial multiple-jurisdiction taxes.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t2203/t2203-25e.pdf
+rules:
+  - name: federal_2025_t2203_yt_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 YT428MJ bracket threshold is $57,375
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 57375
+  - name: federal_2025_t2203_yt_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 YT428MJ bracket threshold is $114,750
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 114750
+  - name: federal_2025_t2203_yt_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 YT428MJ bracket threshold is $177,882
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 177882
+  - name: federal_2025_t2203_yt_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 YT428MJ bracket threshold is $500,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 500000
+  - name: federal_2025_t2203_yt_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 YT428MJ first rate is 6.4%, encoded as 0.064
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.064
+  - name: federal_2025_t2203_yt_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 YT428MJ second rate is 9%, encoded as 0.09
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.09
+  - name: federal_2025_t2203_yt_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 YT428MJ third rate is 10.9%, encoded as 0.109
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.109
+  - name: federal_2025_t2203_yt_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 YT428MJ second base tax is $3,672.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 3672
+  - name: federal_2025_t2203_yt_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 YT428MJ third base tax is $8,835.75
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 8835.75
+  - name: federal_2025_t2203_yt_minimum_tax_carryover_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 YT428MJ line 14 uses 44.14%, encoded as 0.4414
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.4414
+  - name: federal_2025_t2203_yt_additional_minimum_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 YT428MJ line 17 uses 43.9%, encoded as 0.439
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.439
+  - name: federal_2025_t2203_yt_business_investment_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 YT428MJ line 36 maximum business investment tax credit is $25,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 25000
+  - name: federal_2025_t2203_nt_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NT428MJ bracket threshold is $51,964
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 51964
+  - name: federal_2025_t2203_nt_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NT428MJ bracket threshold is $103,930
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 103930
+  - name: federal_2025_t2203_nt_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NT428MJ bracket threshold is $168,967
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 168967
+  - name: federal_2025_t2203_nt_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NT428MJ first rate is 5.9%, encoded as 0.059
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.059
+  - name: federal_2025_t2203_nt_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NT428MJ second rate is 8.6%, encoded as 0.086
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.086
+  - name: federal_2025_t2203_nt_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NT428MJ third rate is 12.2%, encoded as 0.122
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.122
+  - name: federal_2025_t2203_nt_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NT428MJ second base tax is $3,065.88
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 3065.88
+  - name: federal_2025_t2203_nt_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NT428MJ third base tax is $7,534.95
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 7534.95
+  - name: federal_2025_t2203_nt_minimum_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NT428MJ lines 14 and 17 use 45%, encoded as 0.45
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.45
+  - name: federal_2025_t2203_nu_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NU428MJ bracket threshold is $54,707
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 54707
+  - name: federal_2025_t2203_nu_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NU428MJ bracket threshold is $109,413
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 109413
+  - name: federal_2025_t2203_nu_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NU428MJ first rate is 4%, encoded as 0.04
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.04
+  - name: federal_2025_t2203_nu_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NU428MJ second rate is 7%, encoded as 0.07
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.07
+  - name: federal_2025_t2203_nu_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NU428MJ third rate is 9%, encoded as 0.09
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.09
+  - name: federal_2025_t2203_nu_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NU428MJ second base tax is $2,188.28
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2188.28
+  - name: federal_2025_t2203_nu_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NU428MJ third base tax is $6,017.70
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 6017.70
+  - name: federal_2025_t2203_nu_minimum_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NU428MJ lines 14 and 17 use 45%, encoded as 0.45
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.45
+  - name: federal_2025_t2203_nu_volunteer_credit
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NU428MJ line 31 volunteer firefighters and search and rescue volunteers credit is $722
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 722
+  - name: federal_2025_t2203_yt_tax_on_taxable_income_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 YT428MJ line 9 is Yukon tax on taxable income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= federal_2025_t2203_yt_bracket_1_threshold:
+            max(0, taxable_income_line_26000) * federal_2025_t2203_yt_bracket_1_rate
+          else:
+            if taxable_income_line_26000 <= federal_2025_t2203_yt_bracket_2_threshold:
+              (taxable_income_line_26000 - federal_2025_t2203_yt_bracket_1_threshold) * federal_2025_t2203_yt_bracket_2_rate + federal_2025_t2203_yt_bracket_2_base_tax
+            else:
+              (taxable_income_line_26000 - federal_2025_t2203_yt_bracket_2_threshold) * federal_2025_t2203_yt_bracket_3_rate + federal_2025_t2203_yt_bracket_3_base_tax
+  - name: federal_2025_t2203_yt_adjusted_income_tax_line_30
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 YT428MJ lines 10 to 30 calculate adjusted Yukon income tax
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            (
+              max(
+                0,
+                federal_2025_t2203_yt_tax_on_taxable_income_line_9
+                + max(0, yt_unallocated_tax_on_split_income_t1206_line_10)
+                - (
+                  max(0, yt_non_refundable_tax_credits_part_3_line_d)
+                  + max(0, yt_dividend_tax_credit_line_13)
+                  + max(0, minimum_tax_carryover_line_40427) * federal_2025_t2203_yt_minimum_tax_carryover_rate
+                )
+              ) + max(0, yt_t691_part_7_line_14) * federal_2025_t2203_yt_additional_minimum_tax_rate
+            ) * max(0, t2203_yukon_income_allocation_percentage)
+            - (if t2203_resident_of_yukon:
+                (
+                  max(0, yt_resident_adjustment_credit_base_lines_58189_58310_58326_58330_58360)
+                  * federal_2025_t2203_yt_bracket_1_rate
+                  + max(0, yt_dividend_tax_credit_line_13)
+                ) * max(0, 1 - max(0, t2203_yukon_income_allocation_percentage))
+              else:
+                0)
+            - max(0, yt_territorial_foreign_tax_credit_t2036_line_29)
+          )
+  - name: t2203_yukon_tax_part_5_line_10
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 YT428MJ lines 31 to 48 subtract selected credits and enter Yukon tax on Part 5 line 10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2203_yt_adjusted_income_tax_line_30
+            - min(
+              federal_2025_t2203_yt_business_investment_cap,
+              max(0, yt_business_investment_tax_credit_certificate_line_32)
+              + max(0, yt_unused_business_investment_tax_credit_line_33)
+            )
+            - max(0, yt_first_nations_income_tax_credit_yt432_line_44)
+            - max(0, yt_political_contribution_tax_credit_line_47)
+          )
+  - name: federal_2025_t2203_nt_tax_on_taxable_income_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NT428MJ line 9 is Northwest Territories tax on taxable income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= federal_2025_t2203_nt_bracket_1_threshold:
+            max(0, taxable_income_line_26000) * federal_2025_t2203_nt_bracket_1_rate
+          else:
+            if taxable_income_line_26000 <= federal_2025_t2203_nt_bracket_2_threshold:
+              (taxable_income_line_26000 - federal_2025_t2203_nt_bracket_1_threshold) * federal_2025_t2203_nt_bracket_2_rate + federal_2025_t2203_nt_bracket_2_base_tax
+            else:
+              (taxable_income_line_26000 - federal_2025_t2203_nt_bracket_2_threshold) * federal_2025_t2203_nt_bracket_3_rate + federal_2025_t2203_nt_bracket_3_base_tax
+  - name: federal_2025_t2203_nt_adjusted_income_tax_line_30
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NT428MJ lines 10 to 30 calculate adjusted Northwest Territories income tax
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            (
+              max(
+                0,
+                federal_2025_t2203_nt_tax_on_taxable_income_line_9
+                + max(0, nt_unallocated_tax_on_split_income_t1206_line_10)
+                - (
+                  max(0, nt_non_refundable_tax_credits_part_3_line_d)
+                  + max(0, nt_dividend_tax_credit_line_13)
+                  + max(0, minimum_tax_carryover_line_40427) * federal_2025_t2203_nt_minimum_tax_rate
+                )
+              ) + max(0, nt_t691_part_7_line_14) * federal_2025_t2203_nt_minimum_tax_rate
+            ) * max(0, t2203_northwest_territories_income_allocation_percentage)
+            - (if t2203_resident_of_northwest_territories:
+                (
+                  max(0, nt_resident_adjustment_credit_base_line_58360)
+                  * federal_2025_t2203_nt_bracket_1_rate
+                  + max(0, nt_dividend_tax_credit_line_13)
+                ) * max(0, 1 - max(0, t2203_northwest_territories_income_allocation_percentage))
+              else:
+                0)
+            - max(0, nt_territorial_foreign_tax_credit_t2036_line_29)
+          )
+  - name: t2203_northwest_territories_tax_part_5_line_11
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NT428MJ line 33 subtracts political contribution credit and enters Northwest Territories tax on Part 5 line 11
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, federal_2025_t2203_nt_adjusted_income_tax_line_30 - max(0, nt_political_contribution_tax_credit_line_32))
+  - name: federal_2025_t2203_nu_tax_on_taxable_income_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NU428MJ line 9 is Nunavut tax on taxable income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= federal_2025_t2203_nu_bracket_1_threshold:
+            max(0, taxable_income_line_26000) * federal_2025_t2203_nu_bracket_1_rate
+          else:
+            if taxable_income_line_26000 <= federal_2025_t2203_nu_bracket_2_threshold:
+              (taxable_income_line_26000 - federal_2025_t2203_nu_bracket_1_threshold) * federal_2025_t2203_nu_bracket_2_rate + federal_2025_t2203_nu_bracket_2_base_tax
+            else:
+              (taxable_income_line_26000 - federal_2025_t2203_nu_bracket_2_threshold) * federal_2025_t2203_nu_bracket_3_rate + federal_2025_t2203_nu_bracket_3_base_tax
+  - name: federal_2025_t2203_nu_adjusted_income_tax_line_30
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NU428MJ lines 10 to 30 calculate adjusted Nunavut income tax
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            (
+              max(
+                0,
+                federal_2025_t2203_nu_tax_on_taxable_income_line_9
+                + max(0, nu_unallocated_tax_on_split_income_t1206_line_10)
+                - (
+                  max(0, nu_non_refundable_tax_credits_part_3_line_d)
+                  + max(0, nu_dividend_tax_credit_line_13)
+                  + max(0, minimum_tax_carryover_line_40427) * federal_2025_t2203_nu_minimum_tax_rate
+                )
+              ) + max(0, nu_t691_part_7_line_14) * federal_2025_t2203_nu_minimum_tax_rate
+            ) * max(0, t2203_nunavut_income_allocation_percentage)
+            - (if t2203_resident_of_nunavut:
+                (
+                  max(0, nu_resident_adjustment_credit_base_lines_58230_58360)
+                  * federal_2025_t2203_nu_bracket_1_rate
+                  + max(0, nu_dividend_tax_credit_line_13)
+                ) * max(0, 1 - max(0, t2203_nunavut_income_allocation_percentage))
+              else:
+                0)
+            - max(0, nu_territorial_foreign_tax_credit_t2036_line_29)
+          )
+  - name: t2203_nunavut_tax_part_5_line_12
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NU428MJ line 32 subtracts volunteer credit and enters Nunavut tax on Part 5 line 12
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2203_nu_adjusted_income_tax_line_30
+            - (if nu_claims_volunteer_firefighters_or_search_and_rescue_credit:
+                federal_2025_t2203_nu_volunteer_credit
+              else:
+                0)
+          )
