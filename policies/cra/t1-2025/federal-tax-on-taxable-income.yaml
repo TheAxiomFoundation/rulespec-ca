@@ -1,0 +1,256 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA 2025 T1 return Step 5 Part A calculates federal tax on taxable
+    income from line 26000 using the five federal brackets, rates, and
+    base-tax amounts printed on the return. The result is line 76 and
+    is carried to line 119.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/federal-tax-on-taxable-income
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Form 5000-R is the official 2025 T1 return for residents of
+        PE, NS, NB, MB, and SK, and its federal Step 5 Part A gives the
+        common 2025 federal taxable-income bracket calculation.
+    source_urls:
+      - https://www.canada.ca/en/revenue-agency/services/forms-publications/tax-packages-years/general-income-tax-benefit-package/5000-r.html
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-r/5000-r-25e.txt
+rules:
+  - name: federal_2025_t1_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2025 T1 Step 5 Part A column 1 applies to line 26000 of $57,375 or less
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          57375
+
+  - name: federal_2025_t1_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2025 T1 Step 5 Part A column 2 applies above $57,375 and not more than $114,750
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          114750
+
+  - name: federal_2025_t1_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2025 T1 Step 5 Part A column 3 applies above $114,750 and not more than $177,882
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          177882
+
+  - name: federal_2025_t1_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA 2025 T1 Step 5 Part A column 4 applies above $177,882 and not more than $253,414
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          253414
+
+  - name: federal_2025_t1_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2025 T1 Step 5 Part A column 1 line 73 gives the rate as 14.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.145
+
+  - name: federal_2025_t1_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2025 T1 Step 5 Part A column 2 line 73 gives the rate as 20.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.205
+
+  - name: federal_2025_t1_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2025 T1 Step 5 Part A column 3 line 73 gives the rate as 26%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.26
+
+  - name: federal_2025_t1_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2025 T1 Step 5 Part A column 4 line 73 gives the rate as 29%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.29
+
+  - name: federal_2025_t1_bracket_5_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA 2025 T1 Step 5 Part A column 5 line 73 gives the rate as 33%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.33
+
+  - name: federal_2025_t1_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA 2025 T1 Step 5 Part A column 2 line 75 gives base tax of $8,319.38
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          8319.38
+
+  - name: federal_2025_t1_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA 2025 T1 Step 5 Part A column 3 line 75 gives base tax of $20,081.25
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          20081.25
+
+  - name: federal_2025_t1_bracket_4_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA 2025 T1 Step 5 Part A column 4 line 75 gives base tax of $36,495.57
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          36495.57
+
+  - name: federal_2025_t1_bracket_5_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA 2025 T1 Step 5 Part A column 5 line 75 gives base tax of $58,399.85
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          58399.85
+
+  - name: federal_2025_t1_taxable_income_line_70
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part A line 70 uses the amount from taxable income line 26000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, taxable_income_line_26000)
+
+  - name: federal_2025_t1_bracket_threshold_line_71
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part A line 71 uses the bracket subtraction amount for the selected column
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if federal_2025_t1_taxable_income_line_70 <= federal_2025_t1_bracket_1_threshold:
+            0
+          else:
+            if federal_2025_t1_taxable_income_line_70 <= federal_2025_t1_bracket_2_threshold:
+              federal_2025_t1_bracket_1_threshold
+            else:
+              if federal_2025_t1_taxable_income_line_70 <= federal_2025_t1_bracket_3_threshold:
+                federal_2025_t1_bracket_2_threshold
+              else:
+                if federal_2025_t1_taxable_income_line_70 <= federal_2025_t1_bracket_4_threshold:
+                  federal_2025_t1_bracket_3_threshold
+                else:
+                  federal_2025_t1_bracket_4_threshold
+
+  - name: federal_2025_t1_amount_above_threshold_line_72
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part A line 72 subtracts line 71 from line 70 and cannot be negative
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t1_taxable_income_line_70
+            - federal_2025_t1_bracket_threshold_line_71
+          )
+
+  - name: federal_2025_t1_selected_rate_line_73
+    kind: derived
+    entity: Person
+    dtype: Rate
+    period: Year
+    source: CRA 2025 T1 Step 5 Part A line 73 uses the rate for the selected taxable income bracket
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if federal_2025_t1_taxable_income_line_70 <= federal_2025_t1_bracket_1_threshold:
+            federal_2025_t1_bracket_1_rate
+          else:
+            if federal_2025_t1_taxable_income_line_70 <= federal_2025_t1_bracket_2_threshold:
+              federal_2025_t1_bracket_2_rate
+            else:
+              if federal_2025_t1_taxable_income_line_70 <= federal_2025_t1_bracket_3_threshold:
+                federal_2025_t1_bracket_3_rate
+              else:
+                if federal_2025_t1_taxable_income_line_70 <= federal_2025_t1_bracket_4_threshold:
+                  federal_2025_t1_bracket_4_rate
+                else:
+                  federal_2025_t1_bracket_5_rate
+
+  - name: federal_2025_t1_tax_on_bracket_slice_line_74
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part A line 74 multiplies line 72 by the percentage from line 73
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1_amount_above_threshold_line_72
+          * federal_2025_t1_selected_rate_line_73
+
+  - name: federal_2025_t1_base_tax_line_75
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part A line 75 uses the base tax for the selected taxable income bracket
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if federal_2025_t1_taxable_income_line_70 <= federal_2025_t1_bracket_1_threshold:
+            0
+          else:
+            if federal_2025_t1_taxable_income_line_70 <= federal_2025_t1_bracket_2_threshold:
+              federal_2025_t1_bracket_2_base_tax
+            else:
+              if federal_2025_t1_taxable_income_line_70 <= federal_2025_t1_bracket_3_threshold:
+                federal_2025_t1_bracket_3_base_tax
+              else:
+                if federal_2025_t1_taxable_income_line_70 <= federal_2025_t1_bracket_4_threshold:
+                  federal_2025_t1_bracket_4_base_tax
+                else:
+                  federal_2025_t1_bracket_5_base_tax
+
+  - name: federal_2025_t1_tax_on_taxable_income_line_76
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part A line 76 adds line 74 and line 75 as federal tax on taxable income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1_tax_on_bracket_slice_line_74
+          + federal_2025_t1_base_tax_line_75
