@@ -4,9 +4,10 @@ module:
     CRA Schedule 6 for the 2025 T1 return calculates the Canada Workers
     Benefit, a refundable personal income tax credit claimed on line
     45300, and the advanced Canada Workers Benefit amount on line 41500.
-    This module encodes the non-Alberta/Quebec/Nunavut Schedule 6 basic
-    amount, disability supplement, secondary-earner exemption, final CWB
-    amount, and ACWB repayment/offset surface.
+    This module encodes the standard Schedule 6 and the Alberta, Quebec,
+    and Nunavut custom Schedule 6 basic amount, disability supplement,
+    secondary-earner exemption, final CWB amount, and ACWB
+    repayment/offset surface.
   source_verification:
     corpus_citation_path: canada/policy/cra/t1-2025/canada-workers-benefit
     upstream_source_check:
@@ -21,6 +22,9 @@ module:
         available filing package.
     source_urls:
       - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s6/5000-s6-25e.pdf
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5009-s6/5009-s6-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5005-s6/5005-s6-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5014-s6/5014-s6-25e.txt
 rules:
   - name: cwb_basic_working_income_exclusion
     kind: parameter
@@ -157,6 +161,398 @@ rules:
         formula: |-
           16386
 
+  - name: cwb_ab_basic_working_income_exclusion
+    kind: parameter
+    dtype: Money
+    source: CRA Alberta Schedule 6 2025 line 17 basic CWB base amount is $2,760
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2760
+
+  - name: cwb_ab_basic_phase_in_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Alberta Schedule 6 2025 line 19 basic CWB rate is 21%, encoded as 0.21
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.21
+
+  - name: cwb_ab_basic_single_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Alberta Schedule 6 2025 line 21 single maximum is $1,750
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1750
+
+  - name: cwb_ab_basic_family_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Alberta Schedule 6 2025 line 21 family maximum is $2,619
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2619
+
+  - name: cwb_ab_basic_single_reduction_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Alberta Schedule 6 2025 line 24 single threshold is $26,159
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 26159
+
+  - name: cwb_ab_basic_family_reduction_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Alberta Schedule 6 2025 line 24 family threshold is $32,772
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 32772
+
+  - name: cwb_ab_disability_working_income_exclusion
+    kind: parameter
+    dtype: Money
+    source: CRA Alberta Schedule 6 2025 line 30 disability supplement base amount is $910
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 910
+
+  - name: cwb_ab_disability_phase_in_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Alberta Schedule 6 2025 line 32 disability supplement rate is 26%, encoded as 0.26
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.26
+
+  - name: cwb_ab_disability_single_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Alberta Schedule 6 2025 line 36 single disability threshold is $37,826
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 37826
+
+  - name: cwb_ab_disability_family_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Alberta Schedule 6 2025 line 36 family disability threshold is $50,232
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 50232
+
+  - name: cwb_qc_basic_single_or_dependant_exclusion
+    kind: parameter
+    dtype: Money
+    source: CRA Quebec Schedule 6 2025 line 17 base amount is $2,400 unless the claimant had an eligible spouse
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2400
+
+  - name: cwb_qc_basic_spouse_exclusion
+    kind: parameter
+    dtype: Money
+    source: CRA Quebec Schedule 6 2025 line 17 base amount is $3,600 with an eligible spouse
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 3600
+
+  - name: cwb_qc_basic_single_or_spouse_only_phase_in_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Quebec Schedule 6 2025 line 19 rate is 37.3% unless the claimant had an eligible dependant
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.373
+
+  - name: cwb_qc_basic_dependant_only_phase_in_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Quebec Schedule 6 2025 line 19 rate is 20% with an eligible dependant and no eligible spouse
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.20
+
+  - name: cwb_qc_basic_spouse_and_dependant_phase_in_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Quebec Schedule 6 2025 line 19 rate is 23.9% with both an eligible spouse and eligible dependant
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.239
+
+  - name: cwb_qc_basic_single_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Quebec Schedule 6 2025 line 21 single maximum is $3,812.06
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 3812.06
+
+  - name: cwb_qc_basic_spouse_only_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Quebec Schedule 6 2025 line 21 spouse-only maximum is $5,943.38
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5943.38
+
+  - name: cwb_qc_basic_dependant_only_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Quebec Schedule 6 2025 line 21 dependant-only maximum is $2,044
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2044
+
+  - name: cwb_qc_basic_spouse_and_dependant_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Quebec Schedule 6 2025 line 21 spouse-and-dependant maximum is $3,808.23
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 3808.23
+
+  - name: cwb_qc_basic_single_reduction_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Quebec Schedule 6 2025 line 24 single threshold is $14,170.05
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 14170.05
+
+  - name: cwb_qc_basic_spouse_only_reduction_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Quebec Schedule 6 2025 line 24 spouse-only threshold is $21,787.19
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 21787.19
+
+  - name: cwb_qc_basic_dependant_only_reduction_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Quebec Schedule 6 2025 line 24 dependant-only threshold is $14,341.56
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 14341.56
+
+  - name: cwb_qc_basic_spouse_and_dependant_reduction_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Quebec Schedule 6 2025 line 24 spouse-and-dependant threshold is $22,007.75
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 22007.75
+
+  - name: cwb_qc_basic_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Quebec Schedule 6 2025 line 26 reduction rate is 20%, encoded as 0.20
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.20
+
+  - name: cwb_qc_disability_working_income_exclusion
+    kind: parameter
+    dtype: Money
+    source: CRA Quebec Schedule 6 2025 line 30 disability supplement base amount is $1,200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1200
+
+  - name: cwb_qc_disability_single_phase_in_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Quebec Schedule 6 2025 line 32 disability supplement rate is 40% without an eligible spouse or dependant
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.40
+
+  - name: cwb_qc_disability_family_phase_in_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Quebec Schedule 6 2025 line 32 disability supplement rate is 20% with an eligible spouse or dependant
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.20
+
+  - name: cwb_qc_disability_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Quebec Schedule 6 2025 line 34 maximum disability supplement is $851.31
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 851.31
+
+  - name: cwb_qc_disability_single_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Quebec Schedule 6 2025 line 36 single disability threshold is $33,230.35
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 33230.35
+
+  - name: cwb_qc_disability_spouse_only_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Quebec Schedule 6 2025 line 36 spouse-only disability threshold is $51,504.09
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 51504.09
+
+  - name: cwb_qc_disability_dependant_only_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Quebec Schedule 6 2025 line 36 dependant-only disability threshold is $24,561.56
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 24561.56
+
+  - name: cwb_qc_disability_spouse_and_dependant_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Quebec Schedule 6 2025 line 36 spouse-and-dependant disability threshold is $41,048.90
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 41048.90
+
+  - name: cwb_qc_disability_one_disabled_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Quebec Schedule 6 2025 line 38 reduction rate is 20% unless the eligible spouse is also eligible for the DTC
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.20
+
+  - name: cwb_qc_disability_two_disabled_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Quebec Schedule 6 2025 line 38 reduction rate is 10% when the eligible spouse is also eligible for the DTC
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.10
+
+  - name: cwb_nu_basic_working_income_exclusion
+    kind: parameter
+    dtype: Money
+    source: CRA Nunavut Schedule 6 2025 line 17 basic CWB base amount is $6,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 6000
+
+  - name: cwb_nu_basic_phase_in_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Nunavut Schedule 6 2025 line 19 basic CWB rate is 14%, encoded as 0.14
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.14
+
+  - name: cwb_nu_basic_single_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Nunavut Schedule 6 2025 line 21 single maximum is $1,621
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1621
+
+  - name: cwb_nu_basic_family_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Nunavut Schedule 6 2025 line 21 family maximum is $2,435
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2435
+
+  - name: cwb_nu_basic_single_reduction_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Nunavut Schedule 6 2025 line 24 single threshold is $26,832
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 26832
+
+  - name: cwb_nu_basic_family_reduction_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Nunavut Schedule 6 2025 line 24 family threshold is $36,927
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 36927
+
+  - name: cwb_nu_basic_single_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Nunavut Schedule 6 2025 line 26 single reduction rate is 4%, encoded as 0.04
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.04
+
+  - name: cwb_nu_basic_family_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Nunavut Schedule 6 2025 line 26 family reduction rate is 8%, encoded as 0.08
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.08
+
+  - name: cwb_nu_disability_working_income_exclusion
+    kind: parameter
+    dtype: Money
+    source: CRA Nunavut Schedule 6 2025 line 30 disability supplement base amount is $4,800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 4800
+
+  - name: cwb_nu_disability_phase_in_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Nunavut Schedule 6 2025 line 32 disability supplement rate is 26%, encoded as 0.26
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.26
+
+  - name: cwb_nu_disability_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Nunavut Schedule 6 2025 line 34 maximum disability supplement is $936
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 936
+
+  - name: cwb_nu_disability_single_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Nunavut Schedule 6 2025 line 36 single disability threshold is $67,357
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 67357
+
+  - name: cwb_nu_disability_family_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Nunavut Schedule 6 2025 line 36 family disability threshold is $67,365
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 67365
+
+  - name: cwb_nu_disability_one_disabled_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Nunavut Schedule 6 2025 line 38 reduction rate is 12% unless the eligible spouse is also eligible for the DTC
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.12
+
+  - name: cwb_nu_disability_two_disabled_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Nunavut Schedule 6 2025 line 38 reduction rate is 6% when the eligible spouse is also eligible for the DTC
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.06
+
   - name: cwb_claimant_working_income
     kind: derived
     entity: Family
@@ -241,10 +637,83 @@ rules:
     versions:
       - effective_from: '2025-01-01'
         formula: |-
-          if has_eligible_spouse_or_eligible_dependant:
-            cwb_basic_family_maximum
+          if is_quebec_resident:
+            if has_eligible_spouse and has_eligible_dependant:
+              cwb_qc_basic_spouse_and_dependant_maximum
+            else:
+              if has_eligible_spouse:
+                cwb_qc_basic_spouse_only_maximum
+              else:
+                if has_eligible_dependant:
+                  cwb_qc_basic_dependant_only_maximum
+                else:
+                  cwb_qc_basic_single_maximum
           else:
-            cwb_basic_single_maximum
+            if is_alberta_resident:
+              if has_eligible_spouse_or_eligible_dependant:
+                cwb_ab_basic_family_maximum
+              else:
+                cwb_ab_basic_single_maximum
+            else:
+              if is_nunavut_resident:
+                if has_eligible_spouse_or_eligible_dependant:
+                  cwb_nu_basic_family_maximum
+                else:
+                  cwb_nu_basic_single_maximum
+              else:
+                if has_eligible_spouse_or_eligible_dependant:
+                  cwb_basic_family_maximum
+                else:
+                  cwb_basic_single_maximum
+
+  - name: cwb_basic_working_income_exclusion_for_jurisdiction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 6 2025 line 17 base amount by standard, AB, QC, and NU Schedule 6
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if is_quebec_resident:
+            if has_eligible_spouse:
+              cwb_qc_basic_spouse_exclusion
+            else:
+              cwb_qc_basic_single_or_dependant_exclusion
+          else:
+            if is_alberta_resident:
+              cwb_ab_basic_working_income_exclusion
+            else:
+              if is_nunavut_resident:
+                cwb_nu_basic_working_income_exclusion
+              else:
+                cwb_basic_working_income_exclusion
+
+  - name: cwb_basic_phase_in_rate_for_jurisdiction
+    kind: derived
+    entity: Family
+    dtype: Rate
+    period: Year
+    source: CRA Schedule 6 2025 line 19 rate by standard, AB, QC, and NU Schedule 6
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if is_quebec_resident:
+            if has_eligible_spouse and has_eligible_dependant:
+              cwb_qc_basic_spouse_and_dependant_phase_in_rate
+            else:
+              if has_eligible_dependant and not has_eligible_spouse:
+                cwb_qc_basic_dependant_only_phase_in_rate
+              else:
+                cwb_qc_basic_single_or_spouse_only_phase_in_rate
+          else:
+            if is_alberta_resident:
+              cwb_ab_basic_phase_in_rate
+            else:
+              if is_nunavut_resident:
+                cwb_nu_basic_phase_in_rate
+              else:
+                cwb_basic_phase_in_rate
 
   - name: cwb_basic_reduction_threshold_for_family_type
     kind: derived
@@ -255,10 +724,54 @@ rules:
     versions:
       - effective_from: '2025-01-01'
         formula: |-
-          if has_eligible_spouse_or_eligible_dependant:
-            cwb_basic_family_reduction_threshold
+          if is_quebec_resident:
+            if has_eligible_spouse and has_eligible_dependant:
+              cwb_qc_basic_spouse_and_dependant_reduction_threshold
+            else:
+              if has_eligible_spouse:
+                cwb_qc_basic_spouse_only_reduction_threshold
+              else:
+                if has_eligible_dependant:
+                  cwb_qc_basic_dependant_only_reduction_threshold
+                else:
+                  cwb_qc_basic_single_reduction_threshold
           else:
-            cwb_basic_single_reduction_threshold
+            if is_alberta_resident:
+              if has_eligible_spouse_or_eligible_dependant:
+                cwb_ab_basic_family_reduction_threshold
+              else:
+                cwb_ab_basic_single_reduction_threshold
+            else:
+              if is_nunavut_resident:
+                if has_eligible_spouse_or_eligible_dependant:
+                  cwb_nu_basic_family_reduction_threshold
+                else:
+                  cwb_nu_basic_single_reduction_threshold
+              else:
+                if has_eligible_spouse_or_eligible_dependant:
+                  cwb_basic_family_reduction_threshold
+                else:
+                  cwb_basic_single_reduction_threshold
+
+  - name: cwb_basic_reduction_rate_for_jurisdiction
+    kind: derived
+    entity: Family
+    dtype: Rate
+    period: Year
+    source: CRA Schedule 6 2025 line 26 reduction rate by standard, AB, QC, and NU Schedule 6
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if is_quebec_resident:
+            cwb_qc_basic_reduction_rate
+          else:
+            if is_nunavut_resident:
+              if has_eligible_spouse_or_eligible_dependant:
+                cwb_nu_basic_family_reduction_rate
+              else:
+                cwb_nu_basic_single_reduction_rate
+            else:
+              cwb_basic_reduction_rate
 
   - name: cwb_basic_amount_before_reduction
     kind: derived
@@ -271,7 +784,7 @@ rules:
         formula: |-
           min(
             cwb_basic_maximum_for_family_type,
-            cwb_basic_phase_in_rate * max(0, cwb_family_working_income - cwb_basic_working_income_exclusion)
+            cwb_basic_phase_in_rate_for_jurisdiction * max(0, cwb_family_working_income - cwb_basic_working_income_exclusion_for_jurisdiction)
           )
 
   - name: cwb_basic_reduction
@@ -283,7 +796,7 @@ rules:
     versions:
       - effective_from: '2025-01-01'
         formula: |-
-          cwb_basic_reduction_rate * max(0, cwb_adjusted_family_net_income - cwb_basic_reduction_threshold_for_family_type)
+          cwb_basic_reduction_rate_for_jurisdiction * max(0, cwb_adjusted_family_net_income - cwb_basic_reduction_threshold_for_family_type)
 
   - name: cwb_basic_amount
     kind: derived
@@ -307,8 +820,39 @@ rules:
         formula: |-
           if claimant_is_eligible_for_disability_tax_credit:
             min(
-              cwb_disability_maximum,
-              cwb_disability_phase_in_rate * max(0, cwb_claimant_working_income - cwb_disability_working_income_exclusion)
+              if is_quebec_resident:
+                cwb_qc_disability_maximum
+              else:
+                if is_nunavut_resident:
+                  cwb_nu_disability_maximum
+                else:
+                  cwb_disability_maximum,
+              (
+                if is_quebec_resident:
+                  if has_eligible_spouse_or_eligible_dependant:
+                    cwb_qc_disability_family_phase_in_rate
+                  else:
+                    cwb_qc_disability_single_phase_in_rate
+                else:
+                  if is_alberta_resident:
+                    cwb_ab_disability_phase_in_rate
+                  else:
+                    if is_nunavut_resident:
+                      cwb_nu_disability_phase_in_rate
+                    else:
+                      cwb_disability_phase_in_rate
+              ) * max(0, cwb_claimant_working_income - (
+                if is_quebec_resident:
+                  cwb_qc_disability_working_income_exclusion
+                else:
+                  if is_alberta_resident:
+                    cwb_ab_disability_working_income_exclusion
+                  else:
+                    if is_nunavut_resident:
+                      cwb_nu_disability_working_income_exclusion
+                    else:
+                      cwb_disability_working_income_exclusion
+              ))
             )
           else:
             0
@@ -322,10 +866,34 @@ rules:
     versions:
       - effective_from: '2025-01-01'
         formula: |-
-          if has_eligible_spouse and spouse_is_eligible_for_disability_tax_credit:
-            cwb_disability_two_disabled_threshold
+          if is_quebec_resident:
+            if has_eligible_spouse and has_eligible_dependant:
+              cwb_qc_disability_spouse_and_dependant_threshold
+            else:
+              if has_eligible_spouse:
+                cwb_qc_disability_spouse_only_threshold
+              else:
+                if has_eligible_dependant:
+                  cwb_qc_disability_dependant_only_threshold
+                else:
+                  cwb_qc_disability_single_threshold
           else:
-            cwb_disability_single_or_one_disabled_threshold
+            if is_alberta_resident:
+              if has_eligible_spouse_or_eligible_dependant:
+                cwb_ab_disability_family_threshold
+              else:
+                cwb_ab_disability_single_threshold
+            else:
+              if is_nunavut_resident:
+                if has_eligible_spouse_or_eligible_dependant:
+                  cwb_nu_disability_family_threshold
+                else:
+                  cwb_nu_disability_single_threshold
+              else:
+                if has_eligible_spouse and spouse_is_eligible_for_disability_tax_credit:
+                  cwb_disability_two_disabled_threshold
+                else:
+                  cwb_disability_single_or_one_disabled_threshold
 
   - name: cwb_disability_reduction_rate
     kind: derived
@@ -336,10 +904,22 @@ rules:
     versions:
       - effective_from: '2025-01-01'
         formula: |-
-          if has_eligible_spouse and spouse_is_eligible_for_disability_tax_credit:
-            cwb_disability_two_disabled_reduction_rate
+          if is_quebec_resident:
+            if has_eligible_spouse and spouse_is_eligible_for_disability_tax_credit:
+              cwb_qc_disability_two_disabled_reduction_rate
+            else:
+              cwb_qc_disability_one_disabled_reduction_rate
           else:
-            cwb_disability_one_disabled_reduction_rate
+            if is_nunavut_resident:
+              if has_eligible_spouse and spouse_is_eligible_for_disability_tax_credit:
+                cwb_nu_disability_two_disabled_reduction_rate
+              else:
+                cwb_nu_disability_one_disabled_reduction_rate
+            else:
+              if has_eligible_spouse and spouse_is_eligible_for_disability_tax_credit:
+                cwb_disability_two_disabled_reduction_rate
+              else:
+                cwb_disability_one_disabled_reduction_rate
 
   - name: cwb_claimant_disability_reduction
     kind: derived

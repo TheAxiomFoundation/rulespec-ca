@@ -10,9 +10,13 @@
     ca:policies/cra/t1-2025/canada-workers-benefit#input.claimant_adjusted_net_income: 20000
     ca:policies/cra/t1-2025/canada-workers-benefit#input.spouse_adjusted_net_income: 0
     ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_spouse: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_dependant: false
     ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_spouse_or_eligible_dependant: false
     ca:policies/cra/t1-2025/canada-workers-benefit#input.claimant_is_eligible_for_disability_tax_credit: false
     ca:policies/cra/t1-2025/canada-workers-benefit#input.spouse_is_eligible_for_disability_tax_credit: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_alberta_resident: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_quebec_resident: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_nunavut_resident: false
     ca:policies/cra/t1-2025/canada-workers-benefit#input.advanced_canada_workers_benefit_payments_received: 0
   output:
     ca:policies/cra/t1-2025/canada-workers-benefit#cwb_claimant_working_income: 9000
@@ -47,9 +51,13 @@
     ca:policies/cra/t1-2025/canada-workers-benefit#input.claimant_adjusted_net_income: 40000
     ca:policies/cra/t1-2025/canada-workers-benefit#input.spouse_adjusted_net_income: 15000
     ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_spouse: true
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_dependant: false
     ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_spouse_or_eligible_dependant: true
     ca:policies/cra/t1-2025/canada-workers-benefit#input.claimant_is_eligible_for_disability_tax_credit: false
     ca:policies/cra/t1-2025/canada-workers-benefit#input.spouse_is_eligible_for_disability_tax_credit: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_alberta_resident: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_quebec_resident: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_nunavut_resident: false
     ca:policies/cra/t1-2025/canada-workers-benefit#input.advanced_canada_workers_benefit_payments_received: 1000
   output:
     ca:policies/cra/t1-2025/canada-workers-benefit#cwb_family_working_income: 45000
@@ -74,9 +82,13 @@
     ca:policies/cra/t1-2025/canada-workers-benefit#input.claimant_adjusted_net_income: 40000
     ca:policies/cra/t1-2025/canada-workers-benefit#input.spouse_adjusted_net_income: 0
     ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_spouse: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_dependant: false
     ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_spouse_or_eligible_dependant: false
     ca:policies/cra/t1-2025/canada-workers-benefit#input.claimant_is_eligible_for_disability_tax_credit: true
     ca:policies/cra/t1-2025/canada-workers-benefit#input.spouse_is_eligible_for_disability_tax_credit: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_alberta_resident: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_quebec_resident: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_nunavut_resident: false
     ca:policies/cra/t1-2025/canada-workers-benefit#input.advanced_canada_workers_benefit_payments_received: 0
   output:
     ca:policies/cra/t1-2025/canada-workers-benefit#cwb_claimant_disability_amount_before_reduction: 843
@@ -97,9 +109,13 @@
     ca:policies/cra/t1-2025/canada-workers-benefit#input.claimant_adjusted_net_income: 25000
     ca:policies/cra/t1-2025/canada-workers-benefit#input.spouse_adjusted_net_income: 30000
     ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_spouse: true
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_dependant: false
     ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_spouse_or_eligible_dependant: true
     ca:policies/cra/t1-2025/canada-workers-benefit#input.claimant_is_eligible_for_disability_tax_credit: true
     ca:policies/cra/t1-2025/canada-workers-benefit#input.spouse_is_eligible_for_disability_tax_credit: true
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_alberta_resident: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_quebec_resident: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_nunavut_resident: false
     ca:policies/cra/t1-2025/canada-workers-benefit#input.advanced_canada_workers_benefit_payments_received: 0
   output:
     ca:policies/cra/t1-2025/canada-workers-benefit#cwb_secondary_earner_exemption: 9000
@@ -108,3 +124,110 @@
     ca:policies/cra/t1-2025/canada-workers-benefit#cwb_disability_reduction_rate: 0.075
     ca:policies/cra/t1-2025/canada-workers-benefit#cwb_claimant_disability_reduction: 0
     ca:policies/cra/t1-2025/canada-workers-benefit#cwb_claimant_disability_supplement: 843
+
+- name: alberta_custom_basic_cwb_amount
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.claimant_working_income: 10000
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.spouse_working_income: 0
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.adjusted_family_net_income: 30000
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.claimant_adjusted_net_income: 30000
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.spouse_adjusted_net_income: 0
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_spouse: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_dependant: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_spouse_or_eligible_dependant: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.claimant_is_eligible_for_disability_tax_credit: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.spouse_is_eligible_for_disability_tax_credit: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_alberta_resident: true
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_quebec_resident: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_nunavut_resident: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.advanced_canada_workers_benefit_payments_received: 0
+  output:
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_working_income_exclusion_for_jurisdiction: 2760
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_phase_in_rate_for_jurisdiction: 0.21
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_maximum_for_family_type: 1750
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_reduction_threshold_for_family_type: 26159
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_reduction_rate_for_jurisdiction: 0.15
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_amount_before_reduction: 1520.4
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_reduction: 576.15
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_amount: 944.25
+    ca:policies/cra/t1-2025/canada-workers-benefit#canada_workers_benefit_line_45300: 944.25
+
+- name: quebec_custom_spouse_and_dependant_cwb_with_disability
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.claimant_working_income: 40000
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.spouse_working_income: 10000
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.adjusted_family_net_income: 35000
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.claimant_adjusted_net_income: 30000
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.spouse_adjusted_net_income: 10000
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_spouse: true
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_dependant: true
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_spouse_or_eligible_dependant: true
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.claimant_is_eligible_for_disability_tax_credit: true
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.spouse_is_eligible_for_disability_tax_credit: true
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_alberta_resident: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_quebec_resident: true
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_nunavut_resident: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.advanced_canada_workers_benefit_payments_received: 0
+  output:
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_secondary_earner_exemption: 10000
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_adjusted_family_net_income: 25000
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_working_income_exclusion_for_jurisdiction: 3600
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_phase_in_rate_for_jurisdiction: 0.239
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_maximum_for_family_type: 3808.23
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_reduction_threshold_for_family_type: 22007.75
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_reduction_rate_for_jurisdiction: 0.2
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_amount_before_reduction: 3808.23
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_reduction: 598.45
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_amount: 3209.78
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_claimant_disability_amount_before_reduction: 851.31
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_disability_reduction_threshold: 41048.9
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_disability_reduction_rate: 0.1
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_claimant_disability_reduction: 0
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_claimant_disability_supplement: 851.31
+    ca:policies/cra/t1-2025/canada-workers-benefit#canada_workers_benefit_line_45300: 4061.09
+
+- name: nunavut_custom_family_cwb_with_disability
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.claimant_working_income: 40000
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.spouse_working_income: 10000
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.adjusted_family_net_income: 45000
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.claimant_adjusted_net_income: 35000
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.spouse_adjusted_net_income: 10000
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_spouse: true
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_dependant: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.has_eligible_spouse_or_eligible_dependant: true
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.claimant_is_eligible_for_disability_tax_credit: true
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.spouse_is_eligible_for_disability_tax_credit: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_alberta_resident: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_quebec_resident: false
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.is_nunavut_resident: true
+    ca:policies/cra/t1-2025/canada-workers-benefit#input.advanced_canada_workers_benefit_payments_received: 0
+  output:
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_secondary_earner_exemption: 10000
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_adjusted_family_net_income: 35000
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_working_income_exclusion_for_jurisdiction: 6000
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_phase_in_rate_for_jurisdiction: 0.14
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_maximum_for_family_type: 2435
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_reduction_threshold_for_family_type: 36927
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_reduction_rate_for_jurisdiction: 0.08
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_amount_before_reduction: 2435
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_reduction: 0
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_basic_amount: 2435
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_claimant_disability_amount_before_reduction: 936
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_disability_reduction_threshold: 67365
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_disability_reduction_rate: 0.12
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_claimant_disability_reduction: 0
+    ca:policies/cra/t1-2025/canada-workers-benefit#cwb_claimant_disability_supplement: 936
+    ca:policies/cra/t1-2025/canada-workers-benefit#canada_workers_benefit_line_45300: 3371
