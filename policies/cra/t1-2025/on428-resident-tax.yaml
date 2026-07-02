@@ -1,0 +1,870 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form ON428 for 2025 calculates ordinary Ontario resident tax:
+    Ontario tax on taxable income, Ontario non-refundable tax credits,
+    minimum tax carryover, surtax, tax reduction, provincial foreign tax
+    credit, LIFT credit, community food program donation credit, Ontario
+    health premium, and final Ontario tax entered on T1 line 42800.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/on428-resident-tax
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Form ON428 is the official 2025 Ontario tax form for
+        Ontario residents. This module encodes the ordinary resident
+        ON428 arithmetic while leaving detailed worksheet calculations,
+        schedule eligibility, residency predicates, and component line
+        values to dedicated modules or fact inputs.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5006-c/5006-c-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5006-c/5006-c-25e.pdf
+rules:
+  - name: on428_2025_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 Part A column 1 applies to taxable income of $52,886 or less
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 52886
+
+  - name: on428_2025_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 Part A column 2 applies above $52,886 and not more than $105,775
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 105775
+
+  - name: on428_2025_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 Part A column 3 applies above $105,775 and not more than $150,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 150000
+
+  - name: on428_2025_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 Part A column 4 applies above $150,000 and not more than $220,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 220000
+
+  - name: on428_2025_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON428 2025 Part A column 1 line 5 gives the rate as 5.05%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0505
+
+  - name: on428_2025_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON428 2025 Part A column 2 line 5 gives the rate as 9.15%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0915
+
+  - name: on428_2025_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON428 2025 Part A column 3 line 5 gives the rate as 11.16%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.1116
+
+  - name: on428_2025_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON428 2025 Part A column 4 line 5 gives the rate as 12.16%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.1216
+
+  - name: on428_2025_bracket_5_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON428 2025 Part A column 5 line 5 gives the rate as 13.16%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.1316
+
+  - name: on428_2025_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 Part A column 2 line 7 gives base tax of $2,670.74
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2670.74
+
+  - name: on428_2025_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 Part A column 3 line 7 gives base tax of $7,510.09
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 7510.09
+
+  - name: on428_2025_bracket_4_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 Part A column 4 line 7 gives base tax of $12,445.60
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 12445.60
+
+  - name: on428_2025_bracket_5_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 Part A column 5 line 7 gives base tax of $20,957.60
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 20957.60
+
+  - name: on428_2025_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 line 9 and line 58040 basic personal amount is $12,747
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 12747
+
+  - name: on428_2025_spouse_or_dependant_base_amount
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 lines 11 and 14 use a base amount of $11,905
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 11905
+
+  - name: on428_2025_spouse_or_dependant_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 lines 13 and 16 cap spouse and eligible dependant amounts at $10,823
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 10823
+
+  - name: on428_2025_medical_expense_income_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON428 2025 line 38 gives the medical expense income rate as 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.03
+
+  - name: on428_2025_medical_expense_threshold_cap
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 line 40 uses the lesser of $2,885 and line 39
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2885
+
+  - name: on428_2025_low_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON428 2025 line 45 gives the Ontario non-refundable tax credit rate as 5.05%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0505
+
+  - name: on428_2025_high_donation_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON428 2025 line 48 multiplies Schedule 9 line 14 by 11.16%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.1116
+
+  - name: on428_2025_minimum_tax_carryover_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON428 2025 line 59 multiplies minimum tax carryover by 24.63%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.2463
+
+  - name: on428_2025_surtax_first_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 line 66 subtracts $5,710 for the first Ontario surtax
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5710
+
+  - name: on428_2025_surtax_second_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 line 67 subtracts $7,307 for the second Ontario surtax
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 7307
+
+  - name: on428_2025_surtax_first_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON428 2025 line 66 applies a 20% Ontario surtax rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.20
+
+  - name: on428_2025_surtax_second_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON428 2025 line 67 applies a 36% Ontario surtax rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.36
+
+  - name: on428_2025_tax_reduction_basic_amount
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 line 74 basic Ontario tax reduction is $294
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 294
+
+  - name: on428_2025_tax_reduction_dependant_amount
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 lines 75 and 76 dependant Ontario tax reduction amount is $544
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 544
+
+  - name: on428_2025_food_donation_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON428 2025 line 87 multiplies qualifying food donations by 25%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.25
+
+  - name: on428_2025_health_premium_threshold_1
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 health premium row 1 threshold is $20,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 20000
+
+  - name: on428_2025_health_premium_threshold_2
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 health premium row 2 threshold is $25,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 25000
+
+  - name: on428_2025_health_premium_threshold_3
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 health premium row 3 threshold is $36,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 36000
+
+  - name: on428_2025_health_premium_threshold_4
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 health premium row 4 threshold is $38,500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 38500
+
+  - name: on428_2025_health_premium_threshold_5
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 health premium row 5 threshold is $48,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 48000
+
+  - name: on428_2025_health_premium_threshold_6
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 health premium row 6 threshold is $48,600
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 48600
+
+  - name: on428_2025_health_premium_threshold_7
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 health premium row 7 threshold is $72,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 72000
+
+  - name: on428_2025_health_premium_threshold_8
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 health premium row 8 threshold is $72,600
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 72600
+
+  - name: on428_2025_health_premium_threshold_9
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 health premium row 9 threshold is $200,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 200000
+
+  - name: on428_2025_health_premium_threshold_10
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 health premium row 10 threshold is $200,600
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 200600
+
+  - name: on428_2025_health_premium_low_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON428 2025 health premium rows 2 and 4 multiply excess income by 6%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.06
+
+  - name: on428_2025_health_premium_high_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON428 2025 health premium rows 6, 8, and 10 multiply excess income by 25%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.25
+
+  - name: on428_2025_health_premium_300
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 health premium rows 3 and 4 use a $300 premium
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 300
+
+  - name: on428_2025_health_premium_450
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 health premium rows 5 and 6 use a $450 premium
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 450
+
+  - name: on428_2025_health_premium_600
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 health premium rows 7 and 8 use a $600 premium
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 600
+
+  - name: on428_2025_health_premium_750
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 health premium rows 9 and 10 use a $750 premium
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 750
+
+  - name: on428_2025_health_premium_900
+    kind: parameter
+    dtype: Money
+    source: CRA ON428 2025 health premium row 11 uses a $900 premium
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 900
+
+  - name: on428_tax_on_taxable_income_line_8
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 Part A line 8 calculates Ontario tax on taxable income using the selected bracket column
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= on428_2025_bracket_1_threshold:
+            max(0, taxable_income_line_26000) * on428_2025_bracket_1_rate
+          else:
+            if taxable_income_line_26000 <= on428_2025_bracket_2_threshold:
+              (taxable_income_line_26000 - on428_2025_bracket_1_threshold)
+              * on428_2025_bracket_2_rate
+              + on428_2025_bracket_2_base_tax
+            else:
+              if taxable_income_line_26000 <= on428_2025_bracket_3_threshold:
+                (taxable_income_line_26000 - on428_2025_bracket_2_threshold)
+                * on428_2025_bracket_3_rate
+                + on428_2025_bracket_3_base_tax
+              else:
+                if taxable_income_line_26000 <= on428_2025_bracket_4_threshold:
+                  (taxable_income_line_26000 - on428_2025_bracket_3_threshold)
+                  * on428_2025_bracket_4_rate
+                  + on428_2025_bracket_4_base_tax
+                else:
+                  (taxable_income_line_26000 - on428_2025_bracket_4_threshold)
+                  * on428_2025_bracket_5_rate
+                  + on428_2025_bracket_5_base_tax
+
+  - name: on428_spouse_or_partner_amount_line_58120
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 13 subtracts spouse or common-law partner net income from the base amount and caps the claim
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            on428_2025_spouse_or_dependant_maximum,
+            max(0, on428_2025_spouse_or_dependant_base_amount - max(0, spouse_net_income_line_23600))
+          )
+
+  - name: on428_eligible_dependant_amount_line_58160
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 16 subtracts eligible dependant net income from the base amount and caps the claim
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            on428_2025_spouse_or_dependant_maximum,
+            max(0, on428_2025_spouse_or_dependant_base_amount - max(0, eligible_dependant_net_income_line_23600))
+          )
+
+  - name: on428_credit_subtotal_line_18
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 18 adds lines 9, 10, 13, 16, and 17
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          on428_2025_basic_personal_amount
+          + max(0, on428_age_amount_line_58080)
+          + on428_spouse_or_partner_amount_line_58120
+          + on428_eligible_dependant_amount_line_58160
+          + max(0, on428_caregiver_amount_line_58185)
+
+  - name: on428_credit_subtotal_line_24
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 24 adds lines 19 to 23
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, cpp_qpp_contributions_employment_line_30800)
+          + max(0, cpp_qpp_contributions_self_employment_line_31000)
+          + max(0, employment_insurance_premiums_line_31200)
+          + max(0, self_employment_ei_premiums_line_31217)
+          + max(0, adoption_expenses_line_58330)
+
+  - name: on428_credit_subtotal_line_31
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 31 adds lines 28 to 30
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          on428_credit_subtotal_line_18
+          + on428_credit_subtotal_line_24
+          + max(0, pension_income_amount_line_58360)
+          + max(0, disability_amount_for_self_line_58440)
+          + max(0, disability_amount_transferred_from_dependant_line_58480)
+
+  - name: on428_credit_subtotal_line_35
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 35 adds lines 31 to 34
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          on428_credit_subtotal_line_31
+          + max(0, student_loan_interest_line_58520)
+          + max(0, unused_tuition_and_education_amounts_line_58560)
+          + max(0, spouse_or_partner_transfers_line_58640)
+
+  - name: on428_medical_expense_income_base_line_39
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 39 multiplies net income line 23600 by 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, net_income_line_23600) * on428_2025_medical_expense_income_rate
+
+  - name: on428_medical_expense_threshold_line_40
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 40 uses the lesser of $2,885 and line 39
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(on428_2025_medical_expense_threshold_cap, on428_medical_expense_income_base_line_39)
+
+  - name: on428_allowable_family_medical_expenses_line_41
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 41 subtracts line 40 from line 36 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, max(0, medical_expenses_line_58689) - on428_medical_expense_threshold_line_40)
+
+  - name: on428_total_medical_expenses_line_58769
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 43 and line 58769 add line 41 and line 42
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          on428_allowable_family_medical_expenses_line_41
+          + max(0, medical_expenses_other_dependants_line_58729)
+
+  - name: on428_total_claim_amount_line_58800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 44 and line 58800 add line 35 and line 43
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          on428_credit_subtotal_line_35 + on428_total_medical_expenses_line_58769
+
+  - name: on428_net_non_refundable_tax_credits_line_58840
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 46 and line 58840 multiply line 44 by the 5.05% credit rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          on428_total_claim_amount_line_58800 * on428_2025_low_credit_rate
+
+  - name: on428_donations_and_gifts_line_58969
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 49 and line 58969 add low-rate and high-rate donations from federal Schedule 9
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_schedule_9_line_13_amount)
+          * on428_2025_low_credit_rate
+          + max(0, federal_schedule_9_line_14_amount)
+          * on428_2025_high_donation_rate
+
+  - name: on428_total_non_refundable_tax_credits_line_61500
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 50 and line 61500 add Ontario net non-refundable tax credits and Ontario donations and gifts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          on428_net_non_refundable_tax_credits_line_58840
+          + on428_donations_and_gifts_line_58969
+
+  - name: on428_tax_after_non_refundable_credits_line_53
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 53 subtracts Ontario non-refundable credits from Ontario tax on taxable income and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, on428_tax_on_taxable_income_line_8 - on428_total_non_refundable_tax_credits_line_61500)
+
+  - name: on428_tax_plus_tax_on_split_income_line_55
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 55 adds line 53 and Ontario tax on split income line 61510
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          on428_tax_after_non_refundable_credits_line_53
+          + max(0, ontario_tax_on_split_income_line_61510)
+
+  - name: on428_minimum_tax_carryover_base_line_58
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 58 subtracts the Ontario dividend tax credit from line 56 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            on428_tax_after_non_refundable_credits_line_53
+            - max(0, ontario_dividend_tax_credit_line_61520)
+          )
+
+  - name: on428_minimum_tax_carryover_line_61540
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 60 and line 61540 use the lesser of line 58 and line 59
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            on428_minimum_tax_carryover_base_line_58,
+            max(0, minimum_tax_carryover_line_40427) * on428_2025_minimum_tax_carryover_rate
+          )
+
+  - name: on428_tax_after_minimum_tax_carryover_line_61
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 61 subtracts line 60 from line 55 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, on428_tax_plus_tax_on_split_income_line_55 - on428_minimum_tax_carryover_line_61540)
+
+  - name: on428_surtax_base_line_65
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 65 subtracts tax on split income from line 63 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            on428_tax_after_minimum_tax_carryover_line_61
+            - max(0, ontario_tax_on_split_income_line_61510)
+          )
+
+  - name: on428_surtax_line_68
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 68 adds the 20% and 36% Ontario surtax components
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, on428_surtax_base_line_65 - on428_2025_surtax_first_threshold)
+          * on428_2025_surtax_first_rate
+          + max(0, on428_surtax_base_line_65 - on428_2025_surtax_second_threshold)
+          * on428_2025_surtax_second_rate
+
+  - name: on428_tax_after_surtax_line_69
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 69 adds line 62 and Ontario surtax line 68
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          on428_tax_after_minimum_tax_carryover_line_61 + on428_surtax_line_68
+
+  - name: on428_tax_after_dividend_credit_line_71
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 71 subtracts Ontario dividend tax credit from line 69 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, on428_tax_after_surtax_line_69 - max(0, ontario_dividend_tax_credit_line_61520))
+
+  - name: on428_tax_after_additional_minimum_tax_line_73
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 73 adds additional tax for minimum tax purposes line 72
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          on428_tax_after_dividend_credit_line_71
+          + max(0, ontario_additional_tax_for_minimum_tax_purposes_line_72)
+
+  - name: on428_tax_reduction_base_line_77
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 77 adds basic, child, and impairment Ontario tax reduction amounts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          on428_2025_tax_reduction_basic_amount
+          + max(0, on428_dependent_children_for_tax_reduction_line_60969)
+          * on428_2025_tax_reduction_dependant_amount
+          + max(0, on428_dependants_with_impairment_line_60970)
+          * on428_2025_tax_reduction_dependant_amount
+
+  - name: on428_tax_reduction_line_80
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 80 calculates Ontario tax reduction when eligible, otherwise zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if on428_tax_reduction_eligible:
+            max(
+              0,
+              on428_tax_reduction_base_line_77 * 2
+              - on428_tax_after_additional_minimum_tax_line_73
+            )
+          else:
+            0
+
+  - name: on428_tax_after_tax_reduction_line_81
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 81 subtracts Ontario tax reduction and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, on428_tax_after_additional_minimum_tax_line_73 - on428_tax_reduction_line_80)
+
+  - name: on428_tax_after_foreign_tax_credit_line_83
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 83 subtracts the provincial foreign tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, on428_tax_after_tax_reduction_line_81 - max(0, provincial_foreign_tax_credit_line_82))
+
+  - name: on428_tax_after_lift_credit_line_86
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 86 subtracts the Ontario LIFT credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, on428_tax_after_foreign_tax_credit_line_83 - max(0, lift_credit_line_62140))
+
+  - name: on428_food_donation_credit_line_87
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 87 multiplies qualifying community food program donations by 25%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, community_food_program_donations_line_62150)
+          * on428_2025_food_donation_credit_rate
+
+  - name: on428_tax_before_health_premium_line_88
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 88 subtracts the community food program donation credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, on428_tax_after_lift_credit_line_86 - on428_food_donation_credit_line_87)
+
+  - name: on428_health_premium_line_89
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 89 calculates the Ontario health premium from taxable income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= on428_2025_health_premium_threshold_1:
+            0
+          else:
+            if taxable_income_line_26000 <= on428_2025_health_premium_threshold_2:
+              (taxable_income_line_26000 - on428_2025_health_premium_threshold_1)
+              * on428_2025_health_premium_low_rate
+            else:
+              if taxable_income_line_26000 <= on428_2025_health_premium_threshold_3:
+                on428_2025_health_premium_300
+              else:
+                if taxable_income_line_26000 <= on428_2025_health_premium_threshold_4:
+                  (taxable_income_line_26000 - on428_2025_health_premium_threshold_3)
+                  * on428_2025_health_premium_low_rate
+                  + on428_2025_health_premium_300
+                else:
+                  if taxable_income_line_26000 <= on428_2025_health_premium_threshold_5:
+                    on428_2025_health_premium_450
+                  else:
+                    if taxable_income_line_26000 <= on428_2025_health_premium_threshold_6:
+                      (taxable_income_line_26000 - on428_2025_health_premium_threshold_5)
+                      * on428_2025_health_premium_high_rate
+                      + on428_2025_health_premium_450
+                    else:
+                      if taxable_income_line_26000 <= on428_2025_health_premium_threshold_7:
+                        on428_2025_health_premium_600
+                      else:
+                        if taxable_income_line_26000 <= on428_2025_health_premium_threshold_8:
+                          (taxable_income_line_26000 - on428_2025_health_premium_threshold_7)
+                          * on428_2025_health_premium_high_rate
+                          + on428_2025_health_premium_600
+                        else:
+                          if taxable_income_line_26000 <= on428_2025_health_premium_threshold_9:
+                            on428_2025_health_premium_750
+                          else:
+                            if taxable_income_line_26000 <= on428_2025_health_premium_threshold_10:
+                              (taxable_income_line_26000 - on428_2025_health_premium_threshold_9)
+                              * on428_2025_health_premium_high_rate
+                              + on428_2025_health_premium_750
+                            else:
+                              on428_2025_health_premium_900
+
+  - name: ontario_tax_line_42800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON428 2025 line 90 adds line 88 and line 89 and enters the result on T1 line 42800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          on428_tax_before_health_premium_line_88 + on428_health_premium_line_89
