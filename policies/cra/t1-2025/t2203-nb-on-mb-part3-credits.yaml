@@ -1,0 +1,510 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T2203 Part 3 for 2025 calculates New Brunswick, Ontario, and
+    Manitoba non-refundable tax credits for multiple-jurisdiction returns.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/t2203-nb-on-mb-part3-credits
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: CRA Form T2203 is the official 2025 Part 3 source for NB, ON, and MB multiple-jurisdiction non-refundable credits.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t2203/t2203-25e.pdf
+rules:
+  - name: federal_2025_t2203_nb_part3_basic_personal_amount_58040
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Part 3 NB basic personal amount line 58040 is $13,396
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 13396
+  - name: federal_2025_t2203_on_part3_basic_personal_amount_58040
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Part 3 ON basic personal amount line 58040 is $12,747
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 12747
+  - name: federal_2025_t2203_nb_part3_low_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 Part 3 NB subtotal uses 9.40%, encoded as 0.094
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.094
+  - name: federal_2025_t2203_on_part3_low_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 Part 3 ON subtotal uses 5.05%, encoded as 0.0505
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0505
+  - name: federal_2025_t2203_mb_part3_low_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 Part 3 MB subtotal uses 10.8%, encoded as 0.108
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.108
+  - name: federal_2025_t2203_nb_part3_schedule9_high_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 Part 3 NB Schedule 9 high-rate amount uses 17.95%, encoded as 0.1795
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.1795
+  - name: federal_2025_t2203_on_part3_schedule9_high_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 Part 3 ON Schedule 9 high-rate amount uses 11.16%, encoded as 0.1116
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.1116
+  - name: federal_2025_t2203_mb_part3_schedule9_high_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 Part 3 MB Schedule 9 high-rate amount uses 17.4%, encoded as 0.174
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.174
+  - name: federal_2025_t2203_part3_nb_on_mb_age_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NB, ON, and MB worksheets line 58080 use a 15% age-amount reduction rate, encoded as 0.15
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.15
+  - name: federal_2025_t2203_nb_part3_age_maximum_58080
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB worksheet line 58080 maximum age amount is $6,037
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 6037
+  - name: federal_2025_t2203_nb_part3_age_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB worksheet line 58080 income threshold is $44,945
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 44945
+  - name: federal_2025_t2203_on_part3_age_maximum_58080
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 ON worksheet line 58080 maximum age amount is $6,223
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 6223
+  - name: federal_2025_t2203_on_part3_age_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 ON worksheet line 58080 income threshold is $46,330
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 46330
+  - name: federal_2025_t2203_mb_part3_basic_base_58040
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 MB worksheet line 58040 base amount is $15,780
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 15780
+  - name: federal_2025_t2203_mb_part3_basic_phaseout_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 MB worksheet line 58040 phase-out starts at $200,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 200000
+  - name: federal_2025_t2203_mb_part3_basic_phaseout_range
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 MB worksheet line 58040 reaches zero at $400,000, so the phase-out range is $200,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 200000
+  - name: federal_2025_t2203_mb_part3_age_maximum_58080
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 MB worksheet line 58080 maximum age amount is $3,728
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 3728
+  - name: federal_2025_t2203_mb_part3_age_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 MB worksheet line 58080 income threshold is $27,749
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 27749
+  - name: federal_2025_t2203_nb_part3_spouse_base
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB worksheet line 58120 base amount is $11,550
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 11550
+  - name: federal_2025_t2203_nb_part3_spouse_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB worksheet line 58120 maximum is $10,499
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 10499
+  - name: federal_2025_t2203_on_part3_spouse_base
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 ON worksheet line 58120 base amount is $11,905
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 11905
+  - name: federal_2025_t2203_on_part3_spouse_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 ON worksheet line 58120 maximum is $10,823
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 10823
+  - name: federal_2025_t2203_mb_part3_spouse_base
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 MB worksheet line 58120 base amount is $9,134
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 9134
+  - name: federal_2025_t2203_nb_part3_volunteer_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Part 3 note says NB VFA or SRVA amount is $5,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5000
+  - name: federal_2025_t2203_mb_part3_volunteer_amount
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Part 3 note says MB VFA or SRVA amount is $6,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 6000
+  - name: federal_2025_t2203_mb_part3_fitness_amount_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Part 3 note says MB fitness amount is capped at $500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 500
+  - name: federal_2025_t2203_mb_part3_arts_amount_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Part 3 note says MB children's arts amount is capped at $500 per child
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 500
+  - name: federal_2025_t2203_on_part3_adoption_expense_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Part 3 note says ON adoption expenses are capped at $15,551 per child
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 15551
+  - name: federal_2025_t2203_mb_part3_adoption_expense_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Part 3 note says MB adoption expenses are capped at $10,000 per child
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 10000
+  - name: federal_2025_t2203_nb_mb_part3_pension_income_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Part 3 NB and MB line 31400 maximum is $1,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1000
+  - name: federal_2025_t2203_on_part3_pension_income_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Part 3 ON line 31400 maximum is $1,762
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1762
+  - name: federal_2025_t2203_nb_part3_medical_threshold_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 NB worksheet line ME threshold cap is $2,798
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2798
+  - name: federal_2025_t2203_on_part3_medical_threshold_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 ON worksheet line ME threshold cap is $2,885
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2885
+  - name: federal_2025_t2203_mb_part3_medical_threshold_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 MB worksheet line ME threshold cap is $1,728
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1728
+  - name: federal_2025_t2203_part3_nb_on_mb_medical_income_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 NB, ON, and MB worksheets line ME use 3% of net income, encoded as 0.03
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.03
+  - name: federal_2025_t2203_nb_part3_age_amount_58080
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NB worksheet line 58080 calculates the age amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, federal_2025_t2203_nb_part3_age_maximum_58080 - max(0, nb_net_income_line_23600 - federal_2025_t2203_nb_part3_age_threshold) * federal_2025_t2203_part3_nb_on_mb_age_reduction_rate)
+  - name: federal_2025_t2203_on_part3_age_amount_58080
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 ON worksheet line 58080 calculates the age amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, federal_2025_t2203_on_part3_age_maximum_58080 - max(0, on_net_income_line_23600 - federal_2025_t2203_on_part3_age_threshold) * federal_2025_t2203_part3_nb_on_mb_age_reduction_rate)
+  - name: federal_2025_t2203_mb_part3_basic_personal_amount_58040
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 MB worksheet line 58040 phases out the basic personal amount between $200,000 and $400,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, federal_2025_t2203_mb_part3_basic_base_58040 - max(0, mb_net_income_line_23600 - federal_2025_t2203_mb_part3_basic_phaseout_threshold) / federal_2025_t2203_mb_part3_basic_phaseout_range * federal_2025_t2203_mb_part3_basic_base_58040)
+  - name: federal_2025_t2203_mb_part3_age_amount_58080
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 MB worksheet line 58080 calculates the age amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, federal_2025_t2203_mb_part3_age_maximum_58080 - max(0, mb_net_income_line_23600 - federal_2025_t2203_mb_part3_age_threshold) * federal_2025_t2203_part3_nb_on_mb_age_reduction_rate)
+  - name: federal_2025_t2203_nb_part3_spouse_amount_58120
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NB worksheet line 58120 calculates spouse or common-law partner amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(federal_2025_t2203_nb_part3_spouse_cap, max(0, federal_2025_t2203_nb_part3_spouse_base - max(0, nb_spouse_net_income_line_23600)))
+  - name: federal_2025_t2203_on_part3_spouse_amount_58120
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 ON worksheet line 58120 calculates spouse or common-law partner amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(federal_2025_t2203_on_part3_spouse_cap, max(0, federal_2025_t2203_on_part3_spouse_base - max(0, on_spouse_net_income_line_23600)))
+  - name: federal_2025_t2203_mb_part3_spouse_amount_58120
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 MB worksheet line 58120 calculates spouse or common-law partner amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, federal_2025_t2203_mb_part3_spouse_base - max(0, mb_spouse_net_income_line_23600))
+  - name: federal_2025_t2203_nb_part3_eligible_dependant_amount_58160
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NB worksheet line 58160 calculates eligible dependant amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(federal_2025_t2203_nb_part3_spouse_cap, max(0, federal_2025_t2203_nb_part3_spouse_base - max(0, nb_eligible_dependant_net_income_line_23600)))
+  - name: federal_2025_t2203_on_part3_eligible_dependant_amount_58160
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 ON worksheet line 58160 calculates eligible dependant amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(federal_2025_t2203_on_part3_spouse_cap, max(0, federal_2025_t2203_on_part3_spouse_base - max(0, on_eligible_dependant_net_income_line_23600)))
+  - name: federal_2025_t2203_mb_part3_eligible_dependant_amount_58160
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 MB worksheet line 58160 calculates eligible dependant amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, federal_2025_t2203_mb_part3_spouse_base - max(0, mb_eligible_dependant_net_income_line_23600))
+  - name: federal_2025_t2203_nb_part3_medical_expenses_line_me
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 NB worksheet line ME subtracts the lesser of $2,798 or 3% of net income from eligible medical expenses
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nb_medical_expenses_line_33099 - min(federal_2025_t2203_nb_part3_medical_threshold_cap, max(0, nb_net_income_line_23600) * federal_2025_t2203_part3_nb_on_mb_medical_income_rate))
+  - name: federal_2025_t2203_on_part3_medical_expenses_line_me
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 ON worksheet line ME subtracts the lesser of $2,885 or 3% of net income from allowable Ontario medical expenses
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, on_allowable_medical_expenses_line_57880 - min(federal_2025_t2203_on_part3_medical_threshold_cap, max(0, on_net_income_line_23600) * federal_2025_t2203_part3_nb_on_mb_medical_income_rate))
+  - name: federal_2025_t2203_mb_part3_medical_expenses_line_me
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 MB worksheet line ME subtracts the lesser of $1,728 or 3% of net income from eligible medical expenses
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, mb_medical_expenses_line_33099 - min(federal_2025_t2203_mb_part3_medical_threshold_cap, max(0, mb_net_income_line_23600) * federal_2025_t2203_part3_nb_on_mb_medical_income_rate))
+  - name: federal_2025_t2203_nb_part3_subtotal_s11_mj
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 Part 3 NB subtotal before tuition, transfer, and medical lines
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2203_nb_part3_basic_personal_amount_58040
+          + federal_2025_t2203_nb_part3_age_amount_58080
+          + federal_2025_t2203_nb_part3_spouse_amount_58120
+          + federal_2025_t2203_nb_part3_eligible_dependant_amount_58160
+          + max(0, nb_infirm_dependants_amount_58200)
+          + max(0, nb_cpp_or_qpp_contributions_line_58240)
+          + max(0, nb_cpp_or_qpp_enhanced_contributions_line_58280)
+          + max(0, nb_employment_insurance_premiums_line_58300)
+          + max(0, nb_employment_insurance_enhanced_premiums_line_58305)
+          + (if nb_claimed_volunteer_firefighters_amount_line_31220: federal_2025_t2203_nb_part3_volunteer_amount else: 0)
+          + (if nb_claimed_search_and_rescue_volunteers_amount_line_31240: federal_2025_t2203_nb_part3_volunteer_amount else: 0)
+          + min(federal_2025_t2203_nb_mb_part3_pension_income_cap, max(0, nb_pension_income_amount_line_31400))
+          + max(0, nb_caregiver_amount_58400)
+          + max(0, nb_disability_self_amount_58440)
+          + max(0, nb_disability_dependant_transfer_amount_58480)
+  - name: federal_2025_t2203_on_part3_subtotal_s11_mj
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 Part 3 ON subtotal before tuition, transfer, and medical lines
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2203_on_part3_basic_personal_amount_58040
+          + federal_2025_t2203_on_part3_age_amount_58080
+          + federal_2025_t2203_on_part3_spouse_amount_58120
+          + federal_2025_t2203_on_part3_eligible_dependant_amount_58160
+          + max(0, on_caregiver_amount_58185)
+          + max(0, on_cpp_or_qpp_contributions_line_58240)
+          + max(0, on_cpp_or_qpp_enhanced_contributions_line_58280)
+          + max(0, on_employment_insurance_premiums_line_58300)
+          + max(0, on_employment_insurance_enhanced_premiums_line_58305)
+          + min(federal_2025_t2203_on_part3_adoption_expense_cap, max(0, on_adoption_expenses_line_58330))
+          + min(federal_2025_t2203_on_part3_pension_income_cap, max(0, on_pension_income_amount_line_31400))
+          + max(0, on_disability_self_amount_58440)
+          + max(0, on_disability_dependant_transfer_amount_58480)
+  - name: federal_2025_t2203_mb_part3_subtotal_s11_mj
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 Part 3 MB subtotal before tuition, transfer, family benefit, and medical lines
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2203_mb_part3_basic_personal_amount_58040
+          + federal_2025_t2203_mb_part3_age_amount_58080
+          + federal_2025_t2203_mb_part3_spouse_amount_58120
+          + federal_2025_t2203_mb_part3_eligible_dependant_amount_58160
+          + max(0, mb_infirm_dependants_amount_58200)
+          + max(0, mb_cpp_or_qpp_contributions_line_58240)
+          + max(0, mb_cpp_or_qpp_enhanced_contributions_line_58280)
+          + max(0, mb_employment_insurance_premiums_line_58300)
+          + max(0, mb_employment_insurance_enhanced_premiums_line_58305)
+          + (if mb_claimed_volunteer_firefighters_amount_line_31220: federal_2025_t2203_mb_part3_volunteer_amount else: 0)
+          + (if mb_claimed_search_and_rescue_volunteers_amount_line_31240: federal_2025_t2203_mb_part3_volunteer_amount else: 0)
+          + min(federal_2025_t2203_mb_part3_fitness_amount_cap, max(0, mb_fitness_amount_line_58325))
+          + min(federal_2025_t2203_mb_part3_arts_amount_cap, max(0, mb_childrens_arts_amount_line_58326))
+          + min(federal_2025_t2203_mb_part3_adoption_expense_cap, max(0, mb_adoption_expenses_line_58330))
+          + min(federal_2025_t2203_nb_mb_part3_pension_income_cap, max(0, mb_pension_income_amount_line_31400))
+          + max(0, mb_caregiver_amount_58400)
+          + max(0, mb_disability_self_amount_58440)
+          + max(0, mb_disability_dependant_transfer_amount_58480)
+  - name: federal_2025_t2203_nb_part3_total_non_refundable_tax_credits_line_d
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 Part 3 NB line D is line A plus line B after applying the 9.40% and 17.95% rates
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          (
+            federal_2025_t2203_nb_part3_subtotal_s11_mj
+            + max(0, nb_disability_supports_line_58520)
+            + max(0, nb_schedule_s11_or_s11_mj_line_58560)
+            + max(0, nb_student_designated_amounts_line_58600)
+            + max(0, nb_schedule_s2_mj_line_58640)
+            + federal_2025_t2203_nb_part3_medical_expenses_line_me
+            + max(0, nb_medical_expenses_other_dependants_line_58729)
+            + max(0, nb_schedule9_line_13)
+          ) * federal_2025_t2203_nb_part3_low_credit_rate
+          + max(0, nb_schedule9_line_14) * federal_2025_t2203_nb_part3_schedule9_high_rate
+  - name: federal_2025_t2203_on_part3_total_non_refundable_tax_credits_line_d
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 Part 3 ON line D is line A plus line B after applying the 5.05% and 11.16% rates
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          (
+            federal_2025_t2203_on_part3_subtotal_s11_mj
+            + max(0, on_disability_supports_line_58520)
+            + max(0, on_schedule_s11_or_s11_mj_line_58560)
+            + max(0, on_schedule_s2_mj_line_58640)
+            + federal_2025_t2203_on_part3_medical_expenses_line_me
+            + max(0, on_medical_expenses_other_dependants_line_58729)
+            + max(0, on_schedule9_line_13)
+          ) * federal_2025_t2203_on_part3_low_credit_rate
+          + max(0, on_schedule9_line_14) * federal_2025_t2203_on_part3_schedule9_high_rate
+  - name: federal_2025_t2203_mb_part3_total_non_refundable_tax_credits_line_d
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 Part 3 MB line D is line A plus line B after applying the 10.8% and 17.4% rates
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          (
+            federal_2025_t2203_mb_part3_subtotal_s11_mj
+            + max(0, mb_disability_supports_line_58520)
+            + max(0, mb_schedule_s11_or_s11_mj_line_58560)
+            + max(0, mb_student_designated_amounts_line_58600)
+            + max(0, mb_schedule_s2_mj_line_58640)
+            + max(0, mb_family_tax_benefit_line_61470)
+            + federal_2025_t2203_mb_part3_medical_expenses_line_me
+            + max(0, mb_medical_expenses_other_dependants_line_58729)
+            + max(0, mb_schedule9_line_13)
+          ) * federal_2025_t2203_mb_part3_low_credit_rate
+          + max(0, mb_schedule9_line_14) * federal_2025_t2203_mb_part3_schedule9_high_rate
