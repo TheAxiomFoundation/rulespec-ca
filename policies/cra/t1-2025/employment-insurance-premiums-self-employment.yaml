@@ -1,0 +1,211 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Schedule 13 for the 2025 T1 return calculates Employment
+    Insurance premiums on self-employment and other eligible earnings for
+    participants in the EI special benefits program. This module encodes
+    the Schedule 13 insurable-room, Quebec/non-Quebec rate, credit, and
+    payable-premium calculations.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/employment-insurance-premiums-self-employment
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/employment-insurance-act
+      rationale: |-
+        CRA Schedule 13 is the official 2025 T1 return schedule for EI
+        premiums on self-employment and other eligible earnings.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s13/5000-s13-25e.pdf
+rules:
+  - name: federal_2025_schedule_13_maximum_insurable_earnings
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 13 2025 line 5 sets maximum insurable earnings at $65,700
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          65700
+
+  - name: federal_2025_schedule_13_non_quebec_ei_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 13 2025 line 9 multiplies eligible earnings by 1.64% for residents outside Quebec
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.0164
+
+  - name: federal_2025_schedule_13_quebec_ei_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 13 2025 line 10 multiplies eligible earnings by 1.31% for residents of Quebec
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.0131
+
+  - name: federal_2025_schedule_13_non_quebec_maximum_premium
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 13 2025 line 9 caps the amount at $1,077.48 for residents outside Quebec
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          1077.48
+
+  - name: federal_2025_schedule_13_quebec_maximum_premium
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 13 2025 line 10 caps the amount at $860.67 for residents of Quebec
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          860.67
+
+  - name: federal_2025_schedule_13_applicable_maximum_premium
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 13 2025 lines 9 and 10 use the Quebec or non-Quebec maximum premium based on residence
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if resident_of_quebec:
+            federal_2025_schedule_13_quebec_maximum_premium
+          else:
+            federal_2025_schedule_13_non_quebec_maximum_premium
+
+  - name: federal_2025_schedule_13_self_employment_income_line_1
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 13 2025 line 1 is the total from line 11 plus line 27 of the return, floored at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, self_employment_income_line_11_plus_line_27)
+
+  - name: federal_2025_schedule_13_controlled_corporation_employment_income_line_2
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 13 2025 line 2 adds employment income from a corporation the taxpayer controls by more than 40%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, controlled_corporation_employment_income_for_ei_special_benefits)
+
+  - name: federal_2025_schedule_13_tax_exempt_reserve_income_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 13 2025 line 3 adds tax-exempt self-employment income earned on a reserve
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, tax_exempt_self_employment_income_on_reserve_for_ei)
+
+  - name: federal_2025_schedule_13_net_self_employment_income_line_4
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 13 2025 line 4 adds lines 1, 2, and 3
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_13_self_employment_income_line_1
+          + federal_2025_schedule_13_controlled_corporation_employment_income_line_2
+          + federal_2025_schedule_13_tax_exempt_reserve_income_line_3
+
+  - name: federal_2025_schedule_13_ei_insurable_earnings_from_employment_line_6
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 13 2025 line 6 uses total EI insurable earnings from box 24 of all T4 slips, or box 14 if box 24 is blank
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, ei_insurable_earnings_from_employment_slips)
+
+  - name: federal_2025_schedule_13_remaining_insurable_earnings_line_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 13 2025 line 7 subtracts line 6 from maximum insurable earnings and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_schedule_13_maximum_insurable_earnings
+            - federal_2025_schedule_13_ei_insurable_earnings_from_employment_line_6
+          )
+
+  - name: federal_2025_schedule_13_earnings_subject_to_ei_line_8
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 13 2025 line 8 is the lesser of line 4 and line 7, but lines 9 or 10 are zero if employment EI premiums already reached the regional maximum
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if ei_premiums_from_employment_slips_for_schedule_13_max_test >= federal_2025_schedule_13_applicable_maximum_premium:
+            0
+          else:
+            min(
+              federal_2025_schedule_13_net_self_employment_income_line_4,
+              federal_2025_schedule_13_remaining_insurable_earnings_line_7
+            )
+
+  - name: federal_2025_schedule_13_ei_premiums_before_line_mapping
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 13 2025 lines 9 and 10 multiply line 8 by the Quebec or non-Quebec EI rate and apply the regional maximum
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if resident_of_quebec:
+            min(
+              federal_2025_schedule_13_earnings_subject_to_ei_line_8
+              * federal_2025_schedule_13_quebec_ei_rate,
+              federal_2025_schedule_13_quebec_maximum_premium
+            )
+          else:
+            min(
+              federal_2025_schedule_13_earnings_subject_to_ei_line_8
+              * federal_2025_schedule_13_non_quebec_ei_rate,
+              federal_2025_schedule_13_non_quebec_maximum_premium
+            )
+
+  - name: employment_insurance_premiums_self_employment_line_31217
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 13 2025 lines 9 and 10 enter the calculated EI premiums on line 31217
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_13_ei_premiums_before_line_mapping
+
+  - name: employment_insurance_premiums_payable_self_employment_line_42120
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 13 2025 lines 9 and 10 enter the calculated EI premiums payable on line 42120
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_13_ei_premiums_before_line_mapping

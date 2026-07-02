@@ -1,0 +1,61 @@
+- name: non_quebec_self_employment_ei_limited_by_remaining_insurable_room
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#input.resident_of_quebec: false
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#input.self_employment_income_line_11_plus_line_27: 40000
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#input.controlled_corporation_employment_income_for_ei_special_benefits: 0
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#input.tax_exempt_self_employment_income_on_reserve_for_ei: 0
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#input.ei_insurable_earnings_from_employment_slips: 30000
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#input.ei_premiums_from_employment_slips_for_schedule_13_max_test: 492
+  output:
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#federal_2025_schedule_13_applicable_maximum_premium: 1077.48
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#federal_2025_schedule_13_self_employment_income_line_1: 40000
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#federal_2025_schedule_13_controlled_corporation_employment_income_line_2: 0
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#federal_2025_schedule_13_tax_exempt_reserve_income_line_3: 0
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#federal_2025_schedule_13_net_self_employment_income_line_4: 40000
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#federal_2025_schedule_13_ei_insurable_earnings_from_employment_line_6: 30000
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#federal_2025_schedule_13_remaining_insurable_earnings_line_7: 35700
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#federal_2025_schedule_13_earnings_subject_to_ei_line_8: 35700
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#federal_2025_schedule_13_ei_premiums_before_line_mapping: 585.48
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#employment_insurance_premiums_self_employment_line_31217: 585.48
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#employment_insurance_premiums_payable_self_employment_line_42120: 585.48
+
+- name: quebec_self_employment_ei_uses_quebec_rate
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#input.resident_of_quebec: true
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#input.self_employment_income_line_11_plus_line_27: 8000
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#input.controlled_corporation_employment_income_for_ei_special_benefits: 1000
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#input.tax_exempt_self_employment_income_on_reserve_for_ei: 1000
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#input.ei_insurable_earnings_from_employment_slips: 0
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#input.ei_premiums_from_employment_slips_for_schedule_13_max_test: 0
+  output:
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#federal_2025_schedule_13_applicable_maximum_premium: 860.67
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#federal_2025_schedule_13_net_self_employment_income_line_4: 10000
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#federal_2025_schedule_13_earnings_subject_to_ei_line_8: 10000
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#employment_insurance_premiums_self_employment_line_31217: 131
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#employment_insurance_premiums_payable_self_employment_line_42120: 131
+
+- name: employment_premiums_at_regional_max_zero_out_self_employment_ei
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#input.resident_of_quebec: true
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#input.self_employment_income_line_11_plus_line_27: 20000
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#input.controlled_corporation_employment_income_for_ei_special_benefits: 0
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#input.tax_exempt_self_employment_income_on_reserve_for_ei: 0
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#input.ei_insurable_earnings_from_employment_slips: 10000
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#input.ei_premiums_from_employment_slips_for_schedule_13_max_test: 860.67
+  output:
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#federal_2025_schedule_13_remaining_insurable_earnings_line_7: 55700
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#federal_2025_schedule_13_earnings_subject_to_ei_line_8: 0
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#employment_insurance_premiums_self_employment_line_31217: 0
+    ca:policies/cra/t1-2025/employment-insurance-premiums-self-employment#employment_insurance_premiums_payable_self_employment_line_42120: 0
