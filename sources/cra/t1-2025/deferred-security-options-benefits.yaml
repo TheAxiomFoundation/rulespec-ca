@@ -1,0 +1,15 @@
+source:
+  id: cra-2025-deferred-security-options-benefits
+  citation_path: canada/policy/cra/t1-2025/deferred-security-options-benefits
+  title: CRA Form T1212 2025 Statement of Deferred Security Options Benefits
+  documents:
+    - title: Form T1212 Statement of Deferred Security Options Benefits 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t1212/t1212-25e.pdf
+  coverage:
+    encoded:
+      - Deferred benefits included in employment income on line 10100
+      - Closing deferred security options benefits balance
+      - 50% security options deduction on line 24900
+    not_encoded:
+      - Eligible security, employment, non-residence, death, and disposition fact predicates
+      - CRA notice of assessment reporting workflow

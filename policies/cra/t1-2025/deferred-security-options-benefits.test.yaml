@@ -1,0 +1,25 @@
+- name: t1212_partial_disposition_reduces_deferred_balance
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/deferred-security-options-benefits#input.t1212_opening_balance_deferred_security_options_benefits_line_1: 10000
+    ca:policies/cra/t1-2025/deferred-security-options-benefits#input.t1212_benefits_that_can_no_longer_be_deferred_line_2: 4000
+  output:
+    ca:policies/cra/t1-2025/deferred-security-options-benefits#deferred_security_options_benefits_income_line_10100: 4000
+    ca:policies/cra/t1-2025/deferred-security-options-benefits#deferred_security_options_closing_balance_line_65220: 6000
+    ca:policies/cra/t1-2025/deferred-security-options-benefits#deferred_security_options_deduction_line_24900: 2000
+
+- name: t1212_line_2_capped_by_opening_balance
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/deferred-security-options-benefits#input.t1212_opening_balance_deferred_security_options_benefits_line_1: 3000
+    ca:policies/cra/t1-2025/deferred-security-options-benefits#input.t1212_benefits_that_can_no_longer_be_deferred_line_2: 5000
+  output:
+    ca:policies/cra/t1-2025/deferred-security-options-benefits#deferred_security_options_benefits_income_line_10100: 3000
+    ca:policies/cra/t1-2025/deferred-security-options-benefits#deferred_security_options_closing_balance_line_65220: 0
+    ca:policies/cra/t1-2025/deferred-security-options-benefits#deferred_security_options_deduction_line_24900: 1500
