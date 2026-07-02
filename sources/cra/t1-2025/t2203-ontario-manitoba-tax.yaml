@@ -1,0 +1,16 @@
+source:
+  id: cra-2025-t2203-ontario-manitoba-tax
+  citation_path: canada/policy/cra/t1-2025/t2203-ontario-manitoba-tax
+  title: CRA Form T2203 2025 ON428MJ and MB428MJ Multiple-Jurisdiction Tax
+  documents:
+    - title: Form T2203 Provincial and Territorial Taxes for Multiple Jurisdictions 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t2203/t2203-25e.pdf
+  coverage:
+    encoded:
+      - ON428MJ bracket tax, allocation, resident adjustment, minimum-tax carryover, surtax, tax reduction, LIFT credit, food donation credit, health premium, and Part 5 line 5
+      - MB428MJ bracket tax, allocation, resident adjustment, political contribution credit, selected credits, and Part 5 line 6
+    not_encoded:
+      - ON and MB Part 3 non-refundable credit worksheet calculations
+      - ON Schedule ON428-A MJ detailed LIFT eligibility calculation
+      - ON and MB S2/S11 transfer and tuition schedules
+      - Detailed certificate eligibility predicates

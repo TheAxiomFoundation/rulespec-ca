@@ -1,0 +1,782 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T2203 for 2025 includes Form ON428MJ and Form MB428MJ for
+    Ontario and Manitoba multiple-jurisdiction tax. This module encodes
+    their Part 4 bracket tax, allocation, resident adjustments, selected
+    credits, and final Part 5 tax lines.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/t2203-ontario-manitoba-tax
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Form T2203 is the official 2025 form for provincial and
+        territorial taxes for multiple jurisdictions, including ON428MJ and
+        MB428MJ.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t2203/t2203-25e.pdf
+rules:
+  - name: federal_2025_t2203_on_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 ON428MJ bracket table first threshold is $52,886
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 52886
+  - name: federal_2025_t2203_on_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 ON428MJ bracket table threshold is $105,775
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 105775
+  - name: federal_2025_t2203_on_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 ON428MJ bracket table threshold is $150,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 150000
+  - name: federal_2025_t2203_on_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 ON428MJ bracket table threshold is $220,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 220000
+  - name: federal_2025_t2203_on_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 ON428MJ bracket table first rate is 5.05%, encoded as 0.0505
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0505
+  - name: federal_2025_t2203_on_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 ON428MJ bracket table second rate is 9.15%, encoded as 0.0915
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0915
+  - name: federal_2025_t2203_on_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 ON428MJ bracket table third rate is 11.16%, encoded as 0.1116
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.1116
+  - name: federal_2025_t2203_on_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 ON428MJ bracket table fourth rate is 12.16%, encoded as 0.1216
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.1216
+  - name: federal_2025_t2203_on_bracket_5_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 ON428MJ bracket table fifth rate is 13.16%, encoded as 0.1316
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.1316
+  - name: federal_2025_t2203_on_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 ON428MJ bracket table second base tax amount is $2,670.74
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2670.74
+  - name: federal_2025_t2203_on_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 ON428MJ bracket table third base tax amount is $7,510.09
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 7510.09
+  - name: federal_2025_t2203_on_bracket_4_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 ON428MJ bracket table fourth base tax amount is $12,445.60
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 12445.60
+  - name: federal_2025_t2203_on_bracket_5_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 ON428MJ bracket table fifth base tax amount is $20,957.60
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 20957.60
+  - name: federal_2025_t2203_on_minimum_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 ON428MJ lines 25 and Worksheet ON428MJ line 45 use 24.63%, encoded as 0.2463
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.2463
+  - name: federal_2025_t2203_on_surtax_first_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 ON428MJ line 38 surtax threshold is $5,710
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5710
+  - name: federal_2025_t2203_on_surtax_second_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 ON428MJ line 39 surtax threshold is $7,307
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 7307
+  - name: federal_2025_t2203_on_surtax_first_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 ON428MJ line 38 surtax rate is 20%, encoded as 0.20
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.20
+  - name: federal_2025_t2203_on_surtax_second_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 ON428MJ line 39 surtax rate is 36%, encoded as 0.36
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.36
+  - name: federal_2025_t2203_on_tax_reduction_basic
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 ON428MJ line 47 basic tax reduction amount is $294
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 294
+  - name: federal_2025_t2203_on_tax_reduction_dependant
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 ON428MJ lines 48 and 51 dependant tax reduction amount is $544
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 544
+  - name: federal_2025_t2203_on_food_donation_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 ON428MJ line 66 food donation credit rate is 25%, encoded as 0.25
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.25
+  - name: federal_2025_t2203_on_health_premium_threshold_1
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Worksheet ON428MJ line 68 first health premium threshold is $20,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 20000
+  - name: federal_2025_t2203_on_health_premium_threshold_2
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Worksheet ON428MJ line 68 threshold is $25,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 25000
+  - name: federal_2025_t2203_on_health_premium_threshold_3
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Worksheet ON428MJ line 68 threshold is $36,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 36000
+  - name: federal_2025_t2203_on_health_premium_threshold_4
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Worksheet ON428MJ line 68 threshold is $38,500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 38500
+  - name: federal_2025_t2203_on_health_premium_threshold_5
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Worksheet ON428MJ line 68 threshold is $48,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 48000
+  - name: federal_2025_t2203_on_health_premium_threshold_6
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Worksheet ON428MJ line 68 threshold is $48,600
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 48600
+  - name: federal_2025_t2203_on_health_premium_threshold_7
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Worksheet ON428MJ line 68 threshold is $72,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 72000
+  - name: federal_2025_t2203_on_health_premium_threshold_8
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Worksheet ON428MJ line 68 threshold is $72,600
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 72600
+  - name: federal_2025_t2203_on_health_premium_threshold_9
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Worksheet ON428MJ line 68 threshold is $200,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 200000
+  - name: federal_2025_t2203_on_health_premium_threshold_10
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Worksheet ON428MJ line 68 threshold is $200,600
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 200600
+  - name: federal_2025_t2203_on_health_premium_low_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 Worksheet ON428MJ line 68 health premium marginal rate is 6%, encoded as 0.06
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.06
+  - name: federal_2025_t2203_on_health_premium_high_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 Worksheet ON428MJ line 68 health premium marginal rate is 25%, encoded as 0.25
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.25
+  - name: federal_2025_t2203_on_health_premium_300
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Worksheet ON428MJ line 68 fixed health premium is $300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 300
+  - name: federal_2025_t2203_on_health_premium_450
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Worksheet ON428MJ line 68 fixed health premium is $450
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 450
+  - name: federal_2025_t2203_on_health_premium_600
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Worksheet ON428MJ line 68 fixed health premium is $600
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 600
+  - name: federal_2025_t2203_on_health_premium_750
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Worksheet ON428MJ line 68 fixed health premium is $750
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 750
+  - name: federal_2025_t2203_on_health_premium_900
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Worksheet ON428MJ line 68 fixed health premium is $900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 900
+  - name: federal_2025_t2203_mb_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 MB428MJ bracket table first threshold is $47,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 47000
+  - name: federal_2025_t2203_mb_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 MB428MJ bracket table second threshold is $100,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 100000
+  - name: federal_2025_t2203_mb_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 MB428MJ bracket table first rate is 10.8%, encoded as 0.108
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.108
+  - name: federal_2025_t2203_mb_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 MB428MJ bracket table second rate is 12.75%, encoded as 0.1275
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.1275
+  - name: federal_2025_t2203_mb_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 MB428MJ bracket table third rate is 17.4%, encoded as 0.174
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.174
+  - name: federal_2025_t2203_mb_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 MB428MJ bracket table second base tax amount is $5,076.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5076
+  - name: federal_2025_t2203_mb_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 MB428MJ bracket table third base tax amount is $11,833.50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 11833.50
+  - name: federal_2025_t2203_mb_minimum_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 MB428MJ lines 14 and 17 use 50%, encoded as 0.50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.50
+  - name: federal_2025_t2203_mb_political_first_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Worksheet MB428MJ line 31 first contribution threshold is $400
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 400
+  - name: federal_2025_t2203_mb_political_second_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Worksheet MB428MJ line 31 second contribution threshold is $750
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 750
+  - name: federal_2025_t2203_mb_political_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 MB428MJ line 31 maximum political contribution tax credit is $1,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1000
+  - name: federal_2025_t2203_mb_political_first_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 Worksheet MB428MJ line 31 first political contribution rate is 75%, encoded as 0.75
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.75
+  - name: federal_2025_t2203_mb_political_second_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 Worksheet MB428MJ line 31 second political contribution rate is 50%, encoded as 0.50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.50
+  - name: federal_2025_t2203_mb_political_third_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 Worksheet MB428MJ line 31 third political contribution rate is 33.33%, encoded as 0.3333
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.3333
+  - name: federal_2025_t2203_mb_political_second_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Worksheet MB428MJ line 31 second-column base credit is $300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 300
+  - name: federal_2025_t2203_mb_political_third_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 Worksheet MB428MJ line 31 third-column base credit is $475
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 475
+  - name: federal_2025_t2203_mb_small_business_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 MB428MJ line 39 maximum small business venture capital tax credit is $120,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 120000
+  - name: federal_2025_t2203_on_tax_on_taxable_income_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 ON428MJ line 9 is Ontario tax on taxable income from the bracket table
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= federal_2025_t2203_on_bracket_1_threshold:
+            max(0, taxable_income_line_26000) * federal_2025_t2203_on_bracket_1_rate
+          else:
+            if taxable_income_line_26000 <= federal_2025_t2203_on_bracket_2_threshold:
+              (taxable_income_line_26000 - federal_2025_t2203_on_bracket_1_threshold) * federal_2025_t2203_on_bracket_2_rate + federal_2025_t2203_on_bracket_2_base_tax
+            else:
+              if taxable_income_line_26000 <= federal_2025_t2203_on_bracket_3_threshold:
+                (taxable_income_line_26000 - federal_2025_t2203_on_bracket_2_threshold) * federal_2025_t2203_on_bracket_3_rate + federal_2025_t2203_on_bracket_3_base_tax
+              else:
+                if taxable_income_line_26000 <= federal_2025_t2203_on_bracket_4_threshold:
+                  (taxable_income_line_26000 - federal_2025_t2203_on_bracket_3_threshold) * federal_2025_t2203_on_bracket_4_rate + federal_2025_t2203_on_bracket_4_base_tax
+                else:
+                  (taxable_income_line_26000 - federal_2025_t2203_on_bracket_4_threshold) * federal_2025_t2203_on_bracket_5_rate + federal_2025_t2203_on_bracket_5_base_tax
+  - name: federal_2025_t2203_on_tax_after_non_refundable_credits_line_11
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 ON428MJ line 11 subtracts Ontario non-refundable credits from tax on taxable income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, federal_2025_t2203_on_tax_on_taxable_income_line_9 - max(0, on_non_refundable_tax_credits_part_3_line_d))
+  - name: federal_2025_t2203_on_tax_allocated_line_13
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 ON428MJ line 13 multiplies line 11 by the Ontario allocation percentage
+    versions:
+      - effective_from: '2025-01-01'
+        formula: federal_2025_t2203_on_tax_after_non_refundable_credits_line_11 * max(0, t2203_ontario_income_allocation_percentage)
+  - name: federal_2025_t2203_on_tax_after_resident_adjustment_line_21
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 ON428MJ lines 14 to 21 apply the resident adjustment and add Ontario unallocated tax on split income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t2203_resident_of_ontario:
+            max(
+              0,
+              federal_2025_t2203_on_tax_allocated_line_13
+              - max(0, on_resident_adjustment_credit_base_lines_58330_58360)
+              * federal_2025_t2203_on_bracket_1_rate
+              * max(0, 1 - max(0, t2203_ontario_income_allocation_percentage))
+            ) + max(0, on_unallocated_tax_on_split_income_t1206_line_20)
+          else:
+            federal_2025_t2203_on_tax_allocated_line_13
+  - name: federal_2025_t2203_on_adjusted_income_tax_line_29
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 ON428MJ lines 22 to 29 subtract the prorated minimum tax carryover
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2203_on_tax_after_resident_adjustment_line_21
+            - min(
+              max(
+                0,
+                (if t2203_resident_of_ontario:
+                    max(0, federal_2025_t2203_on_tax_allocated_line_13 - max(0, on_resident_adjustment_credit_base_lines_58330_58360) * federal_2025_t2203_on_bracket_1_rate * max(0, 1 - max(0, t2203_ontario_income_allocation_percentage)))
+                  else:
+                    federal_2025_t2203_on_tax_after_resident_adjustment_line_21)
+                - (if t2203_resident_of_ontario:
+                    max(0, on_dividend_tax_credit_line_23)
+                  else:
+                    0)
+              ),
+              max(0, minimum_tax_carryover_line_40427)
+              * federal_2025_t2203_on_minimum_tax_rate
+              * max(0, t2203_ontario_income_allocation_percentage)
+            )
+          )
+  - name: federal_2025_t2203_on_surtax_line_41
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 ON428MJ lines 31 to 41 calculate Ontario surtax and prorate by the Ontario allocation percentage
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          (
+            max(
+              0,
+              federal_2025_t2203_on_tax_after_non_refundable_credits_line_11
+              - min(
+                max(0, federal_2025_t2203_on_tax_after_non_refundable_credits_line_11 - max(0, on_dividend_tax_credit_line_23)),
+                max(0, minimum_tax_carryover_line_40427) * federal_2025_t2203_on_minimum_tax_rate
+              )
+              - federal_2025_t2203_on_surtax_first_threshold
+            ) * federal_2025_t2203_on_surtax_first_rate
+            + max(
+              0,
+              federal_2025_t2203_on_tax_after_non_refundable_credits_line_11
+              - min(
+                max(0, federal_2025_t2203_on_tax_after_non_refundable_credits_line_11 - max(0, on_dividend_tax_credit_line_23)),
+                max(0, minimum_tax_carryover_line_40427) * federal_2025_t2203_on_minimum_tax_rate
+              )
+              - federal_2025_t2203_on_surtax_second_threshold
+            ) * federal_2025_t2203_on_surtax_second_rate
+          ) * max(0, t2203_ontario_income_allocation_percentage)
+  - name: federal_2025_t2203_on_tax_after_surtax_and_additional_line_46
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 ON428MJ lines 42 to 46 add surtax and additional tax for minimum tax purposes, and subtract resident dividend tax credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2203_on_adjusted_income_tax_line_29
+            + federal_2025_t2203_on_surtax_line_41
+            - (if t2203_resident_of_ontario:
+                max(0, on_dividend_tax_credit_line_23)
+              else:
+                0)
+          ) + max(0, on_additional_tax_for_minimum_tax_purposes_line_45)
+  - name: federal_2025_t2203_on_tax_reduction_line_57
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 ON428MJ lines 47 to 57 calculate Ontario tax reduction for eligible residents
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if on_tax_reduction_eligible:
+            max(
+              0,
+              (
+                federal_2025_t2203_on_tax_reduction_basic
+                + max(0, on_dependent_children_for_tax_reduction) * federal_2025_t2203_on_tax_reduction_dependant
+                + max(0, on_dependants_with_impairment_for_tax_reduction) * federal_2025_t2203_on_tax_reduction_dependant
+              ) * max(0, t2203_ontario_income_allocation_percentage) * 2
+              - federal_2025_t2203_on_tax_after_surtax_and_additional_line_46
+            )
+          else:
+            0
+  - name: federal_2025_t2203_on_tax_after_reduction_line_58
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 ON428MJ line 58 subtracts Ontario tax reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, federal_2025_t2203_on_tax_after_surtax_and_additional_line_46 - federal_2025_t2203_on_tax_reduction_line_57)
+  - name: federal_2025_t2203_on_tax_after_foreign_lift_and_food_line_67
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 ON428MJ lines 60 to 67 subtract Ontario foreign tax credit, prorated LIFT credit, and food donation credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(
+              0,
+              (if t2203_resident_of_ontario:
+                  max(0, federal_2025_t2203_on_tax_after_reduction_line_58 - max(0, on_provincial_foreign_tax_credit_t2036_line_60))
+                else:
+                  federal_2025_t2203_on_tax_after_reduction_line_58)
+              - max(0, on_lift_credit_schedule_on428_a_mj_line_62) * max(0, t2203_ontario_income_allocation_percentage)
+            )
+            - max(0, on_food_bank_qualifying_donations_line_62150)
+            * federal_2025_t2203_on_food_donation_credit_rate
+          )
+  - name: federal_2025_t2203_on_health_premium_line_68
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 Worksheet ON428MJ line 68 calculates the Ontario health premium from taxable income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= federal_2025_t2203_on_health_premium_threshold_1:
+            0
+          else:
+            if taxable_income_line_26000 <= federal_2025_t2203_on_health_premium_threshold_2:
+              (taxable_income_line_26000 - federal_2025_t2203_on_health_premium_threshold_1)
+              * federal_2025_t2203_on_health_premium_low_rate
+            else:
+              if taxable_income_line_26000 <= federal_2025_t2203_on_health_premium_threshold_3:
+                federal_2025_t2203_on_health_premium_300
+              else:
+                if taxable_income_line_26000 <= federal_2025_t2203_on_health_premium_threshold_4:
+                  (taxable_income_line_26000 - federal_2025_t2203_on_health_premium_threshold_3)
+                  * federal_2025_t2203_on_health_premium_low_rate
+                  + federal_2025_t2203_on_health_premium_300
+                else:
+                  if taxable_income_line_26000 <= federal_2025_t2203_on_health_premium_threshold_5:
+                    federal_2025_t2203_on_health_premium_450
+                  else:
+                    if taxable_income_line_26000 <= federal_2025_t2203_on_health_premium_threshold_6:
+                      (taxable_income_line_26000 - federal_2025_t2203_on_health_premium_threshold_5)
+                      * federal_2025_t2203_on_health_premium_high_rate
+                      + federal_2025_t2203_on_health_premium_450
+                    else:
+                      if taxable_income_line_26000 <= federal_2025_t2203_on_health_premium_threshold_7:
+                        federal_2025_t2203_on_health_premium_600
+                      else:
+                        if taxable_income_line_26000 <= federal_2025_t2203_on_health_premium_threshold_8:
+                          (taxable_income_line_26000 - federal_2025_t2203_on_health_premium_threshold_7)
+                          * federal_2025_t2203_on_health_premium_high_rate
+                          + federal_2025_t2203_on_health_premium_600
+                        else:
+                          if taxable_income_line_26000 <= federal_2025_t2203_on_health_premium_threshold_9:
+                            federal_2025_t2203_on_health_premium_750
+                          else:
+                            if taxable_income_line_26000 <= federal_2025_t2203_on_health_premium_threshold_10:
+                              (taxable_income_line_26000 - federal_2025_t2203_on_health_premium_threshold_9)
+                              * federal_2025_t2203_on_health_premium_high_rate
+                              + federal_2025_t2203_on_health_premium_750
+                            else:
+                              federal_2025_t2203_on_health_premium_900
+  - name: t2203_ontario_tax_part_5_line_5
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 ON428MJ line 69 enters Ontario tax on Part 5 line 5
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t2203_resident_of_ontario:
+            federal_2025_t2203_on_tax_after_foreign_lift_and_food_line_67
+            + federal_2025_t2203_on_health_premium_line_68
+          else:
+            federal_2025_t2203_on_tax_after_reduction_line_58
+  - name: federal_2025_t2203_mb_tax_on_taxable_income_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 MB428MJ line 9 is Manitoba tax on taxable income from the bracket table
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= federal_2025_t2203_mb_bracket_1_threshold:
+            max(0, taxable_income_line_26000) * federal_2025_t2203_mb_bracket_1_rate
+          else:
+            if taxable_income_line_26000 <= federal_2025_t2203_mb_bracket_2_threshold:
+              (taxable_income_line_26000 - federal_2025_t2203_mb_bracket_1_threshold) * federal_2025_t2203_mb_bracket_2_rate + federal_2025_t2203_mb_bracket_2_base_tax
+            else:
+              (taxable_income_line_26000 - federal_2025_t2203_mb_bracket_2_threshold) * federal_2025_t2203_mb_bracket_3_rate + federal_2025_t2203_mb_bracket_3_base_tax
+  - name: federal_2025_t2203_mb_tax_after_non_refundable_credits_line_16
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 MB428MJ lines 10 to 16 add tax on split income and subtract non-refundable credits, dividend credit, and minimum tax carryover
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2203_mb_tax_on_taxable_income_line_9
+            + max(0, mb_unallocated_tax_on_split_income_t1206_line_10)
+            - (
+              max(0, mb_non_refundable_tax_credits_part_3_line_d)
+              + max(0, mb_dividend_tax_credit_line_13)
+              + max(0, minimum_tax_carryover_line_40427) * federal_2025_t2203_mb_minimum_tax_rate
+            )
+          )
+  - name: federal_2025_t2203_mb_tax_allocated_line_20
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 MB428MJ line 20 multiplies line 18 by the Manitoba allocation percentage
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          (
+            federal_2025_t2203_mb_tax_after_non_refundable_credits_line_16
+            + max(0, mb_t691_part_7_line_1_minus_line_2) * federal_2025_t2203_mb_minimum_tax_rate
+          ) * max(0, t2203_manitoba_income_allocation_percentage)
+  - name: federal_2025_t2203_mb_adjusted_income_tax_line_28
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 MB428MJ lines 21 to 28 subtract the resident adjustment
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t2203_resident_of_manitoba:
+            max(
+              0,
+              federal_2025_t2203_mb_tax_allocated_line_20
+              - (
+                max(0, mb_resident_adjustment_credit_base_lines_58315_58316_58325_58326_58330_58360)
+                * federal_2025_t2203_mb_bracket_1_rate
+                + max(0, mb_dividend_tax_credit_line_13)
+              ) * max(0, 1 - max(0, t2203_manitoba_income_allocation_percentage))
+            )
+          else:
+            federal_2025_t2203_mb_tax_allocated_line_20
+  - name: federal_2025_t2203_mb_political_contribution_tax_credit_line_31
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 Worksheet MB428MJ line 31 calculates the political contribution tax credit capped at $1,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_t2203_mb_political_cap,
+            if mb_political_contributions_line_61794 <= federal_2025_t2203_mb_political_first_threshold:
+              max(0, mb_political_contributions_line_61794) * federal_2025_t2203_mb_political_first_rate
+            else:
+              if mb_political_contributions_line_61794 <= federal_2025_t2203_mb_political_second_threshold:
+                (mb_political_contributions_line_61794 - federal_2025_t2203_mb_political_first_threshold) * federal_2025_t2203_mb_political_second_rate + federal_2025_t2203_mb_political_second_base_credit
+              else:
+                (mb_political_contributions_line_61794 - federal_2025_t2203_mb_political_second_threshold) * federal_2025_t2203_mb_political_third_rate + federal_2025_t2203_mb_political_third_base_credit
+          )
+  - name: federal_2025_t2203_mb_tax_after_foreign_and_credits_line_42
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 MB428MJ lines 31 to 42 subtract political, labour-sponsored, foreign, community enterprise, small business, and employee share purchase credits
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(
+              0,
+              max(
+                0,
+                max(
+                  0,
+                  federal_2025_t2203_mb_adjusted_income_tax_line_28
+                  - federal_2025_t2203_mb_political_contribution_tax_credit_line_31
+                ) - max(0, mb_labour_sponsored_funds_tax_credit_line_33)
+              ) - (if t2203_resident_of_manitoba:
+                  max(0, mb_provincial_foreign_tax_credit_t2036_line_35)
+                else:
+                  0)
+            ) - max(0, mb_community_enterprise_development_tax_credit_line_37)
+            - min(
+              federal_2025_t2203_mb_small_business_cap,
+              max(0, mb_small_business_venture_capital_tax_credit_line_39)
+            )
+          ) - max(0, mb_employee_share_purchase_tax_credit_line_41)
+  - name: t2203_manitoba_tax_part_5_line_6
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 MB428MJ line 44 subtracts mineral exploration tax credit and enters Manitoba tax on Part 5 line 6
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, federal_2025_t2203_mb_tax_after_foreign_and_credits_line_42 - max(0, mb_mineral_exploration_tax_credit_line_43))
