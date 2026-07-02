@@ -1,0 +1,57 @@
+- name: federal_net_tax_part_c_positive_path
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.federal_tax_on_taxable_income_line_119: 20000
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.federal_tax_on_split_income_line_40424: 500
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.total_federal_non_refundable_tax_credits_line_35000: 3000
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.federal_dividend_tax_credit_line_40425: 700
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.minimum_tax_carryover_line_40427: 100
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.federal_surtax_on_income_earned_outside_canada: 200
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.federal_foreign_tax_credit_line_40500: 800
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.investment_tax_credit_recapture_line_131: 300
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.federal_logging_tax_credit_line_133: 100
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.federal_political_contribution_tax_credit_line_41000: 650
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.investment_tax_credit_line_41200: 1000
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.labour_sponsored_funds_tax_credit_line_41400: 750
+  output:
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#federal_2025_t1_tax_and_tosi_line_40400: 20500
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#federal_2025_t1_credit_subtotal_line_125: 3800
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#basic_federal_tax_line_42900: 16700
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#federal_2025_t1_basic_tax_plus_surtax_line_128: 16900
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#federal_2025_t1_after_foreign_tax_credit_line_130: 16100
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#federal_2025_t1_tax_before_logging_credit_line_132: 16400
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#federal_tax_line_40600: 16300
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#tax_credit_line_41600: 2400
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#federal_tax_after_selected_credits_line_41700: 13900
+
+- name: federal_net_tax_part_c_floor_paths
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.federal_tax_on_taxable_income_line_119: -100
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.federal_tax_on_split_income_line_40424: -50
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.total_federal_non_refundable_tax_credits_line_35000: 1000
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.federal_dividend_tax_credit_line_40425: 500
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.minimum_tax_carryover_line_40427: 250
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.federal_surtax_on_income_earned_outside_canada: -200
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.federal_foreign_tax_credit_line_40500: 800
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.investment_tax_credit_recapture_line_131: -300
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.federal_logging_tax_credit_line_133: 100
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.federal_political_contribution_tax_credit_line_41000: 650
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.investment_tax_credit_line_41200: 1000
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#input.labour_sponsored_funds_tax_credit_line_41400: 750
+  output:
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#federal_2025_t1_tax_and_tosi_line_40400: 0
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#federal_2025_t1_credit_subtotal_line_125: 1750
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#basic_federal_tax_line_42900: 0
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#federal_2025_t1_basic_tax_plus_surtax_line_128: 0
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#federal_2025_t1_after_foreign_tax_credit_line_130: -800
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#federal_2025_t1_tax_before_logging_credit_line_132: -800
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#federal_tax_line_40600: 0
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#tax_credit_line_41600: 2400
+    ca:policies/cra/t1-2025/federal-net-tax-aggregation#federal_tax_after_selected_credits_line_41700: 0
