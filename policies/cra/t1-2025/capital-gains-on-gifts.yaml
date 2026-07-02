@@ -1,0 +1,129 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T1170 for 2025 calculates capital gains on gifts of certain
+    capital property. This module encodes the per-gift gain, the portion
+    eligible for the zero inclusion rate, the portion subject to the 50%
+    inclusion rate, and category totals for Schedule 3 routing.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/capital-gains-on-gifts
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Form T1170 is the official 2025 form for calculating capital
+        gains on gifts of certain capital property.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t1170/t1170-25e.pdf
+rules:
+  - name: federal_2025_t1170_taxable_inclusion_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T1170 2025 says the part of the gain not eligible for the zero inclusion rate is subject to the 50% inclusion rate, encoded as 0.50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.50
+
+  - name: federal_2025_t1170_gift_capital_gain_column_5
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1170 2025 column 5 is gain, calculated as column 2 proceeds minus columns 3 adjusted cost base and 4 outlays and expenses
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          t1170_proceeds_of_disposition_column_2
+          - max(0, t1170_adjusted_cost_base_column_3)
+          - max(0, t1170_outlays_and_expenses_column_4)
+
+  - name: federal_2025_t1170_gain_eligible_zero_inclusion_column_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1170 2025 column 7 is column 5 multiplied by column 6 eligible gift amount divided by column 2 proceeds
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if max(0, t1170_proceeds_of_disposition_column_2) <= 0:
+            0
+          else:
+            max(0, federal_2025_t1170_gift_capital_gain_column_5)
+            * max(0, t1170_eligible_amount_of_gift_column_6)
+            / max(0, t1170_proceeds_of_disposition_column_2)
+
+  - name: federal_2025_t1170_gain_subject_to_50_percent_inclusion_column_8
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1170 2025 column 8 is column 5 minus column 7, the gain subject to the 50% inclusion rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, federal_2025_t1170_gift_capital_gain_column_5)
+            - federal_2025_t1170_gain_eligible_zero_inclusion_column_7
+          )
+
+  - name: federal_2025_t1170_taxable_capital_gain_from_gift
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1170 2025 says the remaining gain is subject to the 50% inclusion rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1170_gain_subject_to_50_percent_inclusion_column_8
+          * federal_2025_t1170_taxable_inclusion_rate
+
+  - name: federal_2025_t1170_shares_and_units_schedule_3_line_13200
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1170 2025 says to include the amount from the shares and units table column 8 on Schedule 3 Part 3 line 13200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t1170_shares_and_units_gain_subject_to_50_percent_inclusion_column_8)
+
+  - name: federal_2025_t1170_bonds_debentures_and_other_properties_schedule_3_line_15300
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1170 2025 includes a bonds, debentures, and other properties table using the same column 8 gain subject to 50% inclusion rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t1170_bonds_debentures_and_other_properties_gain_subject_to_50_percent_inclusion_column_8)
+
+  - name: federal_2025_t1170_total_gain_eligible_zero_inclusion
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1170 2025 totals column 7 gain eligible for the zero inclusion rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t1170_shares_and_units_gain_eligible_zero_inclusion_column_7)
+          + max(0, t1170_bonds_debentures_and_other_properties_gain_eligible_zero_inclusion_column_7)
+
+  - name: federal_2025_t1170_total_gain_subject_to_50_percent_inclusion
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1170 2025 totals column 8 gain subject to the 50% inclusion rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1170_shares_and_units_schedule_3_line_13200
+          + federal_2025_t1170_bonds_debentures_and_other_properties_schedule_3_line_15300
