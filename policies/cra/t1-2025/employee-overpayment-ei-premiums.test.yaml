@@ -1,0 +1,82 @@
+- name: t2204_non_quebec_overpayment_and_credit
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.t2204_has_self_employment_ei_special_benefits_agreement: false
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.t4_ei_insurable_earnings_box_24_or_14: 70000
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.self_employment_and_other_ei_special_benefits_earnings_line_2: 0
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.t2204_resident_of_quebec: false
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.t4_ei_premiums_box_18: 1200
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.t4_ppip_premiums_box_55: 0
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.schedule_13_premiums_payable_for_t2204_line_5: 0
+  output:
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_ei_insurable_earnings_line_1: 70000
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_self_employment_ei_earnings_line_2: 0
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_total_ei_earnings_line_3: 65700
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_total_premiums_deducted_line_4: 1200
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_schedule_13_premiums_payable_line_5: 0
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_total_premiums_line_6: 1200
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_excess_earnings_line_7: 63700
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_premiums_over_excess_earnings_line_8: 0
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_premiums_deducted_line_9: 1200
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_non_quebec_required_premiums_line_10: 1077.48
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_quebec_required_premiums_line_11: 860.67
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_required_premiums_line_12: 1077.48
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_overpayment_by_required_premiums_line_13: 122.52
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_greater_overpayment_line_14: 122.52
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#employee_employment_insurance_overpayment_line_45000: 122.52
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#employment_insurance_premiums_through_employment_credit_line_31200: 1077.48
+
+- name: t2204_quebec_branch_with_schedule_13
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.t2204_has_self_employment_ei_special_benefits_agreement: true
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.t4_ei_insurable_earnings_box_24_or_14: 50000
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.self_employment_and_other_ei_special_benefits_earnings_line_2: 10000
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.t2204_resident_of_quebec: true
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.t4_ei_premiums_box_18: 900
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.t4_ppip_premiums_box_55: 400
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.schedule_13_premiums_payable_for_t2204_line_5: 200
+  output:
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_ei_insurable_earnings_line_1: 50000
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_self_employment_ei_earnings_line_2: 10000
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_total_ei_earnings_line_3: 60000
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_total_premiums_deducted_line_4: 900
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_total_premiums_line_6: 1100
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_excess_earnings_line_7: 58000
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_quebec_required_premiums_line_11: 655
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_required_premiums_line_12: 655
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_overpayment_by_required_premiums_line_13: 245
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_greater_overpayment_line_14: 245
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#employee_employment_insurance_overpayment_line_45000: 245
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#employment_insurance_premiums_through_employment_credit_line_31200: 655
+
+- name: t2204_low_insurable_earnings_and_refund_threshold
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.t2204_has_self_employment_ei_special_benefits_agreement: false
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.t4_ei_insurable_earnings_box_24_or_14: 1500
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.self_employment_and_other_ei_special_benefits_earnings_line_2: 0
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.t2204_resident_of_quebec: false
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.t4_ei_premiums_box_18: 1
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.t4_ppip_premiums_box_55: 0
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#input.schedule_13_premiums_payable_for_t2204_line_5: 0
+  output:
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_ei_insurable_earnings_line_1: 0
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_total_ei_earnings_line_3: 0
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_excess_earnings_line_7: 0
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_premiums_over_excess_earnings_line_8: 1
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_non_quebec_required_premiums_line_10: 0
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_required_premiums_line_12: 0
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_overpayment_by_required_premiums_line_13: 1
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#federal_2025_t2204_greater_overpayment_line_14: 1
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#employee_employment_insurance_overpayment_line_45000: 0
+    ca:policies/cra/t1-2025/employee-overpayment-ei-premiums#employment_insurance_premiums_through_employment_credit_line_31200: 0
