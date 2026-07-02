@@ -1,0 +1,19 @@
+source:
+  id: cra-2025-investment-tax-credit-individuals
+  citation_path: canada/policy/cra/t1-2025/investment-tax-credit-individuals
+  title: CRA Form T2038(IND) 2025 Investment Tax Credit (Individuals)
+  documents:
+    - title: Form T2038(IND) Investment Tax Credit (Individuals) 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t2038-ind/t2038-ind-25e.pdf
+  coverage:
+    encoded:
+      - Part A current-year refundable ITC
+      - Part B current-year non-refundable ITC
+      - Part C SR&ED recapture
+      - Part D allowable line 41200 claim including AMT branch
+      - Part E carryback, refund base, and line 45400 refund
+      - Part F carryforward amount
+    not_encoded:
+      - ITC property, expenditure, available-for-use, flow-through share, and apprenticeship eligibility predicates
+      - Per-apprentice row capture and related-employer allocation agreement workflow
+      - Prior-year carryback tax-year application limits outside the total amount M cap
