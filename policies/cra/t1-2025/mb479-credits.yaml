@@ -1,0 +1,829 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form MB479 for 2025 calculates Manitoba refundable credits:
+    family income, personal tax credit, homeowners affordability tax credit,
+    renters affordability tax credit, seniors school tax rebate, EIA/MSPD
+    adjustment, fertility treatment credit, business and green energy credits,
+    teaching expense credit, rental housing construction incentive credit, and
+    final Manitoba credits entered on T1 line 47900.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/mb479-credits
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Form MB479 is the official 2025 Manitoba refundable credits form.
+        This module encodes the face-form arithmetic while leaving detailed
+        eligibility determinations, certificate validation, and supporting
+        schedule calculations to dedicated modules or fact inputs.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5007-tc/5007-tc-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5007-tc/5007-tc-25e.pdf
+rules:
+  - name: mb479_2025_basic_credit
+    kind: parameter
+    dtype: Money
+    source: CRA MB479 2025 line 7 basic personal tax credit is $195
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 195
+
+  - name: mb479_2025_age_credit
+    kind: parameter
+    dtype: Money
+    source: CRA MB479 2025 lines 8 and 10 age credit is $113
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 113
+
+  - name: mb479_2025_disability_credit
+    kind: parameter
+    dtype: Money
+    source: CRA MB479 2025 lines 11 and 14 disability credit amount is $113
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 113
+
+  - name: mb479_2025_disabled_dependant_credit
+    kind: parameter
+    dtype: Money
+    source: CRA MB479 2025 line 15 disabled dependant credit amount is $62
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 62
+
+  - name: mb479_2025_dependent_child_credit
+    kind: parameter
+    dtype: Money
+    source: CRA MB479 2025 line 16 dependent child credit amount is $26
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 26
+
+  - name: mb479_2025_personal_credit_income_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA MB479 2025 line 18 multiplies family income by 1%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.01
+
+  - name: mb479_2025_homeowners_base_amount
+    kind: parameter
+    dtype: Money
+    source: CRA MB479 2025 line 23 homeowners affordability tax credit base amount is $1,500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1500
+
+  - name: mb479_2025_days_in_year
+    kind: parameter
+    dtype: Count
+    source: CRA MB479 2025 line 24 divides qualified days by 365
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 365
+
+  - name: mb479_2025_senior_rent_base_amount
+    kind: parameter
+    dtype: Money
+    source: CRA MB479 2025 line 31 renters affordability senior base amount is $903.57
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 903.57
+
+  - name: mb479_2025_senior_rent_income_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA MB479 2025 line 32 multiplies family income by 0.8214%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.008214
+
+  - name: mb479_2025_senior_rent_income_reduction_cap
+    kind: parameter
+    dtype: Money
+    source: CRA MB479 2025 line 32 caps the senior renters income reduction at $328.57
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 328.57
+
+  - name: mb479_2025_months_in_year
+    kind: parameter
+    dtype: Count
+    source: CRA MB479 2025 line 34 gives 12 months in the year
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 12
+
+  - name: mb479_2025_renters_monthly_floor
+    kind: parameter
+    dtype: Money
+    source: CRA MB479 2025 line 36 uses a monthly renters amount floor of $47.91
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 47.91
+
+  - name: mb479_2025_seniors_school_income_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA MB479 2025 seniors school tax rebate requires family income less than $63,500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 63500
+
+  - name: mb479_2025_seniors_school_rebate_cap
+    kind: parameter
+    dtype: Money
+    source: CRA MB479 2025 line 44 caps the seniors school tax rebate base at $235
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 235
+
+  - name: mb479_2025_seniors_school_reduction_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA MB479 2025 line 46 seniors school tax rebate reduction threshold is $40,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 40000
+
+  - name: mb479_2025_seniors_school_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA MB479 2025 line 48 applies a 1% seniors school tax rebate reduction rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.01
+
+  - name: mb479_2025_fertility_treatment_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA MB479 2025 line 61 multiplies fertility treatment expenses by 40%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.40
+
+  - name: mb479_2025_fertility_treatment_credit_cap
+    kind: parameter
+    dtype: Money
+    source: CRA MB479 2025 line 61 caps the fertility treatment tax credit at $16,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 16000
+
+  - name: mb479_2025_green_energy_manufacturer_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA MB479 2025 line 68 gives green energy equipment manufacturer credit rate as 7.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.075
+
+  - name: mb479_2025_cultural_industries_printing_credit_cap
+    kind: parameter
+    dtype: Money
+    source: CRA MB479 2025 line 73 caps the cultural industries printing tax credit at $1,100,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1100000
+
+  - name: mb479_2025_community_enterprise_credit_cap
+    kind: parameter
+    dtype: Money
+    source: CRA MB479 2025 line 75 caps the community enterprise development tax credit at $27,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 27000
+
+  - name: mb479_2025_employee_share_purchase_credit_cap
+    kind: parameter
+    dtype: Money
+    source: CRA MB479 2025 line 77 caps the employee share purchase tax credit at $27,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 27000
+
+  - name: mb479_2025_teaching_supplies_expense_cap
+    kind: parameter
+    dtype: Money
+    source: CRA MB479 2025 line 79 caps eligible teaching supplies expenses at $1,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1000
+
+  - name: mb479_2025_teaching_expense_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA MB479 2025 line 79 multiplies eligible teaching supplies expenses by 15%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.15
+
+  - name: mb479_self_family_income_line_5
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 family income lines 1 to 5 add UCCB and RDSP repayments, subtract UCCB and RDSP income, and floor negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            mb479_self_net_income_line_23600
+            + max(0, mb479_self_uccb_rdsp_repayments_line_2)
+            - max(0, mb479_self_uccb_rdsp_income_line_4)
+          )
+
+  - name: mb479_spouse_family_income_line_5
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 family income lines 1 to 5 apply the same calculation for spouse or common-law partner income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            mb479_spouse_net_income_line_23600
+            + max(0, mb479_spouse_uccb_rdsp_repayments_line_2)
+            - max(0, mb479_spouse_uccb_rdsp_income_line_4)
+          )
+
+  - name: mb479_family_income_line_6
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 6 family income is the family income amount used by personal, renters, and seniors school credit calculations
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if mb479_spouse_separate_principal_residence_medical_reasons_line_60890:
+            mb479_self_family_income_line_5
+          else:
+            mb479_self_family_income_line_5 + mb479_spouse_family_income_line_5
+
+  - name: mb479_self_age_credit_line_8
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 8 gives a $113 age credit for self when born in 1960 or earlier
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if mb479_claim_self_age_credit:
+            mb479_2025_age_credit
+          else:
+            0
+
+  - name: mb479_spouse_basic_credit_line_9
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 9 gives a $195 basic credit for spouse or common-law partner
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if mb479_claim_spouse_or_partner_basic_credit:
+            mb479_2025_basic_credit
+          else:
+            0
+
+  - name: mb479_spouse_age_credit_line_10
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 10 gives a $113 age credit for spouse or common-law partner when born in 1960 or earlier
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if mb479_claim_spouse_or_partner_age_credit:
+            mb479_2025_age_credit
+          else:
+            0
+
+  - name: mb479_spouse_disability_credit_line_11
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 11 gives a $113 disability credit for spouse or common-law partner
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if mb479_claim_spouse_or_partner_disability_credit:
+            mb479_2025_disability_credit
+          else:
+            0
+
+  - name: mb479_spouse_credit_subtotal_line_60900
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 12 and line 60900 add spouse basic, age, and disability credits from lines 9 to 11
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          mb479_spouse_basic_credit_line_9
+          + mb479_spouse_age_credit_line_10
+          + mb479_spouse_disability_credit_line_11
+
+  - name: mb479_eligible_dependant_credit_line_13
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 13 gives a $195 credit for an eligible dependant claimed on line 58160 of Form MB428
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if mb479_claim_eligible_dependant_credit_line_58160:
+            mb479_2025_basic_credit
+          else:
+            0
+
+  - name: mb479_total_personal_credits_before_income_reduction_line_61050
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 17 and line 61050 add lines 7, 8, and 12 to 16
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          mb479_2025_basic_credit
+          + mb479_self_age_credit_line_8
+          + mb479_spouse_credit_subtotal_line_60900
+          + mb479_eligible_dependant_credit_line_13
+          + max(0, mb479_disability_claim_count_line_60950)
+          * mb479_2025_disability_credit
+          + max(0, mb479_disabled_dependants_count_line_60970)
+          * mb479_2025_disabled_dependant_credit
+          + max(0, mb479_dependent_children_count_line_60999)
+          * mb479_2025_dependent_child_credit
+
+  - name: mb479_personal_tax_credit_income_reduction_line_18
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 18 multiplies family income line 6 by 1%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: mb479_family_income_line_6 * mb479_2025_personal_credit_income_rate
+
+  - name: mb479_personal_tax_credit_line_19
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 19 subtracts line 18 from line 17 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            mb479_total_personal_credits_before_income_reduction_line_61050
+            - mb479_personal_tax_credit_income_reduction_line_18
+          )
+
+  - name: mb479_homeowners_school_tax_and_advance_line_61160
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 22 and line 61160 add school taxes line 61120 and homeowners affordability tax credit advance line 61140
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, mb479_school_taxes_line_61120)
+          + max(0, mb479_homeowners_affordability_advance_line_61140)
+
+  - name: mb479_homeowners_qualified_days_fraction_line_24
+    kind: derived
+    entity: Family
+    dtype: Rate
+    period: Year
+    source: CRA MB479 2025 line 24 divides qualified days at the principal residence by 365
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, mb479_homeowners_qualified_days_line_61163)
+          / mb479_2025_days_in_year
+
+  - name: mb479_homeowners_prorated_base_line_25
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 25 multiplies the $1,500 homeowners base amount by the qualified-days fraction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: mb479_2025_homeowners_base_amount * mb479_homeowners_qualified_days_fraction_line_24
+
+  - name: mb479_homeowners_pre_advance_credit_line_26
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 26 uses the lesser of line 22 or line 25
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            mb479_homeowners_school_tax_and_advance_line_61160,
+            mb479_homeowners_prorated_base_line_25
+          )
+
+  - name: mb479_homeowners_affordability_tax_credit_line_28
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 28 subtracts line 27 from line 26 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            mb479_homeowners_pre_advance_credit_line_26
+            - max(0, mb479_homeowners_affordability_advance_line_61140)
+          )
+
+  - name: mb479_senior_rent_income_reduction_line_32
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 32 multiplies family income by 0.8214% and caps the amount at $328.57
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            mb479_2025_senior_rent_income_reduction_cap,
+            mb479_family_income_line_6 * mb479_2025_senior_rent_income_rate
+          )
+
+  - name: mb479_senior_rent_monthly_amount_line_35
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 lines 31 to 35 calculate the senior renters monthly amount when the taxpayer or spouse is age 65 or older
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if mb479_renters_senior_eligible:
+            (mb479_2025_senior_rent_base_amount - mb479_senior_rent_income_reduction_line_32)
+            / mb479_2025_months_in_year
+          else:
+            0
+
+  - name: mb479_renters_monthly_amount_line_36
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 36 uses the greater of line 35 or $47.91
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(mb479_senior_rent_monthly_amount_line_35, mb479_2025_renters_monthly_floor)
+
+  - name: mb479_renters_prorated_credit_line_38
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 38 multiplies the monthly renters amount by qualifying months line 61167
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          mb479_renters_monthly_amount_line_36
+          * max(0, mb479_renters_qualifying_months_line_61167)
+
+  - name: mb479_renters_affordability_tax_credit_line_39
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 39 uses the lesser of rent paid line 61165 or line 38
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(max(0, mb479_rent_paid_line_61165), mb479_renters_prorated_credit_line_38)
+
+  - name: mb479_homeowners_and_renters_credit_line_40
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 40 adds the homeowners affordability tax credit and renters affordability tax credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          mb479_homeowners_affordability_tax_credit_line_28
+          + mb479_renters_affordability_tax_credit_line_39
+
+  - name: mb479_seniors_school_rebate_base_line_44
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 44 subtracts line 43 from line 42, floors negative amounts at zero, and caps the amount at $235
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            mb479_2025_seniors_school_rebate_cap,
+            max(
+              0,
+              max(0, mb479_seniors_school_taxes_and_levies_line_61170)
+              - mb479_homeowners_pre_advance_credit_line_26
+            )
+          )
+
+  - name: mb479_seniors_school_income_reduction_line_49
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 lines 47 to 49 subtract $40,000 from family income, floor at zero, and multiply by 1%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            mb479_family_income_line_6
+            - mb479_2025_seniors_school_reduction_threshold
+          )
+          * mb479_2025_seniors_school_reduction_rate
+
+  - name: mb479_seniors_school_rebate_before_proration_line_50
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 50 subtracts line 49 from line 44 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, mb479_seniors_school_rebate_base_line_44 - mb479_seniors_school_income_reduction_line_49)
+
+  - name: mb479_seniors_school_tax_rebate_line_52
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 52 multiplies line 50 by the qualified-days fraction when seniors school tax rebate conditions are met
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if mb479_seniors_school_tax_rebate_eligible:
+            if mb479_family_income_line_6 < mb479_2025_seniors_school_income_threshold:
+              mb479_seniors_school_rebate_before_proration_line_50
+              * mb479_homeowners_qualified_days_fraction_line_24
+            else:
+              0
+          else:
+            0
+
+  - name: mb479_property_and_rent_credits_line_53
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 53 adds line 41 and the seniors school tax rebate line 52
+    versions:
+      - effective_from: '2025-01-01'
+        formula: mb479_homeowners_and_renters_credit_line_40 + mb479_seniors_school_tax_rebate_line_52
+
+  - name: mb479_credits_before_eia_mspd_line_55
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 55 adds property and rent credits line 53 and personal tax credit line 54
+    versions:
+      - effective_from: '2025-01-01'
+        formula: mb479_property_and_rent_credits_line_53 + mb479_personal_tax_credit_line_19
+
+  - name: mb479_credits_after_eia_mspd_line_57
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 57 multiplies line 55 by the line 56 EIA or MSPD factor when line 56 is entered, otherwise carries line 55
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if mb479_eia_mspd_payments_received:
+            mb479_credits_before_eia_mspd_line_55
+            * max(0, mb479_eia_mspd_factor_line_61255)
+          else:
+            mb479_credits_before_eia_mspd_line_55
+
+  - name: mb479_credits_after_primary_caregiver_line_60
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 60 adds line 58 and primary caregiver tax credit line 61260
+    versions:
+      - effective_from: '2025-01-01'
+        formula: mb479_credits_after_eia_mspd_line_57 + max(0, primary_caregiver_tax_credit_line_61260)
+
+  - name: mb479_fertility_treatment_tax_credit_line_61
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 61 multiplies fertility treatment expenses by 40% and caps the credit at $16,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            mb479_2025_fertility_treatment_credit_cap,
+            max(0, fertility_treatment_medical_expenses_line_61268)
+            * mb479_2025_fertility_treatment_rate
+          )
+
+  - name: mb479_credits_after_fertility_line_62
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 62 adds line 60 and fertility treatment tax credit line 61
+    versions:
+      - effective_from: '2025-01-01'
+        formula: mb479_credits_after_primary_caregiver_line_60 + mb479_fertility_treatment_tax_credit_line_61
+
+  - name: mb479_credits_after_paid_work_experience_line_64
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 64 adds line 62 and paid work experience tax credit line 61310
+    versions:
+      - effective_from: '2025-01-01'
+        formula: mb479_credits_after_fertility_line_62 + max(0, paid_work_experience_tax_credit_line_61310)
+
+  - name: mb479_credits_after_odour_control_line_66
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 66 adds line 64 and unused odour-control tax credit line 61340
+    versions:
+      - effective_from: '2025-01-01'
+        formula: mb479_credits_after_paid_work_experience_line_64 + max(0, unused_odour_control_tax_credit_line_61340)
+
+  - name: mb479_green_energy_equipment_manufacturer_credit_line_61390
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 68 calculates 7.5% of adjusted geothermal heat pump cost
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, adjusted_cost_of_geothermal_heat_pumps)
+          * mb479_2025_green_energy_manufacturer_rate
+
+  - name: mb479_green_energy_equipment_credit_line_69
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 69 adds green energy purchaser credit line 67 and manufacturer credit line 68
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, green_energy_equipment_purchaser_credit_line_61380)
+          + mb479_green_energy_equipment_manufacturer_credit_line_61390
+
+  - name: mb479_credits_after_green_energy_line_70
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 70 adds line 66 and green energy equipment credit line 69
+    versions:
+      - effective_from: '2025-01-01'
+        formula: mb479_credits_after_odour_control_line_66 + mb479_green_energy_equipment_credit_line_69
+
+  - name: mb479_credits_after_book_publishing_line_72
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 72 adds line 70 and book publishing tax credit line 61430
+    versions:
+      - effective_from: '2025-01-01'
+        formula: mb479_credits_after_green_energy_line_70 + max(0, book_publishing_tax_credit_line_61430)
+
+  - name: mb479_cultural_industries_printing_tax_credit_line_61480
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 73 caps the cultural industries printing tax credit at $1,100,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            mb479_2025_cultural_industries_printing_credit_cap,
+            max(0, cultural_industries_printing_tax_credit_claim)
+          )
+
+  - name: mb479_credits_after_cultural_printing_line_74
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 74 adds line 72 and cultural industries printing tax credit line 73
+    versions:
+      - effective_from: '2025-01-01'
+        formula: mb479_credits_after_book_publishing_line_72 + mb479_cultural_industries_printing_tax_credit_line_61480
+
+  - name: mb479_community_enterprise_development_tax_credit_line_61484
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 75 caps the community enterprise development tax credit at $27,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            mb479_2025_community_enterprise_credit_cap,
+            max(0, community_enterprise_development_tax_credit_claim)
+          )
+
+  - name: mb479_credits_after_community_enterprise_line_76
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 76 adds line 74 and community enterprise development tax credit line 75
+    versions:
+      - effective_from: '2025-01-01'
+        formula: mb479_credits_after_cultural_printing_line_74 + mb479_community_enterprise_development_tax_credit_line_61484
+
+  - name: mb479_employee_share_purchase_tax_credit_line_61490
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 77 caps the employee share purchase tax credit at $27,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            mb479_2025_employee_share_purchase_credit_cap,
+            max(0, employee_share_purchase_tax_credit_claim)
+          )
+
+  - name: mb479_credits_after_employee_share_purchase_line_78
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 78 adds line 76 and employee share purchase tax credit line 77
+    versions:
+      - effective_from: '2025-01-01'
+        formula: mb479_credits_after_community_enterprise_line_76 + mb479_employee_share_purchase_tax_credit_line_61490
+
+  - name: mb479_teaching_expense_tax_credit_line_79
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 79 caps eligible teaching supplies expenses at $1,000 and multiplies by 15%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            mb479_2025_teaching_supplies_expense_cap,
+            max(0, eligible_teaching_supplies_expenses_line_61495)
+          )
+          * mb479_2025_teaching_expense_rate
+
+  - name: manitoba_credits_line_47900
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA MB479 2025 line 81 adds lines 78 to 80 and enters Manitoba credits on T1 line 47900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          mb479_credits_after_employee_share_purchase_line_78
+          + mb479_teaching_expense_tax_credit_line_79
+          + max(0, rental_housing_construction_incentive_tax_credit_line_80)
