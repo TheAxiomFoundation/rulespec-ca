@@ -1,0 +1,19 @@
+source:
+  id: cra-2025-nonresident-world-income-credits-section-217
+  citation_path: canada/policy/cra/t1-2025/nonresident-world-income-credits-section-217
+  title: CRA 2025 non-resident Schedules A, B, and C
+  documents:
+    - title: Schedule A Statement of World Income 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5013-sa/5013-sa-25e.txt
+    - title: Schedule B Allowable Amount of Federal Non-Refundable Tax Credits 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5013-sb/5013-sb-25e.txt
+    - title: Schedule C Electing under Section 217 of the Income Tax Act 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5013-sc/5013-sc-25e.txt
+  coverage:
+    encoded:
+      - Schedule A net world income and net world income after adjustments
+      - Schedule B net-income percentage and allowable federal non-refundable tax credits
+      - Schedule C eligible section 217 income, required withholding, income after adjustments, and tax adjustment
+    not_encoded:
+      - Residency, non-resident, deemed non-resident, section 216.1, and section 217 election validity predicates
+      - Tax treaty withholding-rate lookup and excluded-income legal characterization
