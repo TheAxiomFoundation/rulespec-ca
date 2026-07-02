@@ -11,8 +11,8 @@ source:
       - Federal tax on split income Part 2 lines 7 to 30 and line 42000 composition
       - Federal dividend and foreign tax credit split-income adjustments
       - Provincial or territorial non-multiple-jurisdiction Part 3 lines 31 to 52
+      - Chart C province/territory high, low, eligible-dividend-credit, and other-than-eligible-dividend-credit rate lookup parameters
     not_encoded:
       - Specified individual, split-income, excluded amount, related business, and reasonable return predicates
       - Disposition reserve calculation and deemed dividend/capital-gain fact extraction
-      - Chart C province/territory rate lookup as named parameters for every jurisdiction
       - Part 4 multiple-jurisdiction T2203 repetition and Chart E placement
