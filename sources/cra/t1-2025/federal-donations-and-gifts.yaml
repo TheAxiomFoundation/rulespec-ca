@@ -5,6 +5,10 @@ source:
   documents:
     - title: Schedule 9 Donations and Gifts 2025
       url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s9/5000-s9-25e.pdf
+    - title: Line 34900 Donations and gifts
+      url: https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/line-34900-donations-gifts.html
+    - title: P113 Gifts and Income Tax 2025
+      url: https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/p113/p113-gifts-income-tax.html
   coverage:
     encoded:
       - Total eligible charitable donations and charitable donation limit
@@ -12,7 +16,7 @@ source:
       - Ecological and cultural gifts inclusion
       - First-$200, 29%, and high-income 33% credit tiers
       - Line 34900 allowable donations for 2025
+      - Five-year and ten-year carry-forward windows and prior-year-before-current-year claim ordering surfaces
     not_encoded:
       - Qualified donee, receipt, and gift eligibility predicates
-      - Five-year and ten-year carry-forward ordering rules
       - Detailed donated-property capital gain and recapture calculations

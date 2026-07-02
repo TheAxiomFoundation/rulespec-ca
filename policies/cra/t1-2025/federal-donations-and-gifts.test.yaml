@@ -8,10 +8,14 @@
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_government_municipal_or_public_bodies: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_registered_universities_outside_canada: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_united_nations_agencies_and_foreign_charities: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.prior_year_unclaimed_charitable_donations_eligible_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.current_year_charitable_donations_eligible_amount: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.net_income: 50000
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.gifts_depreciable_capital_property_amount: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.gifts_capital_property_amount: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.ecological_and_cultural_gifts_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.prior_year_unclaimed_ecological_gifts_eligible_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.current_year_ecological_and_cultural_gifts_eligible_amount: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.ecological_gifts_after_2014_before_2016_amount: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.taxable_income: 50000
   output:
@@ -44,10 +48,14 @@
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_government_municipal_or_public_bodies: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_registered_universities_outside_canada: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_united_nations_agencies_and_foreign_charities: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.prior_year_unclaimed_charitable_donations_eligible_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.current_year_charitable_donations_eligible_amount: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.net_income: 300000
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.gifts_depreciable_capital_property_amount: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.gifts_capital_property_amount: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.ecological_and_cultural_gifts_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.prior_year_unclaimed_ecological_gifts_eligible_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.current_year_ecological_and_cultural_gifts_eligible_amount: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.ecological_gifts_after_2014_before_2016_amount: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.taxable_income: 300000
   output:
@@ -65,10 +73,14 @@
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_government_municipal_or_public_bodies: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_registered_universities_outside_canada: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_united_nations_agencies_and_foreign_charities: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.prior_year_unclaimed_charitable_donations_eligible_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.current_year_charitable_donations_eligible_amount: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.net_income: 1000
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.gifts_depreciable_capital_property_amount: 400
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.gifts_capital_property_amount: 200
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.ecological_and_cultural_gifts_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.prior_year_unclaimed_ecological_gifts_eligible_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.current_year_ecological_and_cultural_gifts_eligible_amount: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.ecological_gifts_after_2014_before_2016_amount: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.taxable_income: 1000
   output:
@@ -88,13 +100,56 @@
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_government_municipal_or_public_bodies: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_registered_universities_outside_canada: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_united_nations_agencies_and_foreign_charities: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.prior_year_unclaimed_charitable_donations_eligible_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.current_year_charitable_donations_eligible_amount: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.net_income: 10000
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.gifts_depreciable_capital_property_amount: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.gifts_capital_property_amount: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.ecological_and_cultural_gifts_amount: 500
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.prior_year_unclaimed_ecological_gifts_eligible_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.current_year_ecological_and_cultural_gifts_eligible_amount: 0
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.ecological_gifts_after_2014_before_2016_amount: 300
     ca:policies/cra/t1-2025/federal-donations-and-gifts#input.taxable_income: 254000
   output:
     ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_donation_high_income_tier_amount: 586
     ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_donation_middle_tier_amount: 714
     ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_donations_and_gifts_credit_line_34900: 429.44
+
+- name: carry_forward_claimed_before_current_year_gifts
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_registered_charities: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_government_municipal_or_public_bodies: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_registered_universities_outside_canada: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.donations_united_nations_agencies_and_foreign_charities: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.prior_year_unclaimed_charitable_donations_eligible_amount: 1000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.current_year_charitable_donations_eligible_amount: 5000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.net_income: 4000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.gifts_depreciable_capital_property_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.gifts_capital_property_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.ecological_and_cultural_gifts_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.prior_year_unclaimed_ecological_gifts_eligible_amount: 300
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.current_year_ecological_and_cultural_gifts_eligible_amount: 700
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.ecological_gifts_after_2014_before_2016_amount: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#input.taxable_income: 50000
+  output:
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_prior_year_unclaimed_charitable_donations_available: 1000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_current_year_charitable_donations_available: 5000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_total_charitable_donations: 6000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_total_charitable_donation_limit: 3000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_charitable_donations_claimed_from_prior_years: 1000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_charitable_donations_claimed_from_current_year: 2000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_prior_year_charitable_donations_remaining_after_claim: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_current_year_charitable_donations_carried_forward: 3000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_prior_year_unclaimed_ecological_gifts_available: 300
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_current_year_ecological_and_cultural_gifts_available: 700
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_ecological_and_cultural_gifts: 1000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_ecological_gifts_claimed_from_prior_years: 300
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_ecological_and_cultural_gifts_claimed_from_current_year: 700
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_prior_year_ecological_gifts_remaining_after_claim: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_current_year_ecological_and_cultural_gifts_carried_forward: 0
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_2025_total_donations_after_gifts: 4000
+    ca:policies/cra/t1-2025/federal-donations-and-gifts#federal_donations_and_gifts_credit_line_34900: 1131
