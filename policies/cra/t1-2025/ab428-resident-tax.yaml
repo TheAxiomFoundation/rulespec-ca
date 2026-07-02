@@ -1,0 +1,780 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form AB428 for 2025 calculates ordinary Alberta resident tax:
+    Alberta tax on taxable income, Alberta non-refundable tax credits,
+    minimum tax carryover, dividend tax credit, political contribution tax
+    credit, supplemental tax credit, and final Alberta tax entered on T1
+    line 42800.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/ab428-resident-tax
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Form AB428 and Worksheet AB428 are the official 2025 Alberta tax
+        calculation documents for Alberta residents. This module encodes the
+        ordinary resident AB428 arithmetic while leaving detailed dependant
+        worksheet calculations, schedule eligibility, residency predicates,
+        and component line values to dedicated modules or fact inputs.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5009-c/5009-c-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5009-c/5009-c-25e.pdf
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5009-d/5009-d-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5009-d/5009-d-25e.pdf
+rules:
+  - name: ab428_2025_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA AB428 2025 Part A column 1 applies to taxable income of $60,000 or less
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 60000
+
+  - name: ab428_2025_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA AB428 2025 Part A column 2 applies above $60,000 and not more than $151,234
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 151234
+
+  - name: ab428_2025_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA AB428 2025 Part A column 3 applies above $151,234 and not more than $181,481
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 181481
+
+  - name: ab428_2025_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA AB428 2025 Part A line 10 column 1 threshold is $181,481
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 181481
+
+  - name: ab428_2025_bracket_5_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA AB428 2025 Part A line 10 column 2 threshold is $241,974
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 241974
+
+  - name: ab428_2025_bracket_6_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA AB428 2025 Part A line 10 column 3 threshold is $362,961
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 362961
+
+  - name: ab428_2025_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA AB428 2025 Part A column 1 line 5 gives the rate as 8%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.08
+
+  - name: ab428_2025_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA AB428 2025 Part A column 2 line 5 gives the rate as 10%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.10
+
+  - name: ab428_2025_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA AB428 2025 Part A column 3 line 5 gives the rate as 12%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.12
+
+  - name: ab428_2025_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA AB428 2025 Part A line 12 column 1 gives the rate as 13%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.13
+
+  - name: ab428_2025_bracket_5_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA AB428 2025 Part A line 12 column 2 gives the rate as 14%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.14
+
+  - name: ab428_2025_bracket_6_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA AB428 2025 Part A line 12 column 3 gives the rate as 15%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.15
+
+  - name: ab428_2025_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA AB428 2025 Part A column 2 line 7 gives base tax of $4,800.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 4800
+
+  - name: ab428_2025_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA AB428 2025 Part A column 3 line 7 gives base tax of $13,923.40
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 13923.40
+
+  - name: ab428_2025_bracket_4_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA AB428 2025 Part A line 14 column 1 gives base tax of $17,553.04
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 17553.04
+
+  - name: ab428_2025_bracket_5_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA AB428 2025 Part A line 14 column 2 gives base tax of $25,417.13
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 25417.13
+
+  - name: ab428_2025_bracket_6_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA AB428 2025 Part A line 14 column 3 gives base tax of $42,355.31
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 42355.31
+
+  - name: ab428_2025_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA AB428 2025 line 16 and line 58040 basic personal amount is $22,323
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 22323
+
+  - name: ab428_2025_age_amount_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA AB428 2025 line 58080 maximum age amount is $6,221
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 6221
+
+  - name: ab428_2025_age_amount_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet AB428 2025 line 58080 starts reducing the age amount above $46,308
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 46308
+
+  - name: ab428_2025_age_amount_zero_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet AB428 2025 line 58080 gives zero age amount at $87,782 or more
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 87782
+
+  - name: ab428_2025_age_amount_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet AB428 2025 line 58080 uses a 15% age amount reduction rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.15
+
+  - name: ab428_2025_spouse_or_dependant_base_amount
+    kind: parameter
+    dtype: Money
+    source: CRA AB428 2025 lines 18 and 21 use a base amount of $22,323
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 22323
+
+  - name: ab428_2025_pension_income_amount_cap
+    kind: parameter
+    dtype: Money
+    source: CRA AB428 2025 line 58360 pension income amount maximum is $1,719
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1719
+
+  - name: ab428_2025_disability_amount_for_self
+    kind: parameter
+    dtype: Money
+    source: CRA AB428 2025 line 58440 disability amount for self is $17,219 unless the under-18 worksheet applies
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 17219
+
+  - name: ab428_2025_medical_expense_income_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA AB428 2025 line 46 gives the medical expense income rate as 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.03
+
+  - name: ab428_2025_medical_expense_threshold_cap
+    kind: parameter
+    dtype: Money
+    source: CRA AB428 2025 line 48 uses the lesser of $2,884 and line 47
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2884
+
+  - name: ab428_2025_low_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA AB428 2025 line 53 gives the Alberta non-refundable tax credit rate as 8%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.08
+
+  - name: ab428_2025_low_donation_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA AB428 2025 line 55 multiplies Schedule 9 line 13 by 60%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.60
+
+  - name: ab428_2025_high_donation_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA AB428 2025 line 56 multiplies Schedule 9 line 14 by 21%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.21
+
+  - name: ab428_2025_minimum_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA AB428 2025 lines 64 and 67 multiply minimum tax amounts by 35%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.35
+
+  - name: ab428_2025_other_than_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet AB428 2025 line 61520 multiplies line 12010 by 2.18%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0218
+
+  - name: ab428_2025_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet AB428 2025 line 61520 multiplies line 12000 minus line 12010 by 8.12%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0812
+
+  - name: ab428_2025_political_first_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet AB428 2025 line 72 first political contribution threshold is $200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 200
+
+  - name: ab428_2025_political_second_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet AB428 2025 line 72 second political contribution threshold is $1,100
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1100
+
+  - name: ab428_2025_political_cap_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet AB428 2025 line 72 gives the maximum credit directly when contributions are more than $2,300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2300
+
+  - name: ab428_2025_political_cap
+    kind: parameter
+    dtype: Money
+    source: CRA AB428 2025 line 72 maximum Alberta political contribution tax credit is $1,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1000
+
+  - name: ab428_2025_political_first_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet AB428 2025 line 72 first political contribution rate is 75%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.75
+
+  - name: ab428_2025_political_second_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet AB428 2025 line 72 second political contribution rate is 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.50
+
+  - name: ab428_2025_political_third_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet AB428 2025 line 72 third political contribution rate is 33.33%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.3333
+
+  - name: ab428_2025_political_second_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet AB428 2025 line 72 second column base credit is $150
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 150
+
+  - name: ab428_2025_political_third_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet AB428 2025 line 72 third column base credit is $600
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 600
+
+  - name: ab428_2025_supplemental_credit_base_amount
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet AB428 2025 line 61545 subtracts a $4,800 base amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 4800
+
+  - name: ab428_2025_supplemental_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet AB428 2025 line 61545 multiplies the excess by 25%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.25
+
+  - name: ab428_tax_on_taxable_income_line_59
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 Part A line 59 calculates Alberta tax on taxable income using the selected bracket column
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= ab428_2025_bracket_1_threshold:
+            max(0, taxable_income_line_26000) * ab428_2025_bracket_1_rate
+          else:
+            if taxable_income_line_26000 <= ab428_2025_bracket_2_threshold:
+              (taxable_income_line_26000 - ab428_2025_bracket_1_threshold)
+              * ab428_2025_bracket_2_rate
+              + ab428_2025_bracket_2_base_tax
+            else:
+              if taxable_income_line_26000 <= ab428_2025_bracket_3_threshold:
+                (taxable_income_line_26000 - ab428_2025_bracket_2_threshold)
+                * ab428_2025_bracket_3_rate
+                + ab428_2025_bracket_3_base_tax
+              else:
+                if taxable_income_line_26000 <= ab428_2025_bracket_5_threshold:
+                  (taxable_income_line_26000 - ab428_2025_bracket_4_threshold)
+                  * ab428_2025_bracket_4_rate
+                  + ab428_2025_bracket_4_base_tax
+                else:
+                  if taxable_income_line_26000 <= ab428_2025_bracket_6_threshold:
+                    (taxable_income_line_26000 - ab428_2025_bracket_5_threshold)
+                    * ab428_2025_bracket_5_rate
+                    + ab428_2025_bracket_5_base_tax
+                  else:
+                    (taxable_income_line_26000 - ab428_2025_bracket_6_threshold)
+                    * ab428_2025_bracket_6_rate
+                    + ab428_2025_bracket_6_base_tax
+
+  - name: ab428_age_amount_line_58080
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet AB428 2025 line 58080 calculates the Alberta age amount for persons born in 1960 or earlier
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if ab428_age_amount_eligible:
+            if net_income_line_23600 <= ab428_2025_age_amount_threshold:
+              ab428_2025_age_amount_maximum
+            else:
+              if net_income_line_23600 >= ab428_2025_age_amount_zero_threshold:
+                0
+              else:
+                max(
+                  0,
+                  ab428_2025_age_amount_maximum
+                  - (net_income_line_23600 - ab428_2025_age_amount_threshold)
+                  * ab428_2025_age_amount_reduction_rate
+                )
+          else:
+            0
+
+  - name: ab428_spouse_or_partner_amount_line_58120
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 20 subtracts spouse or common-law partner net income from the base amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, ab428_2025_spouse_or_dependant_base_amount - max(0, spouse_net_income_line_23600))
+
+  - name: ab428_eligible_dependant_amount_line_58160
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 23 subtracts eligible dependant net income from the base amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, ab428_2025_spouse_or_dependant_base_amount - max(0, eligible_dependant_net_income_line_23600))
+
+  - name: ab428_credit_subtotal_line_25
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 25 adds lines 16, 17, 20, 23, and 24
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          ab428_2025_basic_personal_amount
+          + ab428_age_amount_line_58080
+          + ab428_spouse_or_partner_amount_line_58120
+          + ab428_eligible_dependant_amount_line_58160
+          + max(0, ab428_infirm_dependants_age_18_or_older_line_58200)
+
+  - name: ab428_credit_subtotal_line_32
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 32 adds lines 27 to 31
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, cpp_qpp_contributions_employment_line_30800)
+          + max(0, cpp_qpp_contributions_self_employment_line_31000)
+          + max(0, employment_insurance_premiums_line_31200)
+          + max(0, self_employment_ei_premiums_line_31217)
+          + max(0, adoption_expenses_line_58330)
+
+  - name: ab428_credit_subtotal_line_33
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 33 adds line 26 and line 32
+    versions:
+      - effective_from: '2025-01-01'
+        formula: ab428_credit_subtotal_line_25 + ab428_credit_subtotal_line_32
+
+  - name: ab428_pension_income_amount_line_58360
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 58360 caps the pension income amount at $1,719
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(ab428_2025_pension_income_amount_cap, max(0, pension_income_amount_line_58360))
+
+  - name: ab428_credit_subtotal_line_36
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 36 adds lines 33 to 35
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          ab428_credit_subtotal_line_33
+          + ab428_pension_income_amount_line_58360
+          + max(0, caregiver_amount_line_58400)
+
+  - name: ab428_credit_subtotal_line_39
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 39 adds lines 36 to 38
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          ab428_credit_subtotal_line_36
+          + max(0, disability_amount_for_self_line_58440)
+          + max(0, disability_amount_transferred_from_dependant_line_58480)
+
+  - name: ab428_credit_subtotal_line_43
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 43 adds lines 39 to 42
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          ab428_credit_subtotal_line_39
+          + max(0, student_loan_interest_line_58520)
+          + max(0, unused_tuition_and_education_amounts_line_58560)
+          + max(0, spouse_or_partner_transfers_line_58640)
+
+  - name: ab428_medical_expense_income_base_line_47
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 47 multiplies net income line 23600 by 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, net_income_line_23600) * ab428_2025_medical_expense_income_rate
+
+  - name: ab428_medical_expense_threshold_line_48
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 48 uses the lesser of $2,884 and line 47
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(ab428_2025_medical_expense_threshold_cap, ab428_medical_expense_income_base_line_47)
+
+  - name: ab428_allowable_family_medical_expenses_line_49
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 49 subtracts line 48 from line 44 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, max(0, medical_expenses_line_58689) - ab428_medical_expense_threshold_line_48)
+
+  - name: ab428_total_medical_expenses_line_58769
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 51 and line 58769 add line 49 and line 50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: ab428_allowable_family_medical_expenses_line_49 + max(0, medical_expenses_other_dependants_line_58729)
+
+  - name: ab428_total_claim_amount_line_58800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 52 and line 58800 add line 43 and line 51
+    versions:
+      - effective_from: '2025-01-01'
+        formula: ab428_credit_subtotal_line_43 + ab428_total_medical_expenses_line_58769
+
+  - name: ab428_net_non_refundable_tax_credits_line_58840
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 54 and line 58840 multiply line 52 by the 8% credit rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: ab428_total_claim_amount_line_58800 * ab428_2025_low_credit_rate
+
+  - name: ab428_donations_and_gifts_line_58969
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 57 and line 58969 add low-rate and high-rate donations from federal Schedule 9
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_schedule_9_line_13_amount)
+          * ab428_2025_low_donation_rate
+          + max(0, federal_schedule_9_line_14_amount)
+          * ab428_2025_high_donation_rate
+
+  - name: ab428_total_non_refundable_tax_credits_line_61500
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 58 and line 61500 add Alberta net non-refundable tax credits and Alberta donations and gifts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: ab428_net_non_refundable_tax_credits_line_58840 + ab428_donations_and_gifts_line_58969
+
+  - name: ab428_tax_plus_tax_on_split_income_line_61
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 61 adds Alberta tax on taxable income and Alberta tax on split income line 61510
+    versions:
+      - effective_from: '2025-01-01'
+        formula: ab428_tax_on_taxable_income_line_59 + max(0, alberta_tax_on_split_income_line_61510)
+
+  - name: ab428_dividend_tax_credit_line_61520
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet AB428 2025 line 61520 calculates the Alberta dividend tax credit from line 12000 and line 12010
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, taxable_dividends_other_than_eligible_line_12010)
+          * ab428_2025_other_than_eligible_dividend_credit_rate
+          + max(0, taxable_dividends_line_12000 - max(0, taxable_dividends_other_than_eligible_line_12010))
+          * ab428_2025_eligible_dividend_credit_rate
+
+  - name: ab428_minimum_tax_carryover_line_61540
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 64 and line 61540 multiply federal minimum tax carryover line 40427 by 35%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, minimum_tax_carryover_line_40427) * ab428_2025_minimum_tax_rate
+
+  - name: ab428_credit_and_carryover_subtotal_line_65
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 65 adds lines 62 to 64
+    versions:
+      - effective_from: '2025-01-01'
+        formula: ab428_total_non_refundable_tax_credits_line_61500 + ab428_dividend_tax_credit_line_61520 + ab428_minimum_tax_carryover_line_61540
+
+  - name: ab428_tax_after_credits_and_carryover_line_66
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 66 subtracts line 65 from line 61 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, ab428_tax_plus_tax_on_split_income_line_61 - ab428_credit_and_carryover_subtotal_line_65)
+
+  - name: ab428_additional_tax_for_minimum_tax_purposes_line_67
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 67 multiplies Form T691 Part 7 line 1 minus line 2 by 35%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, t691_part_7_line_1_minus_line_2) * ab428_2025_minimum_tax_rate
+
+  - name: ab428_tax_after_additional_minimum_tax_line_68
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 68 adds line 66 and line 67
+    versions:
+      - effective_from: '2025-01-01'
+        formula: ab428_tax_after_credits_and_carryover_line_66 + ab428_additional_tax_for_minimum_tax_purposes_line_67
+
+  - name: ab428_tax_after_foreign_tax_credit_line_70
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 70 subtracts the provincial foreign tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, ab428_tax_after_additional_minimum_tax_line_68 - max(0, provincial_foreign_tax_credit_line_69))
+
+  - name: ab428_political_contribution_tax_credit_line_72
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet AB428 2025 line 72 calculates the Alberta political contribution tax credit capped at $1,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if alberta_political_contributions_line_60030 > ab428_2025_political_cap_threshold:
+            ab428_2025_political_cap
+          else:
+            min(
+              ab428_2025_political_cap,
+              if alberta_political_contributions_line_60030 <= ab428_2025_political_first_threshold:
+                max(0, alberta_political_contributions_line_60030) * ab428_2025_political_first_rate
+              else:
+                if alberta_political_contributions_line_60030 <= ab428_2025_political_second_threshold:
+                  (alberta_political_contributions_line_60030 - ab428_2025_political_first_threshold)
+                  * ab428_2025_political_second_rate
+                  + ab428_2025_political_second_base_credit
+                else:
+                  (alberta_political_contributions_line_60030 - ab428_2025_political_second_threshold)
+                  * ab428_2025_political_third_rate
+                  + ab428_2025_political_third_base_credit
+            )
+
+  - name: ab428_tax_after_political_contribution_credit_line_73
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 73 subtracts the Alberta political contribution tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, ab428_tax_after_foreign_tax_credit_line_70 - ab428_political_contribution_tax_credit_line_72)
+
+  - name: ab428_supplemental_tax_credit_line_61545
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet AB428 2025 line 61545 calculates the Alberta supplemental tax credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            (max(0, ab428_total_claim_amount_line_58800 - max(0, unused_tuition_and_education_amounts_line_58560))
+            * ab428_2025_low_credit_rate)
+            - ab428_2025_supplemental_credit_base_amount
+          )
+          * ab428_2025_supplemental_credit_rate
+
+  - name: alberta_tax_line_42800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA AB428 2025 line 75 subtracts the Alberta supplemental tax credit and enters Alberta tax on T1 line 42800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, ab428_tax_after_political_contribution_credit_line_73 - ab428_supplemental_tax_credit_line_61545)
