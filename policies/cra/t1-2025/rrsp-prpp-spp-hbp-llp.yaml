@@ -5,7 +5,8 @@ module:
     contributions, HBP and LLP repayments, the RRSP deduction on line
     20800, unused contributions carried forward, HBP/LLP withdrawals, and
     amateur athlete trust income. This module encodes the Schedule 7
-    arithmetic surfaces.
+    arithmetic surfaces and the HBP/LLP minimum repayment shortfall
+    surfaces used for line 12900 income inclusion.
   source_verification:
     corpus_citation_path: canada/policy/cra/t1-2025/rrsp-prpp-spp-hbp-llp
     upstream_source_check:
@@ -18,7 +19,25 @@ module:
         the RRSP deduction.
     source_urls:
       - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s7/5000-s7-25e.pdf
+      - https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/rrsps-related-plans/what-home-buyers-plan/repay-funds-withdrawn-rrsp-s-under-home-buyers-plan.html
+      - https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/rrsps-related-plans/lifelong-learning-plan/repayments-your-rrsp-under.html
 rules:
+  - name: federal_2025_hbp_standard_repayment_years
+    kind: parameter
+    dtype: Count
+    source: CRA HBP guidance says the HBP repayment period is 15 years
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 15
+
+  - name: federal_2025_llp_standard_repayment_years
+    kind: parameter
+    dtype: Count
+    source: CRA LLP guidance gives a 10-year repayment period and examples calculate required repayments as one-tenth
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 10
+
   - name: federal_2025_schedule_7_current_period_contributions_line_24500
     kind: derived
     entity: Person
@@ -54,6 +73,78 @@ rules:
         formula: |-
           max(0, hbp_repayment_designated_line_24600)
           + max(0, llp_repayment_designated_line_24620)
+
+  - name: federal_2025_hbp_minimum_required_repayment
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA HBP guidance says the minimum required repayment for the next year is the HBP balance divided by the number of years remaining in the repayment period
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if max(0, hbp_repayment_years_remaining_for_2025) <= 0:
+            0
+          else:
+            max(0, hbp_balance_at_start_of_2025)
+            / max(0, hbp_repayment_years_remaining_for_2025)
+
+  - name: federal_2025_hbp_repayment_shortfall_income_line_12900
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA HBP guidance says if designated HBP repayments are less than the minimum required repayment, the difference is included as RRSP income on line 12900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_hbp_minimum_required_repayment
+            - max(0, hbp_repayment_designated_line_24600)
+          )
+
+  - name: federal_2025_llp_minimum_required_repayment
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA LLP guidance says the amount required for the next year is the LLP balance divided by the years left in the repayment period
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if max(0, llp_repayment_years_remaining_for_2025) <= 0:
+            0
+          else:
+            max(0, llp_balance_at_start_of_2025)
+            / max(0, llp_repayment_years_remaining_for_2025)
+
+  - name: federal_2025_llp_repayment_shortfall_income_line_12900
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA LLP guidance says if designated LLP repayments are less than the amount required, the difference is included on line 12900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_llp_minimum_required_repayment
+            - max(0, llp_repayment_designated_line_24620)
+          )
+
+  - name: rrsp_income_from_hbp_llp_repayment_shortfalls_line_12900
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA HBP and LLP guidance includes repayment shortfalls as RRSP income on line 12900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_hbp_repayment_shortfall_income_line_12900
+          + federal_2025_llp_repayment_shortfall_income_line_12900
 
   - name: federal_2025_schedule_7_contributions_available_to_deduct_line_10
     kind: derived
