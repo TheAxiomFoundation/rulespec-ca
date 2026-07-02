@@ -1,0 +1,15 @@
+source:
+  id: cra-2025-capital-gains-reserves
+  citation_path: canada/policy/cra/t1-2025/capital-gains-reserves
+  title: CRA Form T2017 2025 Summary of Reserves on Dispositions of Capital Property
+  documents:
+    - title: Form T2017 Summary of Reserves on Dispositions of Capital Property 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t2017/t2017-25e.pdf
+  coverage:
+    encoded:
+      - Part 1 post-1981 reserve roll-forward totals for QFFP, QSBCS, child property, QBT, QCC, and other property
+      - Part 2 pre-November 13, 1981 reserve inclusion and Schedule 3 line 19200 total
+      - Page 3 maximum reserve calculations for most property, extended nine-year property, non-qualifying securities, and pre-1981 property
+    not_encoded:
+      - Per-disposition row storage and paper attachment workflow
+      - Eligibility predicates for QBT, QCC, child transfers, non-qualifying securities, and donee disposition events
