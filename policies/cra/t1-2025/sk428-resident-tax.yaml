@@ -1,0 +1,762 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form SK428 for 2025 calculates ordinary Saskatchewan resident tax:
+    Saskatchewan tax on taxable income, Saskatchewan non-refundable tax
+    credits, farm and small business capital gains tax credit, minimum tax
+    carryover, dividend tax credit, political contribution tax credit,
+    labour-sponsored venture capital tax credit, mineral exploration credit,
+    graduate tuition tax credit, and final Saskatchewan tax entered on T1
+    line 42800.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/sk428-resident-tax
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Form SK428 and Worksheet SK428 are the official 2025 Saskatchewan
+        tax calculation documents for Saskatchewan residents. This module
+        encodes the ordinary resident SK428 arithmetic while leaving detailed
+        dependant worksheet calculations, schedule eligibility, residency
+        predicates, and component line values to dedicated modules or fact
+        inputs.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5008-c/5008-c-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5008-c/5008-c-25e.pdf
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5008-d/5008-d-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5008-d/5008-d-25e.pdf
+rules:
+  - name: sk428_2025_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA SK428 2025 Part A column 1 applies to taxable income of $53,463 or less
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 53463
+
+  - name: sk428_2025_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA SK428 2025 Part A column 2 applies above $53,463 and not more than $152,750
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 152750
+
+  - name: sk428_2025_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA SK428 2025 Part A column 1 line 5 gives the rate as 10.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.105
+
+  - name: sk428_2025_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA SK428 2025 Part A column 2 line 5 gives the rate as 12.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.125
+
+  - name: sk428_2025_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA SK428 2025 Part A column 3 line 5 gives the rate as 14.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.145
+
+  - name: sk428_2025_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA SK428 2025 Part A column 2 line 7 gives base tax of $5,613.62
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5613.62
+
+  - name: sk428_2025_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA SK428 2025 Part A column 3 line 7 gives base tax of $18,024.49
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 18024.49
+
+  - name: sk428_2025_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA SK428 2025 line 9 and line 58040 basic personal amount is $19,491
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 19491
+
+  - name: sk428_2025_age_amount_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA SK428 2025 line 58080 maximum age amount is $5,785
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5785
+
+  - name: sk428_2025_age_amount_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet SK428 2025 line 58080 starts reducing the age amount above $43,066
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 43066
+
+  - name: sk428_2025_age_amount_zero_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet SK428 2025 line 58080 gives zero age amount at $81,633 or more
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 81633
+
+  - name: sk428_2025_age_amount_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet SK428 2025 line 58080 uses a 15% age amount reduction rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.15
+
+  - name: sk428_2025_spouse_or_dependant_base_amount
+    kind: parameter
+    dtype: Money
+    source: CRA SK428 2025 lines 11 and 14 use a base amount of $21,440
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 21440
+
+  - name: sk428_2025_spouse_or_dependant_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA SK428 2025 lines 13 and 16 cap spouse and eligible dependant amounts at $19,491
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 19491
+
+  - name: sk428_2025_dependent_child_amount
+    kind: parameter
+    dtype: Money
+    source: CRA SK428 2025 line 18 multiplies dependent children born in 2007 or later by $7,704
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 7704
+
+  - name: sk428_2025_senior_supplementary_amount
+    kind: parameter
+    dtype: Money
+    source: CRA SK428 2025 line 19 senior supplementary amount is $2,028
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2028
+
+  - name: sk428_2025_first_time_home_buyers_cap
+    kind: parameter
+    dtype: Money
+    source: CRA SK428 2025 line 58357 first-time home buyers' amount maximum is $15,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 15000
+
+  - name: sk428_2025_disability_amount_for_self
+    kind: parameter
+    dtype: Money
+    source: CRA SK428 2025 line 58440 disability amount for self is $13,986 unless the under-18 worksheet applies
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 13986
+
+  - name: sk428_2025_medical_expense_income_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA SK428 2025 line 45 gives the medical expense income rate as 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.03
+
+  - name: sk428_2025_medical_expense_threshold_cap
+    kind: parameter
+    dtype: Money
+    source: CRA SK428 2025 line 47 uses the lesser of $2,681 and line 46
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2681
+
+  - name: sk428_2025_low_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA SK428 2025 line 52 gives the Saskatchewan non-refundable tax credit rate as 10.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.105
+
+  - name: sk428_2025_high_donation_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA SK428 2025 line 55 multiplies Schedule 9 line 14 by 14.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.145
+
+  - name: sk428_2025_minimum_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA SK428 2025 lines 65 and 68 multiply minimum tax amounts by 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.50
+
+  - name: sk428_2025_other_than_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet SK428 2025 line 61520 multiplies line 12010 by 2.519%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.02519
+
+  - name: sk428_2025_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet SK428 2025 line 61520 multiplies line 12000 minus line 12010 by 11%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.11
+
+  - name: sk428_2025_political_first_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet SK428 2025 line 73 first political contribution threshold is $400
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 400
+
+  - name: sk428_2025_political_second_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet SK428 2025 line 73 second political contribution threshold is $750
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 750
+
+  - name: sk428_2025_political_cap_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet SK428 2025 line 73 gives the maximum credit directly when contributions are more than $1,275
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1275
+
+  - name: sk428_2025_political_cap
+    kind: parameter
+    dtype: Money
+    source: CRA SK428 2025 line 73 maximum Saskatchewan political contribution tax credit is $650
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 650
+
+  - name: sk428_2025_political_first_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet SK428 2025 line 73 first political contribution rate is 75%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.75
+
+  - name: sk428_2025_political_second_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet SK428 2025 line 73 second political contribution rate is 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.50
+
+  - name: sk428_2025_political_third_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet SK428 2025 line 73 third political contribution rate is 33.33%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.3333
+
+  - name: sk428_2025_political_second_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet SK428 2025 line 73 second column base credit is $300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 300
+
+  - name: sk428_2025_political_third_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet SK428 2025 line 73 third column base credit is $475
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 475
+
+  - name: sk428_2025_labour_sponsored_venture_capital_credit_cap
+    kind: parameter
+    dtype: Money
+    source: CRA SK428 2025 lines 75 to 77 cap labour-sponsored venture capital tax credit at $875
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 875
+
+  - name: sk428_tax_on_taxable_income_line_8
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 Part A line 8 calculates Saskatchewan tax on taxable income using the selected bracket column
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= sk428_2025_bracket_1_threshold:
+            max(0, taxable_income_line_26000) * sk428_2025_bracket_1_rate
+          else:
+            if taxable_income_line_26000 <= sk428_2025_bracket_2_threshold:
+              (taxable_income_line_26000 - sk428_2025_bracket_1_threshold)
+              * sk428_2025_bracket_2_rate
+              + sk428_2025_bracket_2_base_tax
+            else:
+              (taxable_income_line_26000 - sk428_2025_bracket_2_threshold)
+              * sk428_2025_bracket_3_rate
+              + sk428_2025_bracket_3_base_tax
+
+  - name: sk428_age_amount_line_58080
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet SK428 2025 line 58080 calculates the Saskatchewan age amount for persons born in 1960 or earlier
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if sk428_age_amount_eligible:
+            if net_income_line_23600 <= sk428_2025_age_amount_threshold:
+              sk428_2025_age_amount_maximum
+            else:
+              if net_income_line_23600 >= sk428_2025_age_amount_zero_threshold:
+                0
+              else:
+                max(
+                  0,
+                  sk428_2025_age_amount_maximum
+                  - (net_income_line_23600 - sk428_2025_age_amount_threshold)
+                  * sk428_2025_age_amount_reduction_rate
+                )
+          else:
+            0
+
+  - name: sk428_spouse_or_partner_amount_line_58120
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 13 subtracts spouse or common-law partner net income from the base amount and caps the claim
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            sk428_2025_spouse_or_dependant_maximum,
+            max(0, sk428_2025_spouse_or_dependant_base_amount - max(0, spouse_net_income_line_23600))
+          )
+
+  - name: sk428_eligible_dependant_amount_line_58160
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 16 subtracts eligible dependant net income from the base amount and caps the claim
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            sk428_2025_spouse_or_dependant_maximum,
+            max(0, sk428_2025_spouse_or_dependant_base_amount - max(0, eligible_dependant_net_income_line_23600))
+          )
+
+  - name: sk428_dependent_children_amount_line_58210
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 18 multiplies dependent children born in 2007 or later by $7,704
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, sk428_dependent_children_count_line_58209) * sk428_2025_dependent_child_amount
+
+  - name: sk428_senior_supplementary_amount_line_58220
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 19 gives a $2,028 senior supplementary amount if the taxpayer was born in 1960 or earlier
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if sk428_senior_supplementary_amount_eligible:
+            sk428_2025_senior_supplementary_amount
+          else:
+            0
+
+  - name: sk428_credit_subtotal_line_20
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 20 adds lines 9, 10, 13, and 16 to 19
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          sk428_2025_basic_personal_amount
+          + sk428_age_amount_line_58080
+          + sk428_spouse_or_partner_amount_line_58120
+          + sk428_eligible_dependant_amount_line_58160
+          + max(0, sk428_infirm_dependants_age_18_or_older_line_58200)
+          + sk428_dependent_children_amount_line_58210
+          + sk428_senior_supplementary_amount_line_58220
+
+  - name: sk428_first_time_home_buyers_amount_line_58357
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 58357 caps the first-time home buyers' amount at $15,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(sk428_2025_first_time_home_buyers_cap, max(0, first_time_home_buyers_amount_claim_line_58357))
+
+  - name: sk428_credit_subtotal_line_31
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 31 adds lines 22 to 30
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, cpp_qpp_contributions_employment_line_30800)
+          + max(0, cpp_qpp_contributions_self_employment_line_31000)
+          + max(0, employment_insurance_premiums_line_31200)
+          + max(0, self_employment_ei_premiums_line_31217)
+          + max(0, volunteer_firefighters_amount_line_58315)
+          + max(0, search_and_rescue_volunteers_amount_line_58316)
+          + max(0, volunteer_emergency_medical_first_responders_amount_line_58317)
+          + max(0, home_renovation_expenses_line_58340)
+          + sk428_first_time_home_buyers_amount_line_58357
+
+  - name: sk428_credit_subtotal_line_32
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 32 adds line 21 and line 31
+    versions:
+      - effective_from: '2025-01-01'
+        formula: sk428_credit_subtotal_line_20 + sk428_credit_subtotal_line_31
+
+  - name: sk428_credit_subtotal_line_35
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 35 adds lines 32 to 34
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          sk428_credit_subtotal_line_32
+          + max(0, pension_income_amount_line_58360)
+          + max(0, caregiver_amount_line_58400)
+
+  - name: sk428_credit_subtotal_line_38
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 38 adds lines 35 to 37
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          sk428_credit_subtotal_line_35
+          + max(0, disability_amount_for_self_line_58440)
+          + max(0, disability_amount_transferred_from_dependant_line_58480)
+
+  - name: sk428_credit_subtotal_line_42
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 42 adds lines 38 to 41
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          sk428_credit_subtotal_line_38
+          + max(0, student_loan_interest_line_58520)
+          + max(0, unused_tuition_and_education_amounts_line_58560)
+          + max(0, spouse_or_partner_transfers_line_58640)
+
+  - name: sk428_medical_expense_income_base_line_46
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 46 multiplies net income line 23600 by 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, net_income_line_23600) * sk428_2025_medical_expense_income_rate
+
+  - name: sk428_medical_expense_threshold_line_47
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 47 uses the lesser of $2,681 and line 46
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(sk428_2025_medical_expense_threshold_cap, sk428_medical_expense_income_base_line_46)
+
+  - name: sk428_allowable_family_medical_expenses_line_48
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 48 subtracts line 47 from line 43 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, max(0, medical_expenses_line_58689) - sk428_medical_expense_threshold_line_47)
+
+  - name: sk428_total_medical_expenses_line_58769
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 50 and line 58769 add line 48 and line 49
+    versions:
+      - effective_from: '2025-01-01'
+        formula: sk428_allowable_family_medical_expenses_line_48 + max(0, medical_expenses_other_dependants_line_58729)
+
+  - name: sk428_total_claim_amount_line_58800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 51 and line 58800 add line 42 and line 50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: sk428_credit_subtotal_line_42 + sk428_total_medical_expenses_line_58769
+
+  - name: sk428_net_non_refundable_tax_credits_line_58840
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 53 and line 58840 multiply line 51 by the 10.5% credit rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: sk428_total_claim_amount_line_58800 * sk428_2025_low_credit_rate
+
+  - name: sk428_donations_and_gifts_line_58969
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 56 and line 58969 add low-rate and high-rate donations from federal Schedule 9
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_schedule_9_line_13_amount)
+          * sk428_2025_low_credit_rate
+          + max(0, federal_schedule_9_line_14_amount)
+          * sk428_2025_high_donation_rate
+
+  - name: sk428_total_non_refundable_tax_credits_line_61500
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 57 and line 61500 add Saskatchewan net non-refundable tax credits and Saskatchewan donations and gifts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: sk428_net_non_refundable_tax_credits_line_58840 + sk428_donations_and_gifts_line_58969
+
+  - name: sk428_tax_after_farm_small_business_credit_line_60
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 60 subtracts Saskatchewan farm and small business capital gains tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, sk428_tax_on_taxable_income_line_8 - max(0, saskatchewan_farm_small_business_capital_gains_tax_credit_line_61499))
+
+  - name: sk428_tax_plus_tax_on_split_income_line_62
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 62 adds line 60 and Saskatchewan tax on split income line 61510
+    versions:
+      - effective_from: '2025-01-01'
+        formula: sk428_tax_after_farm_small_business_credit_line_60 + max(0, saskatchewan_tax_on_split_income_line_61510)
+
+  - name: sk428_dividend_tax_credit_line_61520
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet SK428 2025 line 61520 calculates the Saskatchewan dividend tax credit from line 12000 and line 12010
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, taxable_dividends_other_than_eligible_line_12010)
+          * sk428_2025_other_than_eligible_dividend_credit_rate
+          + max(0, taxable_dividends_line_12000 - max(0, taxable_dividends_other_than_eligible_line_12010))
+          * sk428_2025_eligible_dividend_credit_rate
+
+  - name: sk428_minimum_tax_carryover_line_61540
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 65 and line 61540 multiply federal minimum tax carryover line 40427 by 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, minimum_tax_carryover_line_40427) * sk428_2025_minimum_tax_rate
+
+  - name: sk428_credit_and_carryover_subtotal_line_66
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 66 adds lines 63 to 65
+    versions:
+      - effective_from: '2025-01-01'
+        formula: sk428_total_non_refundable_tax_credits_line_61500 + sk428_dividend_tax_credit_line_61520 + sk428_minimum_tax_carryover_line_61540
+
+  - name: sk428_tax_after_credits_and_carryover_line_67
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 67 subtracts line 66 from line 62 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, sk428_tax_plus_tax_on_split_income_line_62 - sk428_credit_and_carryover_subtotal_line_66)
+
+  - name: sk428_additional_tax_for_minimum_tax_purposes_line_68
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 68 multiplies Form T691 Part 7 line 1 minus line 2 by 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, t691_part_7_line_1_minus_line_2) * sk428_2025_minimum_tax_rate
+
+  - name: sk428_tax_after_additional_minimum_tax_line_69
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 69 adds line 67 and line 68
+    versions:
+      - effective_from: '2025-01-01'
+        formula: sk428_tax_after_credits_and_carryover_line_67 + sk428_additional_tax_for_minimum_tax_purposes_line_68
+
+  - name: sk428_tax_after_foreign_tax_credit_line_71
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 71 subtracts the provincial foreign tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, sk428_tax_after_additional_minimum_tax_line_69 - max(0, provincial_foreign_tax_credit_line_70))
+
+  - name: sk428_political_contribution_tax_credit_line_73
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet SK428 2025 line 73 calculates the Saskatchewan political contribution tax credit capped at $650
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if saskatchewan_political_contributions_line_63554 > sk428_2025_political_cap_threshold:
+            sk428_2025_political_cap
+          else:
+            min(
+              sk428_2025_political_cap,
+              if saskatchewan_political_contributions_line_63554 <= sk428_2025_political_first_threshold:
+                max(0, saskatchewan_political_contributions_line_63554) * sk428_2025_political_first_rate
+              else:
+                if saskatchewan_political_contributions_line_63554 <= sk428_2025_political_second_threshold:
+                  (saskatchewan_political_contributions_line_63554 - sk428_2025_political_first_threshold)
+                  * sk428_2025_political_second_rate
+                  + sk428_2025_political_second_base_credit
+                else:
+                  (saskatchewan_political_contributions_line_63554 - sk428_2025_political_second_threshold)
+                  * sk428_2025_political_third_rate
+                  + sk428_2025_political_third_base_credit
+            )
+
+  - name: sk428_tax_after_political_contribution_credit_line_74
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 74 subtracts the Saskatchewan political contribution tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, sk428_tax_after_foreign_tax_credit_line_71 - sk428_political_contribution_tax_credit_line_73)
+
+  - name: sk428_labour_sponsored_venture_capital_tax_credit_line_63557
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 77 adds line 75 and line 76 and caps the labour-sponsored venture capital tax credit at $875
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            sk428_2025_labour_sponsored_venture_capital_credit_cap,
+            min(sk428_2025_labour_sponsored_venture_capital_credit_cap, max(0, sk_labour_sponsored_vcc_registered_saskatchewan_line_75))
+            + min(sk428_2025_labour_sponsored_venture_capital_credit_cap, max(0, sk_labour_sponsored_vcc_registered_federal_line_76))
+          )
+
+  - name: sk428_tax_after_labour_sponsored_credit_line_78
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 78 subtracts the labour-sponsored venture capital tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, sk428_tax_after_political_contribution_credit_line_74 - sk428_labour_sponsored_venture_capital_tax_credit_line_63557)
+
+  - name: sk428_tax_after_mineral_exploration_credit_line_80
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 80 subtracts the Saskatchewan mineral exploration tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, sk428_tax_after_labour_sponsored_credit_line_78 - max(0, saskatchewan_mineral_exploration_tax_credit_line_79))
+
+  - name: saskatchewan_tax_line_42800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA SK428 2025 line 82 subtracts the Saskatchewan graduate tuition tax credit and enters Saskatchewan tax on T1 line 42800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, sk428_tax_after_mineral_exploration_credit_line_80 - max(0, saskatchewan_graduate_tuition_tax_credit_line_63640))
