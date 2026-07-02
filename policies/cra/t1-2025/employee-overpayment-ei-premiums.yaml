@@ -4,7 +4,8 @@ module:
     CRA Form T2204 for 2025 calculates employee overpayment of
     Employment Insurance premiums and the employment EI premium credit.
     This module encodes the line 1 to line 16 arithmetic, including
-    Quebec and non-Quebec rate branches.
+    Quebec and non-Quebec rate branches, T4 earnings extraction, and
+    the box 55 EI-exempt employment exception.
   source_verification:
     corpus_citation_path: canada/policy/cra/t1-2025/employee-overpayment-ei-premiums
     upstream_source_check:
@@ -90,10 +91,30 @@ rules:
       - effective_from: '2025-01-01'
         formula: |-
           if not t2204_has_self_employment_ei_special_benefits_agreement
-            and max(0, t4_ei_insurable_earnings_box_24_or_14) < federal_2025_t2204_basic_exemption:
+            and federal_2025_t2204_t4_ei_insurable_earnings_box_24_or_14 < federal_2025_t2204_basic_exemption:
             0
           else:
-            max(0, t4_ei_insurable_earnings_box_24_or_14)
+            federal_2025_t2204_t4_ei_insurable_earnings_box_24_or_14
+
+  - name: federal_2025_t2204_t4_ei_insurable_earnings_box_24_or_14
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2204 2025 line 1 uses T4 box 24 or, if box 24 is blank, box 14
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t4_box24_ei_insurable_earnings_is_blank:
+            max(
+              max(0, t4_ei_insurable_earnings_box_24_or_14),
+              max(0, t4_employment_income_box_14)
+            )
+          else:
+            max(
+              max(0, t4_ei_insurable_earnings_box_24_or_14),
+              max(0, t4_ei_insurable_earnings_box_24)
+            )
 
   - name: federal_2025_t2204_self_employment_ei_earnings_line_2
     kind: derived
@@ -134,7 +155,23 @@ rules:
             max(0, t4_ei_premiums_box_18)
           else:
             max(0, t4_ei_premiums_box_18)
-            + max(0, t4_ppip_premiums_box_55)
+            + federal_2025_t2204_claimable_t4_box_55_premiums
+
+  - name: federal_2025_t2204_claimable_t4_box_55_premiums
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2204 2025 note 2 says not to claim T4 box 55 on line 4 when there is EI-exempt employment income in box 28, unless the taxpayer has self-employment earnings and an EI special benefits agreement
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t4_has_ei_exempt_employment_income_box_28
+            and max(0, t4_ppip_premiums_box_55) > 0
+            and not t2204_has_self_employment_ei_special_benefits_agreement:
+            0
+          else:
+            max(0, t4_ppip_premiums_box_55)
 
   - name: federal_2025_t2204_schedule_13_premiums_payable_line_5
     kind: derived

@@ -12,8 +12,8 @@ source:
       - Quebec and non-Quebec EI premium rates and maximums
       - Line 45000 EI overpayment threshold
       - Line 31200 employment EI premiums credit
+      - T4 box 24-or-box 14 insurable earnings extraction and box 55 EI-exempt employment exception
     not_encoded:
-      - T4 slip extraction and box 55 EI-exempt employment exception
       - Service Canada EI special-benefits agreement validity
       - Schedule 13 calculation itself, which is encoded in a separate module
       - CRA administrative adjustment note for line 2 and low line 3 amounts
