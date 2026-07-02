@@ -1,0 +1,150 @@
+- name: full_year_mixed_employment_and_self_employment_cpp
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.cpp_contribution_months_line_a: 12
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.cpp_pensionable_earnings_from_t4_slips_line_50339: 50000
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.actual_base_and_first_cpp_contributions_from_t4_box_16_line_50340: 2766.75
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.actual_second_additional_cpp_contributions_from_t4_box_16a_line_50341: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.self_employment_earnings_line_12200_plus_line_27_for_cpp: 30000
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.employment_earnings_not_on_t4_electing_cpp_line_50373: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.employment_earnings_on_t4_electing_cpp_line_50399: 0
+  output:
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_months_line_a: 12
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_maximum_pensionable_earnings_line_b: 71300
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_second_additional_amount_line_c: 9900
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_additional_maximum_pensionable_earnings_line_d: 81200
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_basic_exemption_line_e: 3500
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_total_cpp_pensionable_earnings_line_1: 50000
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_line_2: 50000
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_second_additional_earnings_line_4: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_line_5: 50000
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_base_first_earnings_line_7: 46500
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_actual_base_first_contributions_line_8: 2766.75
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_actual_base_contributions_line_9: 2301.75062775
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_actual_first_additional_contributions_line_10: 464.99937225
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_required_base_contributions_line_11: 2301.75
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_required_first_additional_contributions_line_12: 465
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_required_base_first_contributions_line_13: 2766.75
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_base_difference_line_16: 0.00062775
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_first_additional_difference_line_19: -0.00062775
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_base_first_difference_line_20: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_actual_second_additional_contributions_line_21: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_required_second_additional_contributions_line_22: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_second_additional_difference_line_23: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_total_difference_line_24: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3b_base_line_36: 2301.75
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3b_enhanced_line_48: 465
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#cpp_employment_base_contributions_line_30800: 2301.75
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#cpp_employment_enhanced_contributions_deduction_line_22215: 465
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#cpp_employment_overpayment_line_44800: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part4_self_employment_earnings_line_1: 30000
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part4_cpp_pensionable_earnings_line_3: 30000
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part4_line_4: 30000
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part4_second_additional_earnings_line_6: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part4_base_first_earnings_line_9: 26500
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part4_required_base_contributions_line_10: 2623.5
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part4_required_first_additional_line_11: 530
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part4_required_second_additional_line_12: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#cpp_self_employment_contributions_payable_line_42100: 3153.5
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#cpp_self_employment_base_credit_line_31000: 1311.75
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#cpp_self_employment_deduction_line_22200: 1841.75
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part5_earnings_line_4: 30000
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part5_adjusted_base_first_actual_line_10: 2766.75
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part5_adjusted_second_actual_line_16: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part5_base_first_capacity_line_21: 21300.00744
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part5_base_first_earnings_line_30: 21300.00744
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part5_second_additional_earnings_line_42: 8699.99256
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part5_required_base_line_43: 2108.70073656
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part5_required_first_line_44: 426.0001488
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part5_required_second_line_45: 695.9994048
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part5_contributions_payable_before_overpayment_line_49: 3230.70029016
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#cpp_mixed_contributions_payable_line_42100: 3230.70029016
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#cpp_mixed_overpayment_line_44800: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#cpp_mixed_employment_base_contributions_line_30800: 2301.75
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#cpp_mixed_employment_enhanced_deduction_line_22215: 465
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#cpp_mixed_self_employment_base_credit_line_31000: 1054.35036828
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part5_line_72: 1267.35044268
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part5_line_74: 1267.35044268
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part5_line_75_amount_a: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part5_line_75_base_share: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#cpp_mixed_self_employment_deduction_line_22200: 2176.34992188
+
+- name: zero_cpp_months_zeroes_part_2_proration_amounts
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.cpp_contribution_months_line_a: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.cpp_pensionable_earnings_from_t4_slips_line_50339: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.actual_base_and_first_cpp_contributions_from_t4_box_16_line_50340: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.actual_second_additional_cpp_contributions_from_t4_box_16a_line_50341: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.self_employment_earnings_line_12200_plus_line_27_for_cpp: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.employment_earnings_not_on_t4_electing_cpp_line_50373: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.employment_earnings_on_t4_electing_cpp_line_50399: 0
+  output:
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_months_line_a: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_maximum_pensionable_earnings_line_b: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_second_additional_amount_line_c: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_additional_maximum_pensionable_earnings_line_d: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_basic_exemption_line_e: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part5_second_additional_earnings_line_42: 0
+
+- name: employment_only_positive_cpp_overpayment
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.cpp_contribution_months_line_a: 12
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.cpp_pensionable_earnings_from_t4_slips_line_50339: 81200
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.actual_base_and_first_cpp_contributions_from_t4_box_16_line_50340: 5000
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.actual_second_additional_cpp_contributions_from_t4_box_16a_line_50341: 500
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.self_employment_earnings_line_12200_plus_line_27_for_cpp: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.employment_earnings_not_on_t4_electing_cpp_line_50373: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.employment_earnings_on_t4_electing_cpp_line_50399: 0
+  output:
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_line_2: 81200
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_second_additional_earnings_line_4: 9900
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_base_first_earnings_line_7: 67800
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_actual_base_contributions_line_9: 4159.665
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_actual_first_additional_contributions_line_10: 840.335
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_required_base_contributions_line_11: 3356.1
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_required_first_additional_contributions_line_12: 678
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_required_second_additional_contributions_line_22: 396
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part3_total_difference_line_24: 1069.9
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#cpp_employment_base_contributions_line_30800: 3356.1
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#cpp_employment_enhanced_contributions_deduction_line_22215: 1074
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#cpp_employment_overpayment_line_44800: 1069.9
+
+- name: six_month_self_employment_uses_prorated_limits
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.cpp_contribution_months_line_a: 6
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.cpp_pensionable_earnings_from_t4_slips_line_50339: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.actual_base_and_first_cpp_contributions_from_t4_box_16_line_50340: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.actual_second_additional_cpp_contributions_from_t4_box_16a_line_50341: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.self_employment_earnings_line_12200_plus_line_27_for_cpp: 90000
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.employment_earnings_not_on_t4_electing_cpp_line_50373: 0
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#input.employment_earnings_on_t4_electing_cpp_line_50399: 0
+  output:
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_months_line_a: 6
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_maximum_pensionable_earnings_line_b: 35650
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_second_additional_amount_line_c: 4950
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_additional_maximum_pensionable_earnings_line_d: 40600
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_basic_exemption_line_e: 1750
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part4_line_4: 40600
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part4_second_additional_earnings_line_6: 4950
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part4_base_first_earnings_line_9: 33900
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part4_required_base_contributions_line_10: 3356.1
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part4_required_first_additional_line_11: 678
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#federal_2025_schedule_8_part4_required_second_additional_line_12: 396
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#cpp_self_employment_contributions_payable_line_42100: 4430.1
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#cpp_self_employment_base_credit_line_31000: 1678.05
+    ca:policies/cra/t1-2025/cpp-contributions-and-overpayment#cpp_self_employment_deduction_line_22200: 2752.05
