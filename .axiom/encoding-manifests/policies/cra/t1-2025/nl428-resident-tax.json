@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/cra/t1-2025/nl428-resident-tax.test.yaml",
+      "sha256": "fea0987af88a69f37739001987e565cf2fd35b532c1ab833c824d97858690e91"
+    },
+    {
+      "path": "policies/cra/t1-2025/nl428-resident-tax.yaml",
+      "sha256": "5fc1b03ac44106a2b717b64046b1bed299c6fae9994e047691e3ca3e56d9bd1a"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "cdcbc9fccc856569d16e40163005e99078824c3f",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1088",
+    "version_commit": "cdcbc9fccc856569d16e40163005e99078824c3f"
+  },
+  "axiom_encode_version": "0.2.1088",
+  "backend": "manual",
+  "citation": "ca:policies/cra/t1-2025/nl428-resident-tax",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-03T13:23:08.818147+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/nl428-resident-tax.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
+  "generated_output_sha256": "5fc1b03ac44106a2b717b64046b1bed299c6fae9994e047691e3ca3e56d9bd1a",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "463d7e25e2b86e96a24b20fbb95dffe5a760639f76f9b79bd6cd62b5cf0f0c6d"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

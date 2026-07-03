@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/cra/benefits-2026/federal-family-and-climate-benefits.test.yaml",
+      "sha256": "00e92cfd7fe47f176dc1e58d55348c89d0b97cef67f58557812342df07bb58b9"
+    },
+    {
+      "path": "policies/cra/benefits-2026/federal-family-and-climate-benefits.yaml",
+      "sha256": "46836f1e2d3aeab93216d587154d6ffd5404664642d02b6083c6afa256304ae1"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "cdcbc9fccc856569d16e40163005e99078824c3f",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1088",
+    "version_commit": "cdcbc9fccc856569d16e40163005e99078824c3f"
+  },
+  "axiom_encode_version": "0.2.1088",
+  "backend": "manual",
+  "citation": "ca:policies/cra/benefits-2026/federal-family-and-climate-benefits",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-03T13:23:08.788255+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/benefits-2026/federal-family-and-climate-benefits.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
+  "generated_output_sha256": "46836f1e2d3aeab93216d587154d6ffd5404664642d02b6083c6afa256304ae1",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "4ef5d280d98cf89821bcb964dee189df42a7aee55f5dc232d6ccd29c9ca9d3b3"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

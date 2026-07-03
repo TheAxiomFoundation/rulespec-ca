@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/cra/t1-2025/northern-residents-deductions.test.yaml",
+      "sha256": "e58d800a1e7fe5629ba56d1f8fa0a06cf2f09f92340d7944f7bea28d2241356d"
+    },
+    {
+      "path": "policies/cra/t1-2025/northern-residents-deductions.yaml",
+      "sha256": "849366af844274d0824347f278788755ef50f39feb25c78975d447207ddfe9d1"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "cdcbc9fccc856569d16e40163005e99078824c3f",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1088",
+    "version_commit": "cdcbc9fccc856569d16e40163005e99078824c3f"
+  },
+  "axiom_encode_version": "0.2.1088",
+  "backend": "manual",
+  "citation": "ca:policies/cra/t1-2025/northern-residents-deductions",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-03T13:23:08.819877+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/northern-residents-deductions.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
+  "generated_output_sha256": "849366af844274d0824347f278788755ef50f39feb25c78975d447207ddfe9d1",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "9f15ae23910ba3e1c80d885adc11f9f3159f9c554d554eacc65328baf9e1e1bb"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

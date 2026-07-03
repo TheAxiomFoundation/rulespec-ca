@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/cra/t1-2025/federal-spouse-transfer-amounts.test.yaml",
+      "sha256": "440ec8a29ea689d13f5f68dd6a586d89c27fd56ea56525fd3f461634fa3ddb67"
+    },
+    {
+      "path": "policies/cra/t1-2025/federal-spouse-transfer-amounts.yaml",
+      "sha256": "426b1c5a79261710c38b896e43a06e8ecbc2e241997f3d99c862834df1cd528e"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "cdcbc9fccc856569d16e40163005e99078824c3f",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1088",
+    "version_commit": "cdcbc9fccc856569d16e40163005e99078824c3f"
+  },
+  "axiom_encode_version": "0.2.1088",
+  "backend": "manual",
+  "citation": "ca:policies/cra/t1-2025/federal-spouse-transfer-amounts",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-03T13:23:08.809692+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/federal-spouse-transfer-amounts.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
+  "generated_output_sha256": "426b1c5a79261710c38b896e43a06e8ecbc2e241997f3d99c862834df1cd528e",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "e3463f6255c085277a9cef4e44b8eb4b52de8c123c577914cd2f1cef12c73a87"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

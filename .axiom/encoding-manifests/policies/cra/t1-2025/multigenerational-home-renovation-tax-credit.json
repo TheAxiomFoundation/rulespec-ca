@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/cra/t1-2025/multigenerational-home-renovation-tax-credit.test.yaml",
+      "sha256": "0541621cd4709adce3171bd1932c2ffe0da086772f70e49310d494c03b037d82"
+    },
+    {
+      "path": "policies/cra/t1-2025/multigenerational-home-renovation-tax-credit.yaml",
+      "sha256": "953811bcef50badaa8c901b0f9edae17dc5f2c8ed45bf68121958f059ca2f5a1"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "cdcbc9fccc856569d16e40163005e99078824c3f",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1088",
+    "version_commit": "cdcbc9fccc856569d16e40163005e99078824c3f"
+  },
+  "axiom_encode_version": "0.2.1088",
+  "backend": "manual",
+  "citation": "ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-03T13:23:08.816968+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/multigenerational-home-renovation-tax-credit.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
+  "generated_output_sha256": "953811bcef50badaa8c901b0f9edae17dc5f2c8ed45bf68121958f059ca2f5a1",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "280340536124b6f6323fce8d666034a41d86a8071cf9da31fe1969e929b488b7"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

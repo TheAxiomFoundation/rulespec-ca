@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/cra/t1-2025/fhsa-contributions-transfers-and-activities.test.yaml",
+      "sha256": "016e5fb6ffb4ce1740b158cab64e9a6427cfffb1ed2bd1c3ae221ddf0ee5d3bb"
+    },
+    {
+      "path": "policies/cra/t1-2025/fhsa-contributions-transfers-and-activities.yaml",
+      "sha256": "4bdf3562bf23fdee1c2d1f18319c1f59aa6a08c78ad6af2e1c0a73e4f75310b6"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "cdcbc9fccc856569d16e40163005e99078824c3f",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1088",
+    "version_commit": "cdcbc9fccc856569d16e40163005e99078824c3f"
+  },
+  "axiom_encode_version": "0.2.1088",
+  "backend": "manual",
+  "citation": "ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-03T13:23:08.812727+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/fhsa-contributions-transfers-and-activities.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
+  "generated_output_sha256": "4bdf3562bf23fdee1c2d1f18319c1f59aa6a08c78ad6af2e1c0a73e4f75310b6",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "c3d46efd54eb34c9ebf9d4a329e67e1b619eba03ec29604326d7af1b0f6080b3"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

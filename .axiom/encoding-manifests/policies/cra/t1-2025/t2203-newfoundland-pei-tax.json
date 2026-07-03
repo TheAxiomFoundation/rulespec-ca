@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/cra/t1-2025/t2203-newfoundland-pei-tax.test.yaml",
+      "sha256": "706f618073915df1388372dc55cb14d30d9b8499331afab37116cc3d8e4a5727"
+    },
+    {
+      "path": "policies/cra/t1-2025/t2203-newfoundland-pei-tax.yaml",
+      "sha256": "c4a7cdc694f983ae5e3b1f188b0c7c3c2a7a9cb3c5909f461bbf827a5721935e"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "cdcbc9fccc856569d16e40163005e99078824c3f",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1088",
+    "version_commit": "cdcbc9fccc856569d16e40163005e99078824c3f"
+  },
+  "axiom_encode_version": "0.2.1088",
+  "backend": "manual",
+  "citation": "ca:policies/cra/t1-2025/t2203-newfoundland-pei-tax",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-03T13:23:08.826897+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/t2203-newfoundland-pei-tax.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
+  "generated_output_sha256": "c4a7cdc694f983ae5e3b1f188b0c7c3c2a7a9cb3c5909f461bbf827a5721935e",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "e0694d1cbde925e957953d8d79b121ba548eba43c18ca8947c9dabe634da2d2d"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

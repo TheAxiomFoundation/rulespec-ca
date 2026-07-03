@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/cra/t1-2025/t2203-ontario-manitoba-tax.test.yaml",
+      "sha256": "1daf8032fef94fcd29e785cd925ab34bea3051ff1c9cf944f24a1a83464322a2"
+    },
+    {
+      "path": "policies/cra/t1-2025/t2203-ontario-manitoba-tax.yaml",
+      "sha256": "44fdcd6ff5385abc63ed8cb8358ef34bfc3d97f52b7495e98df71a2cfc92018e"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "cdcbc9fccc856569d16e40163005e99078824c3f",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1088",
+    "version_commit": "cdcbc9fccc856569d16e40163005e99078824c3f"
+  },
+  "axiom_encode_version": "0.2.1088",
+  "backend": "manual",
+  "citation": "ca:policies/cra/t1-2025/t2203-ontario-manitoba-tax",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-03T13:23:08.829530+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/t2203-ontario-manitoba-tax.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
+  "generated_output_sha256": "44fdcd6ff5385abc63ed8cb8358ef34bfc3d97f52b7495e98df71a2cfc92018e",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "4c0c1f3ffb10520461960ba50545e0fac71291574af8db5b713dd3d089b101a1"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}
