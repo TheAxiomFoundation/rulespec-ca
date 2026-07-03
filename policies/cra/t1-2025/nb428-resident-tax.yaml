@@ -1,0 +1,892 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form NB428 for 2025 calculates ordinary New Brunswick resident tax:
+    tax on taxable income, non-refundable tax credits, low-income tax
+    reduction, political contribution tax credit, labour-sponsored venture
+    capital fund tax credit, small business investor tax credit, and final tax
+    entered on T1 line 42800.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/nb428-resident-tax
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Form NB428 and Worksheet NB428 are the official 2025 New Brunswick
+        tax calculation documents for New Brunswick residents. This module
+        encodes ordinary resident NB428 arithmetic while leaving detailed
+        dependant worksheet calculations, schedule eligibility, residency
+        predicates, and component line values to dedicated modules or fact
+        inputs.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5004-c/5004-c-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5004-c/5004-c-25e.pdf
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5004-d/5004-d-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5004-d/5004-d-25e.pdf
+rules:
+  - name: nb428_2025_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 Part A column 1 applies to taxable income of $51,306 or less
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 51306
+
+  - name: nb428_2025_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 Part A column 2 applies above $51,306 and not more than $102,614
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 102614
+
+  - name: nb428_2025_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 Part A column 3 applies above $102,614 and not more than $190,060
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 190060
+
+  - name: nb428_2025_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NB428 2025 Part A column 1 line 5 gives the rate as 9.4%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.094
+
+  - name: nb428_2025_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NB428 2025 Part A column 2 line 5 gives the rate as 14%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.14
+
+  - name: nb428_2025_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NB428 2025 Part A column 3 line 5 gives the rate as 16%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.16
+
+  - name: nb428_2025_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NB428 2025 Part A column 4 line 5 gives the rate as 19.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.195
+
+  - name: nb428_2025_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 Part A column 2 line 7 gives base tax of $4,822.76
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 4822.76
+
+  - name: nb428_2025_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 Part A column 3 line 7 gives base tax of $12,005.88
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 12005.88
+
+  - name: nb428_2025_bracket_4_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 Part A column 4 line 7 gives base tax of $25,997.24
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 25997.24
+
+  - name: nb428_2025_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 line 9 and line 58040 basic personal amount is $13,396
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 13396
+
+  - name: nb428_2025_age_amount_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet NB428 2025 line 58080 maximum age amount is $6,037
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 6037
+
+  - name: nb428_2025_age_amount_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet NB428 2025 line 58080 starts reducing the age amount above $44,945
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 44945
+
+  - name: nb428_2025_age_amount_zero_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet NB428 2025 line 58080 gives zero age amount at $85,192 or more
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 85192
+
+  - name: nb428_2025_age_amount_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet NB428 2025 line 58080 uses a 15% age amount reduction rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.15
+
+  - name: nb428_2025_spouse_or_dependant_base_amount
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 lines 11 and 14 use a base amount of $11,550
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 11550
+
+  - name: nb428_2025_spouse_or_dependant_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 lines 13 and 16 cap spouse and eligible dependant amounts at $10,499
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 10499
+
+  - name: nb428_2025_pension_income_amount_cap
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 line 58360 pension income amount maximum is $1,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1000
+
+  - name: nb428_2025_disability_amount_for_self
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 line 58440 disability amount for self is $10,010 unless the under-18 worksheet applies
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 10010
+
+  - name: nb428_2025_medical_expense_income_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NB428 2025 line 41 gives the medical expense income rate as 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.03
+
+  - name: nb428_2025_medical_expense_threshold_cap
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 line 43 uses the lesser of $2,798 and line 42
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2798
+
+  - name: nb428_2025_low_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NB428 2025 line 48 gives the New Brunswick non-refundable tax credit rate as 9.4%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.094
+
+  - name: nb428_2025_high_donation_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NB428 2025 line 51 multiplies Schedule 9 line 14 by 17.95%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.1795
+
+  - name: nb428_2025_minimum_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NB428 2025 lines 61 and 64 multiply minimum tax amounts by 57%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.57
+
+  - name: nb428_2025_other_than_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet NB428 2025 line 61520 multiplies line 12010 by 2.75%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0275
+
+  - name: nb428_2025_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet NB428 2025 line 61520 multiplies line 12000 minus line 12010 by 14%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.14
+
+  - name: nb428_2025_low_income_basic_reduction
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 line 61570 basic low-income reduction is $802
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 802
+
+  - name: nb428_2025_low_income_spouse_or_dependant_reduction
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 lines 61580 and 61590 reductions are $802
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 802
+
+  - name: nb428_2025_low_income_reduction_cap
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 line 80 caps the basic, spouse, and eligible dependant reductions at $1,604
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1604
+
+  - name: nb428_2025_low_income_reduction_base_income
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 line 82 low-income tax reduction base amount is $21,920
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 21920
+
+  - name: nb428_2025_low_income_single_net_income_limit
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 says a single taxpayer is eligible if net income is less than $48,653
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 48653
+
+  - name: nb428_2025_low_income_family_income_limit
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 says a taxpayer with a spouse or eligible dependant is eligible if adjusted family income is less than $75,387
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 75387
+
+  - name: nb428_2025_low_income_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NB428 2025 line 84 low-income tax reduction rate is 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.03
+
+  - name: nb428_2025_political_first_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet NB428 2025 line 92 first political contribution threshold is $200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 200
+
+  - name: nb428_2025_political_second_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet NB428 2025 line 92 second political contribution threshold is $550
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 550
+
+  - name: nb428_2025_political_cap_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet NB428 2025 line 92 gives the maximum credit if total political contributions are more than $1,075
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1075
+
+  - name: nb428_2025_political_cap
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 line 92 maximum New Brunswick political contribution tax credit is $500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 500
+
+  - name: nb428_2025_political_first_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet NB428 2025 line 92 first political contribution rate is 75%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.75
+
+  - name: nb428_2025_political_second_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet NB428 2025 line 92 second political contribution rate is 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.50
+
+  - name: nb428_2025_political_third_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet NB428 2025 line 92 third political contribution rate is 33.33%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.3333
+
+  - name: nb428_2025_political_second_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet NB428 2025 line 92 column 2 base credit is $150
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 150
+
+  - name: nb428_2025_political_third_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet NB428 2025 line 92 column 3 base credit is $325
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 325
+
+  - name: nb428_2025_labour_sponsored_venture_capital_cap
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 line 61670 caps the labour-sponsored venture capital fund tax credit at $2,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2000
+
+  - name: nb428_2025_small_business_investor_tax_credit_cap
+    kind: parameter
+    dtype: Money
+    source: CRA NB428 2025 line 96 caps the small business investor tax credit at $125,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 125000
+
+  - name: nb428_tax_on_taxable_income_line_54
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 Part A line 54 calculates New Brunswick tax on taxable income using the selected bracket column
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= nb428_2025_bracket_1_threshold:
+            max(0, taxable_income_line_26000) * nb428_2025_bracket_1_rate
+          else:
+            if taxable_income_line_26000 <= nb428_2025_bracket_2_threshold:
+              (taxable_income_line_26000 - nb428_2025_bracket_1_threshold) * nb428_2025_bracket_2_rate + nb428_2025_bracket_2_base_tax
+            else:
+              if taxable_income_line_26000 <= nb428_2025_bracket_3_threshold:
+                (taxable_income_line_26000 - nb428_2025_bracket_2_threshold) * nb428_2025_bracket_3_rate + nb428_2025_bracket_3_base_tax
+              else:
+                (taxable_income_line_26000 - nb428_2025_bracket_3_threshold) * nb428_2025_bracket_4_rate + nb428_2025_bracket_4_base_tax
+
+  - name: nb428_age_amount_line_58080
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet NB428 2025 line 58080 calculates the New Brunswick age amount for persons born in 1960 or earlier
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if nb428_age_amount_eligible:
+            if net_income_line_23600 <= nb428_2025_age_amount_threshold:
+              nb428_2025_age_amount_maximum
+            else:
+              if net_income_line_23600 >= nb428_2025_age_amount_zero_threshold:
+                0
+              else:
+                max(0, nb428_2025_age_amount_maximum - (net_income_line_23600 - nb428_2025_age_amount_threshold) * nb428_2025_age_amount_reduction_rate)
+          else:
+            0
+
+  - name: nb428_spouse_or_partner_amount_line_58120
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 13 subtracts spouse or common-law partner net income from the base amount and caps the claim
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(nb428_2025_spouse_or_dependant_maximum, max(0, nb428_2025_spouse_or_dependant_base_amount - max(0, spouse_net_income_line_23600)))
+
+  - name: nb428_eligible_dependant_amount_line_58160
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 16 subtracts eligible dependant net income from the base amount and caps the claim
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(nb428_2025_spouse_or_dependant_maximum, max(0, nb428_2025_spouse_or_dependant_base_amount - max(0, eligible_dependant_net_income_line_23600)))
+
+  - name: nb428_credit_subtotal_line_18
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 18 adds lines 9, 10, 13, 16, and 17
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nb428_2025_basic_personal_amount + nb428_age_amount_line_58080 + nb428_spouse_or_partner_amount_line_58120 + nb428_eligible_dependant_amount_line_58160 + max(0, nb428_infirm_dependants_age_18_or_older_line_58200)
+
+  - name: nb428_credit_subtotal_line_25
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 25 adds lines 19 to 24
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, cpp_qpp_contributions_employment_line_30800) + max(0, cpp_qpp_contributions_self_employment_line_31000) + max(0, employment_insurance_premiums_line_31200) + max(0, self_employment_ei_premiums_line_31217) + max(0, volunteer_firefighters_amount_line_58315) + max(0, search_and_rescue_volunteers_amount_line_58316)
+
+  - name: nb428_credit_subtotal_line_26
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 26 adds line 18 and line 25
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nb428_credit_subtotal_line_18 + nb428_credit_subtotal_line_25
+
+  - name: nb428_pension_income_amount_line_58360
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 58360 caps the pension income amount at $1,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(nb428_2025_pension_income_amount_cap, max(0, pension_income_amount_line_58360))
+
+  - name: nb428_credit_subtotal_line_30
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 30 adds lines 27 to 29
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nb428_credit_subtotal_line_26 + nb428_pension_income_amount_line_58360 + max(0, caregiver_amount_line_58400)
+
+  - name: nb428_credit_subtotal_line_33
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 33 adds lines 30 to 32
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nb428_credit_subtotal_line_30 + max(0, disability_amount_for_self_line_58440) + max(0, disability_amount_transferred_from_dependant_line_58480)
+
+  - name: nb428_credit_subtotal_line_38
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 38 adds lines 33 to 37
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nb428_credit_subtotal_line_33 + max(0, student_loan_interest_line_58520) + max(0, tuition_and_education_amounts_line_58560) + max(0, tuition_amounts_transferred_line_58600) + max(0, spouse_or_partner_transfers_line_58640)
+
+  - name: nb428_medical_expense_income_base_line_42
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 42 multiplies net income line 23600 by 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, net_income_line_23600) * nb428_2025_medical_expense_income_rate
+
+  - name: nb428_medical_expense_threshold_line_43
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 43 uses the lesser of $2,798 and line 42
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(nb428_2025_medical_expense_threshold_cap, nb428_medical_expense_income_base_line_42)
+
+  - name: nb428_allowable_family_medical_expenses_line_44
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 44 subtracts line 43 from line 39 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, max(0, medical_expenses_line_58689) - nb428_medical_expense_threshold_line_43)
+
+  - name: nb428_total_medical_expenses_line_58769
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 46 and line 58769 add line 44 and line 45
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nb428_allowable_family_medical_expenses_line_44 + max(0, medical_expenses_other_dependants_line_58729)
+
+  - name: nb428_total_claim_amount_line_58800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 47 and line 58800 add line 38 and line 46
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nb428_credit_subtotal_line_38 + nb428_total_medical_expenses_line_58769
+
+  - name: nb428_net_non_refundable_tax_credits_line_58840
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 49 and line 58840 multiply line 47 by the 9.4% credit rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nb428_total_claim_amount_line_58800 * nb428_2025_low_credit_rate
+
+  - name: nb428_donations_and_gifts_line_58969
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 52 and line 58969 add low-rate and high-rate donations from federal Schedule 9
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, federal_schedule_9_line_13_amount) * nb428_2025_low_credit_rate + max(0, federal_schedule_9_line_14_amount) * nb428_2025_high_donation_rate
+
+  - name: nb428_total_non_refundable_tax_credits_line_61500
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 53 adds New Brunswick net non-refundable tax credits and donations and gifts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nb428_net_non_refundable_tax_credits_line_58840 + nb428_donations_and_gifts_line_58969
+
+  - name: nb428_tax_plus_tax_on_split_income_line_56
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 56 adds New Brunswick tax on taxable income and tax on split income line 61510
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nb428_tax_on_taxable_income_line_54 + max(0, new_brunswick_tax_on_split_income_line_61510)
+
+  - name: nb428_tax_after_non_refundable_credits_line_58
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 58 subtracts non-refundable tax credits and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nb428_tax_plus_tax_on_split_income_line_56 - nb428_total_non_refundable_tax_credits_line_61500)
+
+  - name: nb428_dividend_tax_credit_line_61520
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet NB428 2025 line 61520 calculates the New Brunswick dividend tax credit from line 12000 and line 12010
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, taxable_dividends_other_than_eligible_line_12010) * nb428_2025_other_than_eligible_dividend_credit_rate + max(0, taxable_dividends_line_12000 - max(0, taxable_dividends_other_than_eligible_line_12010)) * nb428_2025_eligible_dividend_credit_rate
+
+  - name: nb428_minimum_tax_carryover_line_61540
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 61 and line 61540 multiply federal minimum tax carryover line 40427 by 57%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, minimum_tax_carryover_line_40427) * nb428_2025_minimum_tax_rate
+
+  - name: nb428_credit_and_carryover_subtotal_line_62
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 62 adds dividend tax credit and minimum tax carryover
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nb428_dividend_tax_credit_line_61520 + nb428_minimum_tax_carryover_line_61540
+
+  - name: nb428_tax_after_credits_and_carryover_line_63
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 63 subtracts line 62 from line 59 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nb428_tax_after_non_refundable_credits_line_58 - nb428_credit_and_carryover_subtotal_line_62)
+
+  - name: nb428_additional_tax_for_minimum_tax_purposes_line_64
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 64 multiplies Form T691 Part 7 line 1 minus line 2 by 57%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, t691_part_7_line_1_minus_line_2_amount) * nb428_2025_minimum_tax_rate
+
+  - name: nb428_tax_after_additional_minimum_tax_line_65
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 65 adds line 63 and line 64
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nb428_tax_after_credits_and_carryover_line_63 + nb428_additional_tax_for_minimum_tax_purposes_line_64
+
+  - name: nb428_tax_after_foreign_tax_credit_line_67
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 67 subtracts the provincial foreign tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nb428_tax_after_additional_minimum_tax_line_65 - max(0, provincial_foreign_tax_credit_line_66))
+
+  - name: nb428_tax_after_unused_spouse_low_income_reduction_line_69
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 69 subtracts unused low-income tax reduction from a spouse or common-law partner and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nb428_tax_after_foreign_tax_credit_line_67 - max(0, unused_low_income_tax_reduction_from_spouse_line_61560))
+
+  - name: nb428_adjusted_income_you_line_74
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 lines 70 to 74 calculate the taxpayer's adjusted income for low-income tax reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, net_income_line_23600 + max(0, taxpayer_uccb_rdsp_repayments_line_71) - max(0, taxpayer_uccb_rdsp_income_line_73))
+
+  - name: nb428_adjusted_income_spouse_line_74
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 lines 70 to 74 calculate the spouse or common-law partner adjusted income for low-income tax reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, spouse_net_income_for_nb428_low_income_reduction_line_70 + max(0, spouse_uccb_rdsp_repayments_line_71) - max(0, spouse_uccb_rdsp_income_line_73))
+
+  - name: nb428_adjusted_family_income_line_75
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 75 adds adjusted income columns for taxpayer and spouse or common-law partner
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nb428_adjusted_income_you_line_74 + nb428_adjusted_income_spouse_line_74
+
+  - name: nb428_low_income_spouse_reduction_line_61580
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 61580 allows an $802 spouse or common-law partner reduction when claimed
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if nb428_low_income_spouse_or_partner_reduction_eligible:
+            nb428_2025_low_income_spouse_or_dependant_reduction
+          else:
+            0
+
+  - name: nb428_low_income_eligible_dependant_reduction_line_61590
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 61590 allows an $802 eligible dependant reduction when claimed on line 30400
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if nb428_low_income_eligible_dependant_reduction_eligible:
+            nb428_2025_low_income_spouse_or_dependant_reduction
+          else:
+            0
+
+  - name: nb428_low_income_reduction_basic_subtotal_line_80
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 80 adds lines 77 to 79 and caps the subtotal at $1,604
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(nb428_2025_low_income_reduction_cap, nb428_2025_low_income_basic_reduction + nb428_low_income_spouse_reduction_line_61580 + nb428_low_income_eligible_dependant_reduction_line_61590)
+
+  - name: nb428_low_income_reduction_income_excess_line_83
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 83 subtracts the $21,920 base amount from adjusted family income and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nb428_adjusted_family_income_line_75 - nb428_2025_low_income_reduction_base_income)
+
+  - name: nb428_low_income_reduction_income_reduction_line_85
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 85 multiplies low-income reduction income excess by 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nb428_low_income_reduction_income_excess_line_83 * nb428_2025_low_income_reduction_rate
+
+  - name: nb428_low_income_tax_reduction_line_86
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 86 subtracts line 85 from line 80 and floors negative amounts at zero when low-income reduction eligibility applies
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if unused_low_income_tax_reduction_from_spouse_line_61560 > 0:
+            0
+          else:
+            if nb428_low_income_has_spouse_or_eligible_dependant:
+              if nb428_adjusted_family_income_line_75 < nb428_2025_low_income_family_income_limit:
+                max(0, nb428_low_income_reduction_basic_subtotal_line_80 - nb428_low_income_reduction_income_reduction_line_85)
+              else:
+                0
+            else:
+              if net_income_line_23600 < nb428_2025_low_income_single_net_income_limit:
+                max(0, nb428_low_income_reduction_basic_subtotal_line_80 - nb428_low_income_reduction_income_reduction_line_85)
+              else:
+                0
+
+  - name: nb428_tax_after_low_income_reduction_line_87
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 87 subtracts the New Brunswick low-income tax reduction and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nb428_tax_after_unused_spouse_low_income_reduction_line_69 - nb428_low_income_tax_reduction_line_86)
+
+  - name: nb428_unused_low_income_reduction_for_spouse_line_90
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 90 subtracts line 89 from line 88 to calculate unused low-income reduction for a spouse or common-law partner
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nb428_low_income_tax_reduction_line_86 - nb428_tax_after_foreign_tax_credit_line_67)
+
+  - name: nb428_political_contribution_tax_credit_line_92
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet NB428 2025 line 92 calculates the New Brunswick political contribution tax credit capped at $500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if new_brunswick_political_contributions_line_61550 > nb428_2025_political_cap_threshold:
+            nb428_2025_political_cap
+          else:
+            min(
+              nb428_2025_political_cap,
+              if new_brunswick_political_contributions_line_61550 <= nb428_2025_political_first_threshold:
+                max(0, new_brunswick_political_contributions_line_61550) * nb428_2025_political_first_rate
+              else:
+                if new_brunswick_political_contributions_line_61550 <= nb428_2025_political_second_threshold:
+                  (new_brunswick_political_contributions_line_61550 - nb428_2025_political_first_threshold) * nb428_2025_political_second_rate + nb428_2025_political_second_base_credit
+                else:
+                  (new_brunswick_political_contributions_line_61550 - nb428_2025_political_second_threshold) * nb428_2025_political_third_rate + nb428_2025_political_third_base_credit
+            )
+
+  - name: nb428_tax_after_political_contribution_credit_line_93
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 93 subtracts political contribution tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nb428_tax_after_low_income_reduction_line_87 - nb428_political_contribution_tax_credit_line_92)
+
+  - name: nb428_labour_sponsored_venture_capital_tax_credit_line_61670
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 61670 caps the labour-sponsored venture capital fund tax credit at $2,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(nb428_2025_labour_sponsored_venture_capital_cap, max(0, new_brunswick_labour_sponsored_venture_capital_credit_line_61670))
+
+  - name: nb428_tax_after_labour_sponsored_venture_capital_credit_line_95
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 95 subtracts labour-sponsored venture capital fund tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nb428_tax_after_political_contribution_credit_line_93 - nb428_labour_sponsored_venture_capital_tax_credit_line_61670)
+
+  - name: nb428_small_business_investor_tax_credit_line_96
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 96 caps the small business investor tax credit at $125,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(nb428_2025_small_business_investor_tax_credit_cap, max(0, new_brunswick_small_business_investor_tax_credit_line_96))
+
+  - name: new_brunswick_tax_line_42800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NB428 2025 line 97 subtracts the small business investor tax credit and enters New Brunswick tax on T1 line 42800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nb428_tax_after_labour_sponsored_venture_capital_credit_line_95 - nb428_small_business_investor_tax_credit_line_96)
