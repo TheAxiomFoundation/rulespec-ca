@@ -1,0 +1,89 @@
+- name: on479_high_stack_and_coop_interpolation
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_fertility_treatment_medical_expenses_line_61268: 30000
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_care_tax_credit_schedule_on479a_line_63050: 1000
+    ca:policies/cra/t1-2025/on479-credits#input.on428_medical_expenses_line_58769: 10000
+    ca:policies/cra/t1-2025/on479-credits#input.net_income_line_23600: 40000
+    ca:policies/cra/t1-2025/on479-credits#input.spouse_net_income_line_23600: 10000
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_seniors_public_transit_payments_line_63100: 4000
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_political_contributions_line_63110: 2000
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_focused_flow_through_share_expenses_line_63220: 10000
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_coop_education_qualifying_work_placements_count: 2
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_coop_eligible_expenditures_line_a: 20000
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_coop_prior_year_salaries_and_wages: 500000
+  output:
+    ca:policies/cra/t1-2025/on479-credits#on479_fertility_treatment_tax_credit_line_61268: 5000
+    ca:policies/cra/t1-2025/on479-credits#on479_seniors_public_transit_tax_credit_line_63100: 450
+    ca:policies/cra/t1-2025/on479-credits#on479_political_contribution_tax_credit_line_16: 1069.458894
+    ca:policies/cra/t1-2025/on479-credits#on479_focused_flow_through_share_tax_credit_line_63220: 500
+    ca:policies/cra/t1-2025/on479-credits#on479_cooperative_education_tax_credit_line_63300: 5500
+
+- name: on479_high_stack_family_seniors_credit
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/on479-credits#input.on428_medical_expenses_line_58769: 10000
+    ca:policies/cra/t1-2025/on479-credits#input.net_income_line_23600: 40000
+    ca:policies/cra/t1-2025/on479-credits#input.spouse_net_income_line_23600: 10000
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_fertility_treatment_medical_expenses_line_61268: 30000
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_care_tax_credit_schedule_on479a_line_63050: 1000
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_seniors_public_transit_payments_line_63100: 4000
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_political_contributions_line_63110: 2000
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_focused_flow_through_share_expenses_line_63220: 10000
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_coop_education_qualifying_work_placements_count: 2
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_coop_eligible_expenditures_line_a: 20000
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_coop_prior_year_salaries_and_wages: 500000
+  output:
+    ca:policies/cra/t1-2025/on479-credits#on479_seniors_care_at_home_family_net_income_line_8: 50000
+    ca:policies/cra/t1-2025/on479-credits#on479_seniors_care_at_home_base_credit_line_5: 1500
+    ca:policies/cra/t1-2025/on479-credits#on479_seniors_care_at_home_tax_credit_line_63095: 750
+    ca:policies/cra/t1-2025/on479-credits#on479_credits_subtotal_line_18: 8769.458894
+    ca:policies/cra/t1-2025/on479-credits#ontario_credits_line_47900: 14269.458894
+
+- name: on479_zero_seniors_and_political_cap
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_fertility_treatment_medical_expenses_line_61268: 0
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_care_tax_credit_schedule_on479a_line_63050: 0
+    ca:policies/cra/t1-2025/on479-credits#input.on428_medical_expenses_line_58769: 1000
+    ca:policies/cra/t1-2025/on479-credits#input.net_income_line_23600: 70000
+    ca:policies/cra/t1-2025/on479-credits#input.spouse_net_income_line_23600: 0
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_seniors_public_transit_payments_line_63100: 0
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_political_contributions_line_63110: 4000
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_focused_flow_through_share_expenses_line_63220: 0
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_coop_education_qualifying_work_placements_count: 1
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_coop_eligible_expenditures_line_a: 20000
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_coop_prior_year_salaries_and_wages: 700000
+  output:
+    ca:policies/cra/t1-2025/on479-credits#on479_political_contribution_tax_credit_line_16: 1666.82
+    ca:policies/cra/t1-2025/on479-credits#on479_cooperative_education_tax_credit_line_63300: 3000
+
+- name: on479_zero_family_seniors_credit
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/on479-credits#input.on428_medical_expenses_line_58769: 1000
+    ca:policies/cra/t1-2025/on479-credits#input.net_income_line_23600: 70000
+    ca:policies/cra/t1-2025/on479-credits#input.spouse_net_income_line_23600: 0
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_fertility_treatment_medical_expenses_line_61268: 0
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_care_tax_credit_schedule_on479a_line_63050: 0
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_seniors_public_transit_payments_line_63100: 0
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_political_contributions_line_63110: 4000
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_focused_flow_through_share_expenses_line_63220: 0
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_coop_education_qualifying_work_placements_count: 1
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_coop_eligible_expenditures_line_a: 20000
+    ca:policies/cra/t1-2025/on479-credits#input.ontario_coop_prior_year_salaries_and_wages: 700000
+  output:
+    ca:policies/cra/t1-2025/on479-credits#on479_seniors_care_at_home_tax_credit_line_63095: 0
+    ca:policies/cra/t1-2025/on479-credits#ontario_credits_line_47900: 4666.82
