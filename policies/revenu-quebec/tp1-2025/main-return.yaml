@@ -1,0 +1,618 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Quebec TP-1.D-V 2025 main income tax return arithmetic:
+    total income, net income, taxable income, core non-refundable credits,
+    income tax on taxable income, selected work-chart credits, income tax and
+    contributions, payments, refund, and balance due.
+  source_verification:
+    corpus_citation_path: ca/policy/revenu-quebec/tp1-2025/main-return
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+      rationale: Revenu Quebec TP-1.D-V and TP-1.D.GR-V are the official 2025 Quebec income tax return and work charts.
+    source_urls:
+      - https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D-V%282025-12%29.pdf
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.GR-V%282025-12%29.pdf
+rules:
+  - name: quebec_2025_basic_personal_amount_line_350
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec TP-1.D-V 2025 line 350 basic personal amount is $18,571
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 18571
+
+  - name: quebec_2025_base_non_refundable_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec TP-1.D-V 2025 line 377.1 multiplies line 377 by 14%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.14
+
+  - name: quebec_2025_medical_student_loan_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec TP-1.D-V 2025 line 389 multiplies line 388 by 20%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.20
+
+  - name: quebec_2025_union_dues_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec TP-1.D-V 2025 line 397 multiplies union, professional or other dues by 10%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.10
+
+  - name: quebec_2025_tax_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 401 first taxable income bracket ends at $53,255
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 53255
+
+  - name: quebec_2025_tax_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 401 second taxable income bracket ends at $106,495
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 106495
+
+  - name: quebec_2025_tax_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 401 third taxable income bracket ends at $129,590
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 129590
+
+  - name: quebec_2025_tax_rate_1
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 401 column A rate is 14%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.14
+
+  - name: quebec_2025_tax_rate_2
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 401 column B rate is 19%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.19
+
+  - name: quebec_2025_tax_rate_3
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 401 column C rate is 24%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.24
+
+  - name: quebec_2025_tax_rate_4
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 401 column D rate is 25.75%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.2575
+
+  - name: quebec_2025_tax_base_amount_2
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 401 column B line 7 base tax is $7,455.70
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 7455.70
+
+  - name: quebec_2025_tax_base_amount_3
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 401 column C line 7 base tax is $17,571.30
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 17571.30
+
+  - name: quebec_2025_tax_base_amount_4
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 401 column D line 7 base tax is $23,114.10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 23114.10
+
+  - name: quebec_2025_worker_deduction_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 201 multiplies eligible work income by 6%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.06
+
+  - name: quebec_2025_worker_deduction_maximum
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 201 caps the deduction for workers at $1,420
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1420
+
+  - name: quebec_2025_political_contribution_eligible_cap
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 414 caps eligible municipal political contributions at $200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 200
+
+  - name: quebec_2025_donations_first_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 395 first donation threshold is $200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 200
+
+  - name: quebec_2025_donations_first_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 395 first donation credit rate is 20%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.20
+
+  - name: quebec_2025_political_contribution_first_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 414 first threshold is $50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 50
+
+  - name: quebec_2025_political_contribution_first_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 414 first rate is 85%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.85
+
+  - name: quebec_2025_political_contribution_second_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 414 second rate is 75%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.75
+
+  - name: quebec_2025_political_contribution_credit_cap
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 414 caps the credit at $155
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 155
+
+  - name: quebec_2025_copyright_deduction_base_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 297 starts from a $15,000 amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 15000
+
+  - name: quebec_2025_copyright_income_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 297 subtracts $30,000 from copyright income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 30000
+
+  - name: quebec_2025_copyright_deduction_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 297 multiplies the excess by 0.5
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.5
+
+  - name: tp1_correction_of_employment_income_line_105
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 105 subtracts RL-1 box P totals from RL-22 box A
+    versions:
+      - effective_from: '2025-01-01'
+        formula: tp1_rl22_box_a - tp1_rl1_box_p_total
+
+  - name: tp1_deduction_for_workers_line_201
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 201 multiplies eligible work income by 6% and caps the deduction at $1,420
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(quebec_2025_worker_deduction_maximum, max(0, tp1_worker_deduction_eligible_work_income - max(0, tp1_worker_deduction_income_entitling_line_293)) * quebec_2025_worker_deduction_rate)
+
+  - name: tp1_total_income_line_199
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 199 adds lines 101 and 105 through 164
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          tp1_employment_income_line_101
+          + tp1_correction_of_employment_income_line_105
+          + max(0, tp1_other_employment_income_line_107)
+          + max(0, tp1_parental_insurance_benefits_line_110)
+          + max(0, tp1_employment_insurance_benefits_line_111)
+          + max(0, tp1_old_age_security_pension_line_114)
+          + max(0, tp1_qpp_cpp_benefits_line_119)
+          + max(0, tp1_pension_rrsp_rrif_annuity_income_line_122)
+          + max(0, tp1_retirement_income_transferred_by_spouse_line_123)
+          + max(0, tp1_taxable_dividends_line_128)
+          + max(0, tp1_interest_and_other_investment_income_line_130)
+          + tp1_net_rental_income_line_136
+          + max(0, tp1_taxable_capital_gains_line_139)
+          + max(0, tp1_support_payments_received_taxable_line_142)
+          + max(0, tp1_social_assistance_payments_line_147)
+          + max(0, tp1_income_replacement_indemnities_net_federal_supplements_line_148)
+          + max(0, tp1_other_income_line_154)
+          + tp1_net_business_income_line_164
+
+  - name: tp1_total_deductions_line_254
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 254 adds lines 201 through 207, 214 through 231, and 234 through 252
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          tp1_deduction_for_workers_line_201
+          + max(0, tp1_rpp_deduction_line_205)
+          + max(0, tp1_employment_expenses_and_deductions_line_207)
+          + max(0, tp1_hbp_llp_line_214)
+          + max(0, tp1_fhsa_deduction_line_215)
+          + max(0, tp1_support_payments_made_deductible_line_225)
+          + max(0, tp1_moving_expenses_line_228)
+          + max(0, tp1_carrying_charges_interest_expenses_line_231)
+          + max(0, tp1_allowable_business_investment_loss_line_234)
+          + max(0, tp1_remote_areas_deduction_line_236)
+          + max(0, tp1_exploration_development_expenses_line_241)
+          + max(0, tp1_retirement_income_transferred_to_spouse_deduction_line_245)
+          + max(0, tp1_repayment_overpaid_amounts_deduction_line_246)
+          + max(0, tp1_qpp_cpp_qpip_deduction_line_248)
+          + max(0, tp1_other_deductions_line_250)
+          + max(0, tp1_carryover_adjustment_investment_expenses_line_252)
+
+  - name: tp1_income_after_deductions_line_256
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 256 subtracts total deductions from total income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: tp1_total_income_line_199 - tp1_total_deductions_line_254
+
+  - name: tp1_net_income_line_275
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 275 adds line 256 and line 260 and floors negative results at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, tp1_income_after_deductions_line_256 + max(0, tp1_adjustment_of_investment_expenses_line_260))
+
+  - name: tp1_taxable_income_before_deductions_line_279
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 279 adds lines 275 through 278
+    versions:
+      - effective_from: '2025-01-01'
+        formula: tp1_net_income_line_275 + max(0, tp1_adjustment_of_deductions_line_276) + max(0, tp1_uccb_rdsp_income_line_278)
+
+  - name: tp1_deduction_for_copyright_income_line_297
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 297 calculates the deduction for copyright income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(max(0, tp1_copyright_income), quebec_2025_copyright_deduction_base_amount - max(0, tp1_copyright_income - quebec_2025_copyright_income_threshold) * quebec_2025_copyright_deduction_reduction_rate)
+
+  - name: tp1_total_taxable_income_deductions_line_298
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 298 adds lines 287 through 297
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, tp1_strategic_investments_deductions_line_287)
+          + max(0, tp1_non_capital_losses_other_years_line_289)
+          + max(0, tp1_net_capital_losses_other_years_line_290)
+          + max(0, tp1_capital_gains_deduction_qualifying_business_transfer_line_291)
+          + max(0, tp1_capital_gains_deduction_line_292)
+          + max(0, tp1_reserve_income_deduction_line_293)
+          + max(0, tp1_certain_income_deductions_line_295)
+          + max(0, tp1_miscellaneous_deductions_line_297)
+          + tp1_deduction_for_copyright_income_line_297
+
+  - name: tp1_taxable_income_line_299
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 299 subtracts line 298 from line 279 and floors negative results at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, tp1_taxable_income_before_deductions_line_279 - tp1_total_taxable_income_deductions_line_298)
+
+  - name: tp1_basic_personal_amount_after_adjustment_line_359
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 359 subtracts line 358 from the basic personal amount on line 350
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, quebec_2025_basic_personal_amount_line_350 - max(0, tp1_income_replacement_indemnities_adjustment_line_358))
+
+  - name: tp1_base_credit_amounts_line_377
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 377 adds lines 359 through 376
+    versions:
+      - effective_from: '2025-01-01'
+        formula: tp1_basic_personal_amount_after_adjustment_line_359 + max(0, tp1_schedule_b_amount_line_361) + max(0, tp1_schedule_a_amount_line_367) + max(0, tp1_severe_prolonged_impairment_amount_line_376)
+
+  - name: tp1_base_non_refundable_tax_credit_line_377_1
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 377.1 multiplies line 377 by 14%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: tp1_base_credit_amounts_line_377 * quebec_2025_base_non_refundable_credit_rate
+
+  - name: tp1_medical_student_loan_credit_base_line_388
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 388 adds lines 378 through 385
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, tp1_medical_services_not_available_line_378) + max(0, tp1_medical_expenses_line_381) + max(0, tp1_student_loan_interest_amount_line_385)
+
+  - name: tp1_medical_student_loan_tax_credit_line_389
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 389 multiplies line 388 by 20%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: tp1_medical_student_loan_credit_base_line_388 * quebec_2025_medical_student_loan_credit_rate
+
+  - name: tp1_donations_tax_credit_work_chart_395
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 395 calculates donations and gifts credits with 20%, 25.75%, and 24% tiers
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(max(0, tp1_monetary_donations_line_393), quebec_2025_donations_first_threshold) * quebec_2025_donations_first_rate
+          + min(max(0, tp1_monetary_donations_line_393 - quebec_2025_donations_first_threshold), max(0, tp1_taxable_income_line_299 - quebec_2025_tax_bracket_3_threshold)) * quebec_2025_tax_rate_4
+          + max(0, max(0, tp1_monetary_donations_line_393 - quebec_2025_donations_first_threshold) - max(0, tp1_taxable_income_line_299 - quebec_2025_tax_bracket_3_threshold)) * quebec_2025_tax_rate_3
+
+  - name: tp1_union_dues_tax_credit_line_397
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 397 multiplies union, professional or other dues by 10%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, tp1_union_professional_other_dues_line_397_1) * quebec_2025_union_dues_credit_rate
+
+  - name: tp1_non_refundable_tax_credits_line_399
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 399 adds lines 377.1, 389 through 392, 395 through 397, 398 and 398.1
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          tp1_base_non_refundable_tax_credit_line_377_1
+          + tp1_medical_student_loan_tax_credit_line_389
+          + max(0, tp1_volunteer_firefighters_search_rescue_credit_line_390)
+          + max(0, tp1_career_extension_credit_line_391)
+          + max(0, tp1_recent_graduates_remote_regions_credit_line_392)
+          + tp1_donations_tax_credit_work_chart_395
+          + max(0, tp1_home_buyers_tax_credit_line_396)
+          + tp1_union_dues_tax_credit_line_397
+          + max(0, tp1_tuition_examination_fees_credit_line_398)
+          + max(0, tp1_tuition_examination_fees_transferred_by_child_line_398_1)
+
+  - name: tp1_income_tax_on_taxable_income_line_401
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 401 calculates income tax on taxable income using four tax brackets
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if tp1_taxable_income_line_299 <= quebec_2025_tax_bracket_1_threshold:
+            tp1_taxable_income_line_299 * quebec_2025_tax_rate_1
+          else:
+            if tp1_taxable_income_line_299 <= quebec_2025_tax_bracket_2_threshold:
+              (tp1_taxable_income_line_299 - quebec_2025_tax_bracket_1_threshold) * quebec_2025_tax_rate_2 + quebec_2025_tax_base_amount_2
+            else:
+              if tp1_taxable_income_line_299 <= quebec_2025_tax_bracket_3_threshold:
+                (tp1_taxable_income_line_299 - quebec_2025_tax_bracket_2_threshold) * quebec_2025_tax_rate_3 + quebec_2025_tax_base_amount_3
+              else:
+                (tp1_taxable_income_line_299 - quebec_2025_tax_bracket_3_threshold) * quebec_2025_tax_rate_4 + quebec_2025_tax_base_amount_4
+
+  - name: tp1_tax_after_non_refundable_credits_line_413
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 413 subtracts non-refundable tax credits from income tax on taxable income, before Schedule E overrides
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, tp1_income_tax_on_taxable_income_line_401 - tp1_non_refundable_tax_credits_line_399)
+
+  - name: tp1_political_contribution_tax_credit_line_414
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D.GR-V 2025 Work Chart 414 calculates the credit for contributions to authorized Quebec political parties, capped at $155
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            quebec_2025_political_contribution_credit_cap,
+            min(max(0, tp1_political_contributions_line_414_input), quebec_2025_political_contribution_first_threshold) * quebec_2025_political_contribution_first_rate
+            + max(0, min(max(0, tp1_political_contributions_line_414_input), quebec_2025_political_contribution_eligible_cap) - quebec_2025_political_contribution_first_threshold) * quebec_2025_political_contribution_second_rate
+          )
+
+  - name: tp1_other_tax_credits_line_425
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 425 adds lines 414 through 424
+    versions:
+      - effective_from: '2025-01-01'
+        formula: tp1_political_contribution_tax_credit_line_414 + max(0, tp1_dividend_tax_credit_line_415) + max(0, tp1_capital_regional_cooperative_desjardins_credit_line_422) + max(0, tp1_labour_sponsored_fund_credit_line_424)
+
+  - name: tp1_tax_after_other_credits_line_430
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 430 subtracts line 425 from line 413
+    versions:
+      - effective_from: '2025-01-01'
+        formula: tp1_tax_after_non_refundable_credits_line_413 - tp1_other_tax_credits_line_425
+
+  - name: tp1_tax_after_spouse_transfer_line_432
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 432 subtracts credits transferred from one spouse to the other and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, tp1_tax_after_other_credits_line_430 - max(0, tp1_credits_transferred_from_spouse_line_431))
+
+  - name: tp1_income_tax_and_contributions_line_450
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 450 adds lines 432 through 447
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          tp1_tax_after_spouse_transfer_line_432
+          + max(0, tp1_enterprise_register_annual_registration_fee_line_438)
+          + max(0, tp1_qpip_premium_self_employment_outside_quebec_line_439)
+          + max(0, tp1_advance_payments_tax_credits_line_441)
+          + max(0, tp1_special_taxes_tax_adjustment_line_443)
+          + max(0, tp1_qpp_self_employment_contribution_line_445)
+          + max(0, tp1_health_services_fund_contribution_line_446)
+          + max(0, tp1_prescription_drug_insurance_premium_line_447)
+
+  - name: tp1_income_tax_paid_and_other_credits_line_465
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 465 adds lines 451.2 through 463
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, tp1_quebec_income_tax_withheld_line_451 - max(0, tp1_schedule_q_line_58_line_451_1))
+          + max(0, tp1_income_tax_withholding_transferred_by_spouse_line_451_3)
+          + max(0, tp1_qpp_cpp_overpayment_line_452)
+          + max(0, tp1_income_tax_paid_instalments_line_453)
+          + max(0, tp1_transferable_tax_withheld_another_province_line_454)
+          + max(0, tp1_childcare_expenses_tax_credit_line_455)
+          + max(0, tp1_work_premium_tax_credits_line_456)
+          + max(0, tp1_qpip_overpayment_line_457)
+          + max(0, tp1_home_support_seniors_credit_line_458)
+          + max(0, tp1_qst_rebate_employees_partners_line_459)
+          + max(0, tp1_tax_shield_line_460)
+          + max(0, tp1_other_credits_line_462)
+          + max(0, tp1_senior_assistance_tax_credit_line_463)
+
+  - name: tp1_total_payments_and_credits_line_468
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 468 adds lines 465 and 466
+    versions:
+      - effective_from: '2025-01-01'
+        formula: tp1_income_tax_paid_and_other_credits_line_465 + max(0, tp1_financial_compensation_home_support_line_466)
+
+  - name: tp1_refund_or_balance_difference_line_470
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 470 subtracts line 468 from line 450
+    versions:
+      - effective_from: '2025-01-01'
+        formula: tp1_income_tax_and_contributions_line_450 - tp1_total_payments_and_credits_line_468
+
+  - name: tp1_refund_line_478
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 line 478 subtracts line 476 from the negative amount on line 470
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, -tp1_refund_or_balance_difference_line_470 - max(0, tp1_refund_transferred_to_spouse_line_476))
+
+  - name: tp1_balance_due_line_479
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1.D-V 2025 balance due is the positive amount on line 470
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, tp1_refund_or_balance_difference_line_470)
