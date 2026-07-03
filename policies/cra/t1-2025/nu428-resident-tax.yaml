@@ -1,0 +1,504 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form NU428 for 2025 calculates ordinary Nunavut resident
+    tax: tax on taxable income, non-refundable tax credits, dividend and
+    minimum tax adjustments, political contribution tax credit, and final tax
+    entered on T1 line 42800.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/nu428-resident-tax
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: CRA Form NU428 and Worksheet NU428 are the official 2025 Nunavut tax calculation documents for residents.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5014-c/5014-c-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5014-c/5014-c-25e.pdf
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5014-d/5014-d-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5014-d/5014-d-25e.pdf
+rules:
+  - name: nu428_2025_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA NU428 2025 Part A column 1 applies to taxable income of $54,707 or less
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 54707
+  - name: nu428_2025_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA NU428 2025 Part A column 2 applies above $54,707 and not more than $109,413
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 109413
+  - name: nu428_2025_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA NU428 2025 Part A column 3 applies above $109,413 and not more than $177,881
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 177881
+  - name: nu428_2025_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NU428 2025 Part A column 1 line 5 gives the rate as 4%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.04
+  - name: nu428_2025_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NU428 2025 Part A column 2 line 5 gives the rate as 7%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.07
+  - name: nu428_2025_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NU428 2025 Part A column 3 line 5 gives the rate as 9%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.09
+  - name: nu428_2025_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NU428 2025 Part A column 4 line 5 gives the rate as 11.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.115
+  - name: nu428_2025_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA NU428 2025 Part A column 2 line 7 gives base tax of $2,188.28
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2188.28
+  - name: nu428_2025_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA NU428 2025 Part A column 3 line 7 gives base tax of $6,017.70
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 6017.70
+  - name: nu428_2025_bracket_4_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA NU428 2025 Part A column 4 line 7 gives base tax of $12,179.82
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 12179.82
+  - name: nu428_2025_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA NU428 2025 line 58040 basic personal amount is $19,274
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 19274
+  - name: nu428_2025_age_amount_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet NU428 2025 line 58080 maximum age amount is $12,303
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 12303
+  - name: nu428_2025_age_amount_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet NU428 2025 line 58080 starts reducing the age amount above $45,522
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 45522
+  - name: nu428_2025_age_amount_zero_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet NU428 2025 line 58080 gives zero age amount at $127,542 or more
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 127542
+  - name: nu428_2025_age_amount_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet NU428 2025 line 58080 uses a 15% reduction rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.15
+  - name: nu428_2025_spouse_or_dependant_base_amount
+    kind: parameter
+    dtype: Money
+    source: CRA NU428 2025 lines 11 and 14 use a base amount of $19,274
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 19274
+  - name: nu428_2025_young_child_amount
+    kind: parameter
+    dtype: Money
+    source: CRA NU428 2025 line 58230 multiplies the number of children by $1,200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1200
+  - name: nu428_2025_pension_income_amount_cap
+    kind: parameter
+    dtype: Money
+    source: CRA NU428 2025 line 58360 pension income amount maximum is $2,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2000
+  - name: nu428_2025_disability_amount_for_self
+    kind: parameter
+    dtype: Money
+    source: CRA NU428 2025 line 58440 disability amount for self is $16,405 unless the under-18 worksheet applies
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 16405
+  - name: nu428_2025_medical_expense_income_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NU428 2025 line 40 gives the medical expense income rate as 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.03
+  - name: nu428_2025_medical_expense_threshold_cap
+    kind: parameter
+    dtype: Money
+    source: CRA NU428 2025 line 42 uses the lesser of $2,834 and line 41
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2834
+  - name: nu428_2025_low_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NU428 2025 line 46 gives the Nunavut non-refundable tax credit rate as 4%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.04
+  - name: nu428_2025_high_donation_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NU428 2025 line 50 multiplies Schedule 9 line 14 by 11.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.115
+  - name: nu428_2025_minimum_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NU428 2025 lines 57 and 60 multiply minimum tax amounts by 45%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.45
+  - name: nu428_2025_other_than_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet NU428 2025 line 61520 multiplies line 12010 by 2.61%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0261
+  - name: nu428_2025_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet NU428 2025 line 61520 multiplies line 12000 minus line 12010 by 5.51%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0551
+  - name: nu428_2025_volunteer_credit
+    kind: parameter
+    dtype: Money
+    source: CRA NU428 2025 line 62290 tax credit for volunteer firefighters and search and rescue volunteers is $722
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 722
+
+  - name: nu428_tax_on_taxable_income_line_53
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 Part A line 53 calculates Nunavut tax on taxable income using the selected bracket column
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= nu428_2025_bracket_1_threshold:
+            max(0, taxable_income_line_26000) * nu428_2025_bracket_1_rate
+          else:
+            if taxable_income_line_26000 <= nu428_2025_bracket_2_threshold:
+              (taxable_income_line_26000 - nu428_2025_bracket_1_threshold) * nu428_2025_bracket_2_rate + nu428_2025_bracket_2_base_tax
+            else:
+              if taxable_income_line_26000 <= nu428_2025_bracket_3_threshold:
+                (taxable_income_line_26000 - nu428_2025_bracket_2_threshold) * nu428_2025_bracket_3_rate + nu428_2025_bracket_3_base_tax
+              else:
+                (taxable_income_line_26000 - nu428_2025_bracket_3_threshold) * nu428_2025_bracket_4_rate + nu428_2025_bracket_4_base_tax
+  - name: nu428_age_amount_line_58080
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet NU428 2025 line 58080 calculates the Nunavut age amount for persons born in 1960 or earlier
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if nu428_age_amount_eligible:
+            if net_income_line_23600 <= nu428_2025_age_amount_threshold:
+              nu428_2025_age_amount_maximum
+            else:
+              if net_income_line_23600 >= nu428_2025_age_amount_zero_threshold:
+                0
+              else:
+                max(0, nu428_2025_age_amount_maximum - (net_income_line_23600 - nu428_2025_age_amount_threshold) * nu428_2025_age_amount_reduction_rate)
+          else:
+            0
+  - name: nu428_spouse_or_partner_amount_line_58120
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 13 subtracts spouse or common-law partner net income from the base amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nu428_2025_spouse_or_dependant_base_amount - max(0, spouse_net_income_line_23600))
+  - name: nu428_eligible_dependant_amount_line_58160
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 16 subtracts eligible dependant net income from the base amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nu428_2025_spouse_or_dependant_base_amount - max(0, eligible_dependant_net_income_line_23600))
+  - name: nu428_young_children_amount_line_58230
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 58230 multiplies the number of young children by $1,200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nunavut_young_children_count_line_63710) * nu428_2025_young_child_amount
+  - name: nu428_credit_subtotal_line_19
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 19 adds lines 9, 10, 13, 16, and 17
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nu428_2025_basic_personal_amount + nu428_age_amount_line_58080 + nu428_spouse_or_partner_amount_line_58120 + nu428_eligible_dependant_amount_line_58160 + max(0, nu428_infirm_dependants_age_18_or_older_line_58200) + nu428_young_children_amount_line_58230
+  - name: nu428_credit_subtotal_line_24
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 24 adds lines 20 to 23
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, cpp_qpp_contributions_employment_line_30800) + max(0, cpp_qpp_contributions_self_employment_line_31000) + max(0, employment_insurance_premiums_line_31200) + max(0, self_employment_ei_premiums_line_31217)
+  - name: nu428_credit_subtotal_line_25
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 25 adds line 19 and line 24
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nu428_credit_subtotal_line_19 + nu428_credit_subtotal_line_24
+  - name: nu428_pension_income_amount_line_58360
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 58360 caps the pension income amount at $2,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(nu428_2025_pension_income_amount_cap, max(0, pension_income_amount_line_58360))
+  - name: nu428_credit_subtotal_line_29
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 29 adds lines 25 to 27
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nu428_credit_subtotal_line_25 + nu428_pension_income_amount_line_58360 + max(0, caregiver_amount_line_58400)
+  - name: nu428_credit_subtotal_line_32
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 32 adds lines 28 to 30
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nu428_credit_subtotal_line_29 + max(0, disability_amount_for_self_line_58440) + max(0, disability_amount_transferred_from_dependant_line_58480)
+  - name: nu428_credit_subtotal_line_37
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 37 adds lines 31 to 35
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nu428_credit_subtotal_line_32 + max(0, student_loan_interest_line_58520) + max(0, tuition_and_education_amounts_line_58560) + max(0, tuition_and_education_amounts_transferred_line_58600) + max(0, spouse_or_partner_transfers_line_58640)
+  - name: nu428_medical_expense_income_base_line_41
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 41 multiplies net income line 23600 by 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, net_income_line_23600) * nu428_2025_medical_expense_income_rate
+  - name: nu428_medical_expense_threshold_line_42
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 42 uses the lesser of $2,834 and line 41
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(nu428_2025_medical_expense_threshold_cap, nu428_medical_expense_income_base_line_41)
+  - name: nu428_allowable_family_medical_expenses_line_43
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 43 subtracts line 41 from line 37 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, max(0, medical_expenses_line_58689) - nu428_medical_expense_threshold_line_42)
+  - name: nu428_total_medical_expenses_line_58769
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 44 and line 58769 add line 42 and line 43
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nu428_allowable_family_medical_expenses_line_43 + max(0, medical_expenses_other_dependants_line_58729)
+  - name: nu428_total_claim_amount_line_58800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 46 and line 58800 add line 37 and line 45
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nu428_credit_subtotal_line_37 + nu428_total_medical_expenses_line_58769
+  - name: nu428_net_non_refundable_tax_credits_line_58840
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 48 and line 58840 multiply line 46 by the 4% credit rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nu428_total_claim_amount_line_58800 * nu428_2025_low_credit_rate
+  - name: nu428_donations_and_gifts_line_58969
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 51 and line 58969 add low-rate and high-rate donations from federal Schedule 9
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, federal_schedule_9_line_13_amount) * nu428_2025_low_credit_rate + max(0, federal_schedule_9_line_14_amount) * nu428_2025_high_donation_rate
+  - name: nu428_total_non_refundable_tax_credits_line_61500
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 52 adds Nunavut net non-refundable tax credits and donations and gifts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nu428_net_non_refundable_tax_credits_line_58840 + nu428_donations_and_gifts_line_58969
+  - name: nu428_tax_plus_tax_on_split_income_line_55
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 55 adds Nunavut tax on taxable income and tax on split income line 61510
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nu428_tax_on_taxable_income_line_53 + max(0, nunavut_tax_on_split_income_line_61510)
+  - name: nu428_dividend_tax_credit_line_61520
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet NU428 2025 line 61520 calculates the Nunavut dividend tax credit from line 12000 and line 12010
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, taxable_dividends_other_than_eligible_line_12010) * nu428_2025_other_than_eligible_dividend_credit_rate + max(0, taxable_dividends_line_12000 - max(0, taxable_dividends_other_than_eligible_line_12010)) * nu428_2025_eligible_dividend_credit_rate
+  - name: nu428_minimum_tax_carryover_line_61540
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 58 and line 61540 multiply federal minimum tax carryover line 40427 by 45%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, minimum_tax_carryover_line_40427) * nu428_2025_minimum_tax_rate
+  - name: nu428_credit_and_carryover_subtotal_line_59
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 59 adds lines 55 to 57
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nu428_total_non_refundable_tax_credits_line_61500 + nu428_dividend_tax_credit_line_61520 + nu428_minimum_tax_carryover_line_61540
+  - name: nu428_tax_after_credits_and_carryover_line_60
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 60 subtracts line 58 from line 54 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nu428_tax_plus_tax_on_split_income_line_55 - nu428_credit_and_carryover_subtotal_line_59)
+  - name: nu428_additional_tax_for_minimum_tax_purposes_line_61
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 61 multiplies Form T691 Part 7 line 14 by 45%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, t691_part_7_line_14_amount) * nu428_2025_minimum_tax_rate
+  - name: nu428_tax_after_additional_minimum_tax_line_62
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 62 adds line 59 and line 60
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nu428_tax_after_credits_and_carryover_line_60 + nu428_additional_tax_for_minimum_tax_purposes_line_61
+  - name: nu428_tax_after_foreign_tax_credit_line_64
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 64 subtracts the territorial foreign tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nu428_tax_after_additional_minimum_tax_line_62 - max(0, territorial_foreign_tax_credit_line_62))
+  - name: nu428_volunteer_credit_line_62290
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 62290 gives a $722 tax credit for volunteer firefighters and search and rescue volunteers when claimed
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if nunavut_claims_volunteer_firefighters_or_search_and_rescue_credit:
+            nu428_2025_volunteer_credit
+          else:
+            0
+  - name: nunavut_tax_line_42800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA NU428 2025 line 66 subtracts the volunteer firefighters and search and rescue volunteers credit and enters Nunavut tax on T1 line 42800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nu428_tax_after_foreign_tax_credit_line_64 - nu428_volunteer_credit_line_62290)
