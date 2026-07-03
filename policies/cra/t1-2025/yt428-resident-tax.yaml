@@ -1,0 +1,570 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form YT428 for 2025 calculates ordinary Yukon resident tax: tax on
+    taxable income, non-refundable tax credits, dividend and minimum tax
+    adjustments, business investment tax credit, First Nations income tax
+    credit, political contribution tax credit, and final tax entered on T1
+    line 42800.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/yt428-resident-tax
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: |-
+        CRA Form YT428 and Worksheet YT428 are the official 2025 Yukon tax
+        calculation documents for Yukon residents. This module encodes
+        ordinary resident YT428 arithmetic while leaving detailed source-line
+        component amounts and residency predicates to dedicated modules or fact
+        inputs.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5011-c/5011-c-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5011-c/5011-c-25e.pdf
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5011-d/5011-d-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5011-d/5011-d-25e.pdf
+rules:
+  - name: yt428_2025_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA YT428 2025 Part A column 1 applies to taxable income of $57,375 or less
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 57375
+  - name: yt428_2025_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA YT428 2025 Part A column 2 applies above $57,375 and not more than $114,750
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 114750
+  - name: yt428_2025_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA YT428 2025 Part A column 3 applies above $114,750 and not more than $177,882
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 177882
+  - name: yt428_2025_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA YT428 2025 Part A column 4 applies above $177,882 and not more than $500,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 500000
+  - name: yt428_2025_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA YT428 2025 Part A column 1 line 5 gives the rate as 6.4%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.064
+  - name: yt428_2025_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA YT428 2025 Part A column 2 line 5 gives the rate as 9%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.09
+  - name: yt428_2025_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA YT428 2025 Part A column 3 line 5 gives the rate as 10.9%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.109
+  - name: yt428_2025_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA YT428 2025 Part A column 4 line 5 gives the rate as 12.8%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.128
+  - name: yt428_2025_bracket_5_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA YT428 2025 Part A column 5 line 5 gives the rate as 15%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.15
+  - name: yt428_2025_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA YT428 2025 Part A column 2 line 7 gives base tax of $3,672.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 3672
+  - name: yt428_2025_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA YT428 2025 Part A column 3 line 7 gives base tax of $8,835.75
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 8835.75
+  - name: yt428_2025_bracket_4_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA YT428 2025 Part A column 4 line 7 gives base tax of $15,717.14
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 15717.14
+  - name: yt428_2025_bracket_5_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA YT428 2025 Part A column 5 line 7 gives base tax of $56,948.24
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 56948.24
+  - name: yt428_2025_basic_personal_amount_cap
+    kind: parameter
+    dtype: Money
+    source: CRA YT428 2025 line 58040 basic personal amount maximum is $16,129
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 16129
+  - name: yt428_2025_age_amount_cap
+    kind: parameter
+    dtype: Money
+    source: CRA YT428 2025 line 58080 age amount maximum is $9,028
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 9028
+  - name: yt428_2025_pension_income_amount_cap
+    kind: parameter
+    dtype: Money
+    source: CRA YT428 2025 line 58360 pension income amount maximum is $2,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2000
+  - name: yt428_2025_medical_expense_income_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA YT428 2025 line 37 gives the medical expense income rate as 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.03
+  - name: yt428_2025_medical_expense_threshold_cap
+    kind: parameter
+    dtype: Money
+    source: CRA YT428 2025 line 39 uses the lesser of $2,834 and line 38
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2834
+  - name: yt428_2025_low_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA YT428 2025 line 44 gives the Yukon non-refundable tax credit rate as 6.4%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.064
+  - name: yt428_2025_high_donation_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA YT428 2025 line 47 multiplies Schedule 9 line 14 by 12.8%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.128
+  - name: yt428_2025_minimum_tax_carryover_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA YT428 2025 line 55 multiplies minimum tax carryover by 44.14%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.4414
+  - name: yt428_2025_additional_minimum_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA YT428 2025 line 58 multiplies Form T691 Part 7 line 14 by 43.9%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.439
+  - name: yt428_2025_other_than_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet YT428 2025 line 61520 multiplies line 12010 by 0.67%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0067
+  - name: yt428_2025_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet YT428 2025 line 61520 multiplies line 12000 minus line 12010 by 12.02%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.1202
+  - name: yt428_2025_business_investment_tax_credit_cap
+    kind: parameter
+    dtype: Money
+    source: CRA YT428 2025 line 67 caps the business investment tax credit at $25,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 25000
+  - name: yt428_2025_political_first_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet YT428 2025 line 78 first political contribution threshold is $400
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 400
+  - name: yt428_2025_political_second_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet YT428 2025 line 78 second political contribution threshold is $750
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 750
+  - name: yt428_2025_political_cap_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet YT428 2025 line 78 gives the maximum credit if total political contributions are more than $1,275
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1275
+  - name: yt428_2025_political_cap
+    kind: parameter
+    dtype: Money
+    source: CRA YT428 2025 line 78 maximum Yukon political contribution tax credit is $650
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 650
+  - name: yt428_2025_political_first_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet YT428 2025 line 78 first political contribution rate is 75%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.75
+  - name: yt428_2025_political_second_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet YT428 2025 line 78 second political contribution rate is 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.50
+  - name: yt428_2025_political_third_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet YT428 2025 line 78 third political contribution rate is 33.33%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.3333
+  - name: yt428_2025_political_second_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet YT428 2025 line 78 column 2 base credit is $300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 300
+  - name: yt428_2025_political_third_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet YT428 2025 line 78 column 3 base credit is $475
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 475
+
+  - name: yt428_tax_on_taxable_income_line_50
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 Part A line 50 calculates Yukon tax on taxable income using the selected bracket column
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= yt428_2025_bracket_1_threshold:
+            max(0, taxable_income_line_26000) * yt428_2025_bracket_1_rate
+          else:
+            if taxable_income_line_26000 <= yt428_2025_bracket_2_threshold:
+              (taxable_income_line_26000 - yt428_2025_bracket_1_threshold) * yt428_2025_bracket_2_rate + yt428_2025_bracket_2_base_tax
+            else:
+              if taxable_income_line_26000 <= yt428_2025_bracket_3_threshold:
+                (taxable_income_line_26000 - yt428_2025_bracket_2_threshold) * yt428_2025_bracket_3_rate + yt428_2025_bracket_3_base_tax
+              else:
+                if taxable_income_line_26000 <= yt428_2025_bracket_4_threshold:
+                  (taxable_income_line_26000 - yt428_2025_bracket_3_threshold) * yt428_2025_bracket_4_rate + yt428_2025_bracket_4_base_tax
+                else:
+                  (taxable_income_line_26000 - yt428_2025_bracket_4_threshold) * yt428_2025_bracket_5_rate + yt428_2025_bracket_5_base_tax
+  - name: yt428_basic_personal_amount_line_58040
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 58040 caps the basic personal amount at $16,129
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(yt428_2025_basic_personal_amount_cap, max(0, basic_personal_amount_line_30000))
+  - name: yt428_age_amount_line_58080
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 58080 caps the age amount at $9,028
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(yt428_2025_age_amount_cap, max(0, age_amount_line_30100))
+  - name: yt428_credit_subtotal_line_16
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 16 adds lines 9 to 15
+    versions:
+      - effective_from: '2025-01-01'
+        formula: yt428_basic_personal_amount_line_58040 + yt428_age_amount_line_58080 + max(0, spouse_or_partner_amount_line_58120) + max(0, eligible_dependant_amount_line_58160) + max(0, caregiver_spouse_or_dependant_amount_line_58170) + max(0, caregiver_infirm_dependants_amount_line_58180) + max(0, caregiver_infirm_children_amount_line_58189)
+  - name: yt428_credit_subtotal_line_24
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 24 adds lines 17 to 23
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, cpp_qpp_contributions_employment_line_30800) + max(0, cpp_qpp_contributions_self_employment_line_31000) + max(0, employment_insurance_premiums_line_31200) + max(0, self_employment_ei_premiums_line_31217) + max(0, canada_employment_amount_line_58310) + max(0, childrens_arts_amount_line_58326) + max(0, adoption_expenses_line_58330)
+  - name: yt428_pension_income_amount_line_58360
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 58360 caps the pension income amount at $2,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(yt428_2025_pension_income_amount_cap, max(0, pension_income_amount_line_58360))
+  - name: yt428_credit_subtotal_line_28
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 28 adds lines 16 and 24 to 27
+    versions:
+      - effective_from: '2025-01-01'
+        formula: yt428_credit_subtotal_line_16 + yt428_credit_subtotal_line_24 + yt428_pension_income_amount_line_58360 + max(0, disability_amount_for_self_line_58440) + max(0, disability_amount_transferred_from_dependant_line_58480)
+  - name: yt428_credit_subtotal_line_34
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 34 adds lines 29 to 33
+    versions:
+      - effective_from: '2025-01-01'
+        formula: yt428_credit_subtotal_line_28 + max(0, student_loan_interest_line_58520) + max(0, tuition_education_textbook_amounts_line_58560) + max(0, tuition_amount_transferred_line_58600) + max(0, spouse_or_partner_transfers_line_58640)
+  - name: yt428_medical_expense_income_base_line_38
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 38 multiplies net income line 23600 by 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, net_income_line_23600) * yt428_2025_medical_expense_income_rate
+  - name: yt428_medical_expense_threshold_line_39
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 39 uses the lesser of $2,834 and line 38
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(yt428_2025_medical_expense_threshold_cap, yt428_medical_expense_income_base_line_38)
+  - name: yt428_allowable_family_medical_expenses_line_40
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 40 subtracts line 39 from line 35 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, max(0, medical_expenses_line_58689) - yt428_medical_expense_threshold_line_39)
+  - name: yt428_total_medical_expenses_line_58769
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 42 and line 58769 add line 40 and line 41
+    versions:
+      - effective_from: '2025-01-01'
+        formula: yt428_allowable_family_medical_expenses_line_40 + max(0, medical_expenses_other_dependants_line_58729)
+  - name: yt428_total_claim_amount_line_58800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 43 and line 58800 add line 34 and line 42
+    versions:
+      - effective_from: '2025-01-01'
+        formula: yt428_credit_subtotal_line_34 + yt428_total_medical_expenses_line_58769
+  - name: yt428_net_non_refundable_tax_credits_line_58840
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 45 and line 58840 multiply line 43 by the 6.4% credit rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: yt428_total_claim_amount_line_58800 * yt428_2025_low_credit_rate
+  - name: yt428_donations_and_gifts_line_58969
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 48 and line 58969 add low-rate and high-rate donations from federal Schedule 9
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, federal_schedule_9_line_13_amount) * yt428_2025_low_credit_rate + max(0, federal_schedule_9_line_14_amount) * yt428_2025_high_donation_rate
+  - name: yt428_total_non_refundable_tax_credits_line_61500
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 49 adds Yukon net non-refundable tax credits and donations and gifts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: yt428_net_non_refundable_tax_credits_line_58840 + yt428_donations_and_gifts_line_58969
+  - name: yt428_tax_plus_tax_on_split_income_line_52
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 52 adds Yukon tax on taxable income and tax on split income line 61510
+    versions:
+      - effective_from: '2025-01-01'
+        formula: yt428_tax_on_taxable_income_line_50 + max(0, yukon_tax_on_split_income_line_61510)
+  - name: yt428_dividend_tax_credit_line_61520
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet YT428 2025 line 61520 calculates the Yukon dividend tax credit from line 12000 and line 12010
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, taxable_dividends_other_than_eligible_line_12010) * yt428_2025_other_than_eligible_dividend_credit_rate + max(0, taxable_dividends_line_12000 - max(0, taxable_dividends_other_than_eligible_line_12010)) * yt428_2025_eligible_dividend_credit_rate
+  - name: yt428_minimum_tax_carryover_line_61540
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 55 and line 61540 multiply federal minimum tax carryover line 40427 by 44.14%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, minimum_tax_carryover_line_40427) * yt428_2025_minimum_tax_carryover_rate
+  - name: yt428_credit_and_carryover_subtotal_line_56
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 56 adds lines 53 to 55
+    versions:
+      - effective_from: '2025-01-01'
+        formula: yt428_total_non_refundable_tax_credits_line_61500 + yt428_dividend_tax_credit_line_61520 + yt428_minimum_tax_carryover_line_61540
+  - name: yt428_tax_after_credits_and_carryover_line_57
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 57 subtracts line 56 from line 52 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, yt428_tax_plus_tax_on_split_income_line_52 - yt428_credit_and_carryover_subtotal_line_56)
+  - name: yt428_additional_tax_for_minimum_tax_purposes_line_58
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 58 multiplies Form T691 Part 7 line 14 by 43.9%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, t691_part_7_line_14_amount) * yt428_2025_additional_minimum_tax_rate
+  - name: yt428_tax_after_additional_minimum_tax_line_59
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 59 adds line 57 and line 58
+    versions:
+      - effective_from: '2025-01-01'
+        formula: yt428_tax_after_credits_and_carryover_line_57 + yt428_additional_tax_for_minimum_tax_purposes_line_58
+  - name: yt428_tax_after_foreign_tax_credit_line_62
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 62 subtracts the territorial foreign tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, yt428_tax_after_additional_minimum_tax_line_59 - max(0, territorial_foreign_tax_credit_line_61))
+  - name: yt428_business_investment_credit_available_line_65
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 65 adds certificate and unused business investment tax credit amounts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, yukon_business_investment_tax_credit_certificate_line_63810) + max(0, unused_business_investment_tax_credit_line_64)
+  - name: yt428_business_investment_tax_credit_line_67
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 67 allows the lesser of available credit, line 62 tax, and the $25,000 maximum
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(yt428_2025_business_investment_tax_credit_cap, yt428_business_investment_credit_available_line_65, yt428_tax_after_foreign_tax_credit_line_62)
+  - name: yt428_unused_business_investment_tax_credit_line_70
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 70 subtracts the used business investment tax credit from the available credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, yt428_business_investment_credit_available_line_65 - yt428_business_investment_tax_credit_line_67)
+  - name: yt428_tax_after_business_investment_tax_credit_line_74
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 74 subtracts business investment tax credit from line 62
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, yt428_tax_after_foreign_tax_credit_line_62 - yt428_business_investment_tax_credit_line_67)
+  - name: yt428_tax_after_first_nations_income_tax_credit_line_76
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 76 subtracts Yukon First Nations income tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, yt428_tax_after_business_investment_tax_credit_line_74 - max(0, yukon_first_nations_income_tax_credit_line_63860))
+  - name: yt428_political_contribution_tax_credit_line_78
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet YT428 2025 line 78 calculates the Yukon political contribution tax credit capped at $650
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if yukon_political_contributions_line_63850 > yt428_2025_political_cap_threshold:
+            yt428_2025_political_cap
+          else:
+            min(
+              yt428_2025_political_cap,
+              if yukon_political_contributions_line_63850 <= yt428_2025_political_first_threshold:
+                max(0, yukon_political_contributions_line_63850) * yt428_2025_political_first_rate
+              else:
+                if yukon_political_contributions_line_63850 <= yt428_2025_political_second_threshold:
+                  (yukon_political_contributions_line_63850 - yt428_2025_political_first_threshold) * yt428_2025_political_second_rate + yt428_2025_political_second_base_credit
+                else:
+                  (yukon_political_contributions_line_63850 - yt428_2025_political_second_threshold) * yt428_2025_political_third_rate + yt428_2025_political_third_base_credit
+            )
+  - name: yukon_tax_line_42800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA YT428 2025 line 79 subtracts the political contribution tax credit and enters Yukon tax on T1 line 42800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, yt428_tax_after_first_nations_income_tax_credit_line_76 - yt428_political_contribution_tax_credit_line_78)
