@@ -1,0 +1,109 @@
+- name: bc479_capped_credits_and_renters_phaseout
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_self_net_income_line_23600: 70000
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_self_uccb_rdsp_repayments_line_2: 500
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_self_uccb_rdsp_income_line_4: 1000
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_spouse_net_income_line_23600: 4000
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_spouse_uccb_rdsp_repayments_line_2: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_spouse_uccb_rdsp_income_line_4: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_had_spouse_or_common_law_partner_on_december_31: true
+    ca:policies/cra/t1-2025/bc479-credits#input.bc_s12_home_renovation_expenses_line_5: 20000
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_unused_venture_capital_credit_line_17: 100000
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_venture_capital_credit_jan1_mar3_line_60489: 50000
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_venture_capital_credit_mar4_dec31_line_60490: 100000
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_venture_capital_credit_first_60_days_2026_line_60495: 200000
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_mining_exploration_tax_credit_line_60510: 600
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_clean_buildings_tax_credit_line_60545: 700
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_clean_buildings_partnership_credit_line_60546: 800
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_training_tax_credit_individuals_line_60550: 100
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_training_tax_credit_employers_line_60560: 200
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_shipbuilding_ship_repair_credit_line_60570: 300
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_renters_tax_credit_eligible: true
+  output:
+    ca:policies/cra/t1-2025/bc479-credits#bc479_self_adjusted_family_net_income_line_5: 69500
+    ca:policies/cra/t1-2025/bc479-credits#bc479_spouse_adjusted_family_net_income_line_5: 4000
+    ca:policies/cra/t1-2025/bc479-credits#bc479_adjusted_family_net_income_line_6: 73500
+    ca:policies/cra/t1-2025/bc479-credits#bc479_sales_tax_credit_threshold_line_7: 18000
+    ca:policies/cra/t1-2025/bc479-credits#bc479_sales_tax_credit_income_line_8: 55500
+    ca:policies/cra/t1-2025/bc479-credits#bc479_basic_sales_tax_credit_line_60330: 75
+    ca:policies/cra/t1-2025/bc479-credits#bc479_spouse_sales_tax_credit_line_60350: 75
+    ca:policies/cra/t1-2025/bc479-credits#bc479_sales_tax_credit_before_reduction_line_11: 150
+    ca:policies/cra/t1-2025/bc479-credits#bc479_sales_tax_credit_reduction_line_12: 1110
+    ca:policies/cra/t1-2025/bc479-credits#bc479_sales_tax_credit_line_13: 0
+    ca:policies/cra/t1-2025/bc479-credits#bc479_home_renovation_tax_credit_line_60480: 1000
+    ca:policies/cra/t1-2025/bc479-credits#bc479_credits_after_home_renovation_line_15: 1000
+    ca:policies/cra/t1-2025/bc479-credits#bc479_venture_capital_early_period_credit_line_20: 120000
+    ca:policies/cra/t1-2025/bc479-credits#bc479_venture_capital_tax_credit_line_25: 300000
+    ca:policies/cra/t1-2025/bc479-credits#bc479_clean_buildings_total_credit_line_30: 1500
+    ca:policies/cra/t1-2025/bc479-credits#bc479_training_tax_credit_total_line_34: 600
+    ca:policies/cra/t1-2025/bc479-credits#bc479_credits_before_renters_line_35: 303700
+    ca:policies/cra/t1-2025/bc479-credits#bc479_renters_credit_income_excess_line_41: 8736
+    ca:policies/cra/t1-2025/bc479-credits#bc479_renters_credit_reduction_line_43: 174.72
+    ca:policies/cra/t1-2025/bc479-credits#bc479_renters_tax_credit_line_60576: 225.28
+    ca:policies/cra/t1-2025/bc479-credits#british_columbia_credits_line_47900: 303925.28
+
+- name: bc479_single_low_income_sales_and_full_renters
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_self_net_income_line_23600: 10000
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_self_uccb_rdsp_repayments_line_2: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_self_uccb_rdsp_income_line_4: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_spouse_net_income_line_23600: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_spouse_uccb_rdsp_repayments_line_2: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_spouse_uccb_rdsp_income_line_4: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_had_spouse_or_common_law_partner_on_december_31: false
+    ca:policies/cra/t1-2025/bc479-credits#input.bc_s12_home_renovation_expenses_line_5: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_unused_venture_capital_credit_line_17: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_venture_capital_credit_jan1_mar3_line_60489: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_venture_capital_credit_mar4_dec31_line_60490: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_venture_capital_credit_first_60_days_2026_line_60495: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_mining_exploration_tax_credit_line_60510: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_clean_buildings_tax_credit_line_60545: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_clean_buildings_partnership_credit_line_60546: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_training_tax_credit_individuals_line_60550: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_training_tax_credit_employers_line_60560: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_shipbuilding_ship_repair_credit_line_60570: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_renters_tax_credit_eligible: true
+  output:
+    ca:policies/cra/t1-2025/bc479-credits#bc479_sales_tax_credit_threshold_line_7: 15000
+    ca:policies/cra/t1-2025/bc479-credits#bc479_spouse_sales_tax_credit_line_60350: 0
+    ca:policies/cra/t1-2025/bc479-credits#bc479_sales_tax_credit_line_13: 75
+    ca:policies/cra/t1-2025/bc479-credits#bc479_renters_tax_credit_line_60576: 400
+    ca:policies/cra/t1-2025/bc479-credits#british_columbia_credits_line_47900: 475
+
+- name: bc479_renters_ineligible_or_high_income_zero
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_self_net_income_line_23600: 90000
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_self_uccb_rdsp_repayments_line_2: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_self_uccb_rdsp_income_line_4: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_spouse_net_income_line_23600: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_spouse_uccb_rdsp_repayments_line_2: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_spouse_uccb_rdsp_income_line_4: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_had_spouse_or_common_law_partner_on_december_31: false
+    ca:policies/cra/t1-2025/bc479-credits#input.bc_s12_home_renovation_expenses_line_5: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_unused_venture_capital_credit_line_17: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_venture_capital_credit_jan1_mar3_line_60489: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_venture_capital_credit_mar4_dec31_line_60490: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_venture_capital_credit_first_60_days_2026_line_60495: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_mining_exploration_tax_credit_line_60510: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_clean_buildings_tax_credit_line_60545: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_clean_buildings_partnership_credit_line_60546: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_training_tax_credit_individuals_line_60550: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_training_tax_credit_employers_line_60560: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_shipbuilding_ship_repair_credit_line_60570: 0
+    ca:policies/cra/t1-2025/bc479-credits#input.bc479_renters_tax_credit_eligible: true
+  output:
+    ca:policies/cra/t1-2025/bc479-credits#bc479_sales_tax_credit_line_13: 0
+    ca:policies/cra/t1-2025/bc479-credits#bc479_renters_tax_credit_line_60576: 0
+    ca:policies/cra/t1-2025/bc479-credits#british_columbia_credits_line_47900: 0
