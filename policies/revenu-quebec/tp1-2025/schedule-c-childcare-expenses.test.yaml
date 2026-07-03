@@ -1,0 +1,77 @@
+- name: schedule_c_childcare_expenses_positive_rate
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_1: 10000
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_2: 4000
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_3: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_4: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_5: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_6: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_7: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_8: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_9: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_10: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_11: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_12: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_additional_childcare_expenses_line_38_1: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_allowance_or_reimbursement_line_40: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_count_children_severe_impairment_line_42: 1
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_count_children_born_after_2018_line_44: 1
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_count_children_born_after_2008_or_infirmity_line_46: 1
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_self_net_income_line_275: 30000
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_spouse_net_income_line_275: 20000
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_amount_spouse_claiming_line_455_line_96: 2000
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_total_childcare_expenses_line_39: 16500
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_qualifying_childcare_expenses_line_41: 16000
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_severe_impairment_child_limit_line_43: 16800
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_young_child_limit_line_45: 12275
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_child_under_16_or_infirmity_limit_line_47: 6180
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_childcare_expense_limit_line_50: 35255
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_family_income_line_80: 50000
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_childcare_expenses_credit_base_line_85: 16000
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_tax_credit_rate_line_92: 0.71
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_childcare_expenses_credit_before_spouse_line_94: 11360
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_childcare_expenses_tax_credit_line_455: 9360
+
+- name: schedule_c_limit_and_spouse_claim_floor
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_1: 20000
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_2: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_3: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_4: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_5: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_6: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_7: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_8: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_9: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_10: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_11: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_row_12: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_additional_childcare_expenses_line_38_1: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_childcare_expense_allowance_or_reimbursement_line_40: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_count_children_severe_impairment_line_42: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_count_children_born_after_2018_line_44: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_count_children_born_after_2008_or_infirmity_line_46: 1
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_self_net_income_line_275: 120000
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_spouse_net_income_line_275: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#input.schedule_c_amount_spouse_claiming_line_455_line_96: 5000
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_total_childcare_expenses_line_39: 20000
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_qualifying_childcare_expenses_line_41: 20000
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_severe_impairment_child_limit_line_43: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_young_child_limit_line_45: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_child_under_16_or_infirmity_limit_line_47: 6180
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_childcare_expense_limit_line_50: 6180
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_family_income_line_80: 120000
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_childcare_expenses_credit_base_line_85: 6180
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_tax_credit_rate_line_92: 0.67
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_childcare_expenses_credit_before_spouse_line_94: 4140.6
+    ca:policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses#schedule_c_childcare_expenses_tax_credit_line_455: 0
