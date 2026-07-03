@@ -1,0 +1,23 @@
+- name: t89_credit_limited_by_alberta_tax
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/t89-alberta-stock-savings-plan-credit#input.t89_unused_alberta_stock_savings_plan_credit_from_2024_line_1: 5000
+    ca:policies/cra/t1-2025/t89-alberta-stock-savings-plan-credit#input.alberta_tax_line_42800: 1200
+  output:
+    ca:policies/cra/t1-2025/t89-alberta-stock-savings-plan-credit#t89_alberta_stock_savings_plan_tax_credit_line_47900: 1200
+    ca:policies/cra/t1-2025/t89-alberta-stock-savings-plan-credit#t89_unused_alberta_stock_savings_plan_credit_carryforward_line_4: 3800
+
+- name: t89_credit_limited_by_unused_amount
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/t89-alberta-stock-savings-plan-credit#input.t89_unused_alberta_stock_savings_plan_credit_from_2024_line_1: 800
+    ca:policies/cra/t1-2025/t89-alberta-stock-savings-plan-credit#input.alberta_tax_line_42800: 2000
+  output:
+    ca:policies/cra/t1-2025/t89-alberta-stock-savings-plan-credit#t89_alberta_stock_savings_plan_tax_credit_line_47900: 800
+    ca:policies/cra/t1-2025/t89-alberta-stock-savings-plan-credit#t89_unused_alberta_stock_savings_plan_credit_carryforward_line_4: 0

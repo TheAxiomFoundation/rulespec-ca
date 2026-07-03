@@ -1,0 +1,35 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T89 for 2025 calculates the Alberta stock savings plan tax
+    credit entered on T1 line 47900 and the unused amount carried forward.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/t89-alberta-stock-savings-plan-credit
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: CRA Form T89 is the official 2025 Alberta stock savings plan tax credit calculation form.
+    source_urls:
+      - https://www.canada.ca/en/revenue-agency/services/forms-publications/forms/t89.html
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t89/t89-25e.pdf
+rules:
+  - name: t89_alberta_stock_savings_plan_tax_credit_line_47900
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Form T89 2025 line 3 enters the lesser of unused Alberta stock savings plan tax credit from 2024 and Alberta tax from line 42800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(max(0, t89_unused_alberta_stock_savings_plan_credit_from_2024_line_1), max(0, alberta_tax_line_42800))
+
+  - name: t89_unused_alberta_stock_savings_plan_credit_carryforward_line_4
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Form T89 2025 line 4 subtracts line 3 from line 1 to calculate unused Alberta stock savings plan tax credit carried forward
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, t89_unused_alberta_stock_savings_plan_credit_from_2024_line_1 - t89_alberta_stock_savings_plan_tax_credit_line_47900)
