@@ -1,0 +1,139 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form YT479 for 2025 calculates Yukon refundable credits: children's
+    fitness, research and development, business carbon price rebate, fertility
+    and surrogacy, and final Yukon credits entered on T1 line 47900.
+  source_verification:
+    corpus_citation_path: canada/policy/cra/t1-2025/yt479-credits
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - canada/statute/income-tax-act
+      rationale: CRA Form YT479 and the CRA Yukon 2025 tax information page are official 2025 Yukon credit calculation sources.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5011-tc/5011-tc-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5011-tc/5011-tc-25e.pdf
+      - https://www.canada.ca/en/revenue-agency/services/forms-publications/tax-packages-years/general-income-tax-benefit-package/yukon/5011-pc.html
+rules:
+  - name: yt479_2025_childrens_fitness_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA YT479 2025 line 1 multiplies total eligible children's fitness fees by 6.4%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.064
+
+  - name: yt479_2025_childrens_fitness_base_child_cap
+    kind: parameter
+    dtype: Money
+    source: CRA Yukon 2025 tax information says the children's fitness tax credit can claim up to $1,000 per child
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1000
+
+  - name: yt479_2025_childrens_fitness_dtc_additional_amount
+    kind: parameter
+    dtype: Money
+    source: CRA Yukon 2025 tax information says a child eligible for the disability tax credit can add $500 if the minimum fee condition is met
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 500
+
+  - name: yt479_2025_childrens_fitness_dtc_minimum_fee
+    kind: parameter
+    dtype: Money
+    source: CRA Yukon 2025 tax information says the DTC additional amount requires a minimum of $100 paid for eligible fitness expenses
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 100
+
+  - name: yt479_2025_fertility_surrogacy_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA YT479 2025 line 5 multiplies eligible medical expenses for fertility treatments by 40%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.40
+
+  - name: yt479_2025_fertility_surrogacy_credit_cap
+    kind: parameter
+    dtype: Money
+    source: CRA YT479 2025 line 5 caps the Yukon fertility and surrogacy tax credit at $10,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 10000
+
+  - name: yt479_childrens_fitness_base_eligible_fees_line_63800
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Yukon 2025 tax information caps eligible children's fitness fees at $1,000 per child before DTC additions
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(max(0, yt479_childrens_fitness_eligible_child_count) * yt479_2025_childrens_fitness_base_child_cap, max(0, yt479_childrens_fitness_net_eligible_fees))
+
+  - name: yt479_childrens_fitness_dtc_additional_fees_line_63800
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Yukon 2025 tax information allows an additional $500 for each DTC-eligible child with at least $100 paid for eligible fitness expenses
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, yt479_childrens_fitness_dtc_children_meeting_minimum_fee_count) * yt479_2025_childrens_fitness_dtc_additional_amount
+
+  - name: yt479_childrens_fitness_total_eligible_fees_line_63800
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA YT479 2025 line 1 uses total eligible children's fitness fees on line 63800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: yt479_childrens_fitness_base_eligible_fees_line_63800 + yt479_childrens_fitness_dtc_additional_fees_line_63800
+
+  - name: yt479_childrens_fitness_tax_credit_line_1
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA YT479 2025 line 1 multiplies total eligible fees by 6.4%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: yt479_childrens_fitness_total_eligible_fees_line_63800 * yt479_2025_childrens_fitness_rate
+
+  - name: yt479_yukon_business_carbon_price_rebate_line_3_and_4
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA YT479 2025 lines 3 and 4 add the two Schedule YT(S14) business carbon price rebate amounts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, yt_s14_business_carbon_price_rebate_line_12) + max(0, yt_s14_business_carbon_price_rebate_line_7)
+
+  - name: yt479_fertility_surrogacy_tax_credit_line_5
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA YT479 2025 line 5 gives zero without valid Yukon health care card status and otherwise multiplies eligible fertility treatment expenses by 40% capped at $10,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if not yt479_fertility_surrogacy_valid_yukon_health_card_line_63857:
+            0
+          else:
+            min(yt479_2025_fertility_surrogacy_credit_cap, max(0, yt479_fertility_treatments_medical_expenses_line_61268) * yt479_2025_fertility_surrogacy_rate)
+
+  - name: yukon_credits_line_47900
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA YT479 2025 line 6 adds lines 1 to 5 and enters Yukon credits on T1 line 47900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: yt479_childrens_fitness_tax_credit_line_1 + max(0, yt479_research_and_development_tax_credit_line_63840) + yt479_yukon_business_carbon_price_rebate_line_3_and_4 + yt479_fertility_surrogacy_tax_credit_line_5
