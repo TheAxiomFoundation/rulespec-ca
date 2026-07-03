@@ -6,12 +6,12 @@ module:
     Return, TP-1015.3-V. This module encodes those Quebec 2026 source
     deduction personal credit and related withholding parameters.
   source_verification:
-    corpus_citation_path: canada/policy/revenu-quebec/source-deductions-2026/personal-credit-amounts
+    corpus_citation_path: ca/policy/revenu-quebec/source-deductions-2026/personal-credit-amounts
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
         - quebec/statute/taxation-act
-        - canada/policy/revenu-quebec/source-deductions-2026/personal-credit-amounts
+        - ca/policy/revenu-quebec/source-deductions-2026/personal-credit-amounts
       rationale: |-
         Revenu Québec administers Quebec source deductions. Its 2026
         principal changes page gives the official indexed personal tax

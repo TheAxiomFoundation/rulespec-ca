@@ -1,7 +1,7 @@
 source:
-  jurisdiction: canada
+  jurisdiction: ca
   agency: Canada Revenue Agency
-  citation_path: canada/policy/cra/t4127-2026/federal-income-tax
+  citation_path: ca/policy/cra/t4127-2026/federal-income-tax
   title: CRA 2026 federal income tax rates and T4127 payroll formulas
   effective_from: '2026-01-01'
   documents:

@@ -6,11 +6,11 @@ module:
     tax. This module encodes their Part 4 bracket tax, proration, resident
     adjustments, low-income reductions, and final Part 5 tax lines.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/t2203-newfoundland-pei-tax
+    corpus_citation_path: ca/policy/cra/t1-2025/t2203-newfoundland-pei-tax
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Form T2203 is the official 2025 form for provincial and
         territorial taxes for multiple jurisdictions, including NL428MJ and

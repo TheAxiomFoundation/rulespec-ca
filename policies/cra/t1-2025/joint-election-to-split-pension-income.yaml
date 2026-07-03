@@ -6,11 +6,11 @@ module:
     the maximum split-pension amount, elected amount, pension-income
     amount adjustments, and income-tax-deducted allocation.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/joint-election-to-split-pension-income
+    corpus_citation_path: ca/policy/cra/t1-2025/joint-election-to-split-pension-income
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Form T1032 is the official 2025 T1 form for jointly electing
         to split eligible pension income.

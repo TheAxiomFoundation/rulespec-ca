@@ -5,11 +5,11 @@ module:
     foreign tax credit for non-Quebec residents. This module encodes the
     line 1 to line 5 arithmetic and the minimum-tax line 2 override surface.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/provincial-territorial-foreign-tax-credit
+    corpus_citation_path: ca/policy/cra/t1-2025/provincial-territorial-foreign-tax-credit
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Form T2036 is the official 2025 form for calculating the
         provincial or territorial foreign tax credit.

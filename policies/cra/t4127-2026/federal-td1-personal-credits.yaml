@@ -10,11 +10,11 @@ module:
     amount, caregiver amounts, transferred amounts, and northern residents
     TD1 deduction amount.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t4127-2026/federal-td1-personal-credits
+    corpus_citation_path: ca/policy/cra/t4127-2026/federal-td1-personal-credits
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA publishes the official 2026 TD1 and TD1-WS forms used to
         determine federal personal tax credit claim amounts for payroll

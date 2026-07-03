@@ -8,13 +8,13 @@ module:
     encodes the income-tested monthly and annual benefit surface for a
     beneficiary using the regulatory reduction formulas.
   source_verification:
-    corpus_citation_path: canada/policy/esdc/benefits-2026/canada-disability-benefit
+    corpus_citation_path: ca/policy/esdc/benefits-2026/canada-disability-benefit
     upstream_source_check:
       status: checked_higher_authority
       checked_paths:
-        - canada/regulations/sor-2025-35
-        - canada/statute/canada-disability-benefit-act
-        - canada/statute/income-tax-act
+        - ca/regulations/sor-2025-35
+        - ca/statute/canada-disability-benefit-act
+        - ca/statute/income-tax-act
       rationale: |-
         SOR/2025-35 provides the legal eligibility and calculation
         formula. ESDC publishes the indexed July 2026 to June 2027

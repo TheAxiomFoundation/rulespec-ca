@@ -1,7 +1,7 @@
 source:
-  jurisdiction: canada
+  jurisdiction: ca
   agency: Canada Revenue Agency
-  citation_path: canada/policy/cra/tax-rates-2026/provincial-territorial-income-tax
+  citation_path: ca/policy/cra/tax-rates-2026/provincial-territorial-income-tax
   title: CRA 2026 provincial and territorial income tax rates
   effective_from: '2026-01-01'
   documents:

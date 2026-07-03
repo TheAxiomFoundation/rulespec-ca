@@ -7,11 +7,11 @@ module:
     10 Part A PPIP self-employment premium, Part B PPIP employment
     premium, and Part C EI overpayment and credit calculations.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents
+    corpus_citation_path: ca/policy/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/employment-insurance-act
+        - ca/statute/employment-insurance-act
       rationale: |-
         CRA Schedule 10 is the official 2025 T1 schedule for EI and PPIP
         premium calculations for Quebec and non-resident filing packages.

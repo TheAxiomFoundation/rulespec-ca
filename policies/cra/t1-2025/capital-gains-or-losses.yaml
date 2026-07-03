@@ -8,11 +8,11 @@ module:
     reserves, the 50 percent inclusion rate, the 100 percent partnership
     inclusion line, and the resulting line 12700 / net capital loss surface.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/capital-gains-or-losses
+    corpus_citation_path: ca/policy/cra/t1-2025/capital-gains-or-losses
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Schedule 3 is the official 2025 T1 return schedule for
         calculating capital gains or losses and taxable capital gains.

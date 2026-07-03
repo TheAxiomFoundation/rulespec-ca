@@ -8,11 +8,11 @@ module:
     encodes those Schedule 11 calculation surfaces for the current
     federal filing package available in 2026.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/federal-tuition-and-training-credit
+    corpus_citation_path: ca/policy/cra/t1-2025/federal-tuition-and-training-credit
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Schedule 11 is the official 2025 T1 return schedule for the
         federal tuition amount and Canada training credit. This module

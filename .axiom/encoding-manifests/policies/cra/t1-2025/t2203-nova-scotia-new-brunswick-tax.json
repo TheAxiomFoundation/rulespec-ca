@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/t1-2025/t2203-nova-scotia-new-brunswick-tax.yaml",
-      "sha256": "510bb21b996f84951cb4582e0e00435ba7f2e9b2761cdddf5efae35576789c98"
+      "sha256": "971f00af16138158ffc81c7b5d22500f818c094189ea5dbfa119f875092c2e41"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/t1-2025/t2203-nova-scotia-new-brunswick-tax",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.828716+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/t2203-nova-scotia-new-brunswick-tax.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "510bb21b996f84951cb4582e0e00435ba7f2e9b2761cdddf5efae35576789c98",
+  "generated_at": "2026-07-03T16:33:36.241787+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/t2203-nova-scotia-new-brunswick-tax.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "971f00af16138158ffc81c7b5d22500f818c094189ea5dbfa119f875092c2e41",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "877bf115e534c70760a09e7b2f7ef02b3b78083e47d020230a15c61c46ff7ffc"
+    "value": "8c75957c0d94abf18831fe7ad1facf4241057e89e5d59f8d0eddbb9bf852fcb4"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

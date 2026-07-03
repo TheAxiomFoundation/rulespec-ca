@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/t1-2025/federal-tax-on-taxable-income.yaml",
-      "sha256": "8301ad3adb50387b764b71e77a138ae8f9201870a0ed13e45a9530d1be2a2e2f"
+      "sha256": "b939ac0b435e40634d72f7bfc8393cc1703766d8c0fea21e0ef5638c98bd6172"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/t1-2025/federal-tax-on-taxable-income",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.810482+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/federal-tax-on-taxable-income.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "8301ad3adb50387b764b71e77a138ae8f9201870a0ed13e45a9530d1be2a2e2f",
+  "generated_at": "2026-07-03T16:33:36.206663+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/federal-tax-on-taxable-income.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "b939ac0b435e40634d72f7bfc8393cc1703766d8c0fea21e0ef5638c98bd6172",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "e4181505bd0d131a38d4e8d9e74558eb88004e4136683c05055c0adc79bdab5d"
+    "value": "91f20154f61aa503129547b1458bdeb75656bb55bdcc8a9f20bc4d14e8fbd821"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

@@ -9,11 +9,11 @@ module:
     contribution tax credit, the top-up tax credit, and the refundable
     medical expense supplement.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/federal-worksheet-credits-and-repayments
+    corpus_citation_path: ca/policy/cra/t1-2025/federal-worksheet-credits-and-repayments
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Federal Worksheet 2025 is the official return worksheet for
         these T1 line calculations. This module encodes the published

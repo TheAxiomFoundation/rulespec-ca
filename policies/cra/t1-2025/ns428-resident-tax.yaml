@@ -8,11 +8,11 @@ module:
     innovation credits, age tax credit, and final tax entered on T1 line
     42800.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/ns428-resident-tax
+    corpus_citation_path: ca/policy/cra/t1-2025/ns428-resident-tax
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Form NS428 and Worksheet NS428 are the official 2025 Nova Scotia
         tax calculation documents for Nova Scotia residents. This module

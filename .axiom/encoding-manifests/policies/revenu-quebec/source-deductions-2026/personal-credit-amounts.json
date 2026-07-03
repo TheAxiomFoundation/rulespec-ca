@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/revenu-quebec/source-deductions-2026/personal-credit-amounts.yaml",
-      "sha256": "8aa807bb1facf014c2ec647db1a381e0dfc6b2f8e79adc3dc4cfbf5e3662f8be"
+      "sha256": "924f48ed37f6c9f5d24025f3beb298b678e493ffac600124bc35c41cfbbe8095"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/revenu-quebec/source-deductions-2026/personal-credit-amounts",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.841354+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/revenu-quebec/source-deductions-2026/personal-credit-amounts.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "8aa807bb1facf014c2ec647db1a381e0dfc6b2f8e79adc3dc4cfbf5e3662f8be",
+  "generated_at": "2026-07-03T16:33:36.256228+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/revenu-quebec/source-deductions-2026/personal-credit-amounts.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "924f48ed37f6c9f5d24025f3beb298b678e493ffac600124bc35c41cfbbe8095",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "1dabdd7ab0a4e01fcdbe205c43be8fd6d5fe3cfcee1c1b0bc3c04f4283108fde"
+    "value": "ff2c17d914e9fd69ea8ba1be812ee1187e83716edeac2da5235b7d4141e471a4"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

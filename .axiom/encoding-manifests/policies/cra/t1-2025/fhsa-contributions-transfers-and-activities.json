@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/t1-2025/fhsa-contributions-transfers-and-activities.yaml",
-      "sha256": "4bdf3562bf23fdee1c2d1f18319c1f59aa6a08c78ad6af2e1c0a73e4f75310b6"
+      "sha256": "b7af0deb23f4d89b6d3b14d98f617bf24f22a91bb71275ea03be55c6446566c7"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/t1-2025/fhsa-contributions-transfers-and-activities",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.812727+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/fhsa-contributions-transfers-and-activities.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "4bdf3562bf23fdee1c2d1f18319c1f59aa6a08c78ad6af2e1c0a73e4f75310b6",
+  "generated_at": "2026-07-03T16:33:36.208957+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/fhsa-contributions-transfers-and-activities.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "b7af0deb23f4d89b6d3b14d98f617bf24f22a91bb71275ea03be55c6446566c7",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "c3d46efd54eb34c9ebf9d4a329e67e1b619eba03ec29604326d7af1b0f6080b3"
+    "value": "ec97593f7900373e1b87691f6511f3ffd79d7c32bd34df33d26be9d805941675"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

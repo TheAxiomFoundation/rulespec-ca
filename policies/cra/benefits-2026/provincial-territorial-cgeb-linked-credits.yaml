@@ -10,11 +10,11 @@ module:
     credit, Ontario sales tax credit, Prince Edward Island sales tax
     credit, and Saskatchewan low-income tax credit.
   source_verification:
-    corpus_citation_path: canada/policy/cra/benefits-2026/provincial-territorial-cgeb-linked-credits
+    corpus_citation_path: ca/policy/cra/benefits-2026/provincial-territorial-cgeb-linked-credits
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA RC4210 is the official CRA guide for CGEB/GST-HST credit
         payments and the provincial and territorial programs combined

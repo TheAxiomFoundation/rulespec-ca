@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/td1-2026/provincial-territorial-personal-credits.yaml",
-      "sha256": "d4fb87fa8cb2bc20b9f766e8f7b38f31111207e2ce55449508b01c6cbac2b82c"
+      "sha256": "d11b023775befb916b3589bc46968d772bcf59aa975df9b80b0b255dbb162b14"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/td1-2026/provincial-territorial-personal-credits",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.839396+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/td1-2026/provincial-territorial-personal-credits.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "d4fb87fa8cb2bc20b9f766e8f7b38f31111207e2ce55449508b01c6cbac2b82c",
+  "generated_at": "2026-07-03T16:33:36.254673+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/td1-2026/provincial-territorial-personal-credits.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "d11b023775befb916b3589bc46968d772bcf59aa975df9b80b0b255dbb162b14",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "b0120dcf1c2f7ffbaa78cbeed7233e9b4c965a89a485d6ccc19593c0570177d1"
+    "value": "6edb466aabf72c0d467378b769004430bbff784650a7dc917ae3468fcb1d878e"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

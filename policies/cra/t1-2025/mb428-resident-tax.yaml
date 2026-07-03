@@ -7,11 +7,11 @@ module:
     contribution credit, investment and foreign tax credits, and final
     Manitoba tax entered on T1 line 42800.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/mb428-resident-tax
+    corpus_citation_path: ca/policy/cra/t1-2025/mb428-resident-tax
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Form MB428 and Worksheet MB428 are the official 2025 Manitoba
         tax calculation documents for Manitoba residents. This module encodes

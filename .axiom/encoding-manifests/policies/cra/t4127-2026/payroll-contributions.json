@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/t4127-2026/payroll-contributions.yaml",
-      "sha256": "3cd95e1e269e93c365b32c33cb47919b0a44086657bbf9963b202281cc577c9f"
+      "sha256": "164c03b86b44e7f5a1cf5c060dcae2e2898bc1388c29e4643cf09fb0022a33e6"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/t4127-2026/payroll-contributions",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.837668+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t4127-2026/payroll-contributions.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "3cd95e1e269e93c365b32c33cb47919b0a44086657bbf9963b202281cc577c9f",
+  "generated_at": "2026-07-03T16:33:36.252449+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t4127-2026/payroll-contributions.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "164c03b86b44e7f5a1cf5c060dcae2e2898bc1388c29e4643cf09fb0022a33e6",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "a3ae1eb5969a3d43aaf1699361d4ac89ec5024131c73b29e5cd24ad9c2421d33"
+    "value": "ee3371c4a95af9061883f775dd83c801d314c0464351d45efcb2db0c46051ac8"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

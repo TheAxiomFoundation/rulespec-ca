@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/t1-2025/cpp-contributions-and-overpayment.yaml",
-      "sha256": "391dc24881d458991b5a152d4c61358e883916d030d39921f0e4209cd85c8d60"
+      "sha256": "b7c0496bb4a9db0029b25dffdc2a6de04556d929e7f16eb715bfbe13cb0baa21"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/t1-2025/cpp-contributions-and-overpayment",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.801235+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/cpp-contributions-and-overpayment.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "391dc24881d458991b5a152d4c61358e883916d030d39921f0e4209cd85c8d60",
+  "generated_at": "2026-07-03T16:33:36.197336+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/cpp-contributions-and-overpayment.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "b7c0496bb4a9db0029b25dffdc2a6de04556d929e7f16eb715bfbe13cb0baa21",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "e799090a86bbb51170711015a1ec3bd69cecca5d375714eba58abb3313646d75"
+    "value": "027bffc31a2ed797a7edb65b450e6bfdd797795963b8c73f5d842608a18790f6"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

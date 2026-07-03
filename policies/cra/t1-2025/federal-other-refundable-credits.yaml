@@ -7,11 +7,11 @@ module:
     partner GST/HST rebate claim, and the eligible educator school supply
     tax credit.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/federal-other-refundable-credits
+    corpus_citation_path: ca/policy/cra/t1-2025/federal-other-refundable-credits
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA line guidance and Form GST370 are the official T1 filing
         sources for these line calculations. This module encodes the

@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/t1-2025/capital-gains-or-losses.yaml",
-      "sha256": "f2fd29ba76f01f0d2b8f6c1b81d39886fdacbd865978e9a1567c772efca2329d"
+      "sha256": "9118529e9cb16db83744082d72eac9c37e7f2e11156b724ef6d8d083a30cfa49"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/t1-2025/capital-gains-or-losses",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.797963+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/capital-gains-or-losses.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "f2fd29ba76f01f0d2b8f6c1b81d39886fdacbd865978e9a1567c772efca2329d",
+  "generated_at": "2026-07-03T16:33:36.195650+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/capital-gains-or-losses.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "9118529e9cb16db83744082d72eac9c37e7f2e11156b724ef6d8d083a30cfa49",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "ae5845870af1d31dd5ff2b2e8c721ec979eb29de153532d85c439e1327efc748"
+    "value": "58f143de03ad836011e66375681868ac23151096d7e98700bfb8e294590f8090"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

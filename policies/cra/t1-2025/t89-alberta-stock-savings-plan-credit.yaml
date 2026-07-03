@@ -4,11 +4,11 @@ module:
     CRA Form T89 for 2025 calculates the Alberta stock savings plan tax
     credit entered on T1 line 47900 and the unused amount carried forward.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/t89-alberta-stock-savings-plan-credit
+    corpus_citation_path: ca/policy/cra/t1-2025/t89-alberta-stock-savings-plan-credit
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: CRA Form T89 is the official 2025 Alberta stock savings plan tax credit calculation form.
     source_urls:
       - https://www.canada.ca/en/revenue-agency/services/forms-publications/forms/t89.html

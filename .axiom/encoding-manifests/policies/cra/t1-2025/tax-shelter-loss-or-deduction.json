@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/t1-2025/tax-shelter-loss-or-deduction.yaml",
-      "sha256": "c7a211dad0a345f0f80f9b4992e0593a0f2bc0bebcab43e9b7ca039445d8008e"
+      "sha256": "6dcd8bfad3ee27b5e3acc407f7b60f70b3fbafe218c3a0200a9ed70750fd1740"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.833736+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/tax-shelter-loss-or-deduction.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "c7a211dad0a345f0f80f9b4992e0593a0f2bc0bebcab43e9b7ca039445d8008e",
+  "generated_at": "2026-07-03T16:33:36.247340+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/tax-shelter-loss-or-deduction.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "6dcd8bfad3ee27b5e3acc407f7b60f70b3fbafe218c3a0200a9ed70750fd1740",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "8d697901002346d247e4666f1c822af202fe9f0b22f425193d795aaddb896258"
+    "value": "985ab771afb408edf3dd69126f620f36bcb4d56b58944498b5fc6e7f35b210f5"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

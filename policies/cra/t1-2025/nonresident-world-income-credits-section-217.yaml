@@ -7,11 +7,11 @@ module:
     section 217 tax adjustment. This module encodes those cross-schedule
     arithmetic surfaces.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/nonresident-world-income-credits-section-217
+    corpus_citation_path: ca/policy/cra/t1-2025/nonresident-world-income-credits-section-217
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Schedules A, B, and C are the official 2025 T1
         non-resident package schedules for world income, allowable

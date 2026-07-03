@@ -6,11 +6,11 @@ module:
     limit, the two 2025 chart surfaces, and the final line 25400 elected
     deduction cap.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/capital-gains-deduction
+    corpus_citation_path: ca/policy/cra/t1-2025/capital-gains-deduction
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Form T657 is the official 2025 form for calculating the
         capital gains deduction claimed on line 25400.

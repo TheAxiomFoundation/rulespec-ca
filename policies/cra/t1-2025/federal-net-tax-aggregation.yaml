@@ -9,11 +9,11 @@ module:
     calculate basic federal tax line 42900, federal tax line 40600,
     and line 41700 before ACWB and special taxes.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/federal-net-tax-aggregation
+    corpus_citation_path: ca/policy/cra/t1-2025/federal-net-tax-aggregation
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Form 5000-R is the official 2025 T1 return for residents of
         PE, NS, NB, MB, and SK, and its federal Step 5 Part C gives the

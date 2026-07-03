@@ -6,11 +6,11 @@ module:
     recapture, allowable line 41200 claims, carryback/refund amounts, and
     carryforward.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/investment-tax-credit-individuals
+    corpus_citation_path: ca/policy/cra/t1-2025/investment-tax-credit-individuals
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Form T2038(IND) is the official 2025 form for calculating
         individual investment tax credits.

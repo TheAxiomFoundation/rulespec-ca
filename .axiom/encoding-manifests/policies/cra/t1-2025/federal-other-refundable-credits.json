@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/t1-2025/federal-other-refundable-credits.yaml",
-      "sha256": "c325523db7af18c801174b5bf53043123287e43ccd8a9c9c6cc9c305d8b8fe43"
+      "sha256": "f643f7225e241b7597655b23d887696004f2031c5a92c61b8b8e102d42d1a5c2"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/t1-2025/federal-other-refundable-credits",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.808550+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/federal-other-refundable-credits.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "c325523db7af18c801174b5bf53043123287e43ccd8a9c9c6cc9c305d8b8fe43",
+  "generated_at": "2026-07-03T16:33:36.204482+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/federal-other-refundable-credits.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "f643f7225e241b7597655b23d887696004f2031c5a92c61b8b8e102d42d1a5c2",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "9d210c007116b6743f2570f5d3232f981bbddd3d3b7b2a86757cea2aa6cd427c"
+    "value": "b25213a5fc81a6c73d11ad7637bb02b128ce40d5e20de282c5833a7b9b45266e"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

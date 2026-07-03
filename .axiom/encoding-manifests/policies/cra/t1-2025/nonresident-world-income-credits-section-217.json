@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/t1-2025/nonresident-world-income-credits-section-217.yaml",
-      "sha256": "ca5b85961df51f1fca0e0e2231c48e1d1b15505eef787f2fbfcf61eb2ef9eb78"
+      "sha256": "c25f6c482a444ca7cc4e5dea1b9cb47c7b83b814c46084d06dd695b8f30ac314"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/t1-2025/nonresident-world-income-credits-section-217",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.819038+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/nonresident-world-income-credits-section-217.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "ca5b85961df51f1fca0e0e2231c48e1d1b15505eef787f2fbfcf61eb2ef9eb78",
+  "generated_at": "2026-07-03T16:33:36.224604+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/nonresident-world-income-credits-section-217.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "c25f6c482a444ca7cc4e5dea1b9cb47c7b83b814c46084d06dd695b8f30ac314",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "5ab7572719ffcf34222e892d8a6413d5572582df02583d0e60f67107e6883ec2"
+    "value": "d47eb2e949149c5bc2e88020e490d5fa3bf54be21b3a700f480ebaaf2e73d3b7"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

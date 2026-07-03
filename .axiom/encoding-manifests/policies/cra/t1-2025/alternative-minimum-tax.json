@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/t1-2025/alternative-minimum-tax.yaml",
-      "sha256": "6291e5ae37d1a59fcc7b3b8266dddc356345aa9792bb43adabc766377265f0c0"
+      "sha256": "3f1eb5ffe7f7a431b2761b41b519e457f306aabb9136a9c13343b643fa221ae3"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/t1-2025/alternative-minimum-tax",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.792846+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/alternative-minimum-tax.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "6291e5ae37d1a59fcc7b3b8266dddc356345aa9792bb43adabc766377265f0c0",
+  "generated_at": "2026-07-03T16:33:36.190424+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/alternative-minimum-tax.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "3f1eb5ffe7f7a431b2761b41b519e457f306aabb9136a9c13343b643fa221ae3",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "14a369c88323329e3631e3bda9d8ac0487fd184d1186df49155ca77dda2826b3"
+    "value": "df76db3c653a909110d8e446eb9cf8233fad995c665621537c7a90a44ba1d6c5"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

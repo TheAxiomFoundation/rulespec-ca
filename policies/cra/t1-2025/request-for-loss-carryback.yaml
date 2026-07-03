@@ -6,11 +6,11 @@ module:
     farming/fishing, restricted farm, net capital, and listed personal
     property loss carrybacks and balances available for carryforward.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/request-for-loss-carryback
+    corpus_citation_path: ca/policy/cra/t1-2025/request-for-loss-carryback
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Form T1A is the official 2025 form for requesting loss
         carrybacks from 2025 to the three previous tax years.

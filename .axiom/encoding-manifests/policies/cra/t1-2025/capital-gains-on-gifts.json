@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/t1-2025/capital-gains-on-gifts.yaml",
-      "sha256": "05803eb736797e77661a8268a8cffcc1993d6f9f1ba5057c911b1bfad6430ea0"
+      "sha256": "2e41e329c5ae7a4016b0e0010034e722bab64a950905de81e90a428f607f09f9"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/t1-2025/capital-gains-on-gifts",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.796980+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/capital-gains-on-gifts.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "05803eb736797e77661a8268a8cffcc1993d6f9f1ba5057c911b1bfad6430ea0",
+  "generated_at": "2026-07-03T16:33:36.194958+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/capital-gains-on-gifts.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "2e41e329c5ae7a4016b0e0010034e722bab64a950905de81e90a428f607f09f9",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "80fd7cd3747c5c928265b1dbad8e96bb235f7608f24148e61cb733cd2f5d1f07"
+    "value": "1bc9821cd885b3232747557cc59a77e5b639ba9cb10a3585d7b1c0942fcd42c6"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

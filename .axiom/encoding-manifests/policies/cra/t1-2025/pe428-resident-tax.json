@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/t1-2025/pe428-resident-tax.yaml",
-      "sha256": "d172de4097c7394c17ad4674997e0214023925fd653d115154b015ce31d75283"
+      "sha256": "eeca4668257fe5b56e6a8925fd965484c7663213e9874ecc2289786d6e2515d4"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/t1-2025/pe428-resident-tax",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.821410+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/pe428-resident-tax.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "d172de4097c7394c17ad4674997e0214023925fd653d115154b015ce31d75283",
+  "generated_at": "2026-07-03T16:33:36.233765+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/pe428-resident-tax.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "eeca4668257fe5b56e6a8925fd965484c7663213e9874ecc2289786d6e2515d4",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "1f3d54f85c0b20ebff153bab1b47cb6c632e2e1749d051cd511555eb78554f73"
+    "value": "2fc12ef6eaedb724dacec4722f4c85488d1d801c5a7a7de50b24e4d947cece64"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

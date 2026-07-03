@@ -6,11 +6,11 @@ module:
     investor. This module encodes the total amount claimed and the T1 routing
     surfaces named on the form.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/tax-shelter-loss-or-deduction
+    corpus_citation_path: ca/policy/cra/t1-2025/tax-shelter-loss-or-deduction
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Form T5004 is the official 2025 form for claiming a tax shelter
         loss or deduction year amount.

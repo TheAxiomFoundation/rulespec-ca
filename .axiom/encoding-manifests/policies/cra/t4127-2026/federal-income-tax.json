@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/t4127-2026/federal-income-tax.yaml",
-      "sha256": "90eed01da790203180c97294468480b7534ccb3cb605c0a134975b501e5096af"
+      "sha256": "c88bffb0446007dfa9e5f38167036f2893db4320b24933ecb107f6975085ad5f"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/t4127-2026/federal-income-tax",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.835601+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t4127-2026/federal-income-tax.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "90eed01da790203180c97294468480b7534ccb3cb605c0a134975b501e5096af",
+  "generated_at": "2026-07-03T16:33:36.250425+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t4127-2026/federal-income-tax.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "c88bffb0446007dfa9e5f38167036f2893db4320b24933ecb107f6975085ad5f",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "05358de6be31e8e458dd48d8008741716f779ac3dc9afb5f82e152e90fd9fcfe"
+    "value": "96304ce12c5a9b8cad362a53c1baecfdb719954b97d08ce71186258be1dbf887"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

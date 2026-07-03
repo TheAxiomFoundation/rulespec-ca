@@ -12,14 +12,14 @@ module:
     Revenu Quebec, while T4127 sets the payroll factor T2 to zero for
     Quebec because Revenu Quebec administers Quebec tax withholding.
   source_verification:
-    corpus_citation_path: canada/policy/cra/tax-rates-2026/provincial-territorial-income-tax
+    corpus_citation_path: ca/policy/cra/tax-rates-2026/provincial-territorial-income-tax
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
-        - canada/statute/provincial-territorial-income-tax-acts
-        - canada/policy/cra/tax-rates-2026/provincial-territorial-income-tax
-        - canada/policy/revenu-quebec/tax-rates-2026/income-tax-rates
+        - ca/statute/income-tax-act
+        - ca/statute/provincial-territorial-income-tax-acts
+        - ca/policy/cra/tax-rates-2026/provincial-territorial-income-tax
+        - ca/policy/revenu-quebec/tax-rates-2026/income-tax-rates
       rationale: |-
         The encoded values are current 2026 personal income tax rate
         tables published by CRA and Revenu Quebec for return-year use.

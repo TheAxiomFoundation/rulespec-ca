@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/t1-2025/multiple-jurisdiction-taxes.yaml",
-      "sha256": "0d154a27df894d3baefec7572643afa05626119b99e68f0e0dc0027cfe762187"
+      "sha256": "7a48bd2ec433ffb8e5ac5dfeefff5573aefcab2a3c4520b4ce091a152b09db81"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/t1-2025/multiple-jurisdiction-taxes",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.817517+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/multiple-jurisdiction-taxes.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "0d154a27df894d3baefec7572643afa05626119b99e68f0e0dc0027cfe762187",
+  "generated_at": "2026-07-03T16:33:36.214369+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/multiple-jurisdiction-taxes.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "7a48bd2ec433ffb8e5ac5dfeefff5573aefcab2a3c4520b4ce091a152b09db81",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "f03ff96122f5a4cd06d797a75c73e3e4682a6dfca4eb49d37ad052e8d9f9e4d9"
+    "value": "a1659e3f101f6d5c0fb037970abe028005f05464ed5e03a74d19592bc86f2d23"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

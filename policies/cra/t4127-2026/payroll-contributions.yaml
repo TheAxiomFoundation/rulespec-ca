@@ -6,13 +6,13 @@ module:
     This module encodes annual employee and employer contribution
     surfaces used by payroll withholding and tax-credit calculations.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t4127-2026/payroll-contributions
+    corpus_citation_path: ca/policy/cra/t4127-2026/payroll-contributions
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/canada-pension-plan
-        - canada/statute/employment-insurance-act
-        - canada/statute/quebec-pension-plan
+        - ca/statute/canada-pension-plan
+        - ca/statute/employment-insurance-act
+        - ca/statute/quebec-pension-plan
       rationale: |-
         T4127 states that its formulas are approved for purposes of the
         Canada Pension Plan and Employment Insurance Act. This module

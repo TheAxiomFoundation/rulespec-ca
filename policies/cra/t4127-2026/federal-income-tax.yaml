@@ -10,13 +10,13 @@ module:
     credits, Quebec abatement, labour-sponsored funds credit, and final
     annual federal tax payable.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t4127-2026/federal-income-tax
+    corpus_citation_path: ca/policy/cra/t4127-2026/federal-income-tax
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
-        - canada/statute/canada-pension-plan
-        - canada/statute/employment-insurance-act
+        - ca/statute/income-tax-act
+        - ca/statute/canada-pension-plan
+        - ca/statute/employment-insurance-act
       rationale: |-
         T4127 states that the payroll formulas are approved for purposes
         of the Income Tax Act, Canada Pension Plan, and Employment

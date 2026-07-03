@@ -9,11 +9,11 @@ module:
     secondary-earner exemption, final CWB amount, and ACWB
     repayment/offset surface.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/canada-workers-benefit
+    corpus_citation_path: ca/policy/cra/t1-2025/canada-workers-benefit
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act/122.7
+        - ca/statute/income-tax-act/122.7
       rationale: |-
         The Canada Workers Benefit is authorized by the Income Tax Act,
         and CRA Schedule 6 is the official return calculation worksheet

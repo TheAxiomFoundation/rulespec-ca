@@ -8,11 +8,11 @@ module:
     arithmetic surfaces and the HBP/LLP minimum repayment shortfall
     surfaces used for line 12900 income inclusion.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/rrsp-prpp-spp-hbp-llp
+    corpus_citation_path: ca/policy/cra/t1-2025/rrsp-prpp-spp-hbp-llp
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Schedule 7 is the official 2025 T1 return schedule for
         RRSP/PRPP/SPP contributions, transfers, HBP/LLP activities, and

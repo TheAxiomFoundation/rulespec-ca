@@ -7,11 +7,11 @@ module:
     income line 15000, net income line 23600, and taxable income line
     26000.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/t1-income-net-taxable-income
+    corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Form 5000-R is the official 2025 T1 return for residents of
         PE, NS, NB, MB, and SK, and Steps 2 through 4 provide the common

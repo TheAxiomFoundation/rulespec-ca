@@ -8,11 +8,11 @@ module:
     range, selected TC/TCP amount, and K1/K1P non-refundable tax
     credit amount used by payroll deduction formulas.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t4127-2026/claim-codes
+    corpus_citation_path: ca/policy/cra/t4127-2026/claim-codes
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         T4127 is CRA's official payroll formula source for personal
         claim-code calculations used in tax withholding. This module

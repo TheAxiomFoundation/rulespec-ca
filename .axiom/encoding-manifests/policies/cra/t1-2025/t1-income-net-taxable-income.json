@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/t1-2025/t1-income-net-taxable-income.yaml",
-      "sha256": "a075a388d3eed4d9f2b62fbe92c9a80515a0e4243b43e1cef87c9b6b66ba19a3"
+      "sha256": "73c11563d431192e05907aad06346bd86753d5fe7d2e81973eb4f0f1613045af"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/t1-2025/t1-income-net-taxable-income",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.824857+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/t1-income-net-taxable-income.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "a075a388d3eed4d9f2b62fbe92c9a80515a0e4243b43e1cef87c9b6b66ba19a3",
+  "generated_at": "2026-07-03T16:33:36.238035+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/t1-income-net-taxable-income.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "73c11563d431192e05907aad06346bd86753d5fe7d2e81973eb4f0f1613045af",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "089fcdf3e68b5363521fe323ac5960fe0a23d935b43e87149ff50b5113e21989"
+    "value": "f18dd1d1070f8f4ba9e98773a099b648d0417878435465240d75d6692d556a88"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

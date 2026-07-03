@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit.test.yaml",
+      "sha256": "f7f59d15e4c0cdb745905e4ef78a36c89bdc92d040656419a0e817e288a2392c"
+    },
+    {
+      "path": "policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit.yaml",
+      "sha256": "82db6ff3c9690df6742313dea3fa665ff657a9e920b61e957c3986b12a841e7a"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "cdcbc9fccc856569d16e40163005e99078824c3f",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1088",
+    "version_commit": "cdcbc9fccc856569d16e40163005e99078824c3f"
+  },
+  "axiom_encode_version": "0.2.1088",
+  "backend": "manual",
+  "citation": "ca:policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-03T16:33:36.215257+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "82db6ff3c9690df6742313dea3fa665ff657a9e920b61e957c3986b12a841e7a",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "4ade37da71373c0ea4bfa9f003d0986eb5d3f548bb728e48e7deed4eabbf2ab9"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

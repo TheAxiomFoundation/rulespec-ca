@@ -1,7 +1,7 @@
 source:
-  jurisdiction: canada
+  jurisdiction: ca
   agency: Canada Revenue Agency
-  citation_path: canada/policy/cra/benefits-2026/federal-family-and-climate-benefits
+  citation_path: ca/policy/cra/benefits-2026/federal-family-and-climate-benefits
   title: CRA 2026 federal family, grocery, and carbon benefit parameters
   effective_from: '2026-07-01'
   documents:

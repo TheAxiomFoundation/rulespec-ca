@@ -6,11 +6,11 @@ module:
     minima, the Zone B 50% travel reduction, and the combined line 25500
     amount for eligible northern residents.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/northern-residents-deductions
+    corpus_citation_path: ca/policy/cra/t1-2025/northern-residents-deductions
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Form T2222 is the official 2025 T1 form for calculating
         northern residents deductions claimed on line 25500.

@@ -6,11 +6,11 @@ module:
     income, and the non-multiple-jurisdiction Part 3 provincial or
     territorial tax surface, including Chart C rate lookups.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/tax-on-split-income
+    corpus_citation_path: ca/policy/cra/t1-2025/tax-on-split-income
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Form T1206 is the official 2025 T1 form for calculating tax
         on split income and related TOSI-adjusted income amounts.

@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/t1-2025/federal-tuition-and-training-credit.yaml",
-      "sha256": "55aea284a7d47640cbcd615954c830ae8bae74c3f12b1b2862b7b1c9b98c018b"
+      "sha256": "a7fc6dd5f2a544bddd06788f96a03f3a7b16684e389850dbbe7a91cdaea5cbc2"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/t1-2025/federal-tuition-and-training-credit",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.811170+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/federal-tuition-and-training-credit.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "55aea284a7d47640cbcd615954c830ae8bae74c3f12b1b2862b7b1c9b98c018b",
+  "generated_at": "2026-07-03T16:33:36.207419+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/federal-tuition-and-training-credit.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "a7fc6dd5f2a544bddd06788f96a03f3a7b16684e389850dbbe7a91cdaea5cbc2",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "96f2a23e2c7c5d4583ca45ab659ddaa2fbfc6842f2545ef268b9fd2025d3e601"
+    "value": "7d038bbd54dc1c9df0342e8666c07f64979659a802017d7ca259cf2e3fc3928b"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

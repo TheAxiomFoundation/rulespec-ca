@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp.yaml",
-      "sha256": "a3574cd866e52380e49e576756bfd2f57eea59f8040c2ddd268427eaa0a2ef12"
+      "sha256": "22d9f39b702dff2c8e015907d92c8f180aed93136cbc642baa83970ac2937243"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.823527+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "a3574cd866e52380e49e576756bfd2f57eea59f8040c2ddd268427eaa0a2ef12",
+  "generated_at": "2026-07-03T16:33:36.235932+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "22d9f39b702dff2c8e015907d92c8f180aed93136cbc642baa83970ac2937243",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "e26b74827880bef19fa46d57c1f92e5b6da8e9437b831e9fff958c9ff3a767fd"
+    "value": "2a379bd26753b8ce47596770043bb68434736febdb8cded398ce1e50a1560e49"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

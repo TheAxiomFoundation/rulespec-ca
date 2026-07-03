@@ -9,14 +9,14 @@ module:
     the April 2025 payment. This module encodes those federal
     tax-return-administered personal benefit surfaces.
   source_verification:
-    corpus_citation_path: canada/policy/cra/benefits-2026/federal-family-and-climate-benefits
+    corpus_citation_path: ca/policy/cra/benefits-2026/federal-family-and-climate-benefits
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
-        - canada/statute/canada-child-benefit
-        - canada/statute/canada-disability-benefit-act
-        - canada/statute/greenhouse-gas-pollution-pricing-act
+        - ca/statute/income-tax-act
+        - ca/statute/canada-child-benefit
+        - ca/statute/canada-disability-benefit-act
+        - ca/statute/greenhouse-gas-pollution-pricing-act
       rationale: |-
         CRA publishes the current official benefit amounts and calculation
         parameters used for tax-return-administered benefits. This module

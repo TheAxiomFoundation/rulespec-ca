@@ -5,11 +5,11 @@ module:
     This module encodes the federal non-business credit, business credit,
     foreign surtax fallback, and final line 40500 credit cap.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/federal-foreign-tax-credits
+    corpus_citation_path: ca/policy/cra/t1-2025/federal-foreign-tax-credits
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Form T2209 is the official 2025 form for calculating federal
         foreign tax credits claimed on line 40500.

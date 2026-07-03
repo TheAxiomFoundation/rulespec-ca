@@ -8,11 +8,11 @@ module:
     33 percent tier, 29 percent tier, carry-forward claim ordering, and
     the resulting allowable federal donations amount.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/federal-donations-and-gifts
+    corpus_citation_path: ca/policy/cra/t1-2025/federal-donations-and-gifts
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Schedule 9 is the official 2025 T1 return schedule for the
         federal donations and gifts credit. This module encodes the

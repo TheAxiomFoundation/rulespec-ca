@@ -8,11 +8,11 @@ module:
     rate while leaving dwelling, relationship, renovation, residence, and
     disability eligibility predicates to fact layers.
   source_verification:
-    corpus_citation_path: canada/policy/cra/t1-2025/multigenerational-home-renovation-tax-credit
+    corpus_citation_path: ca/policy/cra/t1-2025/multigenerational-home-renovation-tax-credit
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/income-tax-act
+        - ca/statute/income-tax-act
       rationale: |-
         CRA Schedule 12 is the official 2025 T1 return schedule for the
         multigenerational home renovation tax credit.

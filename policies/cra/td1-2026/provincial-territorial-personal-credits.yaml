@@ -9,12 +9,12 @@ module:
     and territories. Quebec is excluded because Revenu Quebec administers
     Quebec source deductions separately.
   source_verification:
-    corpus_citation_path: canada/policy/cra/td1-2026/provincial-territorial-personal-credits
+    corpus_citation_path: ca/policy/cra/td1-2026/provincial-territorial-personal-credits
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
-        - canada/statute/provincial-territorial-income-tax-acts
-        - canada/policy/cra/td1-2026/provincial-territorial-personal-credits
+        - ca/statute/provincial-territorial-income-tax-acts
+        - ca/policy/cra/td1-2026/provincial-territorial-personal-credits
       rationale: |-
         The CRA 2026 provincial and territorial TD1 forms are the official
         administrative current-year personal credit claim forms used by

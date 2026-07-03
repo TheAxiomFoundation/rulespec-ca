@@ -1,7 +1,7 @@
 source:
-  jurisdiction: canada
+  jurisdiction: ca
   agency: Canada Revenue Agency
-  citation_path: canada/policy/cra/t4127-2026/payroll-contributions
+  citation_path: ca/policy/cra/t4127-2026/payroll-contributions
   title: CRA T4127 2026 CPP, QPP, EI, and QPIP contribution rates
   effective_from: '2026-01-01'
   documents:

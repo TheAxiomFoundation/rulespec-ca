@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/t1-2025/cumulative-net-investment-loss.yaml",
-      "sha256": "6e5d2d4260cd2d66bfbb742ca8b0ea5c52f8f4a8489a8b380d3a8bf0e1a26976"
+      "sha256": "04186d97a2a54991ec8b592aff18c5a4102bac07a999c611139fa6b0db515340"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/t1-2025/cumulative-net-investment-loss",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.802180+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/cumulative-net-investment-loss.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "6e5d2d4260cd2d66bfbb742ca8b0ea5c52f8f4a8489a8b380d3a8bf0e1a26976",
+  "generated_at": "2026-07-03T16:33:36.198205+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/cumulative-net-investment-loss.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "04186d97a2a54991ec8b592aff18c5a4102bac07a999c611139fa6b0db515340",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "c3d07702e3a62a7f53a75848cc68af512035c6e950b058d1a06e24ceed23a90f"
+    "value": "a6f5531d75cde7f614287361ad49424e54b522ff3f129dd4e1a1c29ca4c83812"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

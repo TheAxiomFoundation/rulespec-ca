@@ -6,7 +6,7 @@
     },
     {
       "path": "policies/cra/t1-2025/capital-gains-deduction.yaml",
-      "sha256": "a2b95aeeea414c220624551e70198c2504624e92588a6b34691118b842ce1100"
+      "sha256": "a71c2e57a020b9950cf6b472f93122e45cde8dfbeac7d6f76fd723ec4648069e"
     }
   ],
   "axiom_encode_git": {
@@ -21,10 +21,10 @@
   "citation": "ca:policies/cra/t1-2025/capital-gains-deduction",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T13:23:08.795565+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex/sign-applied-files/policies/cra/t1-2025/capital-gains-deduction.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbmc5n8ex",
-  "generated_output_sha256": "a2b95aeeea414c220624551e70198c2504624e92588a6b34691118b842ce1100",
+  "generated_at": "2026-07-03T16:33:36.194288+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/capital-gains-deduction.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_output_sha256": "a71c2e57a020b9950cf6b472f93122e45cde8dfbeac7d6f76fd723ec4648069e",
   "generation_prompt_sha256": null,
   "model": "",
   "run_id": null,
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "bef940da339f6fb9eaffa945c1be1778fbd54cc26b46dc38a7fe0cec110c49d0"
+    "value": "4b75f802a73f0fa4ad0ffc24a252a2361063a36c8bd52e3e6c7f241fa5ed74e1"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,
