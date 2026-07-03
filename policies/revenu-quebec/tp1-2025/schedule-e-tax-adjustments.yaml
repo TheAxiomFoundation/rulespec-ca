@@ -1,0 +1,138 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Quebec Schedule E 2025 tax adjustments and credits: line 413
+    tax after credits, line 432 adjustment of income tax payable, and
+    line 462 property tax refund for forest producers.
+  source_verification:
+    corpus_citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-e-tax-adjustments
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+      rationale: Revenu Quebec Schedule E is the official 2025 schedule for tax adjustments, foreign/designated-trust credits, AMT/logging adjustments, and forest producer property tax refunds.
+    source_urls:
+      - https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.E-V%282025-12%29.pdf
+rules:
+  - name: quebec_2025_schedule_e_forest_producer_refund_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule E 2025 line 60 multiplies the eligible property tax refund base by 85%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.85
+
+  - name: schedule_e_tax_and_adjustment_total_line_405
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule E 2025 line 405 adds income tax on taxable income and tax adjustment for a single payment accrued to December 31, 1971
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_e_income_tax_on_taxable_income_line_401 + max(0, schedule_e_tax_adjustment_single_payment_line_402)
+
+  - name: schedule_e_total_non_refundable_credits_line_412
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule E 2025 line 412 adds non-refundable tax credits, foreign tax credit, and designated trust beneficiary credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_e_non_refundable_tax_credits_line_406) + max(0, schedule_e_foreign_tax_credit_line_409) + max(0, schedule_e_designated_trust_beneficiary_credit_line_411)
+
+  - name: schedule_e_tax_after_credits_line_413
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule E 2025 line 413 subtracts line 412 from line 405 and carries the result to TP-1 line 413, allowing a negative amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_e_tax_and_adjustment_total_line_405 - schedule_e_total_non_refundable_credits_line_412
+
+  - name: schedule_e_tax_after_spouse_transfer_line_12
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule E 2025 line 12 subtracts line 431 from line 430 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_e_amount_from_return_line_430 - max(0, schedule_e_amount_from_return_line_431))
+
+  - name: schedule_e_tax_after_amt_carryover_line_14
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule E 2025 line 14 subtracts the alternative minimum tax carry-over from line 12 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_e_tax_after_spouse_transfer_line_12 - max(0, schedule_e_alternative_minimum_tax_carryover_line_13))
+
+  - name: schedule_e_tax_after_minimum_tax_line_16
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule E 2025 line 16 enters the greater of line 14 and alternative minimum tax from form TP-776.42-V
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(schedule_e_tax_after_amt_carryover_line_14, max(0, schedule_e_alternative_minimum_tax_line_15))
+
+  - name: schedule_e_adjusted_income_tax_payable_line_432
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule E 2025 line 18 subtracts the deduction for logging tax from line 16 and carries the result to TP-1 line 432
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_e_tax_after_minimum_tax_line_16 - max(0, schedule_e_deduction_for_logging_tax_line_17)
+
+  - name: schedule_e_forest_producer_expense_pool_line_23
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule E 2025 line 23 adds current-year eligible development expenses and unused eligible development expenses
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_e_forest_current_eligible_development_expenses_line_21) + max(0, schedule_e_forest_unused_eligible_development_expenses_line_22)
+
+  - name: schedule_e_forest_assessment_unit_property_tax_amount_line_30
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule E 2025 line 30 multiplies property taxes paid and not refunded by the land-value share of the assessment unit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if max(0, schedule_e_forest_assessment_unit_total_value_line_28) <= 0:
+            0
+          else:
+            max(0, schedule_e_forest_property_taxes_paid_not_refunded_line_26) * max(0, schedule_e_forest_land_value_line_27) / max(0, schedule_e_forest_assessment_unit_total_value_line_28)
+
+  - name: schedule_e_forest_property_tax_refund_base_line_32
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule E 2025 line 32 enters the lesser of the expense pool on line 23 and total eligible property taxes on line 31
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(schedule_e_forest_producer_expense_pool_line_23, max(0, schedule_e_forest_total_eligible_property_taxes_all_units_line_31))
+
+  - name: schedule_e_property_tax_refund_forest_producers_line_462
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule E 2025 line 60 multiplies line 32 by 85% for transfer to TP-1 line 462
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_e_forest_property_tax_refund_base_line_32 * quebec_2025_schedule_e_forest_producer_refund_rate
