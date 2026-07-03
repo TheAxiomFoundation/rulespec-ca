@@ -1,0 +1,184 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Quebec Schedule A 2025 dependant amounts transferred to the
+    Quebec income tax return: amount for children under 18 enrolled in
+    post-secondary studies, amount transferred by a child 18 or over,
+    amount for other dependants, and tuition/examination-fee credits
+    transferred by a child.
+  source_verification:
+    corpus_citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-a-dependants
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+      rationale: Revenu Quebec Schedule A is the official 2025 schedule for dependant amounts transferred to TP-1 lines 367 and 398.1.
+    source_urls:
+      - https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.A-V%282025-12%29.pdf
+rules:
+  - name: quebec_2025_schedule_a_child_under_18_student_max_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule A 2025 line 10 caps the eligible post-secondary child amount at $7,646 for each child under 18
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 7646
+
+  - name: quebec_2025_schedule_a_other_dependant_basic_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule A 2025 line 43 gives the basic amount for each other dependant as $5,570
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5570
+
+  - name: schedule_a_child_under_18_income_for_reduction_row_1
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule A 2025 lines 12 to 20 calculate the child's income for reducing the under-18 post-secondary amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_a_child1_net_income_line_275 + max(0, schedule_a_child1_deduction_line_236) - max(0, schedule_a_child1_scholarships_bursaries_allowances_line_154))
+
+  - name: schedule_a_child_under_18_income_for_reduction_row_2
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule A 2025 lines 12 to 20 calculate the child's income for reducing the under-18 post-secondary amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_a_child2_net_income_line_275 + max(0, schedule_a_child2_deduction_line_236) - max(0, schedule_a_child2_scholarships_bursaries_allowances_line_154))
+
+  - name: schedule_a_child_under_18_income_for_reduction_row_3
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule A 2025 lines 12 to 20 calculate the child's income for reducing the under-18 post-secondary amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_a_child3_net_income_line_275 + max(0, schedule_a_child3_deduction_line_236) - max(0, schedule_a_child3_scholarships_bursaries_allowances_line_154))
+
+  - name: schedule_a_child_under_18_amount_row_1
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule A 2025 lines 10 and 21 calculate each eligible child under 18 post-secondary amount after the income reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, min(max(0, schedule_a_child1_rl8_box_a_amount), quebec_2025_schedule_a_child_under_18_student_max_amount) - schedule_a_child_under_18_income_for_reduction_row_1)
+
+  - name: schedule_a_child_under_18_amount_row_2
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule A 2025 lines 10 and 21 calculate each eligible child under 18 post-secondary amount after the income reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, min(max(0, schedule_a_child2_rl8_box_a_amount), quebec_2025_schedule_a_child_under_18_student_max_amount) - schedule_a_child_under_18_income_for_reduction_row_2)
+
+  - name: schedule_a_child_under_18_amount_row_3
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule A 2025 lines 10 and 21 calculate each eligible child under 18 post-secondary amount after the income reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, min(max(0, schedule_a_child3_rl8_box_a_amount), quebec_2025_schedule_a_child_under_18_student_max_amount) - schedule_a_child_under_18_income_for_reduction_row_3)
+
+  - name: schedule_a_child_under_18_amount_line_22
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule A 2025 line 22 adds the amounts for children under 18 enrolled in post-secondary studies
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_a_child_under_18_amount_row_1 + schedule_a_child_under_18_amount_row_2 + schedule_a_child_under_18_amount_row_3 + max(0, schedule_a_additional_child_under_18_amounts)
+
+  - name: schedule_a_amount_transferred_by_children_18_or_over_line_29
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule A 2025 line 29 adds amounts transferred by children 18 or over from Schedule S
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_a_child18plus_transfer_row_1) + max(0, schedule_a_child18plus_transfer_row_2) + max(0, schedule_a_child18plus_transfer_row_3) + max(0, schedule_a_additional_child18plus_transfer_amounts)
+
+  - name: schedule_a_other_dependant_income_for_reduction_row_1
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule A 2025 lines 44 to 53 calculate an other dependant's income for reducing the dependant amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_a_other_dependant1_net_income_line_275 + max(0, schedule_a_other_dependant1_deduction_line_236) - max(0, schedule_a_other_dependant1_scholarships_bursaries_allowances_line_154))
+
+  - name: schedule_a_other_dependant_income_for_reduction_row_2
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule A 2025 lines 44 to 53 calculate an other dependant's income for reducing the dependant amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_a_other_dependant2_net_income_line_275 + max(0, schedule_a_other_dependant2_deduction_line_236) - max(0, schedule_a_other_dependant2_scholarships_bursaries_allowances_line_154))
+
+  - name: schedule_a_other_dependant_amount_row_1
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule A 2025 lines 43 to 55 calculate each other dependant amount after reduction for age-18 months and income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, max(0, quebec_2025_schedule_a_other_dependant_basic_amount - max(0, schedule_a_other_dependant1_amount_for_months_after_turning_18_line_40)) - schedule_a_other_dependant_income_for_reduction_row_1)
+
+  - name: schedule_a_other_dependant_amount_row_2
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule A 2025 lines 43 to 55 calculate each other dependant amount after reduction for age-18 months and income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, max(0, quebec_2025_schedule_a_other_dependant_basic_amount - max(0, schedule_a_other_dependant2_amount_for_months_after_turning_18_line_40)) - schedule_a_other_dependant_income_for_reduction_row_2)
+
+  - name: schedule_a_other_dependants_amount_line_56
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule A 2025 line 56 adds the amounts for other dependants
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_a_other_dependant_amount_row_1 + schedule_a_other_dependant_amount_row_2 + max(0, schedule_a_additional_other_dependant_amounts)
+
+  - name: schedule_a_amount_for_dependants_and_transfer_line_367
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule A 2025 line 367 adds line 22, line 29, and line 56 for transfer to TP-1 line 367
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_a_child_under_18_amount_line_22 + schedule_a_amount_transferred_by_children_18_or_over_line_29 + schedule_a_other_dependants_amount_line_56
+
+  - name: schedule_a_tax_credit_for_tuition_or_examination_fees_transferred_by_child_line_398_1
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule A 2025 line 70 adds Schedule T line 68 amounts transferred by children for TP-1 line 398.1
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_a_tuition_credit_transferred_by_child_row_1) + max(0, schedule_a_tuition_credit_transferred_by_child_row_2) + max(0, schedule_a_tuition_credit_transferred_by_child_row_3) + max(0, schedule_a_additional_tuition_credit_transferred_by_children)
