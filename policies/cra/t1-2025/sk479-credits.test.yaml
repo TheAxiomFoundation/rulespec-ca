@@ -1,0 +1,59 @@
+- name: sk479_active_families_allowed_family_outputs
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_self_net_income_line_23600: 70000
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_self_uccb_rdsp_repayments_line_2: 1000
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_self_uccb_rdsp_income_line_4: 500
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_spouse_net_income_line_23600: 40000
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_spouse_uccb_rdsp_repayments_line_2: 0
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_spouse_uccb_rdsp_income_line_4: 0
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_active_families_regular_child_count: 2
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_active_families_regular_children_net_eligible_activity_expenses: 800
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_active_families_dtc_child_count: 1
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_active_families_dtc_children_net_eligible_activity_expenses: 450
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_fertility_treatment_medical_expenses_line_61268: 30000
+  output:
+    ca:policies/cra/t1-2025/sk479-credits#sk479_self_adjusted_family_income_line_5: 70500
+    ca:policies/cra/t1-2025/sk479-credits#sk479_spouse_adjusted_family_income_line_5: 40000
+    ca:policies/cra/t1-2025/sk479-credits#sk479_adjusted_family_income_line_6: 110500
+    ca:policies/cra/t1-2025/sk479-credits#sk479_active_families_regular_children_column_5_amount: 600
+    ca:policies/cra/t1-2025/sk479-credits#sk479_active_families_dtc_children_column_5_amount: 400
+    ca:policies/cra/t1-2025/sk479-credits#sk479_active_families_benefit_worksheet_line_7: 1000
+    ca:policies/cra/t1-2025/sk479-credits#sk479_active_families_benefit_line_59800: 1000
+    ca:policies/cra/t1-2025/sk479-credits#saskatchewan_credits_line_47900: 11000
+
+- name: sk479_fertility_cap_person_output
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_fertility_treatment_medical_expenses_line_61268: 30000
+  output:
+    ca:policies/cra/t1-2025/sk479-credits#sk479_fertility_treatment_tax_credit_line_61268: 10000
+
+- name: sk479_active_families_cutoff_blocks_credit
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_self_net_income_line_23600: 125000
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_self_uccb_rdsp_repayments_line_2: 0
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_self_uccb_rdsp_income_line_4: 0
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_spouse_net_income_line_23600: 0
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_spouse_uccb_rdsp_repayments_line_2: 0
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_spouse_uccb_rdsp_income_line_4: 0
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_active_families_regular_child_count: 1
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_active_families_regular_children_net_eligible_activity_expenses: 300
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_active_families_dtc_child_count: 1
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_active_families_dtc_children_net_eligible_activity_expenses: 400
+    ca:policies/cra/t1-2025/sk479-credits#input.sk479_fertility_treatment_medical_expenses_line_61268: 10000
+  output:
+    ca:policies/cra/t1-2025/sk479-credits#sk479_adjusted_family_income_line_6: 125000
+    ca:policies/cra/t1-2025/sk479-credits#sk479_active_families_benefit_worksheet_line_7: 700
+    ca:policies/cra/t1-2025/sk479-credits#sk479_active_families_benefit_line_59800: 0
+    ca:policies/cra/t1-2025/sk479-credits#saskatchewan_credits_line_47900: 5000
