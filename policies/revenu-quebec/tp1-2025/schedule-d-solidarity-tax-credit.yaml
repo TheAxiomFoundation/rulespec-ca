@@ -1,0 +1,224 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Quebec Schedule D 2025 solidarity tax credit eligibility and
+    claim information flags. The schedule establishes eligibility, spouse,
+    dwelling, tenant, and owner facts; Revenu Quebec determines the credit
+    amount from the submitted schedule and Family Allowance data.
+  source_verification:
+    corpus_citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+      rationale: Revenu Quebec Schedule D is the official 2025 solidarity tax credit schedule.
+    source_urls:
+      - https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.D-V%282025-12%29.pdf
+rules:
+  - name: quebec_2025_schedule_d_adult_age
+    kind: parameter
+    dtype: Number
+    source: Revenu Quebec Schedule D 2025 eligibility requirements use age 18 on December 31, 2025
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 18
+
+  - name: quebec_2025_schedule_d_prison_days_disqualification_threshold
+    kind: parameter
+    dtype: Number
+    source: Revenu Quebec Schedule D 2025 denies eligibility if confined to prison or a similar institution for periods totalling more than 183 days in 2025
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 183
+
+  - name: quebec_2025_schedule_d_temporary_resident_months_in_canada
+    kind: parameter
+    dtype: Number
+    source: Revenu Quebec Schedule D 2025 requires a temporary resident or permit holder to have lived in Canada for the last 18 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 18
+
+  - name: quebec_2025_schedule_d_spouse_separation_days
+    kind: parameter
+    dtype: Number
+    source: Revenu Quebec Schedule D 2025 spouse definition excludes a person living separate and apart for 90 days or more because of relationship breakdown
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 90
+
+  - name: schedule_d_age_or_minor_exception_eligible_flag
+    kind: derived
+    entity: Family
+    dtype: Number
+    period: Year
+    source: Revenu Quebec Schedule D 2025 requires the claimant to be 18 or older, or if younger than 18 to have a spouse, be the parent of a child who lived with the claimant, or be an emancipated minor
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_d_claimant_age_on_december_31 >= quebec_2025_schedule_d_adult_age:
+            1
+          else:
+            if schedule_d_minor_had_spouse:
+              1
+            else:
+              if schedule_d_minor_parent_of_child_lived_with_claimant:
+                1
+              else:
+                if schedule_d_minor_emancipated_by_authority:
+                  1
+                else:
+                  0
+
+  - name: schedule_d_resident_quebec_flag
+    kind: derived
+    entity: Family
+    dtype: Number
+    period: Year
+    source: Revenu Quebec Schedule D 2025 requires the claimant to be resident in Quebec on December 31, 2025
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_d_resident_in_quebec_on_december_31:
+            1
+          else:
+            0
+
+  - name: schedule_d_immigration_status_eligible_flag
+    kind: derived
+    entity: Family
+    dtype: Number
+    period: Year
+    source: Revenu Quebec Schedule D 2025 requires the claimant or spouse to be a Canadian citizen, permanent resident, protected person, or qualifying temporary resident or permit holder
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_d_claimant_or_spouse_citizen_permanent_resident_or_protected_person:
+            1
+          else:
+            if schedule_d_claimant_or_spouse_temporary_resident_or_permit_holder:
+              if schedule_d_temporary_resident_months_in_canada >= quebec_2025_schedule_d_temporary_resident_months_in_canada:
+                1
+              else:
+                0
+            else:
+              0
+
+  - name: schedule_d_prison_not_disqualifying_flag
+    kind: derived
+    entity: Family
+    dtype: Number
+    period: Year
+    source: Revenu Quebec Schedule D 2025 denies eligibility if the claimant was confined to prison or similar institution on December 31, 2025 and confined for more than 183 days in 2025
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_d_confined_on_december_31:
+            if schedule_d_days_confined_in_2025 > quebec_2025_schedule_d_prison_days_disqualification_threshold:
+              0
+            else:
+              1
+          else:
+            1
+
+  - name: schedule_d_family_allowance_not_disqualifying_flag
+    kind: derived
+    entity: Family
+    dtype: Number
+    period: Year
+    source: Revenu Quebec Schedule D 2025 denies eligibility if Retraite Quebec made a Family Allowance payment with regard to the claimant for December 2025 unless the claimant turned 18 during that month
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_d_family_allowance_paid_for_claimant_december_2025:
+            if schedule_d_claimant_turned_18_in_december_2025:
+              1
+            else:
+              0
+          else:
+            1
+
+  - name: schedule_d_refugee_claimant_not_disqualifying_flag
+    kind: derived
+    entity: Family
+    dtype: Number
+    period: Year
+    source: Revenu Quebec Schedule D 2025 denies eligibility if the claimant and spouse, if applicable, were refugee protection claimants on December 31, 2025
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_d_claimant_refugee_protection_claimant_on_december_31:
+            if schedule_d_had_spouse_on_december_31:
+              if schedule_d_spouse_refugee_protection_claimant_on_december_31:
+                0
+              else:
+                1
+            else:
+              0
+          else:
+            1
+
+  - name: schedule_d_overall_eligibility_flag
+    kind: derived
+    entity: Family
+    dtype: Number
+    period: Year
+    source: Revenu Quebec Schedule D 2025 eligibility requirements and exclusions determine whether the claimant can claim the solidarity tax credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_d_age_or_minor_exception_eligible_flag * schedule_d_resident_quebec_flag * schedule_d_immigration_status_eligible_flag * schedule_d_prison_not_disqualifying_flag * schedule_d_family_allowance_not_disqualifying_flag * schedule_d_refugee_claimant_not_disqualifying_flag
+
+  - name: schedule_d_lived_alone_flag_line_12
+    kind: derived
+    entity: Family
+    dtype: Number
+    period: Year
+    source: Revenu Quebec Schedule D 2025 line 12 asks whether the claimant lived alone throughout 2025, treating a claimant as living alone if everyone they lived with was under 18
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_d_lived_alone_throughout_2025_or_only_with_minors:
+            1
+          else:
+            0
+
+  - name: schedule_d_spouse_lived_with_claimant_flag_line_40
+    kind: derived
+    entity: Family
+    dtype: Number
+    period: Year
+    source: Revenu Quebec Schedule D 2025 line 40 asks whether the claimant lived with their spouse on December 31, 2025
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_d_had_spouse_on_december_31:
+            if schedule_d_living_with_spouse_on_december_31:
+              1
+            else:
+              0
+          else:
+            0
+
+  - name: schedule_d_housing_information_required_flag
+    kind: derived
+    entity: Family
+    dtype: Number
+    period: Year
+    source: Revenu Quebec Schedule D 2025 requires tenant or owner housing information for the claimant or spouse where applicable
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_d_claimant_tenant_or_subtenant_on_december_31:
+            1
+          else:
+            if schedule_d_claimant_owner_on_december_31:
+              1
+            else:
+              if schedule_d_spouse_tenant_or_subtenant_on_december_31:
+                1
+              else:
+                if schedule_d_spouse_owner_on_december_31:
+                  1
+                else:
+                  0
