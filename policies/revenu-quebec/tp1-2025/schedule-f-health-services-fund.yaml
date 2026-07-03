@@ -1,0 +1,171 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Quebec Schedule F 2025 contribution to the health services
+    fund: income subject to the contribution and TP-1 line 446 contribution.
+  source_verification:
+    corpus_citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-f-health-services-fund
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+      rationale: Revenu Quebec Schedule F is the official 2025 worksheet for the health services fund contribution on TP-1 line 446.
+    source_urls:
+      - https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.F-V%282025-12%29.pdf
+rules:
+  - name: quebec_2025_schedule_f_contribution_income_exemption
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule F 2025 lines 10, 18, 36, 70 and 77 use $18,130 as the no-contribution income threshold
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 18130
+
+  - name: quebec_2025_schedule_f_second_column_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule F 2025 Part B second column applies when income subject to contribution is more than $63,060
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 63060
+
+  - name: quebec_2025_schedule_f_contribution_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule F 2025 line 80 multiplies line 78 by 1%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.01
+
+  - name: quebec_2025_schedule_f_second_column_base_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule F 2025 line 81 adds $150 in the more-than-$63,060 column
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 150
+
+  - name: quebec_2025_schedule_f_first_column_maximum
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule F 2025 line 82 caps the first-column contribution at $150
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 150
+
+  - name: quebec_2025_schedule_f_second_column_maximum
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule F 2025 line 82 caps the second-column contribution at $1,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1000
+
+  - name: schedule_f_income_before_employment_exclusion_line_10
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule F 2025 line 10 adds total income and the income averaging amount for forest producers included on line 276
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_f_total_income_line_199) + max(0, schedule_f_income_averaging_forest_producers_line_276)
+
+  - name: schedule_f_employment_income_adjusted_line_16
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule F 2025 line 16 combines employment income on line 101 and correction of employment income on line 105
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_f_employment_income_line_101 + schedule_f_correction_of_employment_income_line_105
+
+  - name: schedule_f_income_after_employment_exclusion_line_18
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule F 2025 line 18 subtracts line 16 from line 10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_f_income_before_employment_exclusion_line_10 - schedule_f_employment_income_adjusted_line_16)
+
+  - name: schedule_f_excluded_income_total_line_34
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule F 2025 line 34 adds lines 20, 22 and 25 through 33
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, schedule_f_profit_sharing_plan_allocations_line_20)
+          + max(0, schedule_f_old_age_security_pension_line_22)
+          + max(0, schedule_f_taxable_dividend_gross_up_line_25)
+          + max(0, schedule_f_support_payments_received_line_26)
+          + max(0, schedule_f_social_assistance_payments_line_28)
+          + max(0, schedule_f_income_replacement_indemnities_line_29)
+          + max(0, schedule_f_scholarships_bursaries_allowances_line_30)
+          + max(0, schedule_f_spousal_rrsp_recovery_line_31)
+          + max(0, schedule_f_other_excluded_income_line_33)
+
+  - name: schedule_f_income_before_deductions_line_36
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule F 2025 line 36 subtracts line 34 from line 18
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_f_income_after_employment_exclusion_line_18 - schedule_f_excluded_income_total_line_34)
+
+  - name: schedule_f_deductions_line_68
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule F 2025 line 68 adds deductions on lines 41 through 62
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, schedule_f_repayments_overpayments_line_41)
+          + max(0, schedule_f_wage_loss_replacement_benefits_repayment_line_42)
+          + max(0, schedule_f_schedule_r_line_26_line_43)
+          + max(0, schedule_f_schedule_u_or_le35_total_line_43_1)
+          + max(0, schedule_f_ei_benefits_repaid_federal_line_44)
+          + max(0, schedule_f_line_250_deductions_line_45)
+          + max(0, schedule_f_retirement_income_transferred_to_spouse_line_46)
+          + max(0, schedule_f_support_payments_made_line_54)
+          + max(0, schedule_f_carrying_charges_interest_expenses_line_56)
+          + max(0, schedule_f_business_investment_loss_line_58)
+          + max(0, schedule_f_line_293_deductions_line_60)
+          + max(0, schedule_f_line_297_deductions_line_62)
+
+  - name: schedule_f_income_subject_to_contribution_line_70
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule F 2025 line 70 subtracts line 68 from line 36
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_f_income_before_deductions_line_36 - schedule_f_deductions_line_68)
+
+  - name: schedule_f_contribution_to_health_services_fund_line_446
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule F 2025 line 82 calculates the health services fund contribution using the $18,130 and $63,060 thresholds, 1% rate, $150 base amount, and $150/$1,000 maximums
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_f_income_subject_to_contribution_line_70 <= quebec_2025_schedule_f_contribution_income_exemption:
+            0
+          else:
+            if schedule_f_income_subject_to_contribution_line_70 <= quebec_2025_schedule_f_second_column_threshold:
+              min(quebec_2025_schedule_f_first_column_maximum, (schedule_f_income_subject_to_contribution_line_70 - quebec_2025_schedule_f_contribution_income_exemption) * quebec_2025_schedule_f_contribution_rate)
+            else:
+              min(quebec_2025_schedule_f_second_column_maximum, (schedule_f_income_subject_to_contribution_line_70 - quebec_2025_schedule_f_second_column_threshold) * quebec_2025_schedule_f_contribution_rate + quebec_2025_schedule_f_second_column_base_amount)
