@@ -1,0 +1,46 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Quebec Schedule L 2025 business income: business, farming,
+    fishing, professional, commission, cryptoasset and partnership income
+    aggregation for TP-1 line 164.
+  source_verification:
+    corpus_citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-l-business-income
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+      rationale: Revenu Quebec Schedule L is the official 2025 schedule for aggregating net business income for the TP-1 return.
+    source_urls:
+      - https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.L-V%282025-12%29.pdf
+rules:
+  - name: schedule_l_primary_net_business_income_line_27
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule L 2025 line 27 adds net business income on lines 22 through 26.1
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_l_business_other_net_income_line_22 + schedule_l_farming_net_income_line_23 + schedule_l_fishing_net_income_line_24 + schedule_l_profession_net_income_line_25 + schedule_l_commission_net_income_line_26 + schedule_l_cryptoassets_net_income_line_26_1
+
+  - name: schedule_l_net_business_income_line_164
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule L 2025 line 34 adds lines 27 through 30 and carries the result to TP-1 line 164
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_l_primary_net_business_income_line_27 + schedule_l_retiring_partner_or_physician_allowance_line_28 + schedule_l_specified_member_partnership_income_line_29 + schedule_l_post_operation_commissions_line_30
+
+  - name: schedule_l_family_resource_qpip_qpp_earnings_line_40
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule L 2025 line 40 enters insurable earnings for QPIP and pensionable earnings for QPP from line 8 of form LM-53-V
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_l_lm53_line_8_family_resource_qpip_qpp_earnings)
