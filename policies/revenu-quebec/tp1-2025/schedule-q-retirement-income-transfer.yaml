@@ -1,0 +1,68 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Quebec Schedule Q 2025 retirement income transferred to a spouse:
+    eligible retirement income after deductions, 50% transfer cap, TP-1
+    line 245 transfer, and proportional Quebec withholding transfer.
+  source_verification:
+    corpus_citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+      rationale: Revenu Quebec Schedule Q is the official 2025 schedule for transferring retirement income and related Quebec withholding to a spouse.
+    source_urls:
+      - https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.Q-V%282025-12%29.pdf
+rules:
+  - name: quebec_2025_schedule_q_transfer_cap_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule Q 2025 line 22 caps transferred retirement income at 50% of line 20
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.5
+
+  - name: schedule_q_retirement_income_deductions_line_18
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule Q 2025 line 18 adds deductions on lines 12 through 16 from the retirement income on line 10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_q_annuity_rrsp_rrif_prpp_transfer_line_12) + max(0, schedule_q_unused_prpp_vrsp_refund_deduction_line_13) + max(0, schedule_q_line_293_deduction_line_14) + max(0, schedule_q_line_297_point_12_deduction_line_16)
+
+  - name: schedule_q_eligible_retirement_income_line_20
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule Q 2025 line 20 subtracts line 18 from line 10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_q_retirement_income_line_122_line_10 - schedule_q_retirement_income_deductions_line_18)
+
+  - name: schedule_q_retirement_income_transferred_line_245
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule Q 2025 line 22 carries retirement income transferred to the spouse to TP-1 line 245, with a maximum of 50% of line 20
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(max(0, schedule_q_requested_retirement_income_transfer_line_22), schedule_q_eligible_retirement_income_line_20 * quebec_2025_schedule_q_transfer_cap_rate)
+
+  - name: schedule_q_quebec_withholding_transferred_line_451_1
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule Q 2025 line 58 multiplies Quebec tax withheld on line 50 by line 52 and divides by line 53
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_q_eligible_retirement_income_line_20 <= 0:
+            0
+          else:
+            max(0, schedule_q_quebec_income_tax_withheld_line_50) * schedule_q_retirement_income_transferred_line_245 / schedule_q_eligible_retirement_income_line_20
