@@ -16,6 +16,7 @@ path_rules:
       - ".axiom/**"
     allow_extensions:
       - ".json"
+      - ".toml"
       - ".yaml"
   - patterns:
       - ".github/**"
