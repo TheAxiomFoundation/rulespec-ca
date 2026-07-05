@@ -1,0 +1,64 @@
+- name: schedule_j_couple_dependent_capped_with_reduction
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_tp1029_61_md_line_22: 10000
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_tp1029_61_md_line_23: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_monthly_rent_column_1_line_30: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_months_paid_rent_column_1_line_32: 6
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_monthly_rent_column_2_line_30: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_months_paid_rent_column_2_line_32: 6
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_condominium_services_line_36: 3000
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_housekeeping_ground_snow_services_line_50: 10000
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_personal_care_meals_services_line_52: 15000
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_nursing_services_line_54: 10000
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_other_eligible_services_line_56: 10000
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_claiming_for_couple: true
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_self_dependent_senior: true
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_spouse_dependent_senior: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_self_net_income_line_275: 60000
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_spouse_net_income_line_275: 20000
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_work_chart_458_reduction_line_89: 1000
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#schedule_j_private_seniors_residence_services_line_24: 12000
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#schedule_j_rent_services_column_1_line_33: 180
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#schedule_j_rent_services_column_2_line_33: 360
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#schedule_j_rent_services_total_line_34: 540
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#schedule_j_direct_home_support_services_line_74: 45000
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#schedule_j_raw_home_support_services_cost_line_75: 60540
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#schedule_j_annual_expense_limit_line_75: 45000
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#schedule_j_home_support_services_cost_line_75: 45000
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#schedule_j_family_income_line_82: 80000
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#schedule_j_credit_before_reduction_line_88: 17550
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#schedule_j_tax_credit_home_support_seniors_line_458: 16550
+
+- name: schedule_j_single_non_dependent_no_reduction
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_tp1029_61_md_line_22: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_tp1029_61_md_line_23: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_monthly_rent_column_1_line_30: 800
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_months_paid_rent_column_1_line_32: 12
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_monthly_rent_column_2_line_30: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_months_paid_rent_column_2_line_32: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_condominium_services_line_36: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_housekeeping_ground_snow_services_line_50: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_personal_care_meals_services_line_52: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_nursing_services_line_54: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_other_eligible_services_line_56: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_claiming_for_couple: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_self_dependent_senior: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_spouse_dependent_senior: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_self_net_income_line_275: 30000
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_spouse_net_income_line_275: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#input.schedule_j_work_chart_458_reduction_line_89: 5000
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#schedule_j_annual_expense_limit_line_75: 19500
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#schedule_j_home_support_services_cost_line_75: 1480
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#schedule_j_family_income_line_82: 30000
+    ca:policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors#schedule_j_tax_credit_home_support_seniors_line_458: 577.2
