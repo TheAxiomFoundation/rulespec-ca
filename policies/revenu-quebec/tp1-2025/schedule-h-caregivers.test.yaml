@@ -1,0 +1,86 @@
+- name: schedule_h_all_caregiver_components
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_lived_with_impairment_receiver1_net_income_line_275: 30000
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_lived_with_impairment_receiver1_turned_18_reduction_line_259: 100
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_lived_with_impairment_receiver1_social_assistance_adjustment_line_260: 50
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_lived_with_impairment_receiver1_amount_claimed_by_another_caregiver_line_263: 200
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_lived_with_impairment_receiver2_net_income_line_275: 40000
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_lived_with_impairment_receiver2_turned_18_reduction_line_259: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_lived_with_impairment_receiver2_social_assistance_adjustment_line_260: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_lived_with_impairment_receiver2_amount_claimed_by_another_caregiver_line_263: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_additional_lived_with_impairment_credit_amounts: 100
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_specialized_respite_expenses_line_266: 20000
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_lived_with_impairment_respite_eligible_receiver_count: 2
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_not_lived_with_impairment_receiver1_net_income_line_275: 27000
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_not_lived_with_impairment_receiver1_turned_18_reduction_line_359: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_not_lived_with_impairment_receiver1_social_assistance_adjustment_line_360: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_not_lived_with_impairment_receiver1_amount_claimed_by_another_caregiver_line_363: 100
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_not_lived_with_impairment_receiver2_net_income_line_275: 50000
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_not_lived_with_impairment_receiver2_turned_18_reduction_line_359: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_not_lived_with_impairment_receiver2_social_assistance_adjustment_line_360: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_not_lived_with_impairment_receiver2_amount_claimed_by_another_caregiver_line_363: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_additional_not_lived_with_impairment_credit_amounts: 50
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_person70_receiver1_amount_claimed_by_another_caregiver_line_452: 300
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_person70_receiver2_amount_claimed_by_another_caregiver_line_452: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_additional_person70_credit_amounts: 75
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_lived_with_impairment_income_excess_row_1: 3480
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_lived_with_impairment_income_excess_row_2: 13480
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_lived_with_impairment_income_reduction_row_1: 556.8
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_lived_with_impairment_income_reduction_row_2: 1494
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_lived_with_impairment_credit_row_1: 2081.2
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_lived_with_impairment_credit_row_2: 1494
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_lived_with_impairment_credit_line_265: 3675.2
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_respite_services_credit_line_267: 3120
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_lived_with_impairment_total_credit_line_268: 6795.2
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_not_lived_with_impairment_income_excess_row_1: 480
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_not_lived_with_impairment_income_excess_row_2: 23480
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_not_lived_with_impairment_income_reduction_row_1: 76.8
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_not_lived_with_impairment_income_reduction_row_2: 1494
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_not_lived_with_impairment_credit_row_1: 1317.2
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_not_lived_with_impairment_credit_row_2: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_not_lived_with_impairment_credit_line_365: 1367.2
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_person_70_or_over_credit_row_1: 1194
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_person_70_or_over_credit_row_2: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_person_70_or_over_credit_line_454: 1269
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_tax_credit_for_caregivers_line_462: 9431.4
+
+- name: schedule_h_no_income_excess_and_no_respite
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_lived_with_impairment_receiver1_net_income_line_275: 20000
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_lived_with_impairment_receiver1_turned_18_reduction_line_259: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_lived_with_impairment_receiver1_social_assistance_adjustment_line_260: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_lived_with_impairment_receiver1_amount_claimed_by_another_caregiver_line_263: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_lived_with_impairment_receiver2_net_income_line_275: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_lived_with_impairment_receiver2_turned_18_reduction_line_259: 3000
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_lived_with_impairment_receiver2_social_assistance_adjustment_line_260: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_lived_with_impairment_receiver2_amount_claimed_by_another_caregiver_line_263: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_additional_lived_with_impairment_credit_amounts: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_specialized_respite_expenses_line_266: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_lived_with_impairment_respite_eligible_receiver_count: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_not_lived_with_impairment_receiver1_net_income_line_275: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_not_lived_with_impairment_receiver1_turned_18_reduction_line_359: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_not_lived_with_impairment_receiver1_social_assistance_adjustment_line_360: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_not_lived_with_impairment_receiver1_amount_claimed_by_another_caregiver_line_363: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_not_lived_with_impairment_receiver2_net_income_line_275: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_not_lived_with_impairment_receiver2_turned_18_reduction_line_359: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_not_lived_with_impairment_receiver2_social_assistance_adjustment_line_360: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_not_lived_with_impairment_receiver2_amount_claimed_by_another_caregiver_line_363: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_additional_not_lived_with_impairment_credit_amounts: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_person70_receiver1_amount_claimed_by_another_caregiver_line_452: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_person70_receiver2_amount_claimed_by_another_caregiver_line_452: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#input.schedule_h_additional_person70_credit_amounts: 0
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_lived_with_impairment_income_excess_row_1: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_lived_with_impairment_credit_row_1: 2988
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_lived_with_impairment_credit_row_2: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_respite_services_credit_line_267: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-h-caregivers#schedule_h_tax_credit_for_caregivers_line_462: 8964
