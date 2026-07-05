@@ -10,6 +10,7 @@ allowed_root_directories:
 allowed_root_files:
   - CLAUDE.md
   - README.md
+  - known-missing-money-atoms.yaml
 path_rules:
   - patterns:
       - ".axiom/**"
