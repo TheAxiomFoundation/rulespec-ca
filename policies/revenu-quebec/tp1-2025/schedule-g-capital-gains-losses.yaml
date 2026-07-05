@@ -1,0 +1,329 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Quebec Schedule G 2025 capital gains and losses: capital
+    property, resource property, qualified farm/fishing/small-business
+    property, qualifying business transfer/cooperative conversion, reserves,
+    deferrals, inclusion rate, and TP-1 line 139 taxable capital gains.
+  source_verification:
+    corpus_citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-g-capital-gains-losses
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+      rationale: Revenu Quebec Schedule G is the official 2025 schedule for Quebec capital gains and losses reported on the TP-1 return.
+    source_urls:
+      - https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.G-V%282025-12%29.pdf
+rules:
+  - name: quebec_2025_schedule_g_personal_use_property_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule G 2025 page 5 says personal-use and precious-property gains do not have to be reported if proceeds are $1,000 or less
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1000
+
+  - name: quebec_2025_schedule_g_personal_use_property_minimum_acb
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule G 2025 page 5 says the adjusted cost base is $1,000 or the actual adjusted cost base, whichever is greater
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1000
+
+  - name: quebec_2025_schedule_g_inclusion_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule G 2025 line 107 applies a 50% inclusion rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.5
+
+  - name: schedule_g_shares_mutual_funds_gain_loss_line_10
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part B line 10 subtracts adjusted cost base and disposition expenses from proceeds for shares and mutual fund units
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_shares_mutual_funds_proceeds - schedule_g_shares_mutual_funds_acb - max(0, schedule_g_shares_mutual_funds_disposition_expenses)
+
+  - name: schedule_g_other_securities_property_gain_loss_line_12
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part B line 12 subtracts adjusted cost base and disposition expenses from proceeds for bonds, partnership interests, other securities or property
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_other_securities_property_proceeds - schedule_g_other_securities_property_acb - max(0, schedule_g_other_securities_property_disposition_expenses)
+
+  - name: schedule_g_immovables_depreciable_property_gain_loss_line_14
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part B line 14 subtracts adjusted cost base and disposition expenses from proceeds for immovables and depreciable property, excluding losses on depreciable property
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_immovables_depreciable_property_proceeds - schedule_g_immovables_depreciable_property_acb - max(0, schedule_g_immovables_depreciable_property_disposition_expenses)
+
+  - name: schedule_g_personal_use_property_gain_line_16
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part B line 16 and page 5 apply the $1,000 reporting and adjusted-cost-base rules to personal-use property gains
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_g_personal_use_property_proceeds <= quebec_2025_schedule_g_personal_use_property_threshold:
+            0
+          else:
+            max(0, schedule_g_personal_use_property_proceeds - max(quebec_2025_schedule_g_personal_use_property_minimum_acb, schedule_g_personal_use_property_acb) - max(0, schedule_g_personal_use_property_disposition_expenses))
+
+  - name: schedule_g_precious_property_gain_loss_line_18
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part B line 18 and page 5 apply the $1,000 reporting and adjusted-cost-base rules to precious property
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_g_precious_property_proceeds <= quebec_2025_schedule_g_personal_use_property_threshold:
+            0
+          else:
+            schedule_g_precious_property_proceeds - max(quebec_2025_schedule_g_personal_use_property_minimum_acb, schedule_g_precious_property_acb) - max(0, schedule_g_precious_property_disposition_expenses)
+
+  - name: schedule_g_precious_property_net_gain_line_20
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part B line 20 subtracts losses on precious property from previous years from line 18 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_g_precious_property_gain_loss_line_18 - max(0, schedule_g_precious_property_prior_year_losses_line_19))
+
+  - name: schedule_g_capital_property_total_line_26
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part B line 26 adds lines 10, 12, 14, 16, 20, 21, 22 and 24
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_shares_mutual_funds_gain_loss_line_10 + schedule_g_other_securities_property_gain_loss_line_12 + schedule_g_immovables_depreciable_property_gain_loss_line_14 + schedule_g_personal_use_property_gain_line_16 + schedule_g_precious_property_net_gain_line_20 + schedule_g_cryptoassets_gain_loss_line_21 + schedule_g_slip_capital_gains_losses_line_22 + schedule_g_partnership_capital_gains_losses_line_24
+
+  - name: schedule_g_capital_property_before_reserves_line_30
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part B line 30 subtracts the business investment loss reduction from line 26
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_capital_property_total_line_26 - max(0, schedule_g_business_investment_loss_reduction_line_28)
+
+  - name: schedule_g_capital_property_current_year_after_reserve_line_34
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part B line 34 subtracts the 2025 reserve for property disposed of in 2025 from line 30
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_capital_property_before_reserves_line_30 - max(0, schedule_g_capital_property_2025_reserve_current_dispositions_line_32)
+
+  - name: schedule_g_capital_property_prior_year_reserve_net_line_40
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part B line 40 subtracts the 2025 reserve for property disposed of before 2025 from the 2024 reserve
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_g_capital_property_2024_reserve_line_36) - max(0, schedule_g_capital_property_2025_reserve_prior_dispositions_line_38)
+
+  - name: schedule_g_capital_property_gain_loss_line_44
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part B line 44 adds lines 34 and 40 and carries the result to line 88
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_capital_property_current_year_after_reserve_line_34 + schedule_g_capital_property_prior_year_reserve_net_line_40
+
+  - name: schedule_g_resource_property_direct_gain_loss_line_46
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part C line 46 subtracts adjusted cost base and disposition expenses from proceeds for resource property
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_resource_property_proceeds - schedule_g_resource_property_acb - max(0, schedule_g_resource_property_disposition_expenses)
+
+  - name: schedule_g_resource_property_gain_loss_line_50
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part C line 50 adds lines 46 through 48 and carries the result to line 88
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_resource_property_direct_gain_loss_line_46 + schedule_g_resource_property_slip_gain_loss_line_47 + schedule_g_resource_property_partnership_gain_loss_line_48
+
+  - name: schedule_g_qualified_property_direct_gain_loss_line_54
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part D line 54 subtracts adjusted cost base and disposition expenses from proceeds for qualified farm or fishing property and qualified small business corporation shares
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_qualified_property_proceeds - schedule_g_qualified_property_acb - max(0, schedule_g_qualified_property_disposition_expenses)
+
+  - name: schedule_g_qualified_property_before_reserves_line_60
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part D line 60 adds lines 54, 56 and 58
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_qualified_property_direct_gain_loss_line_54 + schedule_g_qualified_property_slip_gain_loss_line_56 + schedule_g_qualified_property_partnership_gain_loss_line_58
+
+  - name: schedule_g_qualified_property_current_year_after_reserve_line_68
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part D line 68 subtracts the 2025 reserve for property disposed of in 2025 from line 60
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_qualified_property_before_reserves_line_60 - max(0, schedule_g_qualified_property_2025_reserve_current_dispositions_line_63)
+
+  - name: schedule_g_qualified_property_prior_year_reserve_net_line_80
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part D line 80 subtracts the 2025 reserve for the property from the 2024 reserve for property disposed of after December 31, 2013
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_g_qualified_property_2024_reserve_line_75) - max(0, schedule_g_qualified_property_2025_reserve_prior_dispositions_line_77)
+
+  - name: schedule_g_qualified_property_gain_loss_line_84
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part D line 84 adds lines 68 and 80 and carries the result to line 88
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_qualified_property_current_year_after_reserve_line_68 + schedule_g_qualified_property_prior_year_reserve_net_line_80
+
+  - name: schedule_g_qualifying_transfer_direct_gain_loss_line_203
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part E line 203 subtracts adjusted cost base and disposition expenses from proceeds for shares disposed of as part of a qualifying business transfer or cooperative conversion
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_qualifying_transfer_proceeds - schedule_g_qualifying_transfer_acb - max(0, schedule_g_qualifying_transfer_disposition_expenses)
+
+  - name: schedule_g_qualifying_transfer_before_reserves_line_206
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part E line 206 adds lines 203 through 205
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_qualifying_transfer_direct_gain_loss_line_203 + schedule_g_qualifying_transfer_slip_gain_loss_line_204 + schedule_g_qualifying_transfer_partnership_gain_loss_line_205
+
+  - name: schedule_g_qualifying_transfer_current_year_after_reserve_line_207_1
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part E line 207.1 subtracts the 2025 reserve for property disposed of in 2025 from line 206
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_qualifying_transfer_before_reserves_line_206 - max(0, schedule_g_qualifying_transfer_2025_reserve_current_dispositions_line_207)
+
+  - name: schedule_g_qualifying_transfer_prior_year_reserve_net_line_207_4
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part E line 207.4 subtracts the 2025 reserve for property disposed of before 2025 from the 2024 reserve
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_g_qualifying_transfer_2024_reserve_line_207_2) - max(0, schedule_g_qualifying_transfer_2025_reserve_prior_dispositions_line_207_3)
+
+  - name: schedule_g_qualifying_transfer_gain_loss_line_208
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part E line 208 adds lines 207.1 and 207.4 and carries the result to line 88
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_qualifying_transfer_current_year_after_reserve_line_207_1 + schedule_g_qualifying_transfer_prior_year_reserve_net_line_207_4
+
+  - name: schedule_g_total_capital_gains_losses_line_88
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part F line 88 adds lines 44, 50, 84 and 208 whether positive or negative
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_capital_property_gain_loss_line_44 + schedule_g_resource_property_gain_loss_line_50 + schedule_g_qualified_property_gain_loss_line_84 + schedule_g_qualifying_transfer_gain_loss_line_208
+
+  - name: schedule_g_after_small_business_deferral_line_94_1
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part F line 94.1 subtracts the deferral of capital gains on small business corporation shares from line 88
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_total_capital_gains_losses_line_88 - max(0, schedule_g_small_business_share_deferral_line_94)
+
+  - name: schedule_g_half_inclusion_amount_line_107_1
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part F line 107.1 multiplies line 94.1 by 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_after_small_business_deferral_line_94_1 * quebec_2025_schedule_g_inclusion_rate
+
+  - name: schedule_g_taxable_capital_gains_net_loss_line_108
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part F line 108 adds line 107.1 and line 107.2 and carries a positive result to TP-1 line 139
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_g_half_inclusion_amount_line_107_1 + schedule_g_partnership_interest_100_percent_rate_gain_line_107_2
+
+  - name: schedule_g_taxable_capital_gains_tp1_line_139
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule G 2025 Part F line 108 says to carry the result to line 139 of the return if the result is positive
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_g_taxable_capital_gains_net_loss_line_108)
