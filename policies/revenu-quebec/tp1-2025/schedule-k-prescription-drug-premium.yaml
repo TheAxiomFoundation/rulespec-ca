@@ -1,0 +1,413 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Quebec Schedule K 2025 premium payable under the Quebec
+    prescription drug insurance plan: income base, family deductions,
+    exemption months, premium table, annual maximums, spouse premium,
+    and TP-1 line 447 carryforward.
+  source_verification:
+    corpus_citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+      rationale: Revenu Quebec Schedule K is the official 2025 schedule for calculating the Quebec prescription drug insurance plan premium.
+    source_urls:
+      - https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.K-V%282025-12%29.pdf
+rules:
+  - name: quebec_2025_schedule_k_single_base_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule K 2025 line 41 gives $19,890 for an individual without a spouse on December 31
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 19890
+
+  - name: quebec_2025_schedule_k_spouse_base_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule K 2025 line 41 gives $32,240 for an individual with a spouse on December 31
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 32240
+
+  - name: quebec_2025_schedule_k_spouse_one_child_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule K 2025 line 42 gives $4,220 for an individual with a spouse and one dependent child
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 4220
+
+  - name: quebec_2025_schedule_k_spouse_multiple_children_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule K 2025 line 42 gives $8,120 for an individual with a spouse and more than one dependent child
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 8120
+
+  - name: quebec_2025_schedule_k_single_one_child_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule K 2025 line 44 gives $12,350 for an individual without a spouse and one dependent child
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 12350
+
+  - name: quebec_2025_schedule_k_single_multiple_children_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule K 2025 line 44 gives $16,570 for an individual without a spouse and more than one dependent child
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 16570
+
+  - name: quebec_2025_schedule_k_column_b_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule K 2025 Part C uses $5,000 as the column B starting amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5000
+
+  - name: quebec_2025_schedule_k_full_premium_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule K 2025 Part C says to enter $766 on line 84 if line 48 is more than $14,669
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 14669
+
+  - name: quebec_2025_schedule_k_line_84_maximum_table_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule K 2025 Part C says line 83 is subject to a maximum of $766
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 766
+
+  - name: quebec_2025_schedule_k_annual_maximum_premium
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule K 2025 lines 87 and 94 give the maximum premium for 2025 as $755
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 755
+
+  - name: quebec_2025_schedule_k_first_half_monthly_premium
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule K 2025 lines 88 and 95 multiply January-to-June exempt months by $62.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 62
+
+  - name: quebec_2025_schedule_k_second_half_monthly_premium
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule K 2025 lines 88 and 95 multiply July-to-December exempt months by $63.83
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 63.83
+
+  - name: quebec_2025_schedule_k_single_column_a_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule K 2025 Part C table gives 7.84% for an individual without a spouse in column A
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0784
+
+  - name: quebec_2025_schedule_k_single_column_b_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule K 2025 Part C table gives 11.76% for an individual without a spouse in column B
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.1176
+
+  - name: quebec_2025_schedule_k_spouse_column_a_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule K 2025 Part C table gives 3.93% for an individual with a spouse in column A
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0393
+
+  - name: quebec_2025_schedule_k_spouse_column_b_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule K 2025 Part C table gives 5.89% for an individual with a spouse in column B
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0589
+
+  - name: quebec_2025_schedule_k_single_column_b_base_premium
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule K 2025 Part C table gives $392.00 for an individual without a spouse in column B
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 392
+
+  - name: quebec_2025_schedule_k_spouse_column_b_base_premium
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule K 2025 Part C table gives $196.50 for an individual with a spouse in column B
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 196.5
+
+  - name: quebec_2025_schedule_k_months_in_year
+    kind: parameter
+    dtype: Number
+    source: Revenu Quebec Schedule K 2025 lines 85 and 92 divide exempt months by 12
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 12
+
+  - name: schedule_k_family_income_line_40
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule K 2025 line 40 adds the taxpayer's and spouse's line 275 net income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_k_self_net_income_line_275_line_36) + max(0, schedule_k_spouse_net_income_line_275_line_37)
+
+  - name: schedule_k_base_amount_line_41
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule K 2025 line 41 uses $32,240 with a spouse on December 31 and $19,890 otherwise
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_k_has_spouse_december_31:
+            quebec_2025_schedule_k_spouse_base_amount
+          else:
+            quebec_2025_schedule_k_single_base_amount
+
+  - name: schedule_k_spouse_dependent_child_amount_line_42
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule K 2025 line 42 gives dependent-child additions for individuals with a spouse
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_k_has_spouse_december_31:
+            if schedule_k_dependent_children_count > 1:
+              quebec_2025_schedule_k_spouse_multiple_children_amount
+            else:
+              if schedule_k_dependent_children_count == 1:
+                quebec_2025_schedule_k_spouse_one_child_amount
+              else:
+                0
+          else:
+            0
+
+  - name: schedule_k_single_dependent_child_amount_line_44
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule K 2025 line 44 gives dependent-child additions for individuals without a spouse
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_k_has_spouse_december_31:
+            0
+          else:
+            if schedule_k_dependent_children_count > 1:
+              quebec_2025_schedule_k_single_multiple_children_amount
+            else:
+              if schedule_k_dependent_children_count == 1:
+                quebec_2025_schedule_k_single_one_child_amount
+              else:
+                0
+
+  - name: schedule_k_income_deduction_line_46
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule K 2025 line 46 adds line 41 and, as applicable, line 42 or line 44
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_k_base_amount_line_41 + schedule_k_spouse_dependent_child_amount_line_42 + schedule_k_single_dependent_child_amount_line_44
+
+  - name: schedule_k_income_used_for_premium_line_48
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule K 2025 line 48 subtracts line 46 from line 40 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_k_family_income_line_40 - schedule_k_income_deduction_line_46)
+
+  - name: schedule_k_taxpayer_exempt_months_line_62
+    kind: derived
+    entity: Family
+    dtype: Number
+    period: Year
+    source: Revenu Quebec Schedule K 2025 line 62 adds boxes 60 and 61 for taxpayer exempt months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_k_taxpayer_exempt_months_jan_jun_box_60) + max(0, schedule_k_taxpayer_exempt_months_jul_dec_box_61)
+
+  - name: schedule_k_spouse_exempt_months_line_76
+    kind: derived
+    entity: Family
+    dtype: Number
+    period: Year
+    source: Revenu Quebec Schedule K 2025 line 76 adds boxes 74 and 75 for spouse exempt months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_k_spouse_exempt_months_jan_jun_box_74) + max(0, schedule_k_spouse_exempt_months_jul_dec_box_75)
+
+  - name: schedule_k_premium_table_amount_line_84
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule K 2025 Part C calculates line 84 from line 48 using the spouse status table, with $766 for income over $14,669
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_k_income_used_for_premium_line_48 <= 0:
+            0
+          else:
+            if schedule_k_income_used_for_premium_line_48 <= quebec_2025_schedule_k_column_b_threshold:
+              if schedule_k_has_spouse_december_31:
+                min(quebec_2025_schedule_k_line_84_maximum_table_amount, schedule_k_income_used_for_premium_line_48 * quebec_2025_schedule_k_spouse_column_a_rate)
+              else:
+                min(quebec_2025_schedule_k_line_84_maximum_table_amount, schedule_k_income_used_for_premium_line_48 * quebec_2025_schedule_k_single_column_a_rate)
+            else:
+              if schedule_k_income_used_for_premium_line_48 <= quebec_2025_schedule_k_full_premium_threshold:
+                if schedule_k_has_spouse_december_31:
+                  min(quebec_2025_schedule_k_line_84_maximum_table_amount, (schedule_k_income_used_for_premium_line_48 - quebec_2025_schedule_k_column_b_threshold) * quebec_2025_schedule_k_spouse_column_b_rate + quebec_2025_schedule_k_spouse_column_b_base_premium)
+                else:
+                  min(quebec_2025_schedule_k_line_84_maximum_table_amount, (schedule_k_income_used_for_premium_line_48 - quebec_2025_schedule_k_column_b_threshold) * quebec_2025_schedule_k_single_column_b_rate + quebec_2025_schedule_k_single_column_b_base_premium)
+              else:
+                quebec_2025_schedule_k_line_84_maximum_table_amount
+
+  - name: schedule_k_taxpayer_exempt_months_fraction_line_85
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule K 2025 line 85 multiplies line 84 by box 62 and divides by 12
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_k_premium_table_amount_line_84 * schedule_k_taxpayer_exempt_months_line_62 / quebec_2025_schedule_k_months_in_year
+
+  - name: schedule_k_taxpayer_premium_after_fraction_line_86
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule K 2025 line 86 subtracts line 85 from line 84
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_k_premium_table_amount_line_84 - schedule_k_taxpayer_exempt_months_fraction_line_85)
+
+  - name: schedule_k_taxpayer_exempt_months_max_reduction_line_88
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule K 2025 line 88 adds January-to-June exempt months multiplied by $62.00 and July-to-December exempt months multiplied by $63.83
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_k_taxpayer_exempt_months_jan_jun_box_60) * quebec_2025_schedule_k_first_half_monthly_premium + max(0, schedule_k_taxpayer_exempt_months_jul_dec_box_61) * quebec_2025_schedule_k_second_half_monthly_premium
+
+  - name: schedule_k_taxpayer_maximum_after_months_line_89
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule K 2025 line 89 subtracts line 88 from the $755 maximum premium
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, quebec_2025_schedule_k_annual_maximum_premium - schedule_k_taxpayer_exempt_months_max_reduction_line_88)
+
+  - name: schedule_k_taxpayer_premium_line_90
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule K 2025 line 90 enters the lesser of line 86 and line 89
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(schedule_k_taxpayer_premium_after_fraction_line_86, schedule_k_taxpayer_maximum_after_months_line_89)
+
+  - name: schedule_k_spouse_exempt_months_fraction_line_92
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule K 2025 line 92 multiplies line 91 by box 76 and divides by 12 for the spouse premium
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_k_premium_table_amount_line_84 * schedule_k_spouse_exempt_months_line_76 / quebec_2025_schedule_k_months_in_year
+
+  - name: schedule_k_spouse_premium_after_fraction_line_93
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule K 2025 line 93 subtracts line 92 from line 91
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_k_premium_table_amount_line_84 - schedule_k_spouse_exempt_months_fraction_line_92)
+
+  - name: schedule_k_spouse_exempt_months_max_reduction_line_95
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule K 2025 line 95 adds January-to-June spouse exempt months multiplied by $62.00 and July-to-December exempt months multiplied by $63.83
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_k_spouse_exempt_months_jan_jun_box_74) * quebec_2025_schedule_k_first_half_monthly_premium + max(0, schedule_k_spouse_exempt_months_jul_dec_box_75) * quebec_2025_schedule_k_second_half_monthly_premium
+
+  - name: schedule_k_spouse_maximum_after_months_line_96
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule K 2025 line 96 subtracts line 95 from the $755 maximum premium
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, quebec_2025_schedule_k_annual_maximum_premium - schedule_k_spouse_exempt_months_max_reduction_line_95)
+
+  - name: schedule_k_spouse_premium_line_97
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule K 2025 line 97 enters the lesser of line 93 and line 96 if the taxpayer wishes to pay the spouse's premium
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_k_pay_spouse_premium:
+            min(schedule_k_spouse_premium_after_fraction_line_93, schedule_k_spouse_maximum_after_months_line_96)
+          else:
+            0
+
+  - name: schedule_k_premium_payable_line_447
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule K 2025 line 98 adds lines 90 and 97 and carries the result to TP-1 line 447
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_k_taxpayer_premium_line_90 + schedule_k_spouse_premium_line_97

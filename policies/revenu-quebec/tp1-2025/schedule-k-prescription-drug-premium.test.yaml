@@ -1,0 +1,84 @@
+- name: schedule_k_single_one_child_column_b_partial_exempt
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_self_net_income_line_275_line_36: 40000
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_spouse_net_income_line_275_line_37: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_has_spouse_december_31: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_dependent_children_count: 1
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_taxpayer_exempt_months_jan_jun_box_60: 2
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_taxpayer_exempt_months_jul_dec_box_61: 1
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_spouse_exempt_months_jan_jun_box_74: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_spouse_exempt_months_jul_dec_box_75: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_pay_spouse_premium: false
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_family_income_line_40: 40000
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_base_amount_line_41: 19890
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_spouse_dependent_child_amount_line_42: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_single_dependent_child_amount_line_44: 12350
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_income_deduction_line_46: 32240
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_income_used_for_premium_line_48: 7760
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_taxpayer_exempt_months_line_62: 3
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_spouse_exempt_months_line_76: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_premium_table_amount_line_84: 716.576
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_taxpayer_exempt_months_fraction_line_85: 179.144
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_taxpayer_premium_after_fraction_line_86: 537.432
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_taxpayer_exempt_months_max_reduction_line_88: 187.83
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_taxpayer_maximum_after_months_line_89: 567.17
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_taxpayer_premium_line_90: 537.432
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_spouse_exempt_months_fraction_line_92: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_spouse_premium_after_fraction_line_93: 716.576
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_spouse_exempt_months_max_reduction_line_95: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_spouse_maximum_after_months_line_96: 755
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_spouse_premium_line_97: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_premium_payable_line_447: 537.432
+
+- name: schedule_k_spouse_full_table_pay_spouse_premium
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_self_net_income_line_275_line_36: 90000
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_spouse_net_income_line_275_line_37: 10000
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_has_spouse_december_31: true
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_dependent_children_count: 2
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_taxpayer_exempt_months_jan_jun_box_60: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_taxpayer_exempt_months_jul_dec_box_61: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_spouse_exempt_months_jan_jun_box_74: 6
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_spouse_exempt_months_jul_dec_box_75: 6
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_pay_spouse_premium: true
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_base_amount_line_41: 32240
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_spouse_dependent_child_amount_line_42: 8120
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_single_dependent_child_amount_line_44: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_income_used_for_premium_line_48: 59640
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_premium_table_amount_line_84: 766
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_taxpayer_premium_line_90: 755
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_spouse_exempt_months_line_76: 12
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_spouse_premium_after_fraction_line_93: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_spouse_maximum_after_months_line_96: 0.02
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_spouse_premium_line_97: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_premium_payable_line_447: 755
+
+- name: schedule_k_zero_income_no_premium
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_self_net_income_line_275_line_36: 10000
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_spouse_net_income_line_275_line_37: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_has_spouse_december_31: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_dependent_children_count: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_taxpayer_exempt_months_jan_jun_box_60: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_taxpayer_exempt_months_jul_dec_box_61: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_spouse_exempt_months_jan_jun_box_74: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_spouse_exempt_months_jul_dec_box_75: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#input.schedule_k_pay_spouse_premium: false
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_income_used_for_premium_line_48: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_premium_table_amount_line_84: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium#schedule_k_premium_payable_line_447: 0
