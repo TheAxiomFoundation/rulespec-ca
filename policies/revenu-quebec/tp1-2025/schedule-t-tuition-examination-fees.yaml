@@ -1,0 +1,250 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Quebec Schedule T 2025 tax credit for tuition or examination
+    fees: 20% and 8% tuition credit pools, line 398 claim, carryforwards,
+    current-year transfer to an eligible relative, and Schedule A transfer.
+  source_verification:
+    corpus_citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+      rationale: Revenu Quebec Schedule T is the official 2025 schedule for claiming or transferring tuition and examination fee credits.
+    source_urls:
+      - https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.T-V%282025-12%29.pdf
+rules:
+  - name: quebec_2025_schedule_t_legacy_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule T 2025 line 37 multiplies line 34 by 20%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.20
+
+  - name: quebec_2025_schedule_t_current_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule T 2025 lines 45 and 52 multiply eligible tuition by 8%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.08
+
+  - name: quebec_2025_schedule_t_legacy_carryforward_multiplier
+    kind: parameter
+    dtype: Number
+    source: Revenu Quebec Schedule T 2025 line 40 multiplies unused 20% credit by 5
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5
+
+  - name: quebec_2025_schedule_t_current_carryforward_multiplier
+    kind: parameter
+    dtype: Number
+    source: Revenu Quebec Schedule T 2025 lines 42 and 48 multiply 8% credit amounts by 12.5
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 12.5
+
+  - name: quebec_2025_schedule_t_current_fee_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule T 2025 line 40.6 applies to tuition or examination fees paid for 2025 if they exceed $100
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 100
+
+  - name: schedule_t_legacy_tuition_credit_line_37
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule T 2025 line 37 multiplies unused 20% tuition or examination fees from line 34 by 20%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_t_unused_legacy_20_percent_fees_line_34) * quebec_2025_schedule_t_legacy_credit_rate
+
+  - name: schedule_t_legacy_credit_claim_line_38
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule T 2025 line 38 enters all or part of line 37 claimed on TP-1 line 398
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(schedule_t_legacy_tuition_credit_line_37, max(0, schedule_t_requested_legacy_credit_claim_line_38))
+
+  - name: schedule_t_legacy_unused_credit_line_39
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule T 2025 line 39 subtracts line 38 from line 37
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_t_legacy_tuition_credit_line_37 - schedule_t_legacy_credit_claim_line_38)
+
+  - name: schedule_t_legacy_fees_carryforward_line_40
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule T 2025 line 40 multiplies line 39 by 5
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_t_legacy_unused_credit_line_39 * quebec_2025_schedule_t_legacy_carryforward_multiplier
+
+  - name: schedule_t_current_year_net_fees_line_41
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule T 2025 line 41 subtracts the Canada training credit refund on line 40.7 from 2025 tuition or examination fees on line 40.6
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_t_2025_tuition_examination_fees_line_40_6 > quebec_2025_schedule_t_current_fee_threshold:
+            max(0, schedule_t_2025_tuition_examination_fees_line_40_6 - max(0, schedule_t_canada_training_credit_refund_line_40_7))
+          else:
+            0
+
+  - name: schedule_t_transferable_current_year_credit_line_52
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule T 2025 line 52 multiplies current-year fees from line 51 by 8%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_t_current_year_net_fees_line_41 * quebec_2025_schedule_t_current_credit_rate
+
+  - name: schedule_t_basic_credit_reduction_line_56
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule T 2025 line 56 multiplies the total of TP-1 lines 378 and 381 by 20%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_t_return_lines_378_381_total_line_54) * quebec_2025_schedule_t_legacy_credit_rate
+
+  - name: schedule_t_total_other_credits_line_60
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule T 2025 line 60 adds line 56 and line 58
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_t_basic_credit_reduction_line_56 + max(0, schedule_t_return_lines_377_1_390_391_392_395_396_397_total_line_58)
+
+  - name: schedule_t_tax_available_for_tuition_transfer_line_62
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule T 2025 line 62 subtracts line 60 from line 53 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_t_return_line_401_line_53 - schedule_t_total_other_credits_line_60)
+
+  - name: schedule_t_transferable_tuition_credit_line_66
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule T 2025 line 66 subtracts line 62 from line 52 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_t_transferable_current_year_credit_line_52 - schedule_t_tax_available_for_tuition_transfer_line_62)
+
+  - name: schedule_t_tuition_credit_transferred_line_68
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule T 2025 Part B line 68 transfers all or part of line 66 to an eligible relative
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(schedule_t_transferable_tuition_credit_line_66, max(0, schedule_t_requested_tuition_credit_transfer_line_68))
+
+  - name: schedule_t_transferred_fee_equivalent_line_42
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule T 2025 line 42 multiplies line 68 by 12.5
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_t_tuition_credit_transferred_line_68 * quebec_2025_schedule_t_current_carryforward_multiplier
+
+  - name: schedule_t_current_year_fees_after_transfer_line_43
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule T 2025 line 43 subtracts line 42 from line 41
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_t_current_year_net_fees_line_41 - schedule_t_transferred_fee_equivalent_line_42)
+
+  - name: schedule_t_current_pool_fees_line_44_1
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule T 2025 line 44.1 adds line 43 and unused 8% fees from line 44
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_t_current_year_fees_after_transfer_line_43 + max(0, schedule_t_unused_current_8_percent_fees_line_44)
+
+  - name: schedule_t_current_tuition_credit_line_45
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule T 2025 line 45 multiplies line 44.1 by 8%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_t_current_pool_fees_line_44_1 * quebec_2025_schedule_t_current_credit_rate
+
+  - name: schedule_t_current_credit_claim_line_46
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule T 2025 line 46 enters all or part of line 45 claimed on TP-1 line 398
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(schedule_t_current_tuition_credit_line_45, max(0, schedule_t_requested_current_credit_claim_line_46))
+
+  - name: schedule_t_current_unused_credit_line_47
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule T 2025 line 47 subtracts line 46 from line 45
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_t_current_tuition_credit_line_45 - schedule_t_current_credit_claim_line_46)
+
+  - name: schedule_t_current_fees_carryforward_line_48
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule T 2025 line 48 multiplies line 47 by 12.5
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_t_current_unused_credit_line_47 * quebec_2025_schedule_t_current_carryforward_multiplier
+
+  - name: schedule_t_total_tuition_credit_claim_line_398
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule T 2025 says the amount on TP-1 line 398 must equal the total of lines 38 and 46
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_t_legacy_credit_claim_line_38 + schedule_t_current_credit_claim_line_46
