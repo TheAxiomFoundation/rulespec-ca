@@ -1,0 +1,49 @@
+- name: schedule_r_self_employment_and_outside_quebec_premium
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#input.schedule_r_schedule_l_net_business_income_line_27_line_10: 40000
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#input.schedule_r_schedule_l_family_resource_earnings_line_40_line_11: 5000
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#input.schedule_r_rl1_box_i_or_a_total_line_14: 30000
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#input.schedule_r_canada_outside_quebec_employment_income_line_30: 10000
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#input.schedule_r_outside_canada_employment_income_no_rl1_line_31: 5000
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#input.schedule_r_rl1_box_i_total_line_34: 30000
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#input.schedule_r_federal_return_line_45000_line_38: 100
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#input.schedule_r_federal_return_line_45100_line_40: 40
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#schedule_r_self_employment_earnings_line_12: 45000
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#schedule_r_outside_quebec_employment_income_line_32: 15000
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#schedule_r_employment_income_subject_qpip_line_18: 45000
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#schedule_r_total_relevant_income_for_threshold: 90000
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#schedule_r_self_employment_insurable_room_line_20: 53000
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#schedule_r_self_employment_insurable_amount_line_22: 45000
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#schedule_r_self_employment_qpip_premium_line_24: 395.1
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#schedule_r_qpip_deduction_line_248: 172.800936
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#schedule_r_outside_quebec_insurable_room_line_35: 68000
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#schedule_r_outside_quebec_insurable_amount_line_36: 15000
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#schedule_r_outside_quebec_gross_premium_line_37: 74.1
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#schedule_r_federal_qpip_offset_line_42: 60
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#schedule_r_outside_quebec_qpip_premium_line_44: 14.1
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#schedule_r_total_qpip_premium_line_439: 409.2
+
+- name: schedule_r_below_minimum_income_no_premium
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#input.schedule_r_schedule_l_net_business_income_line_27_line_10: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#input.schedule_r_schedule_l_family_resource_earnings_line_40_line_11: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#input.schedule_r_rl1_box_i_or_a_total_line_14: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#input.schedule_r_canada_outside_quebec_employment_income_line_30: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#input.schedule_r_outside_canada_employment_income_no_rl1_line_31: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#input.schedule_r_rl1_box_i_total_line_34: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#input.schedule_r_federal_return_line_45000_line_38: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#input.schedule_r_federal_return_line_45100_line_40: 0
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#schedule_r_total_relevant_income_for_threshold: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#schedule_r_self_employment_qpip_premium_line_24: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#schedule_r_outside_quebec_gross_premium_line_37: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium#schedule_r_total_qpip_premium_line_439: 0
