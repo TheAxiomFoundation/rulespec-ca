@@ -1,0 +1,74 @@
+- name: schedule_p_spouse_child_adapted_with_supplement
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_self_employment_income_line_10: 10000
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_self_other_employment_income_line_12: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_self_research_grants_line_13: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_self_schedule_l_net_amount_line_14: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_self_wepp_payments_line_15: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_self_line_293_deduction_income_line_22: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_spouse_employment_income_line_30: 8000
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_spouse_other_employment_income_line_32: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_spouse_research_grants_line_33: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_spouse_schedule_l_net_amount_line_34: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_spouse_wepp_payments_line_35: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_spouse_line_293_deduction_income_line_42: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_self_net_income_line_275_line_52: 18000
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_spouse_net_income_line_275_line_53: 8000
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_rl5_box_v_months_line_57: 4
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_eligible_supplement_months_line_58: 3
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_has_spouse_december_31: true
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_has_designated_dependent_child: true
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_adapted_work_premium_eligible: true
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_spouse_schedule_p_line_89: 500
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#schedule_p_self_work_income_before_deductions_line_18: 13000
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#schedule_p_self_work_income_line_29: 12500
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#schedule_p_spouse_work_income_before_deductions_line_38: 9000
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#schedule_p_spouse_work_income_line_49: 9000
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#schedule_p_family_income_line_54: 26000
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#schedule_p_supplement_eligible_months_line_59: 3
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#schedule_p_work_premium_supplement_line_88: 600
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#schedule_p_work_income_basis_line_64: 21500
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#schedule_p_regular_work_premium_line_84: 3336.9
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#schedule_p_adapted_work_premium_line_84: 4060
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#schedule_p_work_premium_before_spouse_allocation_line_85: 4060
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#schedule_p_work_premium_line_89: 3560
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#schedule_p_tax_credits_work_premium_line_456: 4160
+
+- name: schedule_p_single_no_child_regular_only
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_self_employment_income_line_10: 10000
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_self_other_employment_income_line_12: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_self_research_grants_line_13: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_self_schedule_l_net_amount_line_14: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_self_wepp_payments_line_15: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_self_line_293_deduction_income_line_22: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_spouse_employment_income_line_30: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_spouse_other_employment_income_line_32: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_spouse_research_grants_line_33: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_spouse_schedule_l_net_amount_line_34: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_spouse_wepp_payments_line_35: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_spouse_line_293_deduction_income_line_42: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_self_net_income_line_275_line_52: 13000
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_spouse_net_income_line_275_line_53: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_rl5_box_v_months_line_57: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_eligible_supplement_months_line_58: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_has_spouse_december_31: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_has_designated_dependent_child: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_adapted_work_premium_eligible: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#input.schedule_p_spouse_schedule_p_line_89: 0
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#schedule_p_work_income_basis_line_64: 10000
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#schedule_p_regular_work_premium_line_84: 843.6
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#schedule_p_adapted_work_premium_line_84: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#schedule_p_work_premium_before_spouse_allocation_line_85: 843.6
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#schedule_p_work_premium_line_89: 843.6
+    ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium#schedule_p_tax_credits_work_premium_line_456: 843.6

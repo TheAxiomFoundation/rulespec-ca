@@ -1,0 +1,302 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Quebec Schedule P 2025 tax credits respecting the work premium:
+    work income, family income, supplement to the work premium, regular
+    and adapted work premium calculations, spouse allocation, and TP-1
+    line 456 carryforward.
+  source_verification:
+    corpus_citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-p-work-premium
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+      rationale: Revenu Quebec Schedule P is the official 2025 schedule for tax credits respecting the work premium.
+    source_urls:
+      - https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.P-V%282025-12%29.pdf
+rules:
+  - name: quebec_2025_schedule_p_supplement_monthly_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule P 2025 line 56 gives the monthly supplement amount as $200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 200
+
+  - name: quebec_2025_schedule_p_spouse_work_cap
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule P 2025 section E with spouse line 66 gives $19,534 for the work premium
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 19534
+
+  - name: quebec_2025_schedule_p_spouse_adapted_cap
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule P 2025 section E with spouse line 66 gives $26,946 for the adapted work premium
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 26946
+
+  - name: quebec_2025_schedule_p_single_work_cap
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule P 2025 section E without spouse line 66 gives $12,620 for the work premium
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 12620
+
+  - name: quebec_2025_schedule_p_single_adapted_cap
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule P 2025 section E without spouse line 66 gives $17,798 for the adapted work premium
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 17798
+
+  - name: quebec_2025_schedule_p_spouse_work_base
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule P 2025 section E with spouse work premium line 70 gives $3,600
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 3600
+
+  - name: quebec_2025_schedule_p_single_work_base
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule P 2025 section E without spouse work premium line 70 gives $2,400
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2400
+
+  - name: quebec_2025_schedule_p_adapted_base
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule P 2025 section E adapted work premium line 70 gives $1,200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1200
+
+  - name: quebec_2025_schedule_p_spouse_work_rate_no_child
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule P 2025 section E with spouse work premium line 74 gives 11.6% without a designated child
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.116
+
+  - name: quebec_2025_schedule_p_spouse_work_rate_with_child
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule P 2025 section E with spouse work premium line 74 gives 25% with a designated child
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.25
+
+  - name: quebec_2025_schedule_p_spouse_adapted_rate_no_child
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule P 2025 section E with spouse adapted work premium line 75 gives 13.6% without a designated child
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.136
+
+  - name: quebec_2025_schedule_p_spouse_adapted_rate_with_child
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule P 2025 section E with spouse adapted work premium line 75 gives 20% with a designated child
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.20
+
+  - name: quebec_2025_schedule_p_single_work_rate_no_child
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule P 2025 section E without spouse work premium line 74 gives 11.6% without a designated child
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.116
+
+  - name: quebec_2025_schedule_p_single_work_rate_with_child
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule P 2025 section E without spouse work premium line 74 gives 30% with a designated child
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.30
+
+  - name: quebec_2025_schedule_p_single_adapted_rate_no_child
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule P 2025 section E without spouse adapted work premium line 75 gives 13.6% without a designated child
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.136
+
+  - name: quebec_2025_schedule_p_single_adapted_rate_with_child
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule P 2025 section E without spouse adapted work premium line 75 gives 25% with a designated child
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.25
+
+  - name: quebec_2025_schedule_p_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule P 2025 section E line 83 multiplies excess family income by 10%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.10
+
+  - name: schedule_p_self_work_income_before_deductions_line_18
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule P 2025 line 18 adds taxpayer work income sources on lines 10 through 15
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_p_self_employment_income_line_10) + max(0, schedule_p_self_other_employment_income_line_12) + max(0, schedule_p_self_research_grants_line_13) + max(0, schedule_p_self_schedule_l_net_amount_line_14) + max(0, schedule_p_self_wepp_payments_line_15)
+
+  - name: schedule_p_self_work_income_line_29
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule P 2025 line 29 subtracts line 22 from line 18
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_p_self_work_income_before_deductions_line_18 - max(0, schedule_p_self_line_293_deduction_income_line_22))
+
+  - name: schedule_p_spouse_work_income_before_deductions_line_38
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule P 2025 line 38 adds spouse work income sources on lines 30 through 35
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_p_spouse_employment_income_line_30) + max(0, schedule_p_spouse_other_employment_income_line_32) + max(0, schedule_p_spouse_research_grants_line_33) + max(0, schedule_p_spouse_schedule_l_net_amount_line_34) + max(0, schedule_p_spouse_wepp_payments_line_35)
+
+  - name: schedule_p_spouse_work_income_line_49
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule P 2025 line 49 subtracts line 42 from line 38
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_p_spouse_work_income_before_deductions_line_38 - max(0, schedule_p_spouse_line_293_deduction_income_line_42))
+
+  - name: schedule_p_family_income_line_54
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule P 2025 line 54 adds the taxpayer's and spouse's line 275 net income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_p_self_net_income_line_275_line_52) + max(0, schedule_p_spouse_net_income_line_275_line_53)
+
+  - name: schedule_p_supplement_eligible_months_line_59
+    kind: derived
+    entity: Family
+    dtype: Number
+    period: Year
+    source: Revenu Quebec Schedule P 2025 line 59 uses the lesser of RL-5 box V months on line 57 and eligible months on line 58
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(max(0, schedule_p_rl5_box_v_months_line_57), max(0, schedule_p_eligible_supplement_months_line_58))
+
+  - name: schedule_p_work_premium_supplement_line_88
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule P 2025 line 60 multiplies the $200 monthly amount on line 56 by line 59 and carries it to line 88
+    versions:
+      - effective_from: '2025-01-01'
+        formula: quebec_2025_schedule_p_supplement_monthly_amount * schedule_p_supplement_eligible_months_line_59
+
+  - name: schedule_p_work_income_basis_line_64
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule P 2025 section E line 64 uses combined taxpayer and spouse work income with a spouse, otherwise taxpayer work income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_p_has_spouse_december_31:
+            schedule_p_self_work_income_line_29 + schedule_p_spouse_work_income_line_49
+          else:
+            schedule_p_self_work_income_line_29
+
+  - name: schedule_p_regular_work_premium_line_84
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule P 2025 section E column 1 calculates the regular work premium through line 84
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_p_has_spouse_december_31:
+            max(0, max(0, min(schedule_p_work_income_basis_line_64, quebec_2025_schedule_p_spouse_work_cap) - quebec_2025_schedule_p_spouse_work_base) * (if schedule_p_has_designated_dependent_child: quebec_2025_schedule_p_spouse_work_rate_with_child else: quebec_2025_schedule_p_spouse_work_rate_no_child) - max(0, schedule_p_family_income_line_54 - quebec_2025_schedule_p_spouse_work_cap) * quebec_2025_schedule_p_reduction_rate)
+          else:
+            max(0, max(0, min(schedule_p_work_income_basis_line_64, quebec_2025_schedule_p_single_work_cap) - quebec_2025_schedule_p_single_work_base) * (if schedule_p_has_designated_dependent_child: quebec_2025_schedule_p_single_work_rate_with_child else: quebec_2025_schedule_p_single_work_rate_no_child) - max(0, schedule_p_family_income_line_54 - quebec_2025_schedule_p_single_work_cap) * quebec_2025_schedule_p_reduction_rate)
+
+  - name: schedule_p_adapted_work_premium_line_84
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule P 2025 section E column 2 calculates the adapted work premium through line 84 when the adapted premium conditions are met
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_p_adapted_work_premium_eligible:
+            if schedule_p_has_spouse_december_31:
+              max(0, max(0, min(schedule_p_work_income_basis_line_64, quebec_2025_schedule_p_spouse_adapted_cap) - quebec_2025_schedule_p_adapted_base) * (if schedule_p_has_designated_dependent_child: quebec_2025_schedule_p_spouse_adapted_rate_with_child else: quebec_2025_schedule_p_spouse_adapted_rate_no_child) - max(0, schedule_p_family_income_line_54 - quebec_2025_schedule_p_spouse_adapted_cap) * quebec_2025_schedule_p_reduction_rate)
+            else:
+              max(0, max(0, min(schedule_p_work_income_basis_line_64, quebec_2025_schedule_p_single_adapted_cap) - quebec_2025_schedule_p_adapted_base) * (if schedule_p_has_designated_dependent_child: quebec_2025_schedule_p_single_adapted_rate_with_child else: quebec_2025_schedule_p_single_adapted_rate_no_child) - max(0, schedule_p_family_income_line_54 - quebec_2025_schedule_p_single_adapted_cap) * quebec_2025_schedule_p_reduction_rate)
+          else:
+            0
+
+  - name: schedule_p_work_premium_before_spouse_allocation_line_85
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule P 2025 line 85 enters the greater of the regular work premium and adapted work premium column amounts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(schedule_p_regular_work_premium_line_84, schedule_p_adapted_work_premium_line_84)
+
+  - name: schedule_p_work_premium_line_89
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule P 2025 line 87 subtracts the spouse's line 89 amount when there is a spouse and carries the result to line 89
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_p_has_spouse_december_31:
+            max(0, schedule_p_work_premium_before_spouse_allocation_line_85 - max(0, schedule_p_spouse_schedule_p_line_89))
+          else:
+            schedule_p_work_premium_before_spouse_allocation_line_85
+
+  - name: schedule_p_tax_credits_work_premium_line_456
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule P 2025 line 90 adds line 88 and line 89 and carries tax credits respecting the work premium to TP-1 line 456
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_p_work_premium_supplement_line_88 + schedule_p_work_premium_line_89
