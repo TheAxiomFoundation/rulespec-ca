@@ -1,0 +1,124 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Quebec Schedule N 2025 adjustment of investment expenses:
+    investment expense and income totals, line 260 and line 276 adjustments,
+    line 252 use, and carryforward.
+  source_verification:
+    corpus_citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+      rationale: Revenu Quebec Schedule N is the official 2025 schedule for the adjustment of investment expenses.
+    source_urls:
+      - https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.N-V%282025-12%29.pdf
+rules:
+  - name: quebec_2025_schedule_n_resource_recovery_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule N 2025 line 28 includes recovery of resource deductions multiplied by 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.5
+
+  - name: schedule_n_investment_expenses_line_18
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule N 2025 line 18 adds investment expenses on lines 10 through 16
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_n_specified_member_partnership_loss_line_10) + max(0, schedule_n_carrying_charges_interest_line_12) + max(0, schedule_n_exploration_development_expenses_line_14) + max(0, schedule_n_other_property_income_expenses_line_16)
+
+  - name: schedule_n_resource_deduction_recovery_line_28
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule N 2025 line 28 multiplies recovery of resource deductions by 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_n_resource_deduction_recovery_base) * quebec_2025_schedule_n_resource_recovery_rate
+
+  - name: schedule_n_investment_income_line_36
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule N 2025 line 36 adds investment income on lines 20 through 34
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_n_taxable_canadian_dividends_line_20) + max(0, schedule_n_interest_other_investment_income_line_22) + max(0, schedule_n_specified_member_partnership_income_line_24) + max(0, schedule_n_life_insurance_policy_income_line_26) + schedule_n_resource_deduction_recovery_line_28 + max(0, schedule_n_ordinary_annuities_ro_line_30) + max(0, schedule_n_other_trust_shareholder_property_income_line_32) + max(0, schedule_n_taxable_capital_gains_line_34)
+
+  - name: schedule_n_investment_expense_adjustment_line_260
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule N 2025 line 40 subtracts line 36 from line 18, floors the result at zero, and carries it to TP-1 line 260
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_n_investment_expenses_line_18 - schedule_n_investment_income_line_36)
+
+  - name: schedule_n_other_investment_expenses_line_54
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule N 2025 line 54 adds limited partnership loss and net capital losses from other years
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_n_limited_partnership_loss_line_50) + max(0, schedule_n_net_capital_losses_other_years_line_52)
+
+  - name: schedule_n_investment_income_excess_line_60
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule N 2025 line 60 subtracts line 58 from line 56 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_n_investment_income_line_36 - schedule_n_investment_expenses_line_18)
+
+  - name: schedule_n_other_investment_expense_adjustment_line_276
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule N 2025 line 64 subtracts line 60 from line 54, floors the result at zero, and carries it to TP-1 line 276
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_n_other_investment_expenses_line_54 - schedule_n_investment_income_excess_line_60)
+
+  - name: schedule_n_adjustment_available_line_76
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule N 2025 line 76 adds unused prior adjustment and current adjustments on lines 40 and 64
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_n_unused_adjustment_prior_years_line_70) + schedule_n_investment_expense_adjustment_line_260 + schedule_n_other_investment_expense_adjustment_line_276
+
+  - name: schedule_n_adjustment_used_line_252
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule N 2025 line 78 enters the amount from TP-1 line 252
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(schedule_n_adjustment_available_line_76, max(0, schedule_n_amount_from_return_line_252_line_78))
+
+  - name: schedule_n_adjustment_carryforward_line_80
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule N 2025 line 80 subtracts line 78 from line 76 to determine the amount that can be carried forward
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_n_adjustment_available_line_76 - schedule_n_adjustment_used_line_252)

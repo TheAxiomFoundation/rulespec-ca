@@ -1,0 +1,63 @@
+- name: schedule_n_expenses_exceed_income
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_specified_member_partnership_loss_line_10: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_carrying_charges_interest_line_12: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_exploration_development_expenses_line_14: 3000
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_other_property_income_expenses_line_16: 4000
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_taxable_canadian_dividends_line_20: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_interest_other_investment_income_line_22: 600
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_specified_member_partnership_income_line_24: 700
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_life_insurance_policy_income_line_26: 800
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_resource_deduction_recovery_base: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_ordinary_annuities_ro_line_30: 100
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_other_trust_shareholder_property_income_line_32: 200
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_taxable_capital_gains_line_34: 300
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_limited_partnership_loss_line_50: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_net_capital_losses_other_years_line_52: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_unused_adjustment_prior_years_line_70: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_amount_from_return_line_252_line_78: 1000
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#schedule_n_investment_expenses_line_18: 10000
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#schedule_n_resource_deduction_recovery_line_28: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#schedule_n_investment_income_line_36: 3700
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#schedule_n_investment_expense_adjustment_line_260: 6300
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#schedule_n_other_investment_expenses_line_54: 3000
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#schedule_n_investment_income_excess_line_60: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#schedule_n_other_investment_expense_adjustment_line_276: 3000
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#schedule_n_adjustment_available_line_76: 9800
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#schedule_n_adjustment_used_line_252: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#schedule_n_adjustment_carryforward_line_80: 8800
+
+- name: schedule_n_income_exceeds_expenses_reduces_other_adjustment
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_specified_member_partnership_loss_line_10: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_carrying_charges_interest_line_12: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_exploration_development_expenses_line_14: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_other_property_income_expenses_line_16: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_taxable_canadian_dividends_line_20: 3000
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_interest_other_investment_income_line_22: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_specified_member_partnership_income_line_24: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_life_insurance_policy_income_line_26: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_resource_deduction_recovery_base: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_ordinary_annuities_ro_line_30: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_other_trust_shareholder_property_income_line_32: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_taxable_capital_gains_line_34: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_limited_partnership_loss_line_50: 4000
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_net_capital_losses_other_years_line_52: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_unused_adjustment_prior_years_line_70: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#input.schedule_n_amount_from_return_line_252_line_78: 9999
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#schedule_n_investment_expense_adjustment_line_260: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#schedule_n_investment_income_excess_line_60: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#schedule_n_other_investment_expense_adjustment_line_276: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#schedule_n_adjustment_available_line_76: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#schedule_n_adjustment_used_line_252: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment#schedule_n_adjustment_carryforward_line_80: 0
