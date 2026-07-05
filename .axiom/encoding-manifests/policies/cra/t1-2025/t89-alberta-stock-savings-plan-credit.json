@@ -10,20 +10,20 @@
     }
   ],
   "axiom_encode_git": {
-    "commit": "cdcbc9fccc856569d16e40163005e99078824c3f",
+    "commit": "a314fc624967b4e990beb7d9ffc429dae6e26642",
     "dirty_tracked": false,
     "root": "/Users/pavelmakarchuk/axiom-encode",
-    "version": "0.2.1088",
-    "version_commit": "cdcbc9fccc856569d16e40163005e99078824c3f"
+    "version": "0.2.1152",
+    "version_commit": "a314fc624967b4e990beb7d9ffc429dae6e26642"
   },
-  "axiom_encode_version": "0.2.1088",
+  "axiom_encode_version": "0.2.1152",
   "backend": "manual",
   "citation": "ca:policies/cra/t1-2025/t89-alberta-stock-savings-plan-credit",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T16:33:36.246035+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/t89-alberta-stock-savings-plan-credit.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_at": "2026-07-05T15:04:20.610259+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm/sign-applied-files/policies/cra/t1-2025/t89-alberta-stock-savings-plan-credit.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "69962c2f937acc97f8e48b9cdea12912e891ca8d11f60a95f6db9a0606d1d371",
   "generation_prompt_sha256": null,
   "model": "",
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "7ec2614d47399dcf7b6c27681491e709e6af7951695f7acf95390a46d85c7e89"
+    "value": "2cd70073357214a565a44971dbbc02e6a2bba8f482f1d7fe456076f34dbbcd9a"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

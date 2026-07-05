@@ -10,20 +10,20 @@
     }
   ],
   "axiom_encode_git": {
-    "commit": "cdcbc9fccc856569d16e40163005e99078824c3f",
+    "commit": "a314fc624967b4e990beb7d9ffc429dae6e26642",
     "dirty_tracked": false,
     "root": "/Users/pavelmakarchuk/axiom-encode",
-    "version": "0.2.1088",
-    "version_commit": "cdcbc9fccc856569d16e40163005e99078824c3f"
+    "version": "0.2.1152",
+    "version_commit": "a314fc624967b4e990beb7d9ffc429dae6e26642"
   },
-  "axiom_encode_version": "0.2.1088",
+  "axiom_encode_version": "0.2.1152",
   "backend": "manual",
   "citation": "ca:policies/cra/t1-2025/sk479-credits",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T16:33:36.237443+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/sk479-credits.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_at": "2026-07-05T15:04:20.593933+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm/sign-applied-files/policies/cra/t1-2025/sk479-credits.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "7179361ce939a17080fc32c121e6fd060429fcfeca95c77604e398584b34d19e",
   "generation_prompt_sha256": null,
   "model": "",
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "6690064bb053458481f3ffe34936e7712dcbc9dd9231b3300943d849a3d027ad"
+    "value": "2dddb3fee004ed74788f52d7050cd2c9fdc812c301e988dc88ca08ccd60f05ff"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

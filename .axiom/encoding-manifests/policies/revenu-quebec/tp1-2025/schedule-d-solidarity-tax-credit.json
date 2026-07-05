@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit.test.yaml",
+      "sha256": "2b93f8e2f1070166d6e8758eff5b5b4243675692533f058f0b680b0b5564d3cf"
+    },
+    {
+      "path": "policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit.yaml",
+      "sha256": "f392bf3d190fa61acf5b9bfbe3eeae7f1b705568c5ce65dcf83c4874654b756b"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "a314fc624967b4e990beb7d9ffc429dae6e26642",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1152",
+    "version_commit": "a314fc624967b4e990beb7d9ffc429dae6e26642"
+  },
+  "axiom_encode_version": "0.2.1152",
+  "backend": "manual",
+  "citation": "ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-05T15:04:20.627170+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm/sign-applied-files/policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
+  "generated_output_sha256": "f392bf3d190fa61acf5b9bfbe3eeae7f1b705568c5ce65dcf83c4874654b756b",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "6621d5019e2241eeb3116009edc08bc47d9f2a4808341f89f99232290f874fe8"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

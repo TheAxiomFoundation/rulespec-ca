@@ -10,20 +10,20 @@
     }
   ],
   "axiom_encode_git": {
-    "commit": "cdcbc9fccc856569d16e40163005e99078824c3f",
+    "commit": "a314fc624967b4e990beb7d9ffc429dae6e26642",
     "dirty_tracked": false,
     "root": "/Users/pavelmakarchuk/axiom-encode",
-    "version": "0.2.1088",
-    "version_commit": "cdcbc9fccc856569d16e40163005e99078824c3f"
+    "version": "0.2.1152",
+    "version_commit": "a314fc624967b4e990beb7d9ffc429dae6e26642"
   },
-  "axiom_encode_version": "0.2.1088",
+  "axiom_encode_version": "0.2.1152",
   "backend": "manual",
   "citation": "ca:policies/cra/t1-2025/employee-overpayment-ei-premiums",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T16:33:36.200482+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/t1-2025/employee-overpayment-ei-premiums.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_at": "2026-07-05T15:04:20.546635+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm/sign-applied-files/policies/cra/t1-2025/employee-overpayment-ei-premiums.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "3230abd3ae0a41edf2aa9c4a18e118f7b8c9dd046320e7b11c11b35844fffc8f",
   "generation_prompt_sha256": null,
   "model": "",
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "e16d354dcd1648ddb9ddfc8ccdca9c12857b262993eecb347328bbcd12c011e3"
+    "value": "2e525245cd45478327f6fb68d3412960780ab189d1bedcb08b0dd586fa4e2d95"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

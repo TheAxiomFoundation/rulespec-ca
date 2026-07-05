@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/revenu-quebec/tp1-2025/schedule-s-student-transfer.test.yaml",
+      "sha256": "ffb0fa16a2a386a80b8f82a8ffb8c9011ac2fc2c4ed60663a94557d5d5ac76f0"
+    },
+    {
+      "path": "policies/revenu-quebec/tp1-2025/schedule-s-student-transfer.yaml",
+      "sha256": "1e812bd477e78258097d236a88a3181bf63e7a2051f286134560fc8c7b3a0bba"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "a314fc624967b4e990beb7d9ffc429dae6e26642",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1152",
+    "version_commit": "a314fc624967b4e990beb7d9ffc429dae6e26642"
+  },
+  "axiom_encode_version": "0.2.1152",
+  "backend": "manual",
+  "citation": "ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-05T15:04:20.637811+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm/sign-applied-files/policies/revenu-quebec/tp1-2025/schedule-s-student-transfer.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
+  "generated_output_sha256": "1e812bd477e78258097d236a88a3181bf63e7a2051f286134560fc8c7b3a0bba",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "d9dd94eb3e6b78fe30136b05ecb54e728ee0ae967c4dd117d6af58a95c4fc06a"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

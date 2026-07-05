@@ -10,20 +10,20 @@
     }
   ],
   "axiom_encode_git": {
-    "commit": "cdcbc9fccc856569d16e40163005e99078824c3f",
+    "commit": "a314fc624967b4e990beb7d9ffc429dae6e26642",
     "dirty_tracked": false,
     "root": "/Users/pavelmakarchuk/axiom-encode",
-    "version": "0.2.1088",
-    "version_commit": "cdcbc9fccc856569d16e40163005e99078824c3f"
+    "version": "0.2.1152",
+    "version_commit": "a314fc624967b4e990beb7d9ffc429dae6e26642"
   },
-  "axiom_encode_version": "0.2.1088",
+  "axiom_encode_version": "0.2.1152",
   "backend": "manual",
   "citation": "ca:policies/cra/benefits-2026/provincial-territorial-cgeb-linked-credits",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-07-03T16:33:36.188492+00:00",
-  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn/sign-applied-files/policies/cra/benefits-2026/provincial-territorial-cgeb-linked-credits.yaml",
-  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpagq50gdn",
+  "generated_at": "2026-07-05T15:04:20.529143+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm/sign-applied-files/policies/cra/benefits-2026/provincial-territorial-cgeb-linked-credits.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "087aabc804b35a82373850e042a27f3db446b91edd82127f03440b51e3f01f87",
   "generation_prompt_sha256": null,
   "model": "",
@@ -33,7 +33,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "f4e03e2a58848db600647bdb71d0c0dedd2acc789ca3daeb94d4ee6037000eb9"
+    "value": "638c27fcb730f48c52bf03b04991e3682c181daa7156b1ffacdfea8b6d2a0b29"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,
