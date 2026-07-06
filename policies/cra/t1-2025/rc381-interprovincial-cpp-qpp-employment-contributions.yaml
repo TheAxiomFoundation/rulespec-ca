@@ -1,0 +1,571 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form RC381 for 2025 calculates inter-provincial CPP and QPP
+    contributions for taxpayers with employment income inside and outside
+    Quebec. This module encodes the Part 3 employment-income allocation and
+    the positive-overpayment branch. Part 2 month-count amounts are consumed
+    as upstream fact inputs because Part 2 depends on election and residency
+    month facts outside this Part 3 employment-income calculation. It does
+    not encode the Part 3b non-positive allocation, Part 4 self-employment,
+    or Part 5 optional QPP self-employment calculations.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/canada-pension-plan
+        - ca/statute/quebec-pension-plan
+      rationale: |-
+        CRA Form RC381 is the official 2025 inter-provincial CPP/QPP
+        calculation form for taxpayers who earned employment income in Quebec
+        and were resident outside Quebec, or earned employment income outside
+        Quebec and were resident in Quebec.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/rc381/rc381-25e.pdf
+rules:
+  - name: federal_2025_rc381_cpp_actual_base_share
+    kind: parameter
+    dtype: Rate
+    source: CRA RC381 2025 Part 3 line 20 multiplies actual CPP base and first additional contributions by 83.1933%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.831933
+
+  - name: federal_2025_rc381_qpp_actual_base_share
+    kind: parameter
+    dtype: Rate
+    source: CRA RC381 2025 Part 3 line 40 multiplies actual QPP base and first additional contributions by 84.375%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.84375
+
+  - name: federal_2025_rc381_cpp_base_employee_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA RC381 2025 Part 3 line 22 multiplies CPP base-and-first earnings by 4.95%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0495
+
+  - name: federal_2025_rc381_qpp_base_employee_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA RC381 2025 Part 3 line 42 multiplies QPP base-and-first earnings by 5.4%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.054
+
+  - name: federal_2025_rc381_first_additional_employee_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA RC381 2025 Part 3 lines 23 and 43 multiply base-and-first earnings by 1%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.01
+
+  - name: federal_2025_rc381_second_additional_employee_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA RC381 2025 Part 3 lines 26 and 46 multiply second additional earnings by 4%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.04
+
+  - name: federal_2025_rc381_cpp_base_employee_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA RC381 2025 Part 3 line 22 caps required CPP base contributions at $3,356.10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 3356.10
+
+  - name: federal_2025_rc381_qpp_base_employee_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA RC381 2025 Part 3 line 42 caps required QPP base contributions at $3,661.20
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 3661.20
+
+  - name: federal_2025_rc381_first_additional_employee_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA RC381 2025 Part 3 lines 23 and 43 cap required first additional contributions at $678.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 678.00
+
+  - name: federal_2025_rc381_second_additional_employee_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA RC381 2025 Part 3 lines 26 and 46 cap required second additional contributions at $396.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 396.00
+
+  - name: rc381_part3_total_pensionable_earnings_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 3 adds CPP pensionable earnings line 1 and QPP pensionable earnings line 2
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, rc381_cpp_pensionable_earnings_line_1)
+          + max(0, rc381_qpp_pensionable_earnings_line_2)
+
+  - name: rc381_part3_cpp_allocation_rate_line_6
+    kind: derived
+    entity: Person
+    dtype: Number
+    period: Year
+    source: CRA RC381 2025 Part 3 line 6 divides line 4 by line 5 to allocate CPP and QPP limits
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if rc381_part3_total_pensionable_earnings_line_3 > 0:
+            max(0, rc381_cpp_pensionable_earnings_line_1)
+            / rc381_part3_total_pensionable_earnings_line_3
+          else:
+            0
+
+  - name: rc381_part3_cpp_additional_maximum_line_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 7 multiplies Part 2 line E by the allocation rate on line 6
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, rc381_cpp_part2_additional_maximum_pensionable_earnings_line_e) * rc381_part3_cpp_allocation_rate_line_6
+
+  - name: rc381_part3_cpp_maximum_pensionable_line_8
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 8 multiplies Part 2 line C by the allocation rate on line 6
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, rc381_cpp_part2_maximum_pensionable_earnings_line_c) * rc381_part3_cpp_allocation_rate_line_6
+
+  - name: rc381_part3_cpp_basic_exemption_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 9 multiplies Part 2 line F by the allocation rate on line 6
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, rc381_cpp_part2_basic_exemption_line_f) * rc381_part3_cpp_allocation_rate_line_6
+
+  - name: rc381_part3_cpp_second_additional_limit_line_10
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 10 multiplies Part 2 line D by the allocation rate on line 6
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, rc381_cpp_part2_second_additional_amount_line_d) * rc381_part3_cpp_allocation_rate_line_6
+
+  - name: rc381_part3_cpp_subject_to_contributions_line_11
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 11 is the lesser of CPP earnings line 1 and line 7
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(max(0, rc381_cpp_pensionable_earnings_line_1), rc381_part3_cpp_additional_maximum_line_7)
+
+  - name: rc381_part3_cpp_second_additional_earnings_line_15
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 15 is the lesser of line 10 and line 14
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            rc381_part3_cpp_second_additional_limit_line_10,
+            max(0, rc381_part3_cpp_subject_to_contributions_line_11 - rc381_part3_cpp_maximum_pensionable_line_8)
+          )
+
+  - name: rc381_part3_cpp_base_first_earnings_line_18
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 18 subtracts the basic exemption from line 16 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            rc381_part3_cpp_subject_to_contributions_line_11
+            - rc381_part3_cpp_second_additional_earnings_line_15
+            - rc381_part3_cpp_basic_exemption_line_9
+          )
+
+  - name: rc381_part3_cpp_actual_base_line_20
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 20 multiplies actual CPP base and first additional contributions by 83.1933%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, rc381_actual_base_first_cpp_contributions_line_19) * federal_2025_rc381_cpp_actual_base_share
+
+  - name: rc381_part3_cpp_actual_first_additional_line_21
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 21 subtracts line 20 from actual CPP base and first additional contributions line 19
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, rc381_actual_base_first_cpp_contributions_line_19) - rc381_part3_cpp_actual_base_line_20
+
+  - name: rc381_part3_cpp_required_base_line_22
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 22 multiplies line 18 by 4.95% and caps the amount at $3,356.10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(rc381_part3_cpp_base_first_earnings_line_18 * federal_2025_rc381_cpp_base_employee_rate, federal_2025_rc381_cpp_base_employee_maximum)
+
+  - name: rc381_part3_cpp_required_first_additional_line_23
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 23 multiplies line 18 by 1% and caps the amount at $678.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(rc381_part3_cpp_base_first_earnings_line_18 * federal_2025_rc381_first_additional_employee_rate, federal_2025_rc381_first_additional_employee_maximum)
+
+  - name: rc381_part3_cpp_required_second_additional_line_26
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 26 multiplies line 15 by 4% and caps the amount at $396.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(rc381_part3_cpp_second_additional_earnings_line_15 * federal_2025_rc381_second_additional_employee_rate, federal_2025_rc381_second_additional_employee_maximum)
+
+  - name: rc381_part3_qpp_additional_maximum_line_27
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 27 subtracts CPP line 7 from QPP Part 2 line I
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, rc381_qpp_part2_additional_maximum_pensionable_earnings_line_i - rc381_part3_cpp_additional_maximum_line_7)
+
+  - name: rc381_part3_qpp_maximum_pensionable_line_28
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 28 subtracts CPP line 8 from QPP Part 2 line G
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, rc381_qpp_part2_maximum_pensionable_earnings_line_g - rc381_part3_cpp_maximum_pensionable_line_8)
+
+  - name: rc381_part3_qpp_basic_exemption_line_29
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 29 subtracts CPP line 9 from QPP Part 2 line J
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, rc381_qpp_part2_basic_exemption_line_j - rc381_part3_cpp_basic_exemption_line_9)
+
+  - name: rc381_part3_qpp_second_additional_limit_line_30
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 30 subtracts CPP line 10 from QPP Part 2 line H
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, rc381_qpp_part2_second_additional_amount_line_h - rc381_part3_cpp_second_additional_limit_line_10)
+
+  - name: rc381_part3_qpp_subject_to_contributions_line_31
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 31 is the lesser of QPP earnings line 2 and line 27
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(max(0, rc381_qpp_pensionable_earnings_line_2), rc381_part3_qpp_additional_maximum_line_27)
+
+  - name: rc381_part3_qpp_second_additional_earnings_line_35
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 35 is the lesser of line 30 and line 34
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            rc381_part3_qpp_second_additional_limit_line_30,
+            max(0, rc381_part3_qpp_subject_to_contributions_line_31 - rc381_part3_qpp_maximum_pensionable_line_28)
+          )
+
+  - name: rc381_part3_qpp_base_first_earnings_line_38
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 38 subtracts the basic exemption from line 36 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            rc381_part3_qpp_subject_to_contributions_line_31
+            - rc381_part3_qpp_second_additional_earnings_line_35
+            - rc381_part3_qpp_basic_exemption_line_29
+          )
+
+  - name: rc381_part3_qpp_actual_base_line_40
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 40 multiplies actual QPP base and first additional contributions by 84.375%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, rc381_actual_base_first_qpp_contributions_line_39) * federal_2025_rc381_qpp_actual_base_share
+
+  - name: rc381_part3_qpp_actual_first_additional_line_41
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 41 subtracts line 40 from actual QPP base and first additional contributions line 39
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, rc381_actual_base_first_qpp_contributions_line_39) - rc381_part3_qpp_actual_base_line_40
+
+  - name: rc381_part3_qpp_required_base_line_42
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 42 multiplies line 38 by 5.4% and caps the amount at $3,661.20
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(rc381_part3_qpp_base_first_earnings_line_38 * federal_2025_rc381_qpp_base_employee_rate, federal_2025_rc381_qpp_base_employee_maximum)
+
+  - name: rc381_part3_qpp_required_first_additional_line_43
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 43 multiplies line 38 by 1% and caps the amount at $678.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(rc381_part3_qpp_base_first_earnings_line_38 * federal_2025_rc381_first_additional_employee_rate, federal_2025_rc381_first_additional_employee_maximum)
+
+  - name: rc381_part3_qpp_required_second_additional_line_46
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 46 multiplies line 35 by 4% and caps the amount at $396.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(rc381_part3_qpp_second_additional_earnings_line_35 * federal_2025_rc381_second_additional_employee_rate, federal_2025_rc381_second_additional_employee_maximum)
+
+  - name: rc381_part3_total_actual_base_contributions_line_49
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 49 adds actual CPP and QPP base contributions from lines 20 and 40
+    versions:
+      - effective_from: '2025-01-01'
+        formula: rc381_part3_cpp_actual_base_line_20 + rc381_part3_qpp_actual_base_line_40
+
+  - name: rc381_part3_total_required_base_contributions_line_52
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 52 adds required CPP and QPP base contributions from lines 22 and 42
+    versions:
+      - effective_from: '2025-01-01'
+        formula: rc381_part3_cpp_required_base_line_22 + rc381_part3_qpp_required_base_line_42
+
+  - name: rc381_part3_base_difference_line_53
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 53 subtracts required base contributions line 52 from actual base contributions line 49
+    versions:
+      - effective_from: '2025-01-01'
+        formula: rc381_part3_total_actual_base_contributions_line_49 - rc381_part3_total_required_base_contributions_line_52
+
+  - name: rc381_part3_total_actual_first_additional_line_56
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 56 adds actual CPP and QPP first additional contributions from lines 21 and 41
+    versions:
+      - effective_from: '2025-01-01'
+        formula: rc381_part3_cpp_actual_first_additional_line_21 + rc381_part3_qpp_actual_first_additional_line_41
+
+  - name: rc381_part3_total_required_first_additional_line_59
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 59 adds required CPP and QPP first additional contributions from lines 23 and 43
+    versions:
+      - effective_from: '2025-01-01'
+        formula: rc381_part3_cpp_required_first_additional_line_23 + rc381_part3_qpp_required_first_additional_line_43
+
+  - name: rc381_part3_first_additional_difference_line_60
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 60 subtracts required first additional contributions line 59 from actual first additional contributions line 56
+    versions:
+      - effective_from: '2025-01-01'
+        formula: rc381_part3_total_actual_first_additional_line_56 - rc381_part3_total_required_first_additional_line_59
+
+  - name: rc381_part3_base_first_difference_line_61
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 61 adds base difference line 53 and first additional difference line 60
+    versions:
+      - effective_from: '2025-01-01'
+        formula: rc381_part3_base_difference_line_53 + rc381_part3_first_additional_difference_line_60
+
+  - name: rc381_part3_total_actual_second_additional_line_64
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 64 adds actual CPP and QPP second additional contributions from lines 25 and 45
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, rc381_actual_second_additional_cpp_contributions_line_25) + max(0, rc381_actual_second_additional_qpp_contributions_line_45)
+
+  - name: rc381_part3_total_required_second_additional_line_67
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 67 adds required CPP and QPP second additional contributions from lines 26 and 46
+    versions:
+      - effective_from: '2025-01-01'
+        formula: rc381_part3_cpp_required_second_additional_line_26 + rc381_part3_qpp_required_second_additional_line_46
+
+  - name: rc381_part3_second_additional_difference_line_68
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 68 subtracts required second additional contributions line 67 from actual second additional contributions line 64
+    versions:
+      - effective_from: '2025-01-01'
+        formula: rc381_part3_total_actual_second_additional_line_64 - rc381_part3_total_required_second_additional_line_67
+
+  - name: rc381_part3_total_difference_line_69
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3 line 69 adds line 61 and line 68
+    versions:
+      - effective_from: '2025-01-01'
+        formula: rc381_part3_base_first_difference_line_61 + rc381_part3_second_additional_difference_line_68
+
+  - name: rc381_part3a_base_contributions_line_30800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3a line 70 enters line 52 on T1 line 30800 when line 69 is positive
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if rc381_part3_total_difference_line_69 > 0:
+            rc381_part3_total_required_base_contributions_line_52
+          else:
+            0
+
+  - name: rc381_part3a_enhanced_deduction_line_22215
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3a line 73 adds lines 71 and 72 and enters the amount on T1 line 22215 when line 69 is positive
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if rc381_part3_total_difference_line_69 > 0:
+            rc381_part3_total_required_first_additional_line_59
+            + rc381_part3_total_required_second_additional_line_67
+          else:
+            0
+
+  - name: rc381_part3a_overpayment_line_44800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3a line 74 enters positive line 69 on T1 line 44800 as an overpayment
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, rc381_part3_total_difference_line_69)
+
+  - name: cpp_qpp_contributions_employment_line_30800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3a line 70 enters line 52 on T1 line 30800 when line 69 is positive
+    versions:
+      - effective_from: '2025-01-01'
+        formula: rc381_part3a_base_contributions_line_30800
+
+  - name: cpp_qpp_enhanced_employment_deduction_line_22215
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3a line 73 enters required enhanced CPP/QPP employee contributions on T1 line 22215 when line 69 is positive
+    versions:
+      - effective_from: '2025-01-01'
+        formula: rc381_part3a_enhanced_deduction_line_22215
+
+  - name: cpp_or_qpp_overpayment_line_44800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA RC381 2025 Part 3a line 74 enters positive line 69 on T1 line 44800 as CPP/QPP overpayment
+    versions:
+      - effective_from: '2025-01-01'
+        formula: rc381_part3a_overpayment_line_44800

@@ -1,0 +1,195 @@
+- name: rc381_part3_positive_overpayment_allocates_cpp_and_qpp_employment_contributions
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_pensionable_earnings_line_1: 50000
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_pensionable_earnings_line_2: 30000
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_maximum_pensionable_earnings_line_c: 71300
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_second_additional_amount_line_d: 9900
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_additional_maximum_pensionable_earnings_line_e: 81200
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_basic_exemption_line_f: 3500
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_maximum_pensionable_earnings_line_g: 71300
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_second_additional_amount_line_h: 9900
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_additional_maximum_pensionable_earnings_line_i: 81200
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_basic_exemption_line_j: 3500
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_base_first_cpp_contributions_line_19: 3000
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_second_additional_cpp_contributions_line_25: 300
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_base_first_qpp_contributions_line_39: 1700
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_second_additional_qpp_contributions_line_45: 150
+  output:
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_total_pensionable_earnings_line_3: 80000
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_allocation_rate_line_6: 0.625
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_additional_maximum_line_7: 50750
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_maximum_pensionable_line_8: 44562.5
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_basic_exemption_line_9: 2187.5
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_second_additional_limit_line_10: 6187.5
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_subject_to_contributions_line_11: 50000
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_second_additional_earnings_line_15: 5437.5
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_base_first_earnings_line_18: 42375
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_actual_base_line_20: 2495.799
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_actual_first_additional_line_21: 504.201
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_required_base_line_22: 2097.5625
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_required_first_additional_line_23: 423.75
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_required_second_additional_line_26: 217.5
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_qpp_additional_maximum_line_27: 30450
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_qpp_maximum_pensionable_line_28: 26737.5
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_qpp_basic_exemption_line_29: 1312.5
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_qpp_second_additional_limit_line_30: 3712.5
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_qpp_subject_to_contributions_line_31: 30000
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_qpp_second_additional_earnings_line_35: 3262.5
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_qpp_base_first_earnings_line_38: 25425
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_qpp_actual_base_line_40: 1434.375
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_qpp_actual_first_additional_line_41: 265.625
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_qpp_required_base_line_42: 1372.95
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_qpp_required_first_additional_line_43: 254.25
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_qpp_required_second_additional_line_46: 130.5
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_total_actual_base_contributions_line_49: 3930.174
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_total_required_base_contributions_line_52: 3470.5125
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_base_difference_line_53: 459.6615
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_total_actual_first_additional_line_56: 769.826
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_total_required_first_additional_line_59: 678
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_first_additional_difference_line_60: 91.826
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_base_first_difference_line_61: 551.4875
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_total_actual_second_additional_line_64: 450
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_total_required_second_additional_line_67: 348
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_second_additional_difference_line_68: 102
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_total_difference_line_69: 653.4875
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3a_base_contributions_line_30800: 3470.5125
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3a_enhanced_deduction_line_22215: 1026
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3a_overpayment_line_44800: 653.4875
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#cpp_qpp_contributions_employment_line_30800: 3470.5125
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#cpp_qpp_enhanced_employment_deduction_line_22215: 1026
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#cpp_or_qpp_overpayment_line_44800: 653.4875
+
+- name: rc381_part3_zero_pensionable_earnings_zeroes_allocation_branch
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_pensionable_earnings_line_1: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_pensionable_earnings_line_2: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_maximum_pensionable_earnings_line_c: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_second_additional_amount_line_d: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_additional_maximum_pensionable_earnings_line_e: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_basic_exemption_line_f: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_maximum_pensionable_earnings_line_g: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_second_additional_amount_line_h: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_additional_maximum_pensionable_earnings_line_i: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_basic_exemption_line_j: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_base_first_cpp_contributions_line_19: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_second_additional_cpp_contributions_line_25: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_base_first_qpp_contributions_line_39: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_second_additional_qpp_contributions_line_45: 0
+  output:
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_total_pensionable_earnings_line_3: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_allocation_rate_line_6: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_subject_to_contributions_line_11: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_qpp_subject_to_contributions_line_31: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_total_difference_line_69: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3a_base_contributions_line_30800: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3a_enhanced_deduction_line_22215: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3a_overpayment_line_44800: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#cpp_qpp_contributions_employment_line_30800: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#cpp_qpp_enhanced_employment_deduction_line_22215: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#cpp_or_qpp_overpayment_line_44800: 0
+
+- name: rc381_part3_negative_difference_zeroes_part3a_t1_outputs
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_pensionable_earnings_line_1: 50000
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_pensionable_earnings_line_2: 30000
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_maximum_pensionable_earnings_line_c: 71300
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_second_additional_amount_line_d: 9900
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_additional_maximum_pensionable_earnings_line_e: 81200
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_basic_exemption_line_f: 3500
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_maximum_pensionable_earnings_line_g: 71300
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_second_additional_amount_line_h: 9900
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_additional_maximum_pensionable_earnings_line_i: 81200
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_basic_exemption_line_j: 3500
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_base_first_cpp_contributions_line_19: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_second_additional_cpp_contributions_line_25: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_base_first_qpp_contributions_line_39: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_second_additional_qpp_contributions_line_45: 0
+  output:
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_total_required_base_contributions_line_52: 3470.5125
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_total_required_first_additional_line_59: 678
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_total_required_second_additional_line_67: 348
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_total_difference_line_69: -4496.5125
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3a_base_contributions_line_30800: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3a_enhanced_deduction_line_22215: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3a_overpayment_line_44800: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#cpp_qpp_contributions_employment_line_30800: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#cpp_qpp_enhanced_employment_deduction_line_22215: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#cpp_or_qpp_overpayment_line_44800: 0
+
+- name: rc381_part3_cpp_only_caps_bind_allocation_one
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_pensionable_earnings_line_1: 100000
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_pensionable_earnings_line_2: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_maximum_pensionable_earnings_line_c: 71300
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_second_additional_amount_line_d: 9900
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_additional_maximum_pensionable_earnings_line_e: 81200
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_basic_exemption_line_f: 3500
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_maximum_pensionable_earnings_line_g: 71300
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_second_additional_amount_line_h: 9900
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_additional_maximum_pensionable_earnings_line_i: 81200
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_basic_exemption_line_j: 3500
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_base_first_cpp_contributions_line_19: 10000
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_second_additional_cpp_contributions_line_25: 1000
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_base_first_qpp_contributions_line_39: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_second_additional_qpp_contributions_line_45: 0
+  output:
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_allocation_rate_line_6: 1
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_subject_to_contributions_line_11: 81200
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_second_additional_earnings_line_15: 9900
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_base_first_earnings_line_18: 67800
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_required_base_line_22: 3356.10
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_required_first_additional_line_23: 678
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_required_second_additional_line_26: 396
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_total_difference_line_69: 6569.9
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#cpp_qpp_contributions_employment_line_30800: 3356.10
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#cpp_qpp_enhanced_employment_deduction_line_22215: 1074
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#cpp_or_qpp_overpayment_line_44800: 6569.9
+
+- name: rc381_part3_qpp_only_caps_bind_allocation_zero
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_pensionable_earnings_line_1: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_pensionable_earnings_line_2: 100000
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_maximum_pensionable_earnings_line_c: 71300
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_second_additional_amount_line_d: 9900
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_additional_maximum_pensionable_earnings_line_e: 81200
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_cpp_part2_basic_exemption_line_f: 3500
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_maximum_pensionable_earnings_line_g: 71300
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_second_additional_amount_line_h: 9900
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_additional_maximum_pensionable_earnings_line_i: 81200
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_qpp_part2_basic_exemption_line_j: 3500
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_base_first_cpp_contributions_line_19: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_second_additional_cpp_contributions_line_25: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_base_first_qpp_contributions_line_39: 10000
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#input.rc381_actual_second_additional_qpp_contributions_line_45: 1000
+  output:
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_cpp_allocation_rate_line_6: 0
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_qpp_subject_to_contributions_line_31: 81200
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_qpp_second_additional_earnings_line_35: 9900
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_qpp_base_first_earnings_line_38: 67800
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_qpp_required_base_line_42: 3661.20
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_qpp_required_first_additional_line_43: 678
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_qpp_required_second_additional_line_46: 396
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#rc381_part3_total_difference_line_69: 6264.8
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#cpp_qpp_contributions_employment_line_30800: 3661.20
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#cpp_qpp_enhanced_employment_deduction_line_22215: 1074
+    ca:policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions#cpp_or_qpp_overpayment_line_44800: 6264.8

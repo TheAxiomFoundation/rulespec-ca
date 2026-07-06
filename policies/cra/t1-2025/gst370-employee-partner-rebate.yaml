@@ -1,0 +1,468 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form GST370 for 2025 calculates the employee and partner GST/HST
+    rebate, including GST, HST, and separately paid provincial HST
+    components, and enters the total on T1 line 45700.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/gst370-employee-partner-rebate
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/excise-tax-act
+      rationale: |-
+        CRA Form GST370 is the official employee and partner GST/HST rebate
+        application form. This module encodes the published 2025 arithmetic
+        while leaving claimant, employer, partnership, registration,
+        allowance-reasonableness, and expense-eligibility predicates to
+        deeper fact layers.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/gst370/gst370-25e.pdf
+rules:
+  - name: federal_2025_gst370_gst_rebate_rate_numerator
+    kind: parameter
+    dtype: Number
+    source: CRA GST370 2025 Part B line 4 multiplies line 3 by 5/105
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5
+
+  - name: federal_2025_gst370_gst_rebate_rate_denominator
+    kind: parameter
+    dtype: Number
+    source: CRA GST370 2025 Part B line 4 multiplies line 3 by 5/105
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 105
+
+  - name: federal_2025_gst370_hst_13_rebate_rate_numerator
+    kind: parameter
+    dtype: Number
+    source: CRA GST370 2025 Part B line 9 multiplies the 13% HST column by 13/113
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 13
+
+  - name: federal_2025_gst370_hst_13_rebate_rate_denominator
+    kind: parameter
+    dtype: Number
+    source: CRA GST370 2025 Part B line 9 multiplies the 13% HST column by 13/113
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 113
+
+  - name: federal_2025_gst370_hst_14_rebate_rate_numerator
+    kind: parameter
+    dtype: Number
+    source: CRA GST370 2025 Part B line 10 multiplies the 14% HST column by 14/114
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 14
+
+  - name: federal_2025_gst370_hst_14_rebate_rate_denominator
+    kind: parameter
+    dtype: Number
+    source: CRA GST370 2025 Part B line 10 multiplies the 14% HST column by 14/114
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 114
+
+  - name: federal_2025_gst370_hst_15_rebate_rate_numerator
+    kind: parameter
+    dtype: Number
+    source: CRA GST370 2025 Part B line 11 multiplies the 15% HST column by 15/115
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 15
+
+  - name: federal_2025_gst370_hst_15_rebate_rate_denominator
+    kind: parameter
+    dtype: Number
+    source: CRA GST370 2025 Part B line 11 multiplies the 15% HST column by 15/115
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 115
+
+  - name: federal_2025_gst370_provincial_hst_1_rebate_rate_numerator
+    kind: parameter
+    dtype: Number
+    source: CRA GST370 2025 Chart 3 line 5 multiplies the 1% provincial HST column by 1/101
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1
+
+  - name: federal_2025_gst370_provincial_hst_1_rebate_rate_denominator
+    kind: parameter
+    dtype: Number
+    source: CRA GST370 2025 Chart 3 line 5 multiplies the 1% provincial HST column by 1/101
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 101
+
+  - name: federal_2025_gst370_provincial_hst_2_rebate_rate_numerator
+    kind: parameter
+    dtype: Number
+    source: CRA GST370 2025 Chart 3 line 6 multiplies the 2% provincial HST column by 2/102
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2
+
+  - name: federal_2025_gst370_provincial_hst_2_rebate_rate_denominator
+    kind: parameter
+    dtype: Number
+    source: CRA GST370 2025 Chart 3 line 6 multiplies the 2% provincial HST column by 2/102
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 102
+
+  - name: federal_2025_gst370_provincial_hst_8_rebate_rate_numerator
+    kind: parameter
+    dtype: Number
+    source: CRA GST370 2025 Chart 3 line 7 multiplies the 8% provincial HST column by 8/108
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 8
+
+  - name: federal_2025_gst370_provincial_hst_8_rebate_rate_denominator
+    kind: parameter
+    dtype: Number
+    source: CRA GST370 2025 Chart 3 line 7 multiplies the 8% provincial HST column by 8/108
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 108
+
+  - name: federal_2025_gst370_provincial_hst_9_rebate_rate_numerator
+    kind: parameter
+    dtype: Number
+    source: CRA GST370 2025 Chart 3 line 8 multiplies the 9% provincial HST column by 9/109
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 9
+
+  - name: federal_2025_gst370_provincial_hst_9_rebate_rate_denominator
+    kind: parameter
+    dtype: Number
+    source: CRA GST370 2025 Chart 3 line 8 multiplies the 9% provincial HST column by 9/109
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 109
+
+  - name: federal_2025_gst370_provincial_hst_10_rebate_rate_numerator
+    kind: parameter
+    dtype: Number
+    source: CRA GST370 2025 Chart 3 line 9 multiplies the 10% provincial HST column by 10/110
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 10
+
+  - name: federal_2025_gst370_provincial_hst_10_rebate_rate_denominator
+    kind: parameter
+    dtype: Number
+    source: CRA GST370 2025 Chart 3 line 9 multiplies the 10% provincial HST column by 10/110
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 110
+
+  - name: gst370_total_eligible_expenses_for_gst_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Part B line 3 adds line 1 eligible GST expenses and line 2 eligible CCA for GST
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, gst370_gst_eligible_expenses_other_than_cca_line_1)
+          + max(0, gst370_gst_eligible_cca_line_2)
+
+  - name: gst370_eligible_gst_line_4
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Part B line 4 multiplies total eligible GST expenses by 5/105
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          gst370_total_eligible_expenses_for_gst_line_3
+          * federal_2025_gst370_gst_rebate_rate_numerator
+          / federal_2025_gst370_gst_rebate_rate_denominator
+
+  - name: gst370_hst_13_total_line_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Part B line 7 adds 13% HST eligible expenses and CCA from lines 5 and 6
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, gst370_hst_13_eligible_expenses_other_than_cca_line_5)
+          + max(0, gst370_hst_13_eligible_cca_line_6)
+
+  - name: gst370_hst_14_total_line_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Part B line 7 adds 14% HST eligible expenses and CCA from lines 5 and 6
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, gst370_hst_14_eligible_expenses_other_than_cca_line_5)
+          + max(0, gst370_hst_14_eligible_cca_line_6)
+
+  - name: gst370_hst_15_total_line_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Part B line 7 adds 15% HST eligible expenses and CCA from lines 5 and 6
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, gst370_hst_15_eligible_expenses_other_than_cca_line_5)
+          + max(0, gst370_hst_15_eligible_cca_line_6)
+
+  - name: gst370_total_eligible_expenses_for_hst_line_8
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Part B line 8 adds the 13%, 14%, and 15% HST totals from line 7
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          gst370_hst_13_total_line_7
+          + gst370_hst_14_total_line_7
+          + gst370_hst_15_total_line_7
+
+  - name: gst370_hst_13_rebate_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Part B line 9 multiplies the 13% HST line 7 amount by 13/113
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          gst370_hst_13_total_line_7
+          * federal_2025_gst370_hst_13_rebate_rate_numerator
+          / federal_2025_gst370_hst_13_rebate_rate_denominator
+
+  - name: gst370_hst_14_rebate_line_10
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Part B line 10 multiplies the 14% HST line 7 amount by 14/114
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          gst370_hst_14_total_line_7
+          * federal_2025_gst370_hst_14_rebate_rate_numerator
+          / federal_2025_gst370_hst_14_rebate_rate_denominator
+
+  - name: gst370_hst_15_rebate_line_11
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Part B line 11 multiplies the 15% HST line 7 amount by 15/115
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          gst370_hst_15_total_line_7
+          * federal_2025_gst370_hst_15_rebate_rate_numerator
+          / federal_2025_gst370_hst_15_rebate_rate_denominator
+
+  - name: gst370_total_hst_rebate_line_12
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Part B line 12 adds lines 9, 10, and 11
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          gst370_hst_13_rebate_line_9
+          + gst370_hst_14_rebate_line_10
+          + gst370_hst_15_rebate_line_11
+
+  - name: gst370_chart3_hst_1_total_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Chart 3 line 3 adds 1% provincial HST expenses and CCA from lines 1 and 2
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, gst370_chart3_hst_1_eligible_expenses_line_1)
+          + max(0, gst370_chart3_hst_1_eligible_cca_line_2)
+
+  - name: gst370_chart3_hst_2_total_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Chart 3 line 3 adds 2% provincial HST expenses and CCA from lines 1 and 2
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, gst370_chart3_hst_2_eligible_expenses_line_1)
+          + max(0, gst370_chart3_hst_2_eligible_cca_line_2)
+
+  - name: gst370_chart3_hst_8_total_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Chart 3 line 3 adds 8% provincial HST expenses and CCA from lines 1 and 2
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, gst370_chart3_hst_8_eligible_expenses_line_1)
+          + max(0, gst370_chart3_hst_8_eligible_cca_line_2)
+
+  - name: gst370_chart3_hst_9_total_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Chart 3 line 3 adds 9% provincial HST expenses and CCA from lines 1 and 2
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, gst370_chart3_hst_9_eligible_expenses_line_1)
+          + max(0, gst370_chart3_hst_9_eligible_cca_line_2)
+
+  - name: gst370_chart3_hst_10_total_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Chart 3 line 3 adds 10% provincial HST expenses and CCA from lines 1 and 2
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, gst370_chart3_hst_10_eligible_expenses_line_1)
+          + max(0, gst370_chart3_hst_10_eligible_cca_line_2)
+
+  - name: gst370_total_expenses_eligible_for_provincial_hst_rebate_line_13
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Chart 3 line 4 is entered on Part B line 13 and adds all Chart 3 column totals from line 3
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          gst370_chart3_hst_1_total_line_3
+          + gst370_chart3_hst_2_total_line_3
+          + gst370_chart3_hst_8_total_line_3
+          + gst370_chart3_hst_9_total_line_3
+          + gst370_chart3_hst_10_total_line_3
+
+  - name: gst370_chart3_hst_1_rebate_line_5
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Chart 3 line 5 multiplies the 1% HST line 3 amount by 1/101
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          gst370_chart3_hst_1_total_line_3
+          * federal_2025_gst370_provincial_hst_1_rebate_rate_numerator
+          / federal_2025_gst370_provincial_hst_1_rebate_rate_denominator
+
+  - name: gst370_chart3_hst_2_rebate_line_6
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Chart 3 line 6 multiplies the 2% HST line 3 amount by 2/102
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          gst370_chart3_hst_2_total_line_3
+          * federal_2025_gst370_provincial_hst_2_rebate_rate_numerator
+          / federal_2025_gst370_provincial_hst_2_rebate_rate_denominator
+
+  - name: gst370_chart3_hst_8_rebate_line_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Chart 3 line 7 multiplies the 8% HST line 3 amount by 8/108
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          gst370_chart3_hst_8_total_line_3
+          * federal_2025_gst370_provincial_hst_8_rebate_rate_numerator
+          / federal_2025_gst370_provincial_hst_8_rebate_rate_denominator
+
+  - name: gst370_chart3_hst_9_rebate_line_8
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Chart 3 line 8 multiplies the 9% HST line 3 amount by 9/109
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          gst370_chart3_hst_9_total_line_3
+          * federal_2025_gst370_provincial_hst_9_rebate_rate_numerator
+          / federal_2025_gst370_provincial_hst_9_rebate_rate_denominator
+
+  - name: gst370_chart3_hst_10_rebate_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Chart 3 line 9 multiplies the 10% HST line 3 amount by 10/110
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          gst370_chart3_hst_10_total_line_3
+          * federal_2025_gst370_provincial_hst_10_rebate_rate_numerator
+          / federal_2025_gst370_provincial_hst_10_rebate_rate_denominator
+
+  - name: gst370_rebate_for_property_and_services_brought_into_participating_province_line_14
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Part B line 14 is Chart 3 line 10, the total of Chart 3 lines 5 through 9
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          gst370_chart3_hst_1_rebate_line_5
+          + gst370_chart3_hst_2_rebate_line_6
+          + gst370_chart3_hst_8_rebate_line_7
+          + gst370_chart3_hst_9_rebate_line_8
+          + gst370_chart3_hst_10_rebate_line_9
+
+  - name: gst370_total_employee_and_partner_rebate_line_15
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 Part B line 15 adds lines 4, 12, and 14
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          gst370_eligible_gst_line_4
+          + gst370_total_hst_rebate_line_12
+          + gst370_rebate_for_property_and_services_brought_into_participating_province_line_14
+
+  - name: gst370_employee_and_partner_gst_hst_rebate_line_45700
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA GST370 2025 line 15 is entered on line 45700 of the income tax and benefit return
+    versions:
+      - effective_from: '2025-01-01'
+        formula: gst370_total_employee_and_partner_rebate_line_15

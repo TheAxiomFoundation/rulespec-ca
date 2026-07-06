@@ -1,0 +1,21 @@
+source:
+  id: cra-2025-rc381-interprovincial-cpp-qpp-employment-contributions
+  citation_path: ca/policy/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions
+  title: CRA Form RC381 2025 Inter-Provincial Calculation for CPP and QPP Contributions and Overpayments
+  documents:
+    - title: Form RC381 Inter-Provincial Calculation for CPP and QPP Contributions and Overpayments 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/rc381/rc381-25e.pdf
+  coverage:
+    encoded:
+      - Part 3 employment-income CPP/QPP pensionable earnings allocation between Quebec and non-Quebec employment income
+      - CPP employment contribution base, first additional, and second additional required amounts
+      - QPP employment contribution base, first additional, and second additional required amounts
+      - Part 3 total actual and required contribution differences through line 69
+      - Part 3a positive line 69 branch for T1 lines 30800, 22215, and 44800
+    not_encoded:
+      - Part 1 CPP stop-contribution election and revocation predicates
+      - Part 2 month-count fact predicates and monthly proration table derivation for lines C through J
+      - Part 3b zero or negative line 69 allocation branch
+      - Part 4 CPP self-employment and other earnings calculations
+      - Part 5 QPP optional self-employment contribution calculations
+      - Fifth-decimal truncation of the line 6 allocation rate
