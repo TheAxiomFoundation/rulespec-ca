@@ -1,0 +1,22 @@
+source:
+  id: cra-2025-employment-expenses-deduction
+  citation_path: ca/policy/cra/t1-2025/employment-expenses-deduction
+  title: CRA Form T777 2025 Statement of Employment Expenses
+  documents:
+    - title: Form T777 Statement of Employment Expenses 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t777/t777-25e.pdf
+    - title: T4044 Employment Expenses 2025
+      url: https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/t4044/employment-expenses.html
+  coverage:
+    encoded:
+      - Employment expense line 15 and final line 22900 aggregation
+      - 50% food, beverage, and entertainment expense rate
+      - Motor vehicle employment-use fraction and rebate, allowance, or reimbursement offset
+      - Labour mobility 50% income limit, per-relocation cap, annual cap, and unused carryforward
+      - Work-space-in-the-home line 50 through line 55 income limit and carryforward calculation
+      - Capital cost allowance Part A and Part B calculation spines, rates, and stated current-year adjustment factors
+    not_encoded:
+      - Employer-required expense, T2200, employment contract, commission employee, and eligible tradesperson predicates
+      - Receipt, reasonableness, GST/HST rebate, vehicle logbook, and detailed simplified-method substantiation
+      - Per-class/per-vehicle inventory beyond aggregate Part A and Class 10.1 schedule slots
+      - Detailed artist, musician, forestry, transport employee, and home-office eligibility fact extraction beyond T777 aggregate amounts
