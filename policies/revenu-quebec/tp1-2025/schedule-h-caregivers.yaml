@@ -1,0 +1,274 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Quebec Schedule H 2025 tax credit for caregivers: care
+    receivers 18 or over with an impairment who live with the caregiver,
+    care receivers 18 or over with an impairment who do not live with the
+    caregiver, care receivers 70 or over who live with the caregiver, and
+    the specialized respite services add-on.
+  source_verification:
+    corpus_citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-h-caregivers
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+      rationale: Revenu Quebec Schedule H is the official 2025 schedule for the caregiver tax credit on TP-1 line 462.
+    source_urls:
+      - https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.H-V%282025-12%29.pdf
+rules:
+  - name: quebec_2025_schedule_h_care_receiver_income_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule H 2025 lines 253 and 353 subtract $26,520 from the eligible care receiver's net income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 26520
+
+  - name: quebec_2025_schedule_h_income_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule H 2025 lines 256 and 356 multiply excess care receiver income by 16%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.16
+
+  - name: quebec_2025_schedule_h_impairment_lived_with_base_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule H 2025 line 251 gives $2,988 for each eligible care receiver 18 or over with an impairment who lived with the caregiver
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2988
+
+  - name: quebec_2025_schedule_h_income_reduction_cap
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule H 2025 lines 257 and 357 cap the income reduction at $1,494
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1494
+
+  - name: quebec_2025_schedule_h_other_caregiver_base_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule H 2025 lines 351 and 451 give $1,494 for each eligible care receiver in Part B section 2 or Part C
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1494
+
+  - name: quebec_2025_schedule_h_respite_expense_cap_per_receiver
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule H 2025 line 266 and page 6 cap specialized respite service expenses at $5,200 per eligible care receiver
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5200
+
+  - name: quebec_2025_schedule_h_respite_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule H 2025 line 267 multiplies eligible specialized respite expenses by 30%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.30
+
+  - name: schedule_h_lived_with_impairment_income_excess_row_1
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 lines 252 to 254 subtract $26,520 from the care receiver's net income and floor the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_h_lived_with_impairment_receiver1_net_income_line_275 - quebec_2025_schedule_h_care_receiver_income_threshold)
+
+  - name: schedule_h_lived_with_impairment_income_excess_row_2
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 lines 252 to 254 subtract $26,520 from the care receiver's net income and floor the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_h_lived_with_impairment_receiver2_net_income_line_275 - quebec_2025_schedule_h_care_receiver_income_threshold)
+
+  - name: schedule_h_lived_with_impairment_income_reduction_row_1
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 lines 256 and 257 multiply excess income by 16% and cap the reduction at $1,494
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(schedule_h_lived_with_impairment_income_excess_row_1 * quebec_2025_schedule_h_income_reduction_rate, quebec_2025_schedule_h_income_reduction_cap)
+
+  - name: schedule_h_lived_with_impairment_income_reduction_row_2
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 lines 256 and 257 multiply excess income by 16% and cap the reduction at $1,494
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(schedule_h_lived_with_impairment_income_excess_row_2 * quebec_2025_schedule_h_income_reduction_rate, quebec_2025_schedule_h_income_reduction_cap)
+
+  - name: schedule_h_lived_with_impairment_credit_row_1
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 lines 258 to 264 calculate the credit for an eligible care receiver who lived with the caregiver
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, quebec_2025_schedule_h_impairment_lived_with_base_amount - schedule_h_lived_with_impairment_income_reduction_row_1 - max(0, schedule_h_lived_with_impairment_receiver1_turned_18_reduction_line_259) - max(0, schedule_h_lived_with_impairment_receiver1_social_assistance_adjustment_line_260) - max(0, schedule_h_lived_with_impairment_receiver1_amount_claimed_by_another_caregiver_line_263))
+
+  - name: schedule_h_lived_with_impairment_credit_row_2
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 lines 258 to 264 calculate the credit for an eligible care receiver who lived with the caregiver
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, quebec_2025_schedule_h_impairment_lived_with_base_amount - schedule_h_lived_with_impairment_income_reduction_row_2 - max(0, schedule_h_lived_with_impairment_receiver2_turned_18_reduction_line_259) - max(0, schedule_h_lived_with_impairment_receiver2_social_assistance_adjustment_line_260) - max(0, schedule_h_lived_with_impairment_receiver2_amount_claimed_by_another_caregiver_line_263))
+
+  - name: schedule_h_lived_with_impairment_credit_line_265
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 line 265 adds line 264 amounts for care receivers who lived with the caregiver
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_h_lived_with_impairment_credit_row_1 + schedule_h_lived_with_impairment_credit_row_2 + max(0, schedule_h_additional_lived_with_impairment_credit_amounts)
+
+  - name: schedule_h_respite_services_credit_line_267
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 lines 266 and 267 multiply eligible specialized respite service expenses by 30% after the $5,200-per-receiver cap
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(max(0, schedule_h_specialized_respite_expenses_line_266), max(0, schedule_h_lived_with_impairment_respite_eligible_receiver_count) * quebec_2025_schedule_h_respite_expense_cap_per_receiver) * quebec_2025_schedule_h_respite_rate
+
+  - name: schedule_h_lived_with_impairment_total_credit_line_268
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 line 268 adds line 265 and the specialized respite services credit on line 267
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_h_lived_with_impairment_credit_line_265 + schedule_h_respite_services_credit_line_267
+
+  - name: schedule_h_not_lived_with_impairment_income_excess_row_1
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 lines 352 to 354 subtract $26,520 from the care receiver's net income and floor the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_h_not_lived_with_impairment_receiver1_net_income_line_275 - quebec_2025_schedule_h_care_receiver_income_threshold)
+
+  - name: schedule_h_not_lived_with_impairment_income_excess_row_2
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 lines 352 to 354 subtract $26,520 from the care receiver's net income and floor the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_h_not_lived_with_impairment_receiver2_net_income_line_275 - quebec_2025_schedule_h_care_receiver_income_threshold)
+
+  - name: schedule_h_not_lived_with_impairment_income_reduction_row_1
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 lines 356 and 357 multiply excess income by 16% and cap the reduction at $1,494
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(schedule_h_not_lived_with_impairment_income_excess_row_1 * quebec_2025_schedule_h_income_reduction_rate, quebec_2025_schedule_h_income_reduction_cap)
+
+  - name: schedule_h_not_lived_with_impairment_income_reduction_row_2
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 lines 356 and 357 multiply excess income by 16% and cap the reduction at $1,494
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(schedule_h_not_lived_with_impairment_income_excess_row_2 * quebec_2025_schedule_h_income_reduction_rate, quebec_2025_schedule_h_income_reduction_cap)
+
+  - name: schedule_h_not_lived_with_impairment_credit_row_1
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 lines 358 to 364 calculate the credit for an eligible care receiver who did not live with the caregiver
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, quebec_2025_schedule_h_other_caregiver_base_amount - schedule_h_not_lived_with_impairment_income_reduction_row_1 - max(0, schedule_h_not_lived_with_impairment_receiver1_turned_18_reduction_line_359) - max(0, schedule_h_not_lived_with_impairment_receiver1_social_assistance_adjustment_line_360) - max(0, schedule_h_not_lived_with_impairment_receiver1_amount_claimed_by_another_caregiver_line_363))
+
+  - name: schedule_h_not_lived_with_impairment_credit_row_2
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 lines 358 to 364 calculate the credit for an eligible care receiver who did not live with the caregiver
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, quebec_2025_schedule_h_other_caregiver_base_amount - schedule_h_not_lived_with_impairment_income_reduction_row_2 - max(0, schedule_h_not_lived_with_impairment_receiver2_turned_18_reduction_line_359) - max(0, schedule_h_not_lived_with_impairment_receiver2_social_assistance_adjustment_line_360) - max(0, schedule_h_not_lived_with_impairment_receiver2_amount_claimed_by_another_caregiver_line_363))
+
+  - name: schedule_h_not_lived_with_impairment_credit_line_365
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 line 365 adds line 364 amounts for care receivers who did not live with the caregiver
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_h_not_lived_with_impairment_credit_row_1 + schedule_h_not_lived_with_impairment_credit_row_2 + max(0, schedule_h_additional_not_lived_with_impairment_credit_amounts)
+
+  - name: schedule_h_person_70_or_over_credit_row_1
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 lines 451 to 453 calculate the credit for a person 70 or over by subtracting amounts claimed by another caregiver from $1,494
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, quebec_2025_schedule_h_other_caregiver_base_amount - max(0, schedule_h_person70_receiver1_amount_claimed_by_another_caregiver_line_452))
+
+  - name: schedule_h_person_70_or_over_credit_row_2
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 lines 451 to 453 calculate the credit for a person 70 or over by subtracting amounts claimed by another caregiver from $1,494
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, quebec_2025_schedule_h_other_caregiver_base_amount - max(0, schedule_h_person70_receiver2_amount_claimed_by_another_caregiver_line_452))
+
+  - name: schedule_h_person_70_or_over_credit_line_454
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 line 454 adds line 453 amounts for eligible care receivers 70 or over
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_h_person_70_or_over_credit_row_1 + schedule_h_person_70_or_over_credit_row_2 + max(0, schedule_h_additional_person70_credit_amounts)
+
+  - name: schedule_h_tax_credit_for_caregivers_line_462
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule H 2025 carries the applicable caregiver tax credit amounts to TP-1 line 462
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_h_lived_with_impairment_total_credit_line_268 + schedule_h_not_lived_with_impairment_credit_line_365 + schedule_h_person_70_or_over_credit_line_454

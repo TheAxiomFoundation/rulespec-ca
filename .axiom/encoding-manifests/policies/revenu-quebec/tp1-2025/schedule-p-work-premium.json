@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/revenu-quebec/tp1-2025/schedule-p-work-premium.test.yaml",
+      "sha256": "ddca4fbf9ecaf334591395c06d5a79924c82186773cb80f7651a486eadf9fa7c"
+    },
+    {
+      "path": "policies/revenu-quebec/tp1-2025/schedule-p-work-premium.yaml",
+      "sha256": "fe81dd64e840a8dbce5ddc06af8676617deaf3d0e8b67eccac23ad9f61d510a3"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "a314fc624967b4e990beb7d9ffc429dae6e26642",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1152",
+    "version_commit": "a314fc624967b4e990beb7d9ffc429dae6e26642"
+  },
+  "axiom_encode_version": "0.2.1152",
+  "backend": "manual",
+  "citation": "ca:policies/revenu-quebec/tp1-2025/schedule-p-work-premium",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-05T15:04:20.635256+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm/sign-applied-files/policies/revenu-quebec/tp1-2025/schedule-p-work-premium.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
+  "generated_output_sha256": "fe81dd64e840a8dbce5ddc06af8676617deaf3d0e8b67eccac23ad9f61d510a3",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "a012f0f87a551685bb42d3faf2f3e46dc7f5302fed9a804b49c6bd6b2108dc19"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

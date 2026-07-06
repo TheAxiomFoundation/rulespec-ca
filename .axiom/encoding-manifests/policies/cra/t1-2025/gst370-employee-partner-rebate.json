@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/cra/t1-2025/gst370-employee-partner-rebate.test.yaml",
+      "sha256": "3beded987f3a00994e540bc8c523e057387551fbe29e244cca8c539cf8674c20"
+    },
+    {
+      "path": "policies/cra/t1-2025/gst370-employee-partner-rebate.yaml",
+      "sha256": "1dc2bb73774274f0b373734091571c1c1bef09361873767d1bb716b930f336ba"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "b402f25b8b03c47be8f43acf07b972097b055f5d",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1156",
+    "version_commit": "b402f25b8b03c47be8f43acf07b972097b055f5d"
+  },
+  "axiom_encode_version": "0.2.1156",
+  "backend": "manual",
+  "citation": "ca:policies/cra/t1-2025/gst370-employee-partner-rebate",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-06T14:55:55.567331+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmp_z9qlzqo/sign-applied-files/policies/cra/t1-2025/gst370-employee-partner-rebate.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmp_z9qlzqo",
+  "generated_output_sha256": "1dc2bb73774274f0b373734091571c1c1bef09361873767d1bb716b930f336ba",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "5ae3866cc6f4fab50cfa4251098aa78af94f304603e8da00f463459c96522d1d"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

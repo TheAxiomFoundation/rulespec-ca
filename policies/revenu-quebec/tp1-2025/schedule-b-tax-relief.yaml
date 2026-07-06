@@ -1,0 +1,399 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Quebec Schedule B 2025 tax relief measures: family income,
+    age/person-living-alone/retirement-income amounts, medical expenses,
+    refundable medical expense credit, and independent living tax credit
+    for seniors.
+  source_verification:
+    corpus_citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-b-tax-relief
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+      rationale: Revenu Quebec Schedule B is the official 2025 schedule for TP-1 tax relief measures on lines 361, 381, and 462.
+    source_urls:
+      - https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.B-V%282025-12%29.pdf
+rules:
+  - name: quebec_2025_schedule_b_age_living_alone_income_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule B 2025 line 16 subtracts $42,090 from family income for the tax relief phaseout
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 42090
+
+  - name: quebec_2025_schedule_b_spouse_phaseout_limit
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule B 2025 says the age, living-alone, and retirement-income amounts are unavailable with a spouse if line 18 is more than $90,027
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 90027
+
+  - name: quebec_2025_schedule_b_single_phaseout_limit
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule B 2025 says the age, living-alone, and retirement-income amounts are unavailable without a spouse if line 18 is more than $64,699
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 64699
+
+  - name: quebec_2025_schedule_b_person_living_alone_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule B 2025 line 20 gives the amount for a person living alone as $2,128
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2128
+
+  - name: quebec_2025_schedule_b_age_amount
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule B 2025 lines 22 and 23 give the age amount as $3,906 for each eligible spouse born before January 1, 1961
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 3906
+
+  - name: quebec_2025_schedule_b_retirement_income_factor
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule B 2025 retirement income work chart multiplies eligible retirement income by 1.25
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1.25
+
+  - name: quebec_2025_schedule_b_retirement_income_amount_cap
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule B 2025 retirement income work chart caps the amount for retirement income at $3,470
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 3470
+
+  - name: quebec_2025_schedule_b_phaseout_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule B 2025 line 31 multiplies line 18 by 18.75%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.1875
+
+  - name: quebec_2025_schedule_b_medical_expense_income_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule B 2025 line 39 multiplies family income by 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.03
+
+  - name: quebec_2025_schedule_b_refundable_medical_income_limit
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule B 2025 Part D denies the refundable medical expense credit if line 14 is over $57,655
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 57655
+
+  - name: quebec_2025_schedule_b_refundable_medical_work_income_minimum
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule B 2025 Part D requires work income of $3,750 or more
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 3750
+
+  - name: quebec_2025_schedule_b_refundable_medical_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule B 2025 line 44 multiplies eligible expenses by 25%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.25
+
+  - name: quebec_2025_schedule_b_refundable_medical_cap
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule B 2025 line 44 caps the refundable medical expense credit before reduction at $1,466
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1466
+
+  - name: quebec_2025_schedule_b_refundable_medical_reduction_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule B 2025 line 46 subtracts $28,335 from family income for the refundable medical credit reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 28335
+
+  - name: quebec_2025_schedule_b_refundable_medical_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule B 2025 line 48 multiplies excess family income by 5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.05
+
+  - name: quebec_2025_schedule_b_independent_living_equipment_floor
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule B 2025 line 62 subtracts $250 from eligible equipment or fixture expenses
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 250
+
+  - name: quebec_2025_schedule_b_independent_living_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule B 2025 line 69 multiplies eligible independent living expenses by 20%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.20
+
+  - name: schedule_b_family_income_line_14
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 lines 10 to 14 add the taxpayer's and spouse's line 275 net income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_b_self_net_income_line_275) + max(0, schedule_b_spouse_net_income_line_275)
+
+  - name: schedule_b_age_living_alone_phaseout_income_line_18
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 lines 15 to 18 subtract $42,090 from family income and floor the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_b_family_income_line_14 - quebec_2025_schedule_b_age_living_alone_income_threshold)
+
+  - name: schedule_b_person_living_alone_amount_line_20
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 line 20 enters $2,128 if the person living alone conditions are met
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_b_person_living_alone_eligible:
+            quebec_2025_schedule_b_person_living_alone_amount
+          else:
+            0
+
+  - name: schedule_b_self_age_amount_line_22
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 line 22 enters $3,906 if the taxpayer was born before January 1, 1961
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_b_self_born_before_1961:
+            quebec_2025_schedule_b_age_amount
+          else:
+            0
+
+  - name: schedule_b_spouse_age_amount_line_23
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 line 23 enters $3,906 if the spouse was born before January 1, 1961
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_b_spouse_born_before_1961:
+            quebec_2025_schedule_b_age_amount
+          else:
+            0
+
+  - name: schedule_b_self_retirement_income_amount_line_27
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 retirement income work chart line 9 multiplies eligible income by 1.25 and caps it at $3,470
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(quebec_2025_schedule_b_retirement_income_amount_cap, max(0, schedule_b_self_retirement_income_lines_122_123 - max(0, schedule_b_self_retirement_income_deductions_transfers_lines_2_to_6)) * quebec_2025_schedule_b_retirement_income_factor)
+
+  - name: schedule_b_spouse_retirement_income_amount_line_28
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 retirement income work chart line 9 multiplies eligible income by 1.25 and caps it at $3,470
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(quebec_2025_schedule_b_retirement_income_amount_cap, max(0, schedule_b_spouse_retirement_income_lines_122_123 - max(0, schedule_b_spouse_retirement_income_deductions_transfers_lines_2_to_6)) * quebec_2025_schedule_b_retirement_income_factor)
+
+  - name: schedule_b_total_age_living_alone_retirement_amounts_line_30
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 line 30 adds lines 20 through 28
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_b_person_living_alone_amount_line_20 + max(0, schedule_b_single_parent_family_additional_amount_line_21) + schedule_b_self_age_amount_line_22 + schedule_b_spouse_age_amount_line_23 + schedule_b_self_retirement_income_amount_line_27 + schedule_b_spouse_retirement_income_amount_line_28
+
+  - name: schedule_b_age_living_alone_retirement_phaseout_line_31
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 line 31 multiplies line 18 by 18.75%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_b_age_living_alone_phaseout_income_line_18 * quebec_2025_schedule_b_phaseout_rate
+
+  - name: schedule_b_age_living_alone_retirement_family_amount_line_32
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 line 32 subtracts line 31 from line 30 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_b_had_spouse_on_december_31:
+            if schedule_b_age_living_alone_phaseout_income_line_18 <= quebec_2025_schedule_b_spouse_phaseout_limit:
+              max(0, schedule_b_total_age_living_alone_retirement_amounts_line_30 - schedule_b_age_living_alone_retirement_phaseout_line_31)
+            else:
+              0
+          else:
+            if schedule_b_age_living_alone_phaseout_income_line_18 <= quebec_2025_schedule_b_single_phaseout_limit:
+              max(0, schedule_b_total_age_living_alone_retirement_amounts_line_30 - schedule_b_age_living_alone_retirement_phaseout_line_31)
+            else:
+              0
+
+  - name: schedule_b_age_living_alone_retirement_income_amount_line_361
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 line 34 subtracts the amount claimed on the spouse's line 361 and carries the result to TP-1 line 361
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_b_age_living_alone_retirement_family_amount_line_32 - max(0, schedule_b_amount_claimed_on_spouse_line_361_line_33))
+
+  - name: schedule_b_medical_expenses_income_floor_line_39
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 line 39 multiplies family income by 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_b_family_income_line_14 * quebec_2025_schedule_b_medical_expense_income_rate
+
+  - name: schedule_b_medical_expenses_line_381
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 line 40 subtracts line 39 from medical expenses and floors the result at zero for TP-1 line 381
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_b_medical_expenses_line_36 - schedule_b_medical_expenses_income_floor_line_39)
+
+  - name: schedule_b_refundable_medical_credit_base_line_43
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 line 43 adds medical expenses from line 40 and the disability supports deduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_b_medical_expenses_line_381 + max(0, schedule_b_disability_supports_deduction_line_42)
+
+  - name: schedule_b_refundable_medical_credit_before_reduction_line_44
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 line 44 multiplies line 43 by 25% and caps the result at $1,466
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(quebec_2025_schedule_b_refundable_medical_cap, schedule_b_refundable_medical_credit_base_line_43 * quebec_2025_schedule_b_refundable_medical_rate)
+
+  - name: schedule_b_refundable_medical_income_excess_line_47
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 lines 45 to 47 subtract $28,335 from family income and floor the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_b_family_income_line_14 - quebec_2025_schedule_b_refundable_medical_reduction_threshold)
+
+  - name: schedule_b_refundable_medical_reduction_line_48
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 line 48 multiplies line 47 by 5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_b_refundable_medical_income_excess_line_47 * quebec_2025_schedule_b_refundable_medical_reduction_rate
+
+  - name: schedule_b_refundable_medical_expense_credit_line_462
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 line 50 subtracts line 48 from line 44 and floors the result at zero for TP-1 line 462
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_b_refundable_medical_conditions_met:
+            if schedule_b_family_income_line_14 <= quebec_2025_schedule_b_refundable_medical_income_limit:
+              if schedule_b_work_income_for_refundable_medical_credit >= quebec_2025_schedule_b_refundable_medical_work_income_minimum:
+                max(0, schedule_b_refundable_medical_credit_before_reduction_line_44 - schedule_b_refundable_medical_reduction_line_48)
+              else:
+                0
+            else:
+              0
+          else:
+            0
+
+  - name: schedule_b_independent_living_equipment_amount_line_64
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 lines 60 to 64 subtract $250 from eligible equipment or fixture expenses and floor the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_b_independent_living_equipment_expenses_line_60 - quebec_2025_schedule_b_independent_living_equipment_floor)
+
+  - name: schedule_b_independent_living_expenses_line_67
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 line 67 adds the equipment amount and functional rehabilitation transition unit expenses
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_b_independent_living_equipment_amount_line_64 + max(0, schedule_b_independent_living_rehabilitation_unit_expenses_line_66)
+
+  - name: schedule_b_independent_living_seniors_credit_line_462
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule B 2025 line 69 multiplies line 67 by 20% for transfer to TP-1 line 462
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_b_independent_living_seniors_conditions_met:
+            schedule_b_independent_living_expenses_line_67 * quebec_2025_schedule_b_independent_living_rate
+          else:
+            0

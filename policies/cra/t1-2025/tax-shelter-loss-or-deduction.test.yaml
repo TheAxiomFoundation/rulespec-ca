@@ -1,0 +1,31 @@
+- name: t5004_routes_claims_and_totals_line_67650
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#input.t5004_tax_shelter_gift_claims: 1000
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#input.t5004_tax_shelter_political_contribution_claims: 200
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#input.t5004_tax_shelter_limited_partner_claims: 3000
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#input.t5004_tax_shelter_rental_claims: 400
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#input.t5004_tax_shelter_business_investment_loss_claims: 500
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#input.t5004_tax_shelter_business_income_claims: 600
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#input.t5004_tax_shelter_carrying_charges_claims: 700
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#input.t5004_tax_shelter_farming_claims: 800
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#input.t5004_tax_shelter_exploration_and_development_claims: 900
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#input.t5004_tax_shelter_fishing_claims: 100
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#input.t5004_tax_shelter_other_deduction_claims: 50
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#input.t5004_tax_shelter_other_claims: 25
+  output:
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#tax_shelter_gifts_line_34900: 1000
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#tax_shelter_political_contributions_line_40900: 200
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#tax_shelter_limited_partner_net_partnership_income_line_12200: 3000
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#tax_shelter_rental_income_line_12600: 400
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#tax_shelter_business_investment_loss_line_21700: 500
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#tax_shelter_business_income_line_13500: 600
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#tax_shelter_carrying_charges_line_22100: 700
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#tax_shelter_farming_income_line_14100: 800
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#tax_shelter_exploration_and_development_expenses_line_22400: 900
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#tax_shelter_fishing_income_line_14300: 100
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#tax_shelter_other_deductions_line_23200: 50
+    ca:policies/cra/t1-2025/tax-shelter-loss-or-deduction#tax_shelter_total_amount_claimed_line_67650: 8275

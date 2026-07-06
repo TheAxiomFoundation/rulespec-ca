@@ -1,0 +1,15 @@
+source:
+  id: cra-2025-t2203-sk-ab-bc-part3-credits
+  citation_path: ca/policy/cra/t1-2025/t2203-sk-ab-bc-part3-credits
+  title: CRA Form T2203 2025 Part 3 SK, AB, and BC Non-Refundable Tax Credits
+  documents:
+    - title: Form T2203 Provincial and Territorial Taxes for Multiple Jurisdictions 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t2203/t2203-25e.pdf
+  coverage:
+    encoded:
+      - SK, AB, and BC Part 3 subtotal and total non-refundable tax credit line C
+      - Selected worksheet formulas for age amount, spouse amount, eligible dependant amount, medical expenses, BC donations and gifts, and BC farmers' food donation credit
+      - Province-specific SK dependant children, senior supplement, volunteer, S12, first-time home buyer, adoption, pension, and Schedule 9 split-rate amounts
+    not_encoded:
+      - Per-dependant row tables for infirm dependants, BC caregivers, caregiver amounts, disability transfers, and medical expenses for other dependants
+      - S2/S11/S12 detailed transfer schedules

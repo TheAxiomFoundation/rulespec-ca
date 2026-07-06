@@ -1,0 +1,65 @@
+- name: t1170_no_advantage_full_gain_zero_inclusion
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_proceeds_of_disposition_column_2: 10000
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_adjusted_cost_base_column_3: 6000
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_outlays_and_expenses_column_4: 1000
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_eligible_amount_of_gift_column_6: 10000
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_shares_and_units_gain_subject_to_50_percent_inclusion_column_8: 0
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_bonds_debentures_and_other_properties_gain_subject_to_50_percent_inclusion_column_8: 0
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_shares_and_units_gain_eligible_zero_inclusion_column_7: 3000
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_bonds_debentures_and_other_properties_gain_eligible_zero_inclusion_column_7: 0
+  output:
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#federal_2025_t1170_gift_capital_gain_column_5: 3000
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#federal_2025_t1170_gain_eligible_zero_inclusion_column_7: 3000
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#federal_2025_t1170_gain_subject_to_50_percent_inclusion_column_8: 0
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#federal_2025_t1170_taxable_capital_gain_from_gift: 0
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#federal_2025_t1170_shares_and_units_schedule_3_line_13200: 0
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#federal_2025_t1170_bonds_debentures_and_other_properties_schedule_3_line_15300: 0
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#federal_2025_t1170_total_gain_eligible_zero_inclusion: 3000
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#federal_2025_t1170_total_gain_subject_to_50_percent_inclusion: 0
+
+- name: t1170_advantage_splits_gain_between_zero_and_50_percent
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_proceeds_of_disposition_column_2: 10000
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_adjusted_cost_base_column_3: 6000
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_outlays_and_expenses_column_4: 1000
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_eligible_amount_of_gift_column_6: 7000
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_shares_and_units_gain_subject_to_50_percent_inclusion_column_8: 900
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_bonds_debentures_and_other_properties_gain_subject_to_50_percent_inclusion_column_8: 400
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_shares_and_units_gain_eligible_zero_inclusion_column_7: 2100
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_bonds_debentures_and_other_properties_gain_eligible_zero_inclusion_column_7: 800
+  output:
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#federal_2025_t1170_gift_capital_gain_column_5: 3000
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#federal_2025_t1170_gain_eligible_zero_inclusion_column_7: 2100
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#federal_2025_t1170_gain_subject_to_50_percent_inclusion_column_8: 900
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#federal_2025_t1170_taxable_capital_gain_from_gift: 450
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#federal_2025_t1170_shares_and_units_schedule_3_line_13200: 900
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#federal_2025_t1170_bonds_debentures_and_other_properties_schedule_3_line_15300: 400
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#federal_2025_t1170_total_gain_eligible_zero_inclusion: 2900
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#federal_2025_t1170_total_gain_subject_to_50_percent_inclusion: 1300
+
+- name: t1170_zero_proceeds_zeroes_division_branch
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_proceeds_of_disposition_column_2: 0
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_adjusted_cost_base_column_3: 0
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_outlays_and_expenses_column_4: 0
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_eligible_amount_of_gift_column_6: 1000
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_shares_and_units_gain_subject_to_50_percent_inclusion_column_8: 0
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_bonds_debentures_and_other_properties_gain_subject_to_50_percent_inclusion_column_8: 0
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_shares_and_units_gain_eligible_zero_inclusion_column_7: 0
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#input.t1170_bonds_debentures_and_other_properties_gain_eligible_zero_inclusion_column_7: 0
+  output:
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#federal_2025_t1170_gain_eligible_zero_inclusion_column_7: 0
+    ca:policies/cra/t1-2025/capital-gains-on-gifts#federal_2025_t1170_gain_subject_to_50_percent_inclusion_column_8: 0

@@ -1,0 +1,77 @@
+- name: rrsp_deduction_and_carryforward
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.rrsp_prpp_spp_contributions_mar4_to_dec31_2025: 6000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.rrsp_prpp_spp_contributions_jan1_to_mar2_2026: 2000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.unused_rrsp_prpp_spp_contributions_available_for_2025: 1000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.hbp_repayment_designated_line_24600: 500
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.llp_repayment_designated_line_24620: 250
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.hbp_balance_at_start_of_2025: 9000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.hbp_repayment_years_remaining_for_2025: 9
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.llp_balance_at_start_of_2025: 7500
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.llp_repayment_years_remaining_for_2025: 10
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.rrsp_deduction_limit_2025_line_11: 7000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.employer_prpp_contributions_line_20810: 1000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.rrsp_transfers_line_24640: 1500
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.rrsp_prpp_spp_regular_deduction_claimed_line_18: 5000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.hbp_withdrawals_from_t4rsp_box_27: 12000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.llp_withdrawals_from_t4rsp_box_25: 3000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.amateur_athlete_trust_contributions_2025: 800
+  output:
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_schedule_7_current_period_contributions_line_24500: 8000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_schedule_7_total_contributions_line_5: 9000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_schedule_7_hbp_llp_repayments_line_9: 750
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_hbp_minimum_required_repayment: 1000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_hbp_repayment_shortfall_income_line_12900: 500
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_llp_minimum_required_repayment: 750
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_llp_repayment_shortfall_income_line_12900: 500
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#rrsp_income_from_hbp_llp_repayment_shortfalls_line_12900: 1000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_schedule_7_contributions_available_to_deduct_line_10: 8250
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_schedule_7_rrsp_limit_after_prpp_line_13: 6000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_schedule_7_contributions_after_transfers_line_16: 6750
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_schedule_7_max_regular_deduction_line_17: 6000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_schedule_7_regular_deduction_claimed_line_18: 5000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_schedule_7_line_19: 6500
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#rrsp_deduction_line_20800: 6500
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_schedule_7_unused_contributions_carryforward_line_23: 1750
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#hbp_withdrawals_line_24700: 12000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#llp_withdrawals_line_26300: 3000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#amateur_athlete_trust_income_line_26700: 800
+
+- name: rrsp_deduction_limited_by_available_room
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.rrsp_prpp_spp_contributions_mar4_to_dec31_2025: 1000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.rrsp_prpp_spp_contributions_jan1_to_mar2_2026: 0
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.unused_rrsp_prpp_spp_contributions_available_for_2025: 0
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.hbp_repayment_designated_line_24600: 2000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.llp_repayment_designated_line_24620: 0
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.hbp_balance_at_start_of_2025: 0
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.hbp_repayment_years_remaining_for_2025: 0
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.llp_balance_at_start_of_2025: 0
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.llp_repayment_years_remaining_for_2025: 0
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.rrsp_deduction_limit_2025_line_11: 5000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.employer_prpp_contributions_line_20810: 0
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.rrsp_transfers_line_24640: 0
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.rrsp_prpp_spp_regular_deduction_claimed_line_18: 5000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.hbp_withdrawals_from_t4rsp_box_27: 0
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.llp_withdrawals_from_t4rsp_box_25: 0
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#input.amateur_athlete_trust_contributions_2025: 0
+  output:
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_schedule_7_total_contributions_line_5: 1000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_schedule_7_hbp_llp_repayments_line_9: 2000
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_hbp_minimum_required_repayment: 0
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_hbp_repayment_shortfall_income_line_12900: 0
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_llp_minimum_required_repayment: 0
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_llp_repayment_shortfall_income_line_12900: 0
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#rrsp_income_from_hbp_llp_repayment_shortfalls_line_12900: 0
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_schedule_7_contributions_available_to_deduct_line_10: 0
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_schedule_7_max_regular_deduction_line_17: 0
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#rrsp_deduction_line_20800: 0
+    ca:policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp#federal_2025_schedule_7_unused_contributions_carryforward_line_23: 0

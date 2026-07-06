@@ -1,0 +1,1025 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form PE428 for 2025 calculates ordinary Prince Edward Island resident
+    tax: tax on taxable income, non-refundable tax credits, dividend and
+    minimum tax credits, low-income tax reduction, political contribution and
+    equity tax credits, final tax entered on T1 line 42800, and the
+    refundable volunteer firefighter/search-and-rescue credit entered on line
+    47900.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/pe428-resident-tax
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Form PE428 and Worksheet PE428 are the official 2025 Prince
+        Edward Island tax calculation documents for Prince Edward Island
+        residents. This module encodes ordinary resident PE428 arithmetic
+        while leaving detailed dependant worksheet calculations, schedule
+        eligibility, residency predicates, and component line values to
+        dedicated modules or fact inputs.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5002-c/5002-c-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5002-c/5002-c-25e.pdf
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5002-d/5002-d-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5002-d/5002-d-25e.pdf
+rules:
+  - name: pe428_2025_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 Part A column 1 applies to taxable income of $33,328 or less
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 33328
+
+  - name: pe428_2025_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 Part A column 2 applies above $33,328 and not more than $64,656
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 64656
+
+  - name: pe428_2025_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 Part A column 3 applies above $64,656 and not more than $105,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 105000
+
+  - name: pe428_2025_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 Part A column 4 applies above $105,000 and not more than $140,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 140000
+
+  - name: pe428_2025_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA PE428 2025 Part A column 1 line 5 gives the rate as 9.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.095
+
+  - name: pe428_2025_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA PE428 2025 Part A column 2 line 5 gives the rate as 13.47%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.1347
+
+  - name: pe428_2025_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA PE428 2025 Part A column 3 line 5 gives the rate as 16.6%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.166
+
+  - name: pe428_2025_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA PE428 2025 Part A column 4 line 5 gives the rate as 17.62%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.1762
+
+  - name: pe428_2025_bracket_5_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA PE428 2025 Part A column 5 line 5 gives the rate as 19%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.19
+
+  - name: pe428_2025_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 Part A column 2 line 7 gives base tax of $3,166.16
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 3166.16
+
+  - name: pe428_2025_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 Part A column 3 line 7 gives base tax of $7,386.04
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 7386.04
+
+  - name: pe428_2025_bracket_4_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 Part A column 4 line 7 gives base tax of $14,083.15
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 14083.15
+
+  - name: pe428_2025_bracket_5_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 Part A column 5 line 7 gives base tax of $20,250.15
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 20250.15
+
+  - name: pe428_2025_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 line 9 and line 58040 basic personal amount is $14,650
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 14650
+
+  - name: pe428_2025_age_amount_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 line 58080 maximum age amount is $6,510
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 6510
+
+  - name: pe428_2025_age_amount_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet PE428 2025 line 58080 starts reducing the age amount above $36,600
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 36600
+
+  - name: pe428_2025_age_amount_zero_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet PE428 2025 line 58080 gives zero age amount at $80,000 or more
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 80000
+
+  - name: pe428_2025_age_amount_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet PE428 2025 line 58080 uses a 15% age amount reduction rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.15
+
+  - name: pe428_2025_spouse_or_dependant_base_amount
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 lines 11 and 14 use a base amount of $13,687
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 13687
+
+  - name: pe428_2025_spouse_or_dependant_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 lines 13 and 16 cap spouse and eligible dependant amounts at $12,443
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 12443
+
+  - name: pe428_2025_young_child_monthly_amount
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 line 58230 multiplies eligible months by $100
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 100
+
+  - name: pe428_2025_pension_income_amount_cap
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 line 58360 pension income amount maximum is $1,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1000
+
+  - name: pe428_2025_disability_amount_for_self
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 line 58440 disability amount for self is $6,890 unless the under-18 worksheet applies
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 6890
+
+  - name: pe428_2025_teacher_school_supply_amount_cap
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 line 58500 caps the teacher school supply amount at $500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 500
+
+  - name: pe428_2025_medical_expense_income_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA PE428 2025 line 42 gives the medical expense income rate as 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.03
+
+  - name: pe428_2025_medical_expense_threshold_cap
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 line 44 uses the lesser of $1,678 and line 43
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1678
+
+  - name: pe428_2025_low_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA PE428 2025 line 49 gives the Prince Edward Island non-refundable tax credit rate as 9.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.095
+
+  - name: pe428_2025_high_donation_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA PE428 2025 line 52 multiplies Schedule 9 line 14 by 19%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.19
+
+  - name: pe428_2025_minimum_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA PE428 2025 lines 61 and 64 multiply minimum tax amounts by 57.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.575
+
+  - name: pe428_2025_other_than_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet PE428 2025 line 61520 multiplies line 12010 by 1.3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.013
+
+  - name: pe428_2025_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet PE428 2025 line 61520 multiplies line 12000 minus line 12010 by 10.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.105
+
+  - name: pe428_2025_low_income_basic_reduction
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 line 63370 basic low-income tax reduction is $350
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 350
+
+  - name: pe428_2025_low_income_age_reduction
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 lines 63380 and 63400 age reductions are $250
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 250
+
+  - name: pe428_2025_low_income_spouse_or_dependant_reduction
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 lines 63390 and 63410 reductions are $350
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 350
+
+  - name: pe428_2025_low_income_dependent_child_reduction
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 line 80 multiplies dependent children born in 2007 or later by $300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 300
+
+  - name: pe428_2025_low_income_reduction_base_income
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 line 83 low-income tax reduction base amount is $22,650
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 22650
+
+  - name: pe428_2025_low_income_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA PE428 2025 line 85 low-income tax reduction rate is 5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.05
+
+  - name: pe428_2025_political_first_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet PE428 2025 line 92 first political contribution threshold is $100
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 100
+
+  - name: pe428_2025_political_second_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet PE428 2025 line 92 second political contribution threshold is $550
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 550
+
+  - name: pe428_2025_political_cap_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet PE428 2025 line 92 gives the maximum credit directly when contributions are more than $1,150
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1150
+
+  - name: pe428_2025_political_cap
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 line 92 maximum Prince Edward Island political contribution tax credit is $500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 500
+
+  - name: pe428_2025_political_first_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet PE428 2025 line 92 first political contribution rate is 75%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.75
+
+  - name: pe428_2025_political_second_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet PE428 2025 line 92 second political contribution rate is 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.50
+
+  - name: pe428_2025_political_third_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet PE428 2025 line 92 third political contribution rate is 33.33%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.3333
+
+  - name: pe428_2025_political_second_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet PE428 2025 line 92 second column base credit is $75
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 75
+
+  - name: pe428_2025_political_third_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet PE428 2025 line 92 third column base credit is $300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 300
+
+  - name: pe428_2025_equity_tax_credit_cap
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 line 96 caps total Prince Edward Island equity tax credit at $7,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 7000
+
+  - name: pe428_2025_volunteer_firefighter_search_rescue_credit
+    kind: parameter
+    dtype: Money
+    source: CRA PE428 2025 line 63510 volunteer firefighter and volunteer search and rescue personnel tax credit is $1,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1000
+
+  - name: pe428_tax_on_taxable_income_line_55
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 Part A line 55 calculates Prince Edward Island tax on taxable income using the selected bracket column
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= pe428_2025_bracket_1_threshold:
+            max(0, taxable_income_line_26000) * pe428_2025_bracket_1_rate
+          else:
+            if taxable_income_line_26000 <= pe428_2025_bracket_2_threshold:
+              (taxable_income_line_26000 - pe428_2025_bracket_1_threshold)
+              * pe428_2025_bracket_2_rate
+              + pe428_2025_bracket_2_base_tax
+            else:
+              if taxable_income_line_26000 <= pe428_2025_bracket_3_threshold:
+                (taxable_income_line_26000 - pe428_2025_bracket_2_threshold)
+                * pe428_2025_bracket_3_rate
+                + pe428_2025_bracket_3_base_tax
+              else:
+                if taxable_income_line_26000 <= pe428_2025_bracket_4_threshold:
+                  (taxable_income_line_26000 - pe428_2025_bracket_3_threshold)
+                  * pe428_2025_bracket_4_rate
+                  + pe428_2025_bracket_4_base_tax
+                else:
+                  (taxable_income_line_26000 - pe428_2025_bracket_4_threshold)
+                  * pe428_2025_bracket_5_rate
+                  + pe428_2025_bracket_5_base_tax
+
+  - name: pe428_age_amount_line_58080
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet PE428 2025 line 58080 calculates the Prince Edward Island age amount for persons born in 1960 or earlier
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if pe428_age_amount_eligible:
+            if net_income_line_23600 <= pe428_2025_age_amount_threshold:
+              pe428_2025_age_amount_maximum
+            else:
+              if net_income_line_23600 >= pe428_2025_age_amount_zero_threshold:
+                0
+              else:
+                max(
+                  0,
+                  pe428_2025_age_amount_maximum
+                  - (net_income_line_23600 - pe428_2025_age_amount_threshold)
+                  * pe428_2025_age_amount_reduction_rate
+                )
+          else:
+            0
+
+  - name: pe428_spouse_or_partner_amount_line_58120
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 13 subtracts spouse or common-law partner net income from the base amount and caps the claim
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(pe428_2025_spouse_or_dependant_maximum, max(0, pe428_2025_spouse_or_dependant_base_amount - max(0, spouse_net_income_line_23600)))
+
+  - name: pe428_eligible_dependant_amount_line_58160
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 16 subtracts eligible dependant net income from the base amount and caps the claim
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(pe428_2025_spouse_or_dependant_maximum, max(0, pe428_2025_spouse_or_dependant_base_amount - max(0, eligible_dependant_net_income_line_23600)))
+
+  - name: pe428_young_children_amount_line_58230
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 58230 multiplies the total number of eligible months for young children by $100
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, pe428_young_children_eligible_months_line_58229) * pe428_2025_young_child_monthly_amount
+
+  - name: pe428_credit_subtotal_line_19
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 19 adds lines 9, 10, 13, and 16 to 18
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          pe428_2025_basic_personal_amount
+          + pe428_age_amount_line_58080
+          + pe428_spouse_or_partner_amount_line_58120
+          + pe428_eligible_dependant_amount_line_58160
+          + max(0, pe428_infirm_dependants_age_18_or_older_line_58200)
+          + pe428_young_children_amount_line_58230
+
+  - name: pe428_credit_subtotal_line_24
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 24 adds lines 20 to 23
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, cpp_qpp_contributions_employment_line_30800)
+          + max(0, cpp_qpp_contributions_self_employment_line_31000)
+          + max(0, employment_insurance_premiums_line_31200)
+          + max(0, self_employment_ei_premiums_line_31217)
+
+  - name: pe428_credit_subtotal_line_25
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 25 adds line 19 and line 24
+    versions:
+      - effective_from: '2025-01-01'
+        formula: pe428_credit_subtotal_line_19 + pe428_credit_subtotal_line_24
+
+  - name: pe428_pension_income_amount_line_58360
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 58360 caps the pension income amount at $1,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(pe428_2025_pension_income_amount_cap, max(0, pension_income_amount_line_58360))
+
+  - name: pe428_credit_subtotal_line_30
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 30 adds lines 26 to 29
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          pe428_credit_subtotal_line_25
+          + pe428_pension_income_amount_line_58360
+          + max(0, childrens_wellness_tax_credit_line_58365)
+          + max(0, caregiver_amount_line_58400)
+
+  - name: pe428_teacher_school_supply_amount_line_58500
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 58500 caps the teacher school supply amount at $500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(pe428_2025_teacher_school_supply_amount_cap, max(0, teacher_school_supply_amount_line_58500))
+
+  - name: pe428_credit_subtotal_line_34
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 34 adds lines 30 to 33
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          pe428_credit_subtotal_line_30
+          + max(0, disability_amount_for_self_line_58440)
+          + max(0, disability_amount_transferred_from_dependant_line_58480)
+          + pe428_teacher_school_supply_amount_line_58500
+
+  - name: pe428_credit_subtotal_line_39
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 39 adds lines 34 to 38
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          pe428_credit_subtotal_line_34
+          + max(0, student_loan_interest_line_58520)
+          + max(0, tuition_and_education_amounts_line_58560)
+          + max(0, tuition_and_education_amounts_transferred_line_58600)
+          + max(0, spouse_or_partner_transfers_line_58640)
+
+  - name: pe428_medical_expense_income_base_line_43
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 43 multiplies net income line 23600 by 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, net_income_line_23600) * pe428_2025_medical_expense_income_rate
+
+  - name: pe428_medical_expense_threshold_line_44
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 44 uses the lesser of $1,678 and line 43
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(pe428_2025_medical_expense_threshold_cap, pe428_medical_expense_income_base_line_43)
+
+  - name: pe428_allowable_family_medical_expenses_line_45
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 45 subtracts line 44 from line 40 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, max(0, medical_expenses_line_58689) - pe428_medical_expense_threshold_line_44)
+
+  - name: pe428_total_medical_expenses_line_58769
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 47 and line 58769 add line 45 and line 46
+    versions:
+      - effective_from: '2025-01-01'
+        formula: pe428_allowable_family_medical_expenses_line_45 + max(0, medical_expenses_other_dependants_line_58729)
+
+  - name: pe428_total_claim_amount_line_58800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 48 and line 58800 add line 39 and line 47
+    versions:
+      - effective_from: '2025-01-01'
+        formula: pe428_credit_subtotal_line_39 + pe428_total_medical_expenses_line_58769
+
+  - name: pe428_net_non_refundable_tax_credits_line_58840
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 50 and line 58840 multiply line 48 by the 9.5% credit rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: pe428_total_claim_amount_line_58800 * pe428_2025_low_credit_rate
+
+  - name: pe428_donations_and_gifts_line_58969
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 53 and line 58969 add low-rate and high-rate donations from federal Schedule 9
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_schedule_9_line_13_amount)
+          * pe428_2025_low_credit_rate
+          + max(0, federal_schedule_9_line_14_amount)
+          * pe428_2025_high_donation_rate
+
+  - name: pe428_total_non_refundable_tax_credits_line_61500
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 54 and line 61500 add Prince Edward Island net non-refundable tax credits and donations and gifts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: pe428_net_non_refundable_tax_credits_line_58840 + pe428_donations_and_gifts_line_58969
+
+  - name: pe428_tax_plus_tax_on_split_income_line_57
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 57 adds Prince Edward Island tax on taxable income and tax on split income line 61510
+    versions:
+      - effective_from: '2025-01-01'
+        formula: pe428_tax_on_taxable_income_line_55 + max(0, prince_edward_island_tax_on_split_income_line_61510)
+
+  - name: pe428_tax_after_non_refundable_credits_line_59
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 59 subtracts non-refundable tax credits from line 57 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, pe428_tax_plus_tax_on_split_income_line_57 - pe428_total_non_refundable_tax_credits_line_61500)
+
+  - name: pe428_dividend_tax_credit_line_61520
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet PE428 2025 line 61520 calculates the Prince Edward Island dividend tax credit from line 12000 and line 12010
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, taxable_dividends_other_than_eligible_line_12010)
+          * pe428_2025_other_than_eligible_dividend_credit_rate
+          + max(0, taxable_dividends_line_12000 - max(0, taxable_dividends_other_than_eligible_line_12010))
+          * pe428_2025_eligible_dividend_credit_rate
+
+  - name: pe428_minimum_tax_carryover_line_61540
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 61 and line 61540 multiply federal minimum tax carryover line 40427 by 57.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, minimum_tax_carryover_line_40427) * pe428_2025_minimum_tax_rate
+
+  - name: pe428_dividend_and_carryover_subtotal_line_62
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 62 adds dividend tax credit and minimum tax carryover
+    versions:
+      - effective_from: '2025-01-01'
+        formula: pe428_dividend_tax_credit_line_61520 + pe428_minimum_tax_carryover_line_61540
+
+  - name: pe428_tax_after_dividend_and_carryover_line_63
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 63 subtracts line 62 from line 59 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, pe428_tax_after_non_refundable_credits_line_59 - pe428_dividend_and_carryover_subtotal_line_62)
+
+  - name: pe428_additional_tax_for_minimum_tax_purposes_line_64
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 64 multiplies Form T691 Part 7 line 14 by 57.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, t691_part_7_line_14_amount) * pe428_2025_minimum_tax_rate
+
+  - name: pe428_tax_after_additional_minimum_tax_line_65
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 65 adds line 63 and line 64
+    versions:
+      - effective_from: '2025-01-01'
+        formula: pe428_tax_after_dividend_and_carryover_line_63 + pe428_additional_tax_for_minimum_tax_purposes_line_64
+
+  - name: pe428_tax_after_spouse_unused_low_income_reduction_line_67
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 67 subtracts unused low-income tax reduction from spouse or common-law partner and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, pe428_tax_after_additional_minimum_tax_line_65 - max(0, spouse_unused_low_income_tax_reduction_line_63360))
+
+  - name: pe428_adjusted_income_you_line_72
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 lines 68 to 72 calculate the taxpayer's adjusted income for low-income tax reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, net_income_line_23600 + max(0, taxpayer_uccb_repayment_line_69) - max(0, taxpayer_uccb_income_line_71))
+
+  - name: pe428_adjusted_income_spouse_line_72
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 lines 68 to 72 calculate the spouse or common-law partner adjusted income for low-income tax reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, spouse_net_income_for_pe428_low_income_reduction_line_68 + max(0, spouse_uccb_repayment_line_69) - max(0, spouse_uccb_income_line_71))
+
+  - name: pe428_adjusted_family_income_line_73
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 73 adds adjusted income columns for taxpayer and spouse or common-law partner
+    versions:
+      - effective_from: '2025-01-01'
+        formula: pe428_adjusted_income_you_line_72 + pe428_adjusted_income_spouse_line_72
+
+  - name: pe428_low_income_age_reduction_self_line_63380
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 63380 allows a $250 age reduction for self when eligible
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if pe428_low_income_age_reduction_self_eligible:
+            pe428_2025_low_income_age_reduction
+          else:
+            0
+
+  - name: pe428_low_income_spouse_reduction_line_63390
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 63390 allows a $350 spouse or common-law partner reduction when eligible
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if pe428_low_income_spouse_or_partner_reduction_eligible:
+            pe428_2025_low_income_spouse_or_dependant_reduction
+          else:
+            0
+
+  - name: pe428_low_income_spouse_age_reduction_line_63400
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 63400 allows a $250 age reduction for spouse or common-law partner when eligible
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if pe428_low_income_spouse_age_reduction_eligible:
+            pe428_2025_low_income_age_reduction
+          else:
+            0
+
+  - name: pe428_low_income_eligible_dependant_reduction_line_63410
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 63410 allows a $350 eligible dependant reduction when claimed on line 58160
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if pe428_low_income_eligible_dependant_reduction_eligible:
+            pe428_2025_low_income_spouse_or_dependant_reduction
+          else:
+            0
+
+  - name: pe428_low_income_dependent_children_reduction_line_80
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 80 multiplies dependent children born in 2007 or later by $300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, pe428_low_income_dependent_children_count_line_60999) * pe428_2025_low_income_dependent_child_reduction
+
+  - name: pe428_low_income_reduction_subtotal_line_81
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 81 adds lines 75 to 80
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          pe428_2025_low_income_basic_reduction
+          + pe428_low_income_age_reduction_self_line_63380
+          + pe428_low_income_spouse_reduction_line_63390
+          + pe428_low_income_spouse_age_reduction_line_63400
+          + pe428_low_income_eligible_dependant_reduction_line_63410
+          + pe428_low_income_dependent_children_reduction_line_80
+
+  - name: pe428_low_income_reduction_income_excess_line_84
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 84 subtracts the $22,650 base amount from adjusted family income and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, pe428_adjusted_family_income_line_73 - pe428_2025_low_income_reduction_base_income)
+
+  - name: pe428_low_income_reduction_income_reduction_line_86
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 86 multiplies low-income reduction income excess by 5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: pe428_low_income_reduction_income_excess_line_84 * pe428_2025_low_income_reduction_rate
+
+  - name: pe428_low_income_tax_reduction_line_87
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 87 subtracts line 86 from line 81 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if spouse_unused_low_income_tax_reduction_line_63360 > 0:
+            0
+          else:
+            max(0, pe428_low_income_reduction_subtotal_line_81 - pe428_low_income_reduction_income_reduction_line_86)
+
+  - name: pe428_tax_after_low_income_reduction_line_88
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 88 subtracts the Prince Edward Island low-income tax reduction and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, pe428_tax_after_spouse_unused_low_income_reduction_line_67 - pe428_low_income_tax_reduction_line_87)
+
+  - name: pe428_tax_after_foreign_tax_credit_line_90
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 90 subtracts the provincial foreign tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, pe428_tax_after_low_income_reduction_line_88 - max(0, provincial_foreign_tax_credit_line_89))
+
+  - name: pe428_political_contribution_tax_credit_line_92
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet PE428 2025 line 92 calculates the Prince Edward Island political contribution tax credit capped at $500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if prince_edward_island_political_contributions_line_63420 > pe428_2025_political_cap_threshold:
+            pe428_2025_political_cap
+          else:
+            min(
+              pe428_2025_political_cap,
+              if prince_edward_island_political_contributions_line_63420 <= pe428_2025_political_first_threshold:
+                max(0, prince_edward_island_political_contributions_line_63420) * pe428_2025_political_first_rate
+              else:
+                if prince_edward_island_political_contributions_line_63420 <= pe428_2025_political_second_threshold:
+                  (prince_edward_island_political_contributions_line_63420 - pe428_2025_political_first_threshold)
+                  * pe428_2025_political_second_rate
+                  + pe428_2025_political_second_base_credit
+                else:
+                  (prince_edward_island_political_contributions_line_63420 - pe428_2025_political_second_threshold)
+                  * pe428_2025_political_third_rate
+                  + pe428_2025_political_third_base_credit
+            )
+
+  - name: pe428_tax_after_political_contribution_credit_line_93
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 93 subtracts the Prince Edward Island political contribution tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, pe428_tax_after_foreign_tax_credit_line_90 - pe428_political_contribution_tax_credit_line_92)
+
+  - name: pe428_equity_tax_credit_line_96
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 96 adds current and unused equity tax credits and caps the total at $7,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(pe428_2025_equity_tax_credit_cap, max(0, prince_edward_island_equity_tax_credit_line_63500) + max(0, unused_prince_edward_island_equity_tax_credit_line_95))
+
+  - name: prince_edward_island_tax_line_42800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 97 subtracts the equity tax credit and enters Prince Edward Island tax on T1 line 42800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, pe428_tax_after_political_contribution_credit_line_93 - pe428_equity_tax_credit_line_96)
+
+  - name: prince_edward_island_volunteer_firefighter_search_rescue_tax_credit_line_47900
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 63510 gives a $1,000 refundable volunteer firefighter and volunteer search and rescue personnel tax credit when eligible
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if pe428_volunteer_firefighter_search_rescue_credit_eligible:
+            pe428_2025_volunteer_firefighter_search_rescue_credit
+          else:
+            0
+
+  - name: pe428_unused_low_income_tax_reduction_for_spouse_line_101
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA PE428 2025 line 101 subtracts line 65 from line 87 and gives the unused amount a spouse or common-law partner can claim
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, pe428_low_income_tax_reduction_line_87 - pe428_tax_after_additional_minimum_tax_line_65)

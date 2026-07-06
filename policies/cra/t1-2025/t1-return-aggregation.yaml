@@ -1,0 +1,116 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA 2025 T1 return pages 7 and 8 aggregate already-computed
+    federal tax, provincial tax, payable contributions, refundable
+    credits, instalments, and payments into net federal tax, total
+    payable, total credits, refund, and balance owing lines.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/t1-return-aggregation
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Form 5000-R is the official 2025 T1 return for residents of
+        PE, NS, NB, MB, and SK, and its federal pages provide the
+        common return aggregation arithmetic. This module encodes those
+        arithmetic line totals while leaving the underlying schedule,
+        eligibility, withholding, instalment, and province-specific
+        line calculations to their dedicated modules or fact inputs.
+    source_urls:
+      - https://www.canada.ca/en/revenue-agency/services/forms-publications/tax-packages-years/general-income-tax-benefit-package/5000-r.html
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-r/5000-r-25e.txt
+rules:
+  - name: net_federal_tax_line_42000
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 return line 142 and line 42000 add line 139, advanced Canada workers benefit line 41500, and special taxes line 41800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_tax_after_selected_credits_line_41700)
+          + max(0, advanced_canada_workers_benefit_line_41500)
+          + max(0, special_taxes_line_41800)
+
+  - name: total_payable_line_43500
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 return line 148 and line 43500 add lines 143 to 147
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          net_federal_tax_line_42000
+          + max(0, cpp_contributions_payable_line_42100)
+          + max(0, ei_premiums_payable_line_42120)
+          + max(0, social_benefits_repayment_line_42200)
+          + max(0, provincial_or_territorial_tax_line_42800)
+
+  - name: total_credits_line_48200
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 return line 166 and line 48200 add lines 150 to 165
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, total_income_tax_deducted_line_43700)
+          + max(0, refundable_quebec_abatement_line_44000)
+          + max(0, cpp_or_qpp_overpayment_line_44800)
+          + max(0, employment_insurance_overpayment_line_45000)
+          + max(0, refundable_medical_expense_supplement_line_45200)
+          + max(0, canada_workers_benefit_line_45300)
+          + max(0, canada_training_credit_line_45350)
+          + max(0, multigenerational_home_renovation_tax_credit_line_45355)
+          + max(0, investment_tax_credit_refund_line_45400)
+          + max(0, part_xii_2_tax_credit_line_45600)
+          + max(0, employee_and_partner_gst_hst_rebate_line_45700)
+          + max(0, eligible_educator_school_supply_tax_credit_line_46900)
+          + max(0, canadian_journalism_labour_tax_credit_line_47555)
+          + max(0, return_of_fuel_charge_proceeds_to_farmers_tax_credit_line_47556)
+          + max(0, tax_paid_by_instalments_line_47600)
+          + max(0, provincial_or_territorial_credits_line_47900)
+
+  - name: refund_or_balance_owing_line_167
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 return line 167 subtracts total credits line 48200 from total payable line 43500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          total_payable_line_43500 - total_credits_line_48200
+
+  - name: refund_line_48400
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 return line 167 says a negative amount is entered as refund line 48400
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if refund_or_balance_owing_line_167 < 0:
+            0 - refund_or_balance_owing_line_167
+          else:
+            0
+
+  - name: balance_owing_line_48500
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 return line 167 says a positive amount is entered as balance owing line 48500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if refund_or_balance_owing_line_167 > 0:
+            refund_or_balance_owing_line_167
+          else:
+            0

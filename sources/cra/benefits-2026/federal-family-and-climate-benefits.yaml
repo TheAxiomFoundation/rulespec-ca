@@ -1,0 +1,28 @@
+source:
+  jurisdiction: ca
+  agency: Canada Revenue Agency
+  citation_path: ca/policy/cra/benefits-2026/federal-family-and-climate-benefits
+  title: CRA 2026 federal family, grocery, and carbon benefit parameters
+  effective_from: '2026-07-01'
+  documents:
+    - title: Canada child benefit, how much you can get
+      url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/canada-child-benefit/how-much.html
+    - title: Child Disability Benefit
+      url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/child-disability-benefit.html
+    - title: Canada Groceries and Essentials Benefit payments chart, July 2026 to June 2027
+      url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/canada-groceries-essentials-benefit/how-much/payments-chart.html
+    - title: One-time GST/HST credit top-up payment
+      url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/gst-hst-credit/how-much/one-time-top-up.html
+    - title: Closed - Canada Carbon Rebate for individuals
+      url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/canada-carbon-rebate.html
+  coverage:
+    encoded:
+      - Canada child benefit July 2026 to June 2027 maximums and AFNI phaseouts
+      - Child Disability Benefit July 2026 to June 2027 maximums and AFNI phaseouts
+      - Canada Groceries and Essentials Benefit July 2026 to June 2027 annual entitlement table formula
+      - One-time GST/HST credit top-up maximum table and twice-January-payment calculation surface
+      - Canada Carbon Rebate closed status for 2026
+    not_encoded:
+      - Eligibility predicates for custody, residence, immigration, and tax filing status
+      - Provincial and territorial benefits paid with the CCB
+      - Retroactive payment administration and payment-date scheduling

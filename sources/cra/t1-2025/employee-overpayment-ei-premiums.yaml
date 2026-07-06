@@ -1,0 +1,19 @@
+source:
+  id: cra-2025-employee-overpayment-ei-premiums
+  citation_path: ca/policy/cra/t1-2025/employee-overpayment-ei-premiums
+  title: CRA Form T2204 2025 Employee Overpayment of Employment Insurance Premiums
+  documents:
+    - title: Form T2204 Employee Overpayment of Employment Insurance Premiums 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t2204/t2204-25e.pdf
+  coverage:
+    encoded:
+      - EI insurable earnings line 1 note 1 low-earnings rule
+      - Total EI earnings cap and $2,000 excess-earnings calculation
+      - Quebec and non-Quebec EI premium rates and maximums
+      - Line 45000 EI overpayment threshold
+      - Line 31200 employment EI premiums credit
+      - T4 box 24-or-box 14 insurable earnings extraction and box 55 EI-exempt employment exception
+    not_encoded:
+      - Service Canada EI special-benefits agreement validity
+      - Schedule 13 calculation itself, which is encoded in a separate module
+      - CRA administrative adjustment note for line 2 and low line 3 amounts

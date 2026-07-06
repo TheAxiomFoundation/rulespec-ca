@@ -1,0 +1,73 @@
+- name: t1_return_balance_owing_aggregation
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.federal_tax_after_selected_credits_line_41700: 1000
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.advanced_canada_workers_benefit_line_41500: 50
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.special_taxes_line_41800: 25
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.cpp_contributions_payable_line_42100: 200
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.ei_premiums_payable_line_42120: 75
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.social_benefits_repayment_line_42200: 125
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.provincial_or_territorial_tax_line_42800: 500
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.total_income_tax_deducted_line_43700: 900
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.refundable_quebec_abatement_line_44000: 0
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.cpp_or_qpp_overpayment_line_44800: 10
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.employment_insurance_overpayment_line_45000: 5
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.refundable_medical_expense_supplement_line_45200: 20
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.canada_workers_benefit_line_45300: 100
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.canada_training_credit_line_45350: 50
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.multigenerational_home_renovation_tax_credit_line_45355: 25
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.investment_tax_credit_refund_line_45400: 40
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.part_xii_2_tax_credit_line_45600: 8
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.employee_and_partner_gst_hst_rebate_line_45700: 12
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.eligible_educator_school_supply_tax_credit_line_46900: 30
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.canadian_journalism_labour_tax_credit_line_47555: 15
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.return_of_fuel_charge_proceeds_to_farmers_tax_credit_line_47556: 20
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.tax_paid_by_instalments_line_47600: 300
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.provincial_or_territorial_credits_line_47900: 100
+  output:
+    ca:policies/cra/t1-2025/t1-return-aggregation#net_federal_tax_line_42000: 1075
+    ca:policies/cra/t1-2025/t1-return-aggregation#total_payable_line_43500: 1975
+    ca:policies/cra/t1-2025/t1-return-aggregation#total_credits_line_48200: 1635
+    ca:policies/cra/t1-2025/t1-return-aggregation#refund_or_balance_owing_line_167: 340
+    ca:policies/cra/t1-2025/t1-return-aggregation#refund_line_48400: 0
+    ca:policies/cra/t1-2025/t1-return-aggregation#balance_owing_line_48500: 340
+
+- name: t1_return_refund_and_negative_input_floors
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.federal_tax_after_selected_credits_line_41700: -100
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.advanced_canada_workers_benefit_line_41500: -50
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.special_taxes_line_41800: -25
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.cpp_contributions_payable_line_42100: -200
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.ei_premiums_payable_line_42120: -75
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.social_benefits_repayment_line_42200: -125
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.provincial_or_territorial_tax_line_42800: -500
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.total_income_tax_deducted_line_43700: 1000
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.refundable_quebec_abatement_line_44000: -10
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.cpp_or_qpp_overpayment_line_44800: -10
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.employment_insurance_overpayment_line_45000: -5
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.refundable_medical_expense_supplement_line_45200: -20
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.canada_workers_benefit_line_45300: -100
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.canada_training_credit_line_45350: -50
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.multigenerational_home_renovation_tax_credit_line_45355: -25
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.investment_tax_credit_refund_line_45400: -40
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.part_xii_2_tax_credit_line_45600: -8
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.employee_and_partner_gst_hst_rebate_line_45700: -12
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.eligible_educator_school_supply_tax_credit_line_46900: -30
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.canadian_journalism_labour_tax_credit_line_47555: -15
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.return_of_fuel_charge_proceeds_to_farmers_tax_credit_line_47556: -20
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.tax_paid_by_instalments_line_47600: -300
+    ca:policies/cra/t1-2025/t1-return-aggregation#input.provincial_or_territorial_credits_line_47900: -100
+  output:
+    ca:policies/cra/t1-2025/t1-return-aggregation#net_federal_tax_line_42000: 0
+    ca:policies/cra/t1-2025/t1-return-aggregation#total_payable_line_43500: 0
+    ca:policies/cra/t1-2025/t1-return-aggregation#total_credits_line_48200: 1000
+    ca:policies/cra/t1-2025/t1-return-aggregation#refund_or_balance_owing_line_167: -1000
+    ca:policies/cra/t1-2025/t1-return-aggregation#refund_line_48400: 1000
+    ca:policies/cra/t1-2025/t1-return-aggregation#balance_owing_line_48500: 0

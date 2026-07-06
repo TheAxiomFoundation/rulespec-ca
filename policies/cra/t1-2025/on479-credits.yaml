@@ -1,0 +1,330 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form ON479 for 2025 calculates Ontario refundable credits: fertility
+    treatment, CARE, seniors care at home, seniors public transit, political
+    contribution, focused flow-through share, co-operative education, and
+    final Ontario credits entered on T1 line 47900.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/on479-credits
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: CRA Form ON479 and Worksheet ON479 are the official 2025 Ontario refundable credits calculation documents.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5006-tc/5006-tc-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5006-tc/5006-tc-25e.pdf
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5006-d1/5006-d1-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5006-d1/5006-d1-25e.pdf
+rules:
+  - name: on479_2025_fertility_treatment_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON479 2025 line 1 multiplies eligible fertility treatment medical expenses by 25%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.25
+  - name: on479_2025_fertility_treatment_credit_cap
+    kind: parameter
+    dtype: Money
+    source: CRA ON479 2025 line 1 caps the Ontario fertility treatment tax credit at $5,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5000
+  - name: on479_2025_seniors_care_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON479 2025 line 4 gives the Ontario seniors care at home tax credit rate as 25%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.25
+  - name: on479_2025_seniors_care_credit_cap
+    kind: parameter
+    dtype: Money
+    source: CRA ON479 2025 line 5 caps the Ontario seniors care at home tax credit base at $1,500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1500
+  - name: on479_2025_seniors_care_income_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA ON479 2025 says family net income of $35,000 or less receives the unreduced seniors care amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 35000
+  - name: on479_2025_seniors_care_zero_income_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA ON479 2025 says family net income more than $65,000 receives zero seniors care credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 65000
+  - name: on479_2025_seniors_care_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON479 2025 line 11 gives the seniors care at home reduction rate as 5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.05
+  - name: on479_2025_seniors_public_transit_cap
+    kind: parameter
+    dtype: Money
+    source: CRA ON479 2025 line 14 caps eligible seniors' public transit payments at $3,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 3000
+  - name: on479_2025_seniors_public_transit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON479 2025 line 14 multiplies eligible seniors' public transit payments by 15%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.15
+  - name: on479_2025_political_first_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet ON479 2025 line 16 first political contribution threshold is $500.05
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 500.05
+  - name: on479_2025_political_second_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet ON479 2025 line 16 second political contribution threshold is $1,666.82
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1666.82
+  - name: on479_2025_political_cap_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA ON479 2025 line 16 gives the maximum credit if total contributions are $3,793 or more
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 3793
+  - name: on479_2025_political_cap
+    kind: parameter
+    dtype: Money
+    source: CRA ON479 2025 line 16 maximum Ontario political contribution tax credit is $1,666.82
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1666.82
+  - name: on479_2025_political_first_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet ON479 2025 line 16 first political contribution rate is 75%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.75
+  - name: on479_2025_political_second_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet ON479 2025 line 16 second political contribution rate is 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.50
+  - name: on479_2025_political_third_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet ON479 2025 line 16 third political contribution rate is 33.33%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.3333
+  - name: on479_2025_political_second_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet ON479 2025 line 16 column 2 base credit is $375.03
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 375.03
+  - name: on479_2025_political_third_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet ON479 2025 line 16 column 3 base credit is $958.41
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 958.41
+  - name: on479_2025_flow_through_share_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON479 2025 line 17 multiplies Ontario focused flow-through share expenses by 5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.05
+  - name: on479_2025_coop_small_wage_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON479 2025 line 20 gives a 30% co-operative education tax credit rate when prior-year salaries and wages were $400,000 or less
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.30
+  - name: on479_2025_coop_large_wage_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA ON479 2025 line 20 gives a 25% co-operative education tax credit rate when prior-year salaries and wages were $600,000 or more
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.25
+  - name: on479_2025_coop_mid_wage_additional_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet ON479 2025 line 20 multiplies eligible expenditures by 5% before phase-out for mid-range wages
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.05
+  - name: on479_2025_coop_lower_wage_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA ON479 2025 line 20 lower total salary and wage threshold is $400,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 400000
+  - name: on479_2025_coop_upper_wage_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA ON479 2025 line 20 upper total salary and wage threshold is $600,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 600000
+  - name: on479_2025_coop_wage_phaseout_range
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet ON479 2025 line 20 divides by $200,000 in the wage phase-out calculation
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 200000
+  - name: on479_2025_coop_max_per_student
+    kind: parameter
+    dtype: Money
+    source: CRA ON479 2025 line 20 caps the co-operative education tax credit at $3,000 per student
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 3000
+  - name: on479_2025_unit_scalar
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet ON479 2025 line 20 uses 1.00 in the co-operative education phase-out calculation
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1.00
+
+  - name: on479_fertility_treatment_tax_credit_line_61268
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON479 2025 line 1 multiplies eligible fertility treatment expenses by 25% and caps the credit at $5,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(on479_2025_fertility_treatment_credit_cap, max(0, ontario_fertility_treatment_medical_expenses_line_61268) * on479_2025_fertility_treatment_rate)
+  - name: on479_seniors_care_at_home_family_net_income_line_8
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA ON479 2025 line 8 adds taxpayer and spouse or common-law partner net income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, net_income_line_23600) + max(0, spouse_net_income_line_23600)
+  - name: on479_seniors_care_at_home_base_credit_line_5
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA ON479 2025 line 5 multiplies Form ON428 line 58769 medical expenses by 25% and caps the amount at $1,500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(on479_2025_seniors_care_credit_cap, max(0, on428_medical_expenses_line_58769) * on479_2025_seniors_care_rate)
+  - name: on479_seniors_care_at_home_tax_credit_line_63095
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA ON479 2025 line 13 reduces the seniors care at home credit by 5% of family net income above $35,000 and gives zero above $65,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if on479_seniors_care_at_home_family_net_income_line_8 <= on479_2025_seniors_care_income_threshold:
+            on479_seniors_care_at_home_base_credit_line_5
+          else:
+            if on479_seniors_care_at_home_family_net_income_line_8 > on479_2025_seniors_care_zero_income_threshold:
+              0
+            else:
+              max(0, on479_seniors_care_at_home_base_credit_line_5 - (on479_seniors_care_at_home_family_net_income_line_8 - on479_2025_seniors_care_income_threshold) * on479_2025_seniors_care_reduction_rate)
+  - name: on479_seniors_public_transit_tax_credit_line_63100
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON479 2025 line 14 caps eligible public transit payments at $3,000 and multiplies by 15%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(on479_2025_seniors_public_transit_cap, max(0, ontario_seniors_public_transit_payments_line_63100)) * on479_2025_seniors_public_transit_rate
+  - name: on479_political_contribution_tax_credit_line_16
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet ON479 2025 line 16 calculates the Ontario political contribution tax credit capped at $1,666.82
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if ontario_political_contributions_line_63110 >= on479_2025_political_cap_threshold:
+            on479_2025_political_cap
+          else:
+            min(
+              on479_2025_political_cap,
+              if ontario_political_contributions_line_63110 <= on479_2025_political_first_threshold:
+                max(0, ontario_political_contributions_line_63110) * on479_2025_political_first_rate
+              else:
+                if ontario_political_contributions_line_63110 <= on479_2025_political_second_threshold:
+                  (ontario_political_contributions_line_63110 - on479_2025_political_first_threshold) * on479_2025_political_second_rate + on479_2025_political_second_base_credit
+                else:
+                  (ontario_political_contributions_line_63110 - on479_2025_political_second_threshold) * on479_2025_political_third_rate + on479_2025_political_third_base_credit
+            )
+  - name: on479_focused_flow_through_share_tax_credit_line_63220
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON479 2025 line 17 multiplies Form T1221 expenses by 5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, ontario_focused_flow_through_share_expenses_line_63220) * on479_2025_flow_through_share_rate
+  - name: on479_credits_subtotal_line_18
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA ON479 2025 line 18 adds lines 1, 2, 13, 14, 16, and 17
+    versions:
+      - effective_from: '2025-01-01'
+        formula: on479_fertility_treatment_tax_credit_line_61268 + max(0, ontario_care_tax_credit_schedule_on479a_line_63050) + on479_seniors_care_at_home_tax_credit_line_63095 + on479_seniors_public_transit_tax_credit_line_63100 + on479_political_contribution_tax_credit_line_16 + on479_focused_flow_through_share_tax_credit_line_63220
+  - name: on479_cooperative_education_tax_credit_line_63300
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA ON479 2025 line 20 and Worksheet ON479 calculate the Ontario co-operative education tax credit and cap it at $3,000 per student
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            max(0, ontario_coop_education_qualifying_work_placements_count) * on479_2025_coop_max_per_student,
+            if ontario_coop_prior_year_salaries_and_wages <= on479_2025_coop_lower_wage_threshold:
+              max(0, ontario_coop_eligible_expenditures_line_a) * on479_2025_coop_small_wage_rate
+            else:
+              if ontario_coop_prior_year_salaries_and_wages >= on479_2025_coop_upper_wage_threshold:
+                max(0, ontario_coop_eligible_expenditures_line_a) * on479_2025_coop_large_wage_rate
+              else:
+                max(0, ontario_coop_eligible_expenditures_line_a) * on479_2025_coop_large_wage_rate + max(0, ontario_coop_eligible_expenditures_line_a) * on479_2025_coop_mid_wage_additional_rate * max(0, on479_2025_unit_scalar - ((ontario_coop_prior_year_salaries_and_wages - on479_2025_coop_lower_wage_threshold) / on479_2025_coop_wage_phaseout_range))
+          )
+  - name: ontario_credits_line_47900
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA ON479 2025 line 21 adds line 19 and line 20 and enters Ontario credits on T1 line 47900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: on479_credits_subtotal_line_18 + on479_cooperative_education_tax_credit_line_63300

@@ -1,0 +1,16 @@
+source:
+  id: cra-2025-multiple-jurisdiction-taxes
+  citation_path: ca/policy/cra/t1-2025/multiple-jurisdiction-taxes
+  title: CRA Form T2203 2025 Provincial and Territorial Taxes for Multiple Jurisdictions
+  documents:
+    - title: Form T2203 Provincial and Territorial Taxes for Multiple Jurisdictions 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t2203/t2203-25e.pdf
+  coverage:
+    encoded:
+      - Part 1 income allocation line 1, line 2, line 3, Quebec and Other Outside Canada column 4 allocation, and column 5 percentages
+      - Part 2 federal surtax on income allocated outside Canada and refundable Quebec abatement
+      - Part 5 total provincial and territorial tax summary line 42800
+    not_encoded:
+      - Province-by-province Part 3 non-refundable credit worksheets
+      - Province-by-province Part 4 Form 428MJ tax calculations, reductions, surtaxes, low-income reductions, and credits
+      - Full jurisdiction matrix for every Part 1 row beyond Quebec and Other Outside Canada calculation surfaces

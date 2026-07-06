@@ -1,0 +1,19 @@
+source:
+  id: cra-2025-moving-expenses-deduction
+  citation_path: ca/policy/cra/t1-2025/moving-expenses-deduction
+  title: CRA Form T1-M 2025 Moving Expenses Deduction
+  documents:
+    - title: Form T1-M Moving Expenses Deduction for 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t1-m/t1-m-25e.pdf
+  coverage:
+    encoded:
+      - 40-kilometre distance test using old-home and new-home distances to the new work or school location
+      - Travel, temporary living, lease cancellation, incidental, selling, and buying expense subtotals
+      - $5,000 cap for old-home maintenance costs while vacant
+      - Reimbursement or allowance offset against total moving expenses
+      - Line 21900 deduction as the lesser of net moving expenses and net eligible income, plus unused-expense carryforward
+    not_encoded:
+      - Employment, self-employment, full-time student, scholarship, research-grant, and qualifying relocation predicates
+      - Reasonableness, receipt, reimbursement-taxability, and simplified-method rate substantiation
+      - Detailed allocation across multiple moves, multiple family members, or more than one eligible income source
+      - Housing sale, purchase, and old-home vacant-status fact extraction beyond the aggregate T1-M lines

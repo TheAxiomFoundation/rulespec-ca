@@ -1,0 +1,293 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T778 for the 2025 T1 return calculates the child care
+    expenses deduction entered on line 21400. This module encodes the
+    Part B basic limit and the Part C and Part D higher-income/student
+    calculation spine.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/child-care-expenses-deduction
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Form T778 is the official 2025 T1 form for the child care
+        expenses deduction and line 21400 calculation.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t778/t778-25e.pdf
+rules:
+  - name: federal_2025_child_care_limit_under_7_no_disability
+    kind: parameter
+    dtype: Money
+    source: CRA T778 2025 Part B line 1 uses 8000 for each eligible child born in 2019 or later for whom the disability amount cannot be claimed
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 8000
+
+  - name: federal_2025_child_care_limit_disability_amount_child
+    kind: parameter
+    dtype: Money
+    source: CRA T778 2025 Part B line 2 uses 11000 for each eligible child for whom the disability amount can be claimed
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 11000
+
+  - name: federal_2025_child_care_limit_older_child_or_infirm_no_disability
+    kind: parameter
+    dtype: Money
+    source: CRA T778 2025 Part B line 3 uses 5000 for older eligible children and infirm older dependants for whom the disability amount cannot be claimed
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5000
+
+  - name: federal_2025_child_care_earned_income_fraction
+    kind: parameter
+    dtype: Number
+    source: CRA T778 2025 Part B line 6 multiplies earned income by 2/3
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.6666666667
+
+  - name: federal_2025_child_care_school_month_week_fraction
+    kind: parameter
+    dtype: Number
+    source: CRA T778 2025 Part C line 10 and Part D line 15 multiply the basic limit by 2.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.025
+
+  - name: federal_2025_child_care_basic_limit_line_4
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T778 2025 Part B line 4 adds lines 1 through 3
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, child_care_children_under_7_no_disability_count)
+          * federal_2025_child_care_limit_under_7_no_disability
+          + max(0, child_care_children_disability_amount_count)
+          * federal_2025_child_care_limit_disability_amount_child
+          + max(0, child_care_older_children_or_infirm_no_disability_count)
+          * federal_2025_child_care_limit_older_child_or_infirm_no_disability
+
+  - name: federal_2025_child_care_earned_income_limit_line_6
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T778 2025 Part B line 6 multiplies earned income by 2/3
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, child_care_earned_income)
+          * federal_2025_child_care_earned_income_fraction
+
+  - name: federal_2025_child_care_basic_claim_line_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T778 2025 Part B line 7 is the least of line 4, line 5, and line 6
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_child_care_basic_limit_line_4,
+            max(0, child_care_total_expenses_line_67950),
+            federal_2025_child_care_earned_income_limit_line_6
+          )
+
+  - name: federal_2025_child_care_lower_income_allowable_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T778 2025 Part B line 9 subtracts the higher-income person's line 21400 amount from line 7
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_child_care_basic_claim_line_7
+            - max(0, child_care_other_higher_income_line_21400)
+          )
+
+  - name: federal_2025_child_care_higher_income_week_month_unit_line_10
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T778 2025 Part C line 10 multiplies line 4 by 2.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_child_care_basic_limit_line_4
+          * federal_2025_child_care_school_month_week_fraction
+
+  - name: federal_2025_child_care_higher_income_part_c_limit_line_13
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T778 2025 Part C line 13 adds line 11 and line 12
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_child_care_higher_income_week_month_unit_line_10
+          * max(0, child_care_part_c_weeks_full_time_or_infirmity_prison_separation)
+          + federal_2025_child_care_higher_income_week_month_unit_line_10
+          * max(0, child_care_part_c_months_part_time_school)
+
+  - name: federal_2025_child_care_higher_income_allowable_line_14
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T778 2025 Part C line 14 is the lesser of line 7 and line 13
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_child_care_basic_claim_line_7,
+            federal_2025_child_care_higher_income_part_c_limit_line_13
+          )
+
+  - name: federal_2025_child_care_part_d_week_month_unit_line_15
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T778 2025 Part D line 15 multiplies line 4 by 2.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_child_care_basic_limit_line_4
+          * federal_2025_child_care_school_month_week_fraction
+
+  - name: federal_2025_child_care_part_d_limit_line_18
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T778 2025 Part D line 18 adds line 16 and line 17
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_child_care_part_d_week_month_unit_line_15
+          * max(0, child_care_part_d_full_time_school_weeks)
+          + federal_2025_child_care_part_d_week_month_unit_line_15
+          * max(0, child_care_part_d_part_time_or_same_months)
+
+  - name: federal_2025_child_care_pre_part_d_base_claim
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T778 2025 Part D line 24 uses whichever applies, line 9 or line 14
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if child_care_part_c_applies:
+            federal_2025_child_care_higher_income_allowable_line_14
+          else:
+            federal_2025_child_care_lower_income_allowable_line_9
+
+  - name: federal_2025_child_care_part_d_remaining_basic_limit_line_19
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T778 2025 Part D line 19 subtracts line 9 or line 14 from line 4
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_child_care_basic_limit_line_4
+            - federal_2025_child_care_pre_part_d_base_claim
+          )
+
+  - name: federal_2025_child_care_part_d_remaining_expense_line_20
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T778 2025 Part D line 20 subtracts line 9 or line 14 from line 5
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, child_care_total_expenses_line_67950)
+            - federal_2025_child_care_pre_part_d_base_claim
+          )
+
+  - name: federal_2025_child_care_part_d_net_income_limit_line_21
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T778 2025 Part D line 21 multiplies net income excluding lines 21400 and 23500 by 2/3
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, child_care_net_income_excluding_lines_21400_23500)
+          * federal_2025_child_care_earned_income_fraction
+
+  - name: federal_2025_child_care_part_d_part_c_excess_line_22
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T778 2025 Part D line 22 subtracts line 6 from line 13 if Part C was filled out
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_child_care_higher_income_part_c_limit_line_13
+            - federal_2025_child_care_earned_income_limit_line_6
+          )
+
+  - name: federal_2025_child_care_part_d_additional_claim_line_23
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T778 2025 Part D line 23 is the least of line 18, line 19, line 20, line 21, and line 22 if it applies
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if child_care_part_c_applies:
+            min(
+              federal_2025_child_care_part_d_limit_line_18,
+              federal_2025_child_care_part_d_remaining_basic_limit_line_19,
+              federal_2025_child_care_part_d_remaining_expense_line_20,
+              federal_2025_child_care_part_d_net_income_limit_line_21,
+              federal_2025_child_care_part_d_part_c_excess_line_22
+            )
+          else:
+            min(
+              federal_2025_child_care_part_d_limit_line_18,
+              federal_2025_child_care_part_d_remaining_basic_limit_line_19,
+              federal_2025_child_care_part_d_remaining_expense_line_20,
+              federal_2025_child_care_part_d_net_income_limit_line_21
+            )
+
+  - name: child_care_expenses_deduction_line_21400
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T778 2025 Part B line 9, Part C line 14, and Part D line 25 determine the amount entered on line 21400
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if child_care_part_d_applies:
+            federal_2025_child_care_part_d_additional_claim_line_23
+            + federal_2025_child_care_pre_part_d_base_claim
+          else:
+            federal_2025_child_care_pre_part_d_base_claim

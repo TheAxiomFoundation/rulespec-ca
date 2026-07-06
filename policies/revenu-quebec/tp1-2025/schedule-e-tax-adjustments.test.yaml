@@ -1,0 +1,69 @@
+- name: schedule_e_adjustments_and_forest_refund
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_income_tax_on_taxable_income_line_401: 10000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_tax_adjustment_single_payment_line_402: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_non_refundable_tax_credits_line_406: 3000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_foreign_tax_credit_line_409: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_designated_trust_beneficiary_credit_line_411: 200
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_amount_from_return_line_430: 8000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_amount_from_return_line_431: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_alternative_minimum_tax_carryover_line_13: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_alternative_minimum_tax_line_15: 6000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_deduction_for_logging_tax_line_17: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_forest_current_eligible_development_expenses_line_21: 10000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_forest_unused_eligible_development_expenses_line_22: 5000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_forest_property_taxes_paid_not_refunded_line_26: 3000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_forest_land_value_line_27: 40000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_forest_assessment_unit_total_value_line_28: 100000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_forest_total_eligible_property_taxes_all_units_line_31: 1200
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_tax_and_adjustment_total_line_405: 10500
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_total_non_refundable_credits_line_412: 4200
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_tax_after_credits_line_413: 6300
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_tax_after_spouse_transfer_line_12: 7000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_tax_after_amt_carryover_line_14: 5000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_tax_after_minimum_tax_line_16: 6000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_adjusted_income_tax_payable_line_432: 5500
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_forest_producer_expense_pool_line_23: 15000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_forest_assessment_unit_property_tax_amount_line_30: 1200
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_forest_property_tax_refund_base_line_32: 1200
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_property_tax_refund_forest_producers_line_462: 1020
+
+- name: schedule_e_negative_credit_and_zero_division
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_income_tax_on_taxable_income_line_401: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_tax_adjustment_single_payment_line_402: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_non_refundable_tax_credits_line_406: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_foreign_tax_credit_line_409: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_designated_trust_beneficiary_credit_line_411: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_amount_from_return_line_430: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_amount_from_return_line_431: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_alternative_minimum_tax_carryover_line_13: 100
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_alternative_minimum_tax_line_15: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_deduction_for_logging_tax_line_17: 50
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_forest_current_eligible_development_expenses_line_21: 100
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_forest_unused_eligible_development_expenses_line_22: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_forest_property_taxes_paid_not_refunded_line_26: 3000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_forest_land_value_line_27: 40000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_forest_assessment_unit_total_value_line_28: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#input.schedule_e_forest_total_eligible_property_taxes_all_units_line_31: 200
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_tax_and_adjustment_total_line_405: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_total_non_refundable_credits_line_412: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_tax_after_credits_line_413: -1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_tax_after_spouse_transfer_line_12: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_tax_after_amt_carryover_line_14: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_tax_after_minimum_tax_line_16: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_adjusted_income_tax_payable_line_432: -50
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_forest_producer_expense_pool_line_23: 100
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_forest_assessment_unit_property_tax_amount_line_30: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_forest_property_tax_refund_base_line_32: 100
+    ca:policies/revenu-quebec/tp1-2025/schedule-e-tax-adjustments#schedule_e_property_tax_refund_forest_producers_line_462: 85

@@ -1,0 +1,41 @@
+- name: yt479_all_credits_with_caps
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/yt479-credits#input.yt479_childrens_fitness_eligible_child_count: 2
+    ca:policies/cra/t1-2025/yt479-credits#input.yt479_childrens_fitness_net_eligible_fees: 2500
+    ca:policies/cra/t1-2025/yt479-credits#input.yt479_childrens_fitness_dtc_children_meeting_minimum_fee_count: 1
+    ca:policies/cra/t1-2025/yt479-credits#input.yt479_research_and_development_tax_credit_line_63840: 300
+    ca:policies/cra/t1-2025/yt479-credits#input.yt_s14_business_carbon_price_rebate_line_12: 400
+    ca:policies/cra/t1-2025/yt479-credits#input.yt_s14_business_carbon_price_rebate_line_7: 500
+    ca:policies/cra/t1-2025/yt479-credits#input.yt479_fertility_surrogacy_valid_yukon_health_card_line_63857: true
+    ca:policies/cra/t1-2025/yt479-credits#input.yt479_fertility_treatments_medical_expenses_line_61268: 30000
+  output:
+    ca:policies/cra/t1-2025/yt479-credits#yt479_childrens_fitness_base_eligible_fees_line_63800: 2000
+    ca:policies/cra/t1-2025/yt479-credits#yt479_childrens_fitness_dtc_additional_fees_line_63800: 500
+    ca:policies/cra/t1-2025/yt479-credits#yt479_childrens_fitness_total_eligible_fees_line_63800: 2500
+    ca:policies/cra/t1-2025/yt479-credits#yt479_childrens_fitness_tax_credit_line_1: 160
+    ca:policies/cra/t1-2025/yt479-credits#yt479_yukon_business_carbon_price_rebate_line_3_and_4: 900
+    ca:policies/cra/t1-2025/yt479-credits#yt479_fertility_surrogacy_tax_credit_line_5: 10000
+    ca:policies/cra/t1-2025/yt479-credits#yukon_credits_line_47900: 11360
+
+- name: yt479_health_card_no_zeroes_fertility
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/yt479-credits#input.yt479_childrens_fitness_eligible_child_count: 1
+    ca:policies/cra/t1-2025/yt479-credits#input.yt479_childrens_fitness_net_eligible_fees: 100
+    ca:policies/cra/t1-2025/yt479-credits#input.yt479_childrens_fitness_dtc_children_meeting_minimum_fee_count: 0
+    ca:policies/cra/t1-2025/yt479-credits#input.yt479_research_and_development_tax_credit_line_63840: 0
+    ca:policies/cra/t1-2025/yt479-credits#input.yt_s14_business_carbon_price_rebate_line_12: 0
+    ca:policies/cra/t1-2025/yt479-credits#input.yt_s14_business_carbon_price_rebate_line_7: 0
+    ca:policies/cra/t1-2025/yt479-credits#input.yt479_fertility_surrogacy_valid_yukon_health_card_line_63857: false
+    ca:policies/cra/t1-2025/yt479-credits#input.yt479_fertility_treatments_medical_expenses_line_61268: 10000
+  output:
+    ca:policies/cra/t1-2025/yt479-credits#yt479_childrens_fitness_tax_credit_line_1: 6.4
+    ca:policies/cra/t1-2025/yt479-credits#yt479_fertility_surrogacy_tax_credit_line_5: 0
+    ca:policies/cra/t1-2025/yt479-credits#yukon_credits_line_47900: 6.4

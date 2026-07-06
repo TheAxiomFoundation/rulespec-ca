@@ -1,0 +1,1398 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Schedule 8 for the 2025 T1 return calculates Canada Pension
+    Plan contributions and overpayments for residents outside Quebec with
+    no Quebec earned income. This module encodes the Schedule 8 monthly
+    proration table, employment-only, self-employment-only, and mixed
+    employment/self-employment contribution calculations.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/cpp-contributions-and-overpayment
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/canada-pension-plan
+      rationale: |-
+        CRA Schedule 8 is the official 2025 T1 return schedule for CPP
+        contributions and overpayments for residents outside Quebec who
+        have no Quebec earned income.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s8/5000-s8-25e.pdf
+rules:
+  - name: federal_2025_schedule_8_employment_actual_base_share
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 8 2025 Part 3 line 9 multiplies actual base and first additional contributions by 83.1933%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.831933
+
+  - name: federal_2025_schedule_8_base_employee_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 8 2025 Part 3 line 11 uses a 4.95% base employee CPP rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.0495
+
+  - name: federal_2025_schedule_8_first_employee_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 8 2025 Part 3 line 12 uses a 1% first additional employee CPP rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.01
+
+  - name: federal_2025_schedule_8_second_employee_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 8 2025 Part 3 line 22 uses a 4% second additional employee CPP rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.04
+
+  - name: federal_2025_schedule_8_base_self_employed_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 8 2025 Part 4 line 10 uses a 9.9% self-employed base CPP rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.099
+
+  - name: federal_2025_schedule_8_first_self_employed_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 8 2025 Part 4 line 11 uses a 2% self-employed first additional CPP rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.02
+
+  - name: federal_2025_schedule_8_second_self_employed_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 8 2025 Part 4 line 12 uses an 8% self-employed second additional CPP rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.08
+
+  - name: federal_2025_schedule_8_self_employed_base_credit_share
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 8 2025 Part 4 line 15 multiplies base self-employed CPP contributions by 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.50
+
+  - name: federal_2025_schedule_8_base_employee_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 3 line 11 caps base employee CPP contributions at $3,356.10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          3356.10
+
+  - name: federal_2025_schedule_8_first_employee_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 3 line 12 caps first additional employee CPP contributions at $678.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          678.00
+
+  - name: federal_2025_schedule_8_second_employee_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 3 line 22 caps second additional employee CPP contributions at $396.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          396.00
+
+  - name: federal_2025_schedule_8_base_self_employed_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 4 line 10 caps base self-employed CPP contributions at $6,712.20
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          6712.20
+
+  - name: federal_2025_schedule_8_first_self_employed_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 4 line 11 caps first additional self-employed CPP contributions at $1,356.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          1356.00
+
+  - name: federal_2025_schedule_8_second_self_employed_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 4 line 12 caps second additional self-employed CPP contributions at $792.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          792.00
+
+  - name: federal_2025_schedule_8_part5_contribution_to_earnings_factor
+    kind: parameter
+    dtype: Number
+    source: CRA Schedule 8 2025 Part 5 line 20 multiplies line 10 by 16.80672
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          16.80672
+
+  - name: federal_2025_schedule_8_maximum_months
+    kind: parameter
+    dtype: Number
+    source: CRA Schedule 8 2025 Part 2 line A uses 12 months unless a proration condition applies
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          12
+
+  - name: federal_2025_schedule_8_month_count_1
+    kind: parameter
+    dtype: Number
+    source: CRA Schedule 8 2025 Part 2 monthly proration table row for 1 month
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          1
+
+  - name: federal_2025_schedule_8_month_count_2
+    kind: parameter
+    dtype: Number
+    source: CRA Schedule 8 2025 Part 2 monthly proration table row for 2 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          2
+
+  - name: federal_2025_schedule_8_month_count_3
+    kind: parameter
+    dtype: Number
+    source: CRA Schedule 8 2025 Part 2 monthly proration table row for 3 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          3
+
+  - name: federal_2025_schedule_8_month_count_4
+    kind: parameter
+    dtype: Number
+    source: CRA Schedule 8 2025 Part 2 monthly proration table row for 4 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          4
+
+  - name: federal_2025_schedule_8_month_count_5
+    kind: parameter
+    dtype: Number
+    source: CRA Schedule 8 2025 Part 2 monthly proration table row for 5 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          5
+
+  - name: federal_2025_schedule_8_month_count_6
+    kind: parameter
+    dtype: Number
+    source: CRA Schedule 8 2025 Part 2 monthly proration table row for 6 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          6
+
+  - name: federal_2025_schedule_8_month_count_7
+    kind: parameter
+    dtype: Number
+    source: CRA Schedule 8 2025 Part 2 monthly proration table row for 7 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          7
+
+  - name: federal_2025_schedule_8_month_count_8
+    kind: parameter
+    dtype: Number
+    source: CRA Schedule 8 2025 Part 2 monthly proration table row for 8 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          8
+
+  - name: federal_2025_schedule_8_month_count_9
+    kind: parameter
+    dtype: Number
+    source: CRA Schedule 8 2025 Part 2 monthly proration table row for 9 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          9
+
+  - name: federal_2025_schedule_8_month_count_10
+    kind: parameter
+    dtype: Number
+    source: CRA Schedule 8 2025 Part 2 monthly proration table row for 10 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          10
+
+  - name: federal_2025_schedule_8_month_count_11
+    kind: parameter
+    dtype: Number
+    source: CRA Schedule 8 2025 Part 2 monthly proration table row for 11 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          11
+
+  - name: federal_2025_schedule_8_second_additional_amount_per_month
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table increases line C by $825 per month
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          825
+
+  - name: federal_2025_schedule_8_base_first_earnings_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Parts 3, 4, and 5 cap earnings subject to base and first additional contributions at $67,800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          67800
+
+  - name: federal_2025_schedule_8_line_b_month_1
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line B for 1 month
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          5941.67
+
+  - name: federal_2025_schedule_8_line_b_month_2
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line B for 2 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          11883.33
+
+  - name: federal_2025_schedule_8_line_b_month_3
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line B for 3 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          17825.00
+
+  - name: federal_2025_schedule_8_line_b_month_4
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line B for 4 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          23766.67
+
+  - name: federal_2025_schedule_8_line_b_month_5
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line B for 5 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          29708.33
+
+  - name: federal_2025_schedule_8_line_b_month_6
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line B for 6 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          35650.00
+
+  - name: federal_2025_schedule_8_line_b_month_7
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line B for 7 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          41591.67
+
+  - name: federal_2025_schedule_8_line_b_month_8
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line B for 8 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          47533.33
+
+  - name: federal_2025_schedule_8_line_b_month_9
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line B for 9 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          53475.00
+
+  - name: federal_2025_schedule_8_line_b_month_10
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line B for 10 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          59416.67
+
+  - name: federal_2025_schedule_8_line_b_month_11
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line B for 11 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          65358.33
+
+  - name: federal_2025_schedule_8_line_b_month_12
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line B for 12 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          71300.00
+
+  - name: federal_2025_schedule_8_line_e_month_1
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line E for 1 month
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          291.67
+
+  - name: federal_2025_schedule_8_line_e_month_2
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line E for 2 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          583.33
+
+  - name: federal_2025_schedule_8_line_e_month_3
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line E for 3 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          875.00
+
+  - name: federal_2025_schedule_8_line_e_month_4
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line E for 4 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          1166.67
+
+  - name: federal_2025_schedule_8_line_e_month_5
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line E for 5 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          1458.33
+
+  - name: federal_2025_schedule_8_line_e_month_6
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line E for 6 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          1750.00
+
+  - name: federal_2025_schedule_8_line_e_month_7
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line E for 7 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          2041.67
+
+  - name: federal_2025_schedule_8_line_e_month_8
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line E for 8 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          2333.33
+
+  - name: federal_2025_schedule_8_line_e_month_9
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line E for 9 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          2625.00
+
+  - name: federal_2025_schedule_8_line_e_month_10
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line E for 10 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          2916.67
+
+  - name: federal_2025_schedule_8_line_e_month_11
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line E for 11 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          3208.33
+
+  - name: federal_2025_schedule_8_line_e_month_12
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 8 2025 Part 2 monthly proration table line E for 12 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          3500.00
+
+  - name: federal_2025_schedule_8_months_line_a
+    kind: derived
+    entity: Person
+    dtype: Number
+    period: Year
+    source: CRA Schedule 8 2025 Part 2 line A enters the number of months that CPP applied in 2025
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(federal_2025_schedule_8_maximum_months, max(0, cpp_contribution_months_line_a))
+
+  - name: federal_2025_schedule_8_maximum_pensionable_earnings_line_b
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 2 line B uses the monthly proration table, maximum pensionable earnings $71,300 for 12 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if federal_2025_schedule_8_months_line_a <= 0:
+            0
+          else:
+          if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_1:
+              federal_2025_schedule_8_line_b_month_1
+            else:
+              if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_2:
+                federal_2025_schedule_8_line_b_month_2
+              else:
+                if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_3:
+                  federal_2025_schedule_8_line_b_month_3
+                else:
+                  if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_4:
+                    federal_2025_schedule_8_line_b_month_4
+                  else:
+                    if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_5:
+                      federal_2025_schedule_8_line_b_month_5
+                    else:
+                      if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_6:
+                        federal_2025_schedule_8_line_b_month_6
+                      else:
+                        if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_7:
+                          federal_2025_schedule_8_line_b_month_7
+                        else:
+                          if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_8:
+                            federal_2025_schedule_8_line_b_month_8
+                          else:
+                            if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_9:
+                              federal_2025_schedule_8_line_b_month_9
+                            else:
+                              if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_10:
+                                federal_2025_schedule_8_line_b_month_10
+                              else:
+                                if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_11:
+                                  federal_2025_schedule_8_line_b_month_11
+                                else:
+                                  federal_2025_schedule_8_line_b_month_12
+
+  - name: federal_2025_schedule_8_second_additional_amount_line_c
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 2 line C uses the monthly proration table, maximum amount subject to second additional contributions $9,900 for 12 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_months_line_a * federal_2025_schedule_8_second_additional_amount_per_month
+
+  - name: federal_2025_schedule_8_additional_maximum_pensionable_earnings_line_d
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 2 line D uses the monthly proration table, additional maximum pensionable earnings $81,200 for 12 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_maximum_pensionable_earnings_line_b
+          + federal_2025_schedule_8_second_additional_amount_line_c
+
+  - name: federal_2025_schedule_8_basic_exemption_line_e
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 2 line E uses the monthly proration table, maximum basic exemption $3,500 for 12 months
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if federal_2025_schedule_8_months_line_a <= 0:
+            0
+          else:
+          if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_1:
+              federal_2025_schedule_8_line_e_month_1
+            else:
+              if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_2:
+                federal_2025_schedule_8_line_e_month_2
+              else:
+                if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_3:
+                  federal_2025_schedule_8_line_e_month_3
+                else:
+                  if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_4:
+                    federal_2025_schedule_8_line_e_month_4
+                  else:
+                    if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_5:
+                      federal_2025_schedule_8_line_e_month_5
+                    else:
+                      if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_6:
+                        federal_2025_schedule_8_line_e_month_6
+                      else:
+                        if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_7:
+                          federal_2025_schedule_8_line_e_month_7
+                        else:
+                          if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_8:
+                            federal_2025_schedule_8_line_e_month_8
+                          else:
+                            if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_9:
+                              federal_2025_schedule_8_line_e_month_9
+                            else:
+                              if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_10:
+                                federal_2025_schedule_8_line_e_month_10
+                              else:
+                                if federal_2025_schedule_8_months_line_a <= federal_2025_schedule_8_month_count_11:
+                                  federal_2025_schedule_8_line_e_month_11
+                                else:
+                                  federal_2025_schedule_8_line_e_month_12
+
+  - name: federal_2025_schedule_8_part3_total_cpp_pensionable_earnings_line_1
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3 line 1 is total CPP pensionable earnings from T4 box 26, or box 14 if box 26 is blank
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, cpp_pensionable_earnings_from_t4_slips_line_50339)
+
+  - name: federal_2025_schedule_8_part3_line_2
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3 line 2 is the lesser of Part 2 line D and Part 3 line 1
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_8_additional_maximum_pensionable_earnings_line_d,
+            federal_2025_schedule_8_part3_total_cpp_pensionable_earnings_line_1
+          )
+
+  - name: federal_2025_schedule_8_part3_second_additional_earnings_line_4
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3 line 4 subtracts Part 2 line B from line 2 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_2025_schedule_8_part3_line_2 - federal_2025_schedule_8_maximum_pensionable_earnings_line_b)
+
+  - name: federal_2025_schedule_8_part3_line_5
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3 line 5 subtracts line 4 from line 2 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_2025_schedule_8_part3_line_2 - federal_2025_schedule_8_part3_second_additional_earnings_line_4)
+
+  - name: federal_2025_schedule_8_part3_base_first_earnings_line_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3 line 7 subtracts Part 2 line E from line 5 and floors at zero, maximum $67,800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(federal_2025_schedule_8_base_first_earnings_maximum, max(0, federal_2025_schedule_8_part3_line_5 - federal_2025_schedule_8_basic_exemption_line_e))
+
+  - name: federal_2025_schedule_8_part3_actual_base_first_contributions_line_8
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3 line 8 is total actual base and first additional CPP contributions from T4 box 16
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, actual_base_and_first_cpp_contributions_from_t4_box_16_line_50340)
+
+  - name: federal_2025_schedule_8_part3_actual_base_contributions_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3 line 9 multiplies line 8 by 83.1933%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_part3_actual_base_first_contributions_line_8
+          * federal_2025_schedule_8_employment_actual_base_share
+
+  - name: federal_2025_schedule_8_part3_actual_first_additional_contributions_line_10
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3 line 10 subtracts line 9 from line 8
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_part3_actual_base_first_contributions_line_8
+          - federal_2025_schedule_8_part3_actual_base_contributions_line_9
+
+  - name: federal_2025_schedule_8_part3_required_base_contributions_line_11
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3 line 11 multiplies line 7 by 4.95%, maximum $3,356.10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_8_part3_base_first_earnings_line_7 * federal_2025_schedule_8_base_employee_rate,
+            federal_2025_schedule_8_base_employee_maximum
+          )
+
+  - name: federal_2025_schedule_8_part3_required_first_additional_contributions_line_12
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3 line 12 multiplies line 7 by 1%, maximum $678.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_8_part3_base_first_earnings_line_7 * federal_2025_schedule_8_first_employee_rate,
+            federal_2025_schedule_8_first_employee_maximum
+          )
+
+  - name: federal_2025_schedule_8_part3_required_base_first_contributions_line_13
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3 line 13 adds lines 11 and 12
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_part3_required_base_contributions_line_11
+          + federal_2025_schedule_8_part3_required_first_additional_contributions_line_12
+
+  - name: federal_2025_schedule_8_part3_base_difference_line_16
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3 line 16 subtracts line 15 from line 14, allowing negative values
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_part3_actual_base_contributions_line_9
+          - federal_2025_schedule_8_part3_required_base_contributions_line_11
+
+  - name: federal_2025_schedule_8_part3_first_additional_difference_line_19
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3 line 19 subtracts line 18 from line 17, allowing negative values
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_part3_actual_first_additional_contributions_line_10
+          - federal_2025_schedule_8_part3_required_first_additional_contributions_line_12
+
+  - name: federal_2025_schedule_8_part3_base_first_difference_line_20
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3 line 20 adds lines 16 and 19
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_part3_base_difference_line_16
+          + federal_2025_schedule_8_part3_first_additional_difference_line_19
+
+  - name: federal_2025_schedule_8_part3_actual_second_additional_contributions_line_21
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3 line 21 is total actual second additional CPP contributions from T4 box 16A
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, actual_second_additional_cpp_contributions_from_t4_box_16a_line_50341)
+
+  - name: federal_2025_schedule_8_part3_required_second_additional_contributions_line_22
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3 line 22 multiplies line 4 by 4%, maximum $396.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_8_part3_second_additional_earnings_line_4 * federal_2025_schedule_8_second_employee_rate,
+            federal_2025_schedule_8_second_employee_maximum
+          )
+
+  - name: federal_2025_schedule_8_part3_second_additional_difference_line_23
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3 line 23 subtracts line 22 from line 21, allowing negative values
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_part3_actual_second_additional_contributions_line_21
+          - federal_2025_schedule_8_part3_required_second_additional_contributions_line_22
+
+  - name: federal_2025_schedule_8_part3_total_difference_line_24
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3 line 24 adds lines 20 and 23
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_part3_base_first_difference_line_20
+          + federal_2025_schedule_8_part3_second_additional_difference_line_23
+
+  - name: federal_2025_schedule_8_part3b_base_line_36
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3b lines 30 to 36 allocate base CPP contributions through employment income when line 24 is zero or negative
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if federal_2025_schedule_8_part3_base_difference_line_16 >= 0:
+            federal_2025_schedule_8_part3_required_base_contributions_line_11
+          else:
+            max(0, federal_2025_schedule_8_part3_actual_base_contributions_line_9)
+            + (if federal_2025_schedule_8_part3_second_additional_difference_line_23 > 0:
+                min(
+                  federal_2025_schedule_8_part3_second_additional_difference_line_23,
+                  max(
+                    0,
+                    max(0, 0 - federal_2025_schedule_8_part3_base_difference_line_16)
+                    - (if federal_2025_schedule_8_part3_first_additional_difference_line_19 > 0:
+                        min(federal_2025_schedule_8_part3_first_additional_difference_line_19, max(0, 0 - federal_2025_schedule_8_part3_base_difference_line_16))
+                      else:
+                        0)
+                  )
+                )
+              else:
+                0)
+            + (if federal_2025_schedule_8_part3_first_additional_difference_line_19 > 0:
+                min(federal_2025_schedule_8_part3_first_additional_difference_line_19, max(0, 0 - federal_2025_schedule_8_part3_base_difference_line_16))
+              else:
+                0)
+
+  - name: federal_2025_schedule_8_part3b_enhanced_line_48
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3b lines 37 to 48 allocate enhanced CPP deductions through employment income when line 24 is zero or negative
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          (if federal_2025_schedule_8_part3_first_additional_difference_line_19 >= 0:
+            federal_2025_schedule_8_part3_required_first_additional_contributions_line_12
+          else:
+            federal_2025_schedule_8_part3_actual_first_additional_contributions_line_10
+            + (if federal_2025_schedule_8_part3_base_difference_line_16 > 0:
+                min(federal_2025_schedule_8_part3_base_difference_line_16, max(0, 0 - federal_2025_schedule_8_part3_first_additional_difference_line_19))
+              else:
+                0)
+            + (if federal_2025_schedule_8_part3_second_additional_difference_line_23 > 0:
+                min(
+                  max(
+                    0,
+                    max(0, 0 - federal_2025_schedule_8_part3_first_additional_difference_line_19)
+                    - (if federal_2025_schedule_8_part3_base_difference_line_16 > 0:
+                        min(federal_2025_schedule_8_part3_base_difference_line_16, max(0, 0 - federal_2025_schedule_8_part3_first_additional_difference_line_19))
+                      else:
+                        0)
+                  ),
+                  federal_2025_schedule_8_part3_second_additional_difference_line_23
+                  - (if federal_2025_schedule_8_part3_base_difference_line_16 < 0 and federal_2025_schedule_8_part3_second_additional_difference_line_23 > 0:
+                      min(
+                        federal_2025_schedule_8_part3_second_additional_difference_line_23,
+                        max(
+                          0,
+                          max(0, 0 - federal_2025_schedule_8_part3_base_difference_line_16)
+                          - (if federal_2025_schedule_8_part3_first_additional_difference_line_19 > 0:
+                              min(federal_2025_schedule_8_part3_first_additional_difference_line_19, max(0, 0 - federal_2025_schedule_8_part3_base_difference_line_16))
+                            else:
+                              0)
+                        )
+                      )
+                    else:
+                      0)
+                )
+              else:
+                0))
+          + (if federal_2025_schedule_8_part3_second_additional_difference_line_23 >= 0:
+            federal_2025_schedule_8_part3_required_second_additional_contributions_line_22
+          else:
+            federal_2025_schedule_8_part3_actual_second_additional_contributions_line_21
+            + (if federal_2025_schedule_8_part3_base_first_difference_line_20 > 0:
+                min(federal_2025_schedule_8_part3_base_first_difference_line_20, max(0, 0 - federal_2025_schedule_8_part3_second_additional_difference_line_23))
+              else:
+                0))
+
+  - name: cpp_employment_base_contributions_line_30800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3a line 25 or Part 3b line 36 enters base CPP contributions through employment on line 30800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if federal_2025_schedule_8_part3_total_difference_line_24 > 0:
+            federal_2025_schedule_8_part3_required_base_contributions_line_11
+          else:
+            federal_2025_schedule_8_part3b_base_line_36
+
+  - name: cpp_employment_enhanced_contributions_deduction_line_22215
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3a line 28 or Part 3b line 48 enters the enhanced CPP deduction through employment on line 22215
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if federal_2025_schedule_8_part3_total_difference_line_24 > 0:
+            federal_2025_schedule_8_part3_required_first_additional_contributions_line_12
+            + federal_2025_schedule_8_part3_required_second_additional_contributions_line_22
+          else:
+            federal_2025_schedule_8_part3b_enhanced_line_48
+
+  - name: cpp_employment_overpayment_line_44800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 3a line 29 enters positive line 24 as CPP overpayment on line 44800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_2025_schedule_8_part3_total_difference_line_24)
+
+  - name: federal_2025_schedule_8_part4_self_employment_earnings_line_1
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 4 line 1 uses line 12200 plus line 27 of the return
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, self_employment_earnings_line_12200_plus_line_27_for_cpp)
+
+  - name: federal_2025_schedule_8_part4_cpp_pensionable_earnings_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 4 line 3 adds line 1 and employment earnings not shown on a T4 slip, floored at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_schedule_8_part4_self_employment_earnings_line_1
+            + max(0, employment_earnings_not_on_t4_electing_cpp_line_50373)
+          )
+
+  - name: federal_2025_schedule_8_part4_line_4
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 4 line 4 is the lesser of Part 2 line D and Part 4 line 3
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_8_additional_maximum_pensionable_earnings_line_d,
+            federal_2025_schedule_8_part4_cpp_pensionable_earnings_line_3
+          )
+
+  - name: federal_2025_schedule_8_part4_second_additional_earnings_line_6
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 4 line 6 subtracts Part 2 line B from line 4 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_2025_schedule_8_part4_line_4 - federal_2025_schedule_8_maximum_pensionable_earnings_line_b)
+
+  - name: federal_2025_schedule_8_part4_base_first_earnings_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 4 line 9 subtracts Part 2 line E from line 7 and floors at zero, maximum $67,800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_8_base_first_earnings_maximum,
+            max(0, (federal_2025_schedule_8_part4_line_4 - federal_2025_schedule_8_part4_second_additional_earnings_line_6) - federal_2025_schedule_8_basic_exemption_line_e)
+          )
+
+  - name: federal_2025_schedule_8_part4_required_base_contributions_line_10
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 4 line 10 multiplies line 9 by 9.9%, maximum $6,712.20
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_8_part4_base_first_earnings_line_9 * federal_2025_schedule_8_base_self_employed_rate,
+            federal_2025_schedule_8_base_self_employed_maximum
+          )
+
+  - name: federal_2025_schedule_8_part4_required_first_additional_line_11
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 4 line 11 multiplies line 9 by 2%, maximum $1,356.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_8_part4_base_first_earnings_line_9 * federal_2025_schedule_8_first_self_employed_rate,
+            federal_2025_schedule_8_first_self_employed_maximum
+          )
+
+  - name: federal_2025_schedule_8_part4_required_second_additional_line_12
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 4 line 12 multiplies line 6 by 8%, maximum $792.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_8_part4_second_additional_earnings_line_6 * federal_2025_schedule_8_second_self_employed_rate,
+            federal_2025_schedule_8_second_self_employed_maximum
+          )
+
+  - name: cpp_self_employment_contributions_payable_line_42100
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 4 line 14 enters line 10 plus line 13 as CPP contributions payable on line 42100 for self-employment-only cases
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_part4_required_base_contributions_line_10
+          + federal_2025_schedule_8_part4_required_first_additional_line_11
+          + federal_2025_schedule_8_part4_required_second_additional_line_12
+
+  - name: cpp_self_employment_base_credit_line_31000
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 4 line 15 multiplies line 10 by 50% and enters it on line 31000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_part4_required_base_contributions_line_10
+          * federal_2025_schedule_8_self_employed_base_credit_share
+
+  - name: cpp_self_employment_deduction_line_22200
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 4 line 17 adds line 15 and line 16 as the CPP self-employment deduction on line 22200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          cpp_self_employment_base_credit_line_31000
+          + federal_2025_schedule_8_part4_required_first_additional_line_11
+          + federal_2025_schedule_8_part4_required_second_additional_line_12
+
+  - name: federal_2025_schedule_8_part5_earnings_line_4
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 line 4 adds self-employment income, non-T4 elective earnings, and T4 elective earnings
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, self_employment_earnings_line_12200_plus_line_27_for_cpp)
+          + max(0, employment_earnings_not_on_t4_electing_cpp_line_50373)
+          + max(0, employment_earnings_on_t4_electing_cpp_line_50399)
+
+  - name: federal_2025_schedule_8_part5_adjusted_base_first_actual_line_10
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 lines 5 to 10 adjust actual base and first additional CPP contributions from Part 3
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_part3_actual_base_first_contributions_line_8
+          - max(0, federal_2025_schedule_8_part3_base_first_difference_line_20)
+          + (if federal_2025_schedule_8_part3_base_first_difference_line_20 < 0 and federal_2025_schedule_8_part3_second_additional_difference_line_23 > 0:
+              min(federal_2025_schedule_8_part3_second_additional_difference_line_23, max(0, 0 - federal_2025_schedule_8_part3_base_first_difference_line_20))
+            else:
+              0)
+
+  - name: federal_2025_schedule_8_part5_adjusted_second_actual_line_16
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 lines 11 to 16 adjust actual second additional CPP contributions from Part 3
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_part3_actual_second_additional_contributions_line_21
+          - max(0, federal_2025_schedule_8_part3_second_additional_difference_line_23)
+          + (if federal_2025_schedule_8_part3_base_first_difference_line_20 > 0 and federal_2025_schedule_8_part3_second_additional_difference_line_23 < 0:
+              min(federal_2025_schedule_8_part3_base_first_difference_line_20, max(0, 0 - federal_2025_schedule_8_part3_second_additional_difference_line_23))
+            else:
+              0)
+
+  - name: federal_2025_schedule_8_part5_base_first_capacity_line_21
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 lines 17 to 21 determine remaining base and first additional earnings room
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, federal_2025_schedule_8_maximum_pensionable_earnings_line_b - federal_2025_schedule_8_basic_exemption_line_e)
+            - (federal_2025_schedule_8_part5_adjusted_base_first_actual_line_10 * federal_2025_schedule_8_part5_contribution_to_earnings_factor)
+          )
+
+  - name: federal_2025_schedule_8_part5_base_first_earnings_line_30
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 line 30 subtracts line 29 from line 22 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            min(federal_2025_schedule_8_part5_earnings_line_4, federal_2025_schedule_8_part5_base_first_capacity_line_21)
+            - (if federal_2025_schedule_8_part3_total_cpp_pensionable_earnings_line_1 < federal_2025_schedule_8_basic_exemption_line_e:
+                max(
+                  0,
+                  max(0, federal_2025_schedule_8_basic_exemption_line_e - federal_2025_schedule_8_part3_total_cpp_pensionable_earnings_line_1)
+                  - max(0, federal_2025_schedule_8_part5_earnings_line_4 - max(0, federal_2025_schedule_8_maximum_pensionable_earnings_line_b - federal_2025_schedule_8_basic_exemption_line_e))
+                )
+              else:
+                0)
+          )
+
+  - name: federal_2025_schedule_8_part5_second_additional_earnings_line_42
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 lines 31 to 42 determine self-employment earnings subject to second additional contributions
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if federal_2025_schedule_8_part5_earnings_line_4 + federal_2025_schedule_8_part3_line_2 > federal_2025_schedule_8_maximum_pensionable_earnings_line_b:
+            min(
+              federal_2025_schedule_8_second_additional_amount_line_c
+              - (federal_2025_schedule_8_part5_adjusted_second_actual_line_16 / federal_2025_schedule_8_second_employee_rate),
+              federal_2025_schedule_8_part5_earnings_line_4
+              - (if federal_2025_schedule_8_part3_total_cpp_pensionable_earnings_line_1 < federal_2025_schedule_8_basic_exemption_line_e:
+                  max(0, federal_2025_schedule_8_basic_exemption_line_e - federal_2025_schedule_8_part3_total_cpp_pensionable_earnings_line_1)
+                else:
+                  0)
+              - federal_2025_schedule_8_part5_base_first_earnings_line_30
+            )
+          else:
+            0
+
+  - name: federal_2025_schedule_8_part5_required_base_line_43
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 line 43 multiplies line 30 by 9.9%, maximum $6,712.20
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_8_part5_base_first_earnings_line_30 * federal_2025_schedule_8_base_self_employed_rate,
+            federal_2025_schedule_8_base_self_employed_maximum
+          )
+
+  - name: federal_2025_schedule_8_part5_required_first_line_44
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 line 44 multiplies line 30 by 2%, maximum $1,356.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_8_part5_base_first_earnings_line_30 * federal_2025_schedule_8_first_self_employed_rate,
+            federal_2025_schedule_8_first_self_employed_maximum
+          )
+
+  - name: federal_2025_schedule_8_part5_required_second_line_45
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 line 45 multiplies line 42 by 8%, maximum $792.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            max(0, federal_2025_schedule_8_part5_second_additional_earnings_line_42) * federal_2025_schedule_8_second_self_employed_rate,
+            federal_2025_schedule_8_second_self_employed_maximum
+          )
+
+  - name: federal_2025_schedule_8_part5_contributions_payable_before_overpayment_line_49
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 line 49 subtracts twice positive Part 3 line 24 from required mixed self-employment contributions
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_part5_required_base_line_43
+          + federal_2025_schedule_8_part5_required_first_line_44
+          + federal_2025_schedule_8_part5_required_second_line_45
+          - (max(0, federal_2025_schedule_8_part3_total_difference_line_24) * 2)
+
+  - name: cpp_mixed_contributions_payable_line_42100
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 line 49 enters positive line 49 as CPP contributions payable on line 42100
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_2025_schedule_8_part5_contributions_payable_before_overpayment_line_49)
+
+  - name: cpp_mixed_overpayment_line_44800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 line 50 enters negative line 49 as a positive amount multiplied by 50% on line 44800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if federal_2025_schedule_8_part5_contributions_payable_before_overpayment_line_49 < 0:
+            max(0, 0 - federal_2025_schedule_8_part5_contributions_payable_before_overpayment_line_49) * federal_2025_schedule_8_self_employed_base_credit_share
+          else:
+            0
+
+  - name: cpp_mixed_employment_base_contributions_line_30800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 lines 51 to 57 calculate base CPP contributions through employment on line 30800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_part3b_base_line_36
+
+  - name: cpp_mixed_employment_enhanced_deduction_line_22215
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 lines 58 to 69 calculate enhanced CPP deductions through employment on line 22215
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_part3b_enhanced_line_48
+
+  - name: cpp_mixed_self_employment_base_credit_line_31000
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 line 70 multiplies line 43 by 50% and enters the base self-employment credit on line 31000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_part5_required_base_line_43 * federal_2025_schedule_8_self_employed_base_credit_share
+
+  - name: federal_2025_schedule_8_part5_line_72
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 line 72 adds line 70 and half of line 44
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          cpp_mixed_self_employment_base_credit_line_31000
+          + (federal_2025_schedule_8_part5_required_first_line_44 * federal_2025_schedule_8_self_employed_base_credit_share)
+
+  - name: federal_2025_schedule_8_part5_line_74
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 line 74 subtracts positive Part 3 line 24 from line 72, allowing negative values
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_part5_line_72
+          - max(0, federal_2025_schedule_8_part3_total_difference_line_24)
+
+  - name: federal_2025_schedule_8_part5_line_75_amount_a
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 line 75 starts with the lesser of line 72 and line 73 as amount A
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(federal_2025_schedule_8_part5_line_72, max(0, federal_2025_schedule_8_part3_total_difference_line_24))
+
+  - name: federal_2025_schedule_8_part5_line_75_base_share
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 line 75 multiplies amount A by 83.1933%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_8_part5_line_75_amount_a
+          * federal_2025_schedule_8_employment_actual_base_share
+
+  - name: cpp_mixed_self_employment_deduction_line_22200
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 8 2025 Part 5 line 88 adds lines 80, 81, 83, 84, and 87 as the self-employment CPP deduction on line 22200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, cpp_mixed_self_employment_base_credit_line_31000 - federal_2025_schedule_8_part5_line_75_base_share)
+          + (federal_2025_schedule_8_part5_required_first_line_44 * federal_2025_schedule_8_self_employed_base_credit_share)
+          + max(0, (federal_2025_schedule_8_part5_required_first_line_44 * federal_2025_schedule_8_self_employed_base_credit_share) - (federal_2025_schedule_8_part5_line_75_amount_a - federal_2025_schedule_8_part5_line_75_base_share))
+          + (federal_2025_schedule_8_part5_required_second_line_45 * federal_2025_schedule_8_self_employed_base_credit_share)
+          + (if federal_2025_schedule_8_part5_line_74 < 0:
+              max(0, (federal_2025_schedule_8_part5_required_second_line_45 * federal_2025_schedule_8_self_employed_base_credit_share) - max(0, 0 - federal_2025_schedule_8_part5_line_74))
+            else:
+              federal_2025_schedule_8_part5_required_second_line_45 * federal_2025_schedule_8_self_employed_base_credit_share)

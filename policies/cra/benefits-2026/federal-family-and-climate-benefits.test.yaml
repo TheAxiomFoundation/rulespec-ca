@@ -1,0 +1,121 @@
+- name: ccb_one_under_6_cra_example
+  period:
+    period_kind: tax_year
+    start: '2026-07-01'
+    end: '2027-06-30'
+  input:
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.adjusted_family_net_income: 45000
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.ccb_children_under_6_count: 1
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.ccb_children_6_to_17_count: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.child_disability_benefit_eligible_child_count: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.cgeb_child_count: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.cgeb_has_spouse_or_common_law_partner: false
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.gst_hst_credit_top_up_child_count: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.gst_hst_credit_top_up_has_spouse_or_common_law_partner: false
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.january_2026_gst_hst_credit_payment: 0
+  output:
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#benefit_adjusted_family_net_income: 45000
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#ccb_reduction_child_count: 1
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#ccb_maximum_annual_amount: 8157
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#ccb_annual_reduction: 473.41
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#canada_child_benefit_annual_amount: 7683.59
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#child_disability_benefit_phaseout_rate: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#child_disability_benefit_annual_amount: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#canada_carbon_rebate_annual_amount: 0
+
+- name: ccb_two_children_second_threshold_example
+  period:
+    period_kind: tax_year
+    start: '2026-07-01'
+    end: '2027-06-30'
+  input:
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.adjusted_family_net_income: 125000
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.ccb_children_under_6_count: 2
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.ccb_children_6_to_17_count: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.child_disability_benefit_eligible_child_count: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.cgeb_child_count: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.cgeb_has_spouse_or_common_law_partner: true
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.gst_hst_credit_top_up_child_count: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.gst_hst_credit_top_up_has_spouse_or_common_law_partner: true
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.january_2026_gst_hst_credit_payment: 0
+  output:
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#ccb_reduction_child_count: 2
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#ccb_maximum_annual_amount: 16314
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#ccb_annual_reduction: 8424.721
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#canada_child_benefit_annual_amount: 7889.279
+
+- name: cdb_two_children_and_cgeb_married_chart
+  period:
+    period_kind: tax_year
+    start: '2026-07-01'
+    end: '2027-06-30'
+  input:
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.adjusted_family_net_income: 60000
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.ccb_children_under_6_count: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.ccb_children_6_to_17_count: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.child_disability_benefit_eligible_child_count: 2
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.cgeb_child_count: 2
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.cgeb_has_spouse_or_common_law_partner: true
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.gst_hst_credit_top_up_child_count: 2
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.gst_hst_credit_top_up_has_spouse_or_common_law_partner: true
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.january_2026_gst_hst_credit_payment: 266.5
+  output:
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#child_disability_benefit_maximum_annual_amount: 6960
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#child_disability_benefit_phaseout_rate: 0.057
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#child_disability_benefit_annual_reduction: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#child_disability_benefit_annual_amount: 6960
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#cgeb_child_count_for_formula: 2
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#cgeb_base_annual_amount_before_reduction: 1358
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#cgeb_annual_reduction: 678.4
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#canada_groceries_and_essentials_benefit_annual_amount: 679.6
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#gst_hst_credit_top_up_child_count_for_formula: 2
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#one_time_gst_hst_credit_top_up_maximum_amount: 533
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#one_time_gst_hst_credit_top_up_amount_from_january_payment: 533
+
+- name: cgeb_single_no_child_phasein_and_reduction
+  period:
+    period_kind: tax_year
+    start: '2026-07-01'
+    end: '2027-06-30'
+  input:
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.adjusted_family_net_income: 50000
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.ccb_children_under_6_count: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.ccb_children_6_to_17_count: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.child_disability_benefit_eligible_child_count: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.cgeb_child_count: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.cgeb_has_spouse_or_common_law_partner: false
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.gst_hst_credit_top_up_child_count: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.gst_hst_credit_top_up_has_spouse_or_common_law_partner: false
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.january_2026_gst_hst_credit_payment: 100
+  output:
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#cgeb_child_count_for_formula: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#cgeb_base_annual_amount_before_reduction: 679
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#cgeb_annual_reduction: 178.4
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#canada_groceries_and_essentials_benefit_annual_amount: 500.6
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#one_time_gst_hst_credit_top_up_maximum_amount: 267
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#one_time_gst_hst_credit_top_up_amount_from_january_payment: 200
+
+- name: low_income_zero_reduction_branches
+  period:
+    period_kind: tax_year
+    start: '2026-07-01'
+    end: '2027-06-30'
+  input:
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.adjusted_family_net_income: 30000
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.ccb_children_under_6_count: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.ccb_children_6_to_17_count: 1
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.child_disability_benefit_eligible_child_count: 1
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.cgeb_child_count: 1
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.cgeb_has_spouse_or_common_law_partner: false
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.gst_hst_credit_top_up_child_count: 4
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.gst_hst_credit_top_up_has_spouse_or_common_law_partner: false
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#input.january_2026_gst_hst_credit_payment: 500
+  output:
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#ccb_annual_reduction: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#canada_child_benefit_annual_amount: 6883
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#child_disability_benefit_annual_reduction: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#child_disability_benefit_annual_amount: 3480
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#cgeb_annual_reduction: 0
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#canada_groceries_and_essentials_benefit_annual_amount: 1124
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#one_time_gst_hst_credit_top_up_maximum_amount: 717
+    ca:policies/cra/benefits-2026/federal-family-and-climate-benefits#one_time_gst_hst_credit_top_up_amount_from_january_payment: 717

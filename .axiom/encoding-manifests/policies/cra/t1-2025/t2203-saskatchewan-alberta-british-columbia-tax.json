@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/cra/t1-2025/t2203-saskatchewan-alberta-british-columbia-tax.test.yaml",
+      "sha256": "39fcfe27bdaf307b047c71c1e4a4917baccd73af48714dabe96a74366c3b23c1"
+    },
+    {
+      "path": "policies/cra/t1-2025/t2203-saskatchewan-alberta-british-columbia-tax.yaml",
+      "sha256": "15bcd1c9971578525f9259fc0be84edac67cf6a6b937ead01fa821a30f13aabd"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "a314fc624967b4e990beb7d9ffc429dae6e26642",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1152",
+    "version_commit": "a314fc624967b4e990beb7d9ffc429dae6e26642"
+  },
+  "axiom_encode_version": "0.2.1152",
+  "backend": "manual",
+  "citation": "ca:policies/cra/t1-2025/t2203-saskatchewan-alberta-british-columbia-tax",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-05T15:04:20.605121+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm/sign-applied-files/policies/cra/t1-2025/t2203-saskatchewan-alberta-british-columbia-tax.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
+  "generated_output_sha256": "15bcd1c9971578525f9259fc0be84edac67cf6a6b937ead01fa821a30f13aabd",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "3e2b52b69d2f8c612ca0a9c758d51bca3f203d211a9899ff79b806bc8d75f43f"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

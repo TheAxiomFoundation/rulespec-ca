@@ -1,0 +1,210 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form NU479 for 2025 calculates Nunavut refundable credits: cost of
+    living tax credit, single-parent supplement, political contribution tax
+    credit, and final Nunavut credits entered on T1 line 47900.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/nu479-credits
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: CRA Form NU479 is the official 2025 Nunavut credits calculation form.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5014-tc/5014-tc-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5014-tc/5014-tc-25e.pdf
+rules:
+  - name: nu479_2025_basic_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NU479 2025 line 7 gives the basic credit applicable rate as 2%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.02
+
+  - name: nu479_2025_basic_credit_cap
+    kind: parameter
+    dtype: Money
+    source: CRA NU479 2025 line 8 caps the basic credit at $1,500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1500
+
+  - name: nu479_2025_single_parent_supplement_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA NU479 2025 line 10 gives the single-parent supplement base amount as $60,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 60000
+
+  - name: nu479_2025_single_parent_supplement_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NU479 2025 line 12 gives the single-parent supplement applicable rate as 2%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.02
+
+  - name: nu479_2025_single_parent_supplement_cap
+    kind: parameter
+    dtype: Money
+    source: CRA NU479 2025 line 13 caps the cost of living supplement at $255.12
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 255.12
+
+  - name: nu479_2025_political_first_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA NU479 2025 political contribution chart gives the first contribution threshold as $100
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 100
+
+  - name: nu479_2025_political_cap_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA NU479 2025 political contribution chart gives the maximum credit if contributions are $900 or more
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 900
+
+  - name: nu479_2025_political_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NU479 2025 political contribution chart line 25 gives a 50% rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.50
+
+  - name: nu479_2025_political_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA NU479 2025 political contribution chart line 27 gives a $100 base credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 100
+
+  - name: nu479_2025_political_credit_cap
+    kind: parameter
+    dtype: Money
+    source: CRA NU479 2025 line 16 and political contribution chart cap the political contribution amount at $500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 500
+
+  - name: nu479_adjusted_net_income_before_treaty_line_3
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA NU479 2025 line 3 subtracts lines 24400 and 25000 from net income and floors the amount at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nu479_net_income_line_23600 - max(0, nu479_line_24400_and_25000_total))
+
+  - name: nu479_adjusted_net_income_line_5
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA NU479 2025 line 5 subtracts foreign income exempt under a tax treaty and floors the amount at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nu479_adjusted_net_income_before_treaty_line_3 - max(0, nu479_foreign_income_exempt_under_tax_treaty_line_62450))
+
+  - name: nu479_basic_credit_line_8
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA NU479 2025 line 8 multiplies adjusted net income by 2% and caps the basic credit at $1,500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(nu479_2025_basic_credit_cap, max(0, nu479_adjusted_net_income_line_5) * nu479_2025_basic_credit_rate)
+
+  - name: nu479_single_parent_supplement_income_excess_line_11
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA NU479 2025 line 11 subtracts the $60,000 base amount from adjusted net income and floors the amount at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nu479_adjusted_net_income_line_5 - nu479_2025_single_parent_supplement_threshold)
+
+  - name: nu479_cost_of_living_supplement_line_63940
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA NU479 2025 line 13 allows the supplement only for single parents and caps it at $255.12
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if not nu479_single_parent_at_any_time_in_2025:
+            0
+          else:
+            min(nu479_2025_single_parent_supplement_cap, nu479_single_parent_supplement_income_excess_line_11 * nu479_2025_single_parent_supplement_rate)
+
+  - name: nu479_total_cost_of_living_tax_credit_line_63990
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA NU479 2025 line 14 adds line 8 and line 13
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nu479_basic_credit_line_8 + nu479_cost_of_living_supplement_line_63940
+
+  - name: nu479_political_contribution_amount_line_16
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA NU479 2025 political contribution chart gives the line 16 amount, capped at $500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if nu479_political_contributions_line_63991 <= nu479_2025_political_first_threshold:
+            max(0, nu479_political_contributions_line_63991)
+          else:
+            if nu479_political_contributions_line_63991 >= nu479_2025_political_cap_threshold:
+              nu479_2025_political_credit_cap
+            else:
+              min(
+                nu479_2025_political_credit_cap,
+                (nu479_political_contributions_line_63991 - nu479_2025_political_first_threshold) * nu479_2025_political_rate + nu479_2025_political_base_credit
+              )
+
+  - name: nu479_tax_available_for_political_credit_line_19
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA NU479 2025 line 19 subtracts line 14 from line 66 of Form NU428 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nu428_line_66 - nu479_total_cost_of_living_tax_credit_line_63990)
+
+  - name: nu479_political_contribution_tax_credit_line_20
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA NU479 2025 line 20 enters the lesser of line 16 and line 19
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(nu479_political_contribution_amount_line_16, nu479_tax_available_for_political_credit_line_19)
+
+  - name: nunavut_credits_line_47900
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA NU479 2025 line 21 adds line 14 and line 20 and enters Nunavut credits on T1 line 47900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nu479_total_cost_of_living_tax_credit_line_63990 + nu479_political_contribution_tax_credit_line_20

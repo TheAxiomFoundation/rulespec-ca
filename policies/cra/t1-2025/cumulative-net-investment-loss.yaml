@@ -1,0 +1,259 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T936 for 2025 calculates cumulative net investment loss (CNIL)
+    to December 31, 2025. This module encodes Chart A, investment expense and
+    income totals, and the Part 3 CNIL amount reported to Form T657 Step 2.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/cumulative-net-investment-loss
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Form T936 is the official 2025 form for calculating CNIL for
+        capital gains deduction purposes.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t936/t936-25e.pdf
+rules:
+  - name: federal_2025_t936_chart_a_inclusion_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T936 2025 Chart A lines 10 and 18 apply a 50% inclusion rate, encoded as 0.50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.50
+
+  - name: federal_2025_t936_chart_a_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T936 2025 Chart A line 3 subtracts Form T2048 line 17215 from Schedule 3 line 19900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          schedule_3_line_19900
+          - max(0, t2048_line_17215)
+
+  - name: federal_2025_t936_chart_a_line_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T936 2025 Chart A line 7 adds Schedule 3 lines 10700, 11000, and 12400 and allows negative amounts in brackets
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          schedule_3_line_10700
+          + schedule_3_line_11000
+          + schedule_3_line_12400
+
+  - name: federal_2025_t936_chart_a_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T936 2025 Chart A line 9 adds line 7 and Form T2017 line 13 and allows negative amounts in brackets
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t936_chart_a_line_7
+          + t2017_line_13_reserves_qffp_qsbcs
+
+  - name: federal_2025_t936_chart_a_line_11
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T936 2025 Chart A line 11 multiplies line 9 by the 50% rate and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t936_chart_a_line_9
+            * federal_2025_t936_chart_a_inclusion_rate
+          )
+
+  - name: federal_2025_t936_chart_a_line_13
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T936 2025 Chart A line 13 subtracts Form T2048 line 17216 from line 11 and allows negative amounts in brackets
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t936_chart_a_line_11
+          - max(0, t2048_line_17216)
+
+  - name: t936_chart_a_line_14_non_eligible_taxable_capital_gains
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T936 2025 Chart A line 14 subtracts line 13 from line 3 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t936_chart_a_line_3
+            - federal_2025_t936_chart_a_line_13
+          )
+
+  - name: federal_2025_t936_chart_a_line_17
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T936 2025 Chart A line 17 subtracts T3 box 30 from T3 box 21
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          t3_box_21_capital_gains
+          - t3_box_30_capital_gains_eligible_for_deduction
+
+  - name: federal_2025_t936_chart_a_line_19
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T936 2025 Chart A line 19 multiplies line 17 by the 50% rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t936_chart_a_line_17
+          * federal_2025_t936_chart_a_inclusion_rate
+
+  - name: federal_2025_t936_chart_a_additional_investment_income_line_20
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T936 2025 Chart A line 20 subtracts line 19 from line 14 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            t936_chart_a_line_14_non_eligible_taxable_capital_gains
+            - federal_2025_t936_chart_a_line_19
+          )
+
+  - name: federal_2025_t936_additional_expenses_line_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T936 2025 Part 1 line 7 is zero if Chart A was not completed, otherwise the lesser of Chart A line 20 and return line 25300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t936_chart_a_completed:
+            min(
+              max(0, federal_2025_t936_chart_a_additional_investment_income_line_20),
+              max(0, t1_line_25300_net_capital_losses_of_other_years)
+            )
+          else:
+            0
+
+  - name: federal_2025_t936_total_investment_expenses_line_a
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T936 2025 Part 1 line A adds investment expense lines 1 to 7
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, carrying_charges_and_interest_expenses_line_22100)
+          + max(0, net_rental_losses_line_12600)
+          + max(0, limited_or_non_active_partnership_losses_line_12200)
+          + max(0, limited_partnership_losses_of_other_years_line_25100)
+          + max(0, exploration_and_development_expenses_half_line_22400)
+          + max(0, other_investment_expenses_line_68080)
+          + federal_2025_t936_additional_expenses_line_7
+
+  - name: federal_2025_t936_additional_income_line_13
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T936 2025 Part 2 line 13 is zero if Chart A was not completed, otherwise the amount from Chart A line 20
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t936_chart_a_completed:
+            max(0, federal_2025_t936_chart_a_additional_investment_income_line_20)
+          else:
+            0
+
+  - name: federal_2025_t936_total_investment_income_line_b
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T936 2025 Part 2 line B adds investment income lines 8 to 13
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, investment_income_lines_12000_and_12100)
+          + max(0, net_rental_income_line_12600)
+          + max(0, limited_or_non_active_partnership_income_line_12200)
+          + max(0, other_property_income_line_68100)
+          + max(0, recovery_of_exploration_and_development_expenses_half_line_68110)
+          + federal_2025_t936_additional_income_line_13
+
+  - name: federal_2025_t936_total_expenses_after_1987_line_16
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T936 2025 Part 3 line 16 adds current-year line 14 and previous-years line 15
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t936_total_investment_expenses_line_a
+          + max(0, t936_previous_years_total_investment_expenses_after_1987_line_15)
+
+  - name: federal_2025_t936_cumulative_investment_expenses_line_18
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T936 2025 Part 3 line 18 subtracts Form T2048 line 17218 from line 16
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t936_total_expenses_after_1987_line_16
+          - max(0, t2048_2024_to_2025_line_17218)
+
+  - name: federal_2025_t936_cumulative_investment_income_line_21
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T936 2025 Part 3 line 21 adds current-year line 19 and previous-years line 20
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t936_total_investment_income_line_b
+          + max(0, t936_previous_years_total_investment_income_after_1987_line_20)
+
+  - name: cumulative_net_investment_loss_t936_part_3_line_c
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T936 2025 Part 3 line C subtracts cumulative investment income line 21 from cumulative investment expenses line 18 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t936_cumulative_investment_expenses_line_18
+            - federal_2025_t936_cumulative_investment_income_line_21
+          )

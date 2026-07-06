@@ -1,0 +1,362 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form BC479 for 2025 calculates British Columbia refundable credits:
+    sales tax credit, home renovation credit, venture capital, mining
+    exploration, clean buildings, training, renter's tax credit, and final
+    British Columbia credits entered on T1 line 47900.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/bc479-credits
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Form BC479 is the official 2025 British Columbia refundable
+        credits form. This module encodes face-form arithmetic and caps while
+        treating supporting forms, certificates, eligibility declarations, and
+        certificate numbers as external facts.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5010-tc/5010-tc-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5010-tc/5010-tc-25e.pdf
+rules:
+  - name: bc479_2025_sales_tax_single_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA BC479 2025 line 7 uses $15,000 when the taxpayer did not have a spouse or common-law partner on December 31, 2025
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 15000
+
+  - name: bc479_2025_sales_tax_couple_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA BC479 2025 line 7 uses $18,000 when the taxpayer had a spouse or common-law partner on December 31, 2025
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 18000
+
+  - name: bc479_2025_sales_tax_basic_credit
+    kind: parameter
+    dtype: Money
+    source: CRA BC479 2025 line 9 basic sales tax credit is $75
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 75
+
+  - name: bc479_2025_sales_tax_spouse_credit
+    kind: parameter
+    dtype: Money
+    source: CRA BC479 2025 line 10 additional spouse or common-law partner sales tax credit is $75
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 75
+
+  - name: bc479_2025_sales_tax_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA BC479 2025 line 12 multiplies income for the sales tax credit by 2%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.02
+
+  - name: bc479_2025_home_renovation_expense_cap
+    kind: parameter
+    dtype: Money
+    source: CRA BC479 2025 line 14 caps Schedule BC(S12) home renovation expenses at $10,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 10000
+
+  - name: bc479_2025_home_renovation_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA BC479 2025 line 14 multiplies eligible home renovation expenses by 10%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.10
+
+  - name: bc479_2025_venture_capital_early_period_cap
+    kind: parameter
+    dtype: Money
+    source: CRA BC479 2025 line 20 caps the sum of unused venture capital credit and January 1 to March 3 certificate credit at $120,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 120000
+
+  - name: bc479_2025_venture_capital_total_cap
+    kind: parameter
+    dtype: Money
+    source: CRA BC479 2025 line 25 caps total allowable venture capital tax credit at $300,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 300000
+
+  - name: bc479_2025_renters_credit_max
+    kind: parameter
+    dtype: Money
+    source: CRA BC479 2025 line 38 gives the renter's tax credit maximum amount as $400
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 400
+
+  - name: bc479_2025_renters_credit_lower_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA BC479 2025 line 40 gives the renter's tax credit income threshold as $64,764
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 64764
+
+  - name: bc479_2025_renters_credit_upper_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA BC479 2025 says the renter's tax credit is zero when adjusted family net income is more than $84,764
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 84764
+
+  - name: bc479_2025_renters_credit_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA BC479 2025 line 42 gives the renter's tax credit applicable rate as 2%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.02
+
+  - name: bc479_self_adjusted_family_net_income_line_5
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 lines 1 to 5 add UCCB and RDSP repayments, subtract UCCB and RDSP income, and floor negative amounts at zero for the taxpayer
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            bc479_self_net_income_line_23600
+            + max(0, bc479_self_uccb_rdsp_repayments_line_2)
+            - max(0, bc479_self_uccb_rdsp_income_line_4)
+          )
+
+  - name: bc479_spouse_adjusted_family_net_income_line_5
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 lines 1 to 5 apply the adjusted family net income calculation to the spouse or common-law partner
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            bc479_spouse_net_income_line_23600
+            + max(0, bc479_spouse_uccb_rdsp_repayments_line_2)
+            - max(0, bc479_spouse_uccb_rdsp_income_line_4)
+          )
+
+  - name: bc479_adjusted_family_net_income_line_6
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 line 6 adds the taxpayer and spouse line 5 amounts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: bc479_self_adjusted_family_net_income_line_5 + bc479_spouse_adjusted_family_net_income_line_5
+
+  - name: bc479_sales_tax_credit_threshold_line_7
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 line 7 uses $18,000 with a spouse or common-law partner and $15,000 otherwise
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if bc479_had_spouse_or_common_law_partner_on_december_31:
+            bc479_2025_sales_tax_couple_threshold
+          else:
+            bc479_2025_sales_tax_single_threshold
+
+  - name: bc479_sales_tax_credit_income_line_8
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 line 8 subtracts line 7 from adjusted family net income and floors the amount at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, bc479_adjusted_family_net_income_line_6 - bc479_sales_tax_credit_threshold_line_7)
+
+  - name: bc479_basic_sales_tax_credit_line_60330
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 line 9 basic sales tax credit is $75
+    versions:
+      - effective_from: '2025-01-01'
+        formula: bc479_2025_sales_tax_basic_credit
+
+  - name: bc479_spouse_sales_tax_credit_line_60350
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 line 10 claims $75 for a spouse or common-law partner
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if bc479_had_spouse_or_common_law_partner_on_december_31:
+            bc479_2025_sales_tax_spouse_credit
+          else:
+            0
+
+  - name: bc479_sales_tax_credit_before_reduction_line_11
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 line 11 adds lines 9 and 10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: bc479_basic_sales_tax_credit_line_60330 + bc479_spouse_sales_tax_credit_line_60350
+
+  - name: bc479_sales_tax_credit_reduction_line_12
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 line 12 multiplies income for the sales tax credit by 2%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: bc479_sales_tax_credit_income_line_8 * bc479_2025_sales_tax_reduction_rate
+
+  - name: bc479_sales_tax_credit_line_13
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 line 13 subtracts line 12 from line 11 and floors the sales tax credit at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, bc479_sales_tax_credit_before_reduction_line_11 - bc479_sales_tax_credit_reduction_line_12)
+
+  - name: bc479_home_renovation_tax_credit_line_60480
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 line 14 caps Schedule BC(S12) expenses at $10,000 and multiplies by 10%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(bc479_2025_home_renovation_expense_cap, max(0, bc_s12_home_renovation_expenses_line_5)) * bc479_2025_home_renovation_rate
+
+  - name: bc479_credits_after_home_renovation_line_15
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 line 15 adds sales tax credit and home renovation tax credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: bc479_sales_tax_credit_line_13 + bc479_home_renovation_tax_credit_line_60480
+
+  - name: bc479_venture_capital_early_period_credit_line_20
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 line 20 adds unused venture capital credit and January 1 to March 3 certificate credit, capped at $120,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(bc479_2025_venture_capital_early_period_cap, max(0, bc479_unused_venture_capital_credit_line_17) + max(0, bc479_venture_capital_credit_jan1_mar3_line_60489))
+
+  - name: bc479_venture_capital_tax_credit_line_25
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 line 25 adds lines 20, 21, and 23 and caps total venture capital tax credit at $300,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(bc479_2025_venture_capital_total_cap, bc479_venture_capital_early_period_credit_line_20 + max(0, bc479_venture_capital_credit_mar4_dec31_line_60490) + max(0, bc479_venture_capital_credit_first_60_days_2026_line_60495))
+
+  - name: bc479_clean_buildings_total_credit_line_30
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 line 30 adds clean buildings tax credit line 28 and partnership credit line 29
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, bc479_clean_buildings_tax_credit_line_60545) + max(0, bc479_clean_buildings_partnership_credit_line_60546)
+
+  - name: bc479_training_tax_credit_total_line_34
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 line 34 adds training, employer training, and shipbuilding or ship repair tax credits
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, bc479_training_tax_credit_individuals_line_60550) + max(0, bc479_training_tax_credit_employers_line_60560) + max(0, bc479_shipbuilding_ship_repair_credit_line_60570)
+
+  - name: bc479_credits_before_renters_line_35
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 line 35 adds lines 16, 25, 26, 30, and 34
+    versions:
+      - effective_from: '2025-01-01'
+        formula: bc479_credits_after_home_renovation_line_15 + bc479_venture_capital_tax_credit_line_25 + max(0, bc479_mining_exploration_tax_credit_line_60510) + bc479_clean_buildings_total_credit_line_30 + bc479_training_tax_credit_total_line_34
+
+  - name: bc479_renters_credit_income_excess_line_41
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 line 41 subtracts the $64,764 threshold from adjusted family net income and floors the amount at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, bc479_adjusted_family_net_income_line_6 - bc479_2025_renters_credit_lower_threshold)
+
+  - name: bc479_renters_credit_reduction_line_43
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 line 43 multiplies income above the renter's tax credit threshold by 2%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: bc479_renters_credit_income_excess_line_41 * bc479_2025_renters_credit_reduction_rate
+
+  - name: bc479_renters_tax_credit_line_60576
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 line 44 gives the renter's tax credit as $400 below $64,764, phased out at 2%, and zero above $84,764 or if not eligible
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if not bc479_renters_tax_credit_eligible:
+            0
+          else:
+            if bc479_adjusted_family_net_income_line_6 > bc479_2025_renters_credit_upper_threshold:
+              0
+            else:
+              max(0, bc479_2025_renters_credit_max - bc479_renters_credit_reduction_line_43)
+
+  - name: british_columbia_credits_line_47900
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA BC479 2025 line 45 adds line 36 and line 44 and enters British Columbia credits on T1 line 47900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: bc479_credits_before_renters_line_35 + bc479_renters_tax_credit_line_60576

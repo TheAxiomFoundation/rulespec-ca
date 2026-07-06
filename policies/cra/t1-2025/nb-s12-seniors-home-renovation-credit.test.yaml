@@ -1,0 +1,26 @@
+- name: nb_s12_home_renovation_cap_and_other_claimants
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit#input.nb_s12_home_renovation_total_eligible_expenses_line_1: 15000
+    ca:policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit#input.nb_s12_government_assistance_line_2: 2000
+    ca:policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit#input.nb_s12_expenses_claimed_by_other_eligible_individuals_line_4: 3000
+  output:
+    ca:policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit#nb_s12_net_home_renovation_expenses_line_3: 10000
+    ca:policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit#nb_s12_home_renovation_expenses_line_60360: 7000
+    ca:policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit#new_brunswick_seniors_home_renovation_tax_credit_line_47900: 700
+
+- name: nb_s12_other_claimants_floor_credit
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit#input.nb_s12_home_renovation_total_eligible_expenses_line_1: 1000
+    ca:policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit#input.nb_s12_government_assistance_line_2: 0
+    ca:policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit#input.nb_s12_expenses_claimed_by_other_eligible_individuals_line_4: 2000
+  output:
+    ca:policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit#nb_s12_home_renovation_expenses_line_60360: 0
+    ca:policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit#new_brunswick_seniors_home_renovation_tax_credit_line_47900: 0

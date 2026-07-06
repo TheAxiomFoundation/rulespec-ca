@@ -1,0 +1,116 @@
+- name: t2203_allocates_income_surtax_abatement_and_summary
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.net_income_line_23600: 100000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.split_income_deduction_line_23200: 5000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.net_partnership_income_line_12200: 10000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.business_income_line_13500: 20000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.professional_income_line_13700: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.commission_income_line_13900: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.farming_income_line_14100: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.fishing_income_line_14300: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_resident_of_canada: true
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_quebec_business_income_allocated_column_2_line_52140: 20000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_quebec_excess_income_allocated_column_3_line_52140: 25000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_other_outside_canada_business_income_allocated_column_2_line_52220: 10000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_other_outside_canada_excess_income_allocated_column_3_line_52220: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_total_business_income_allocated_column_2: 30000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_total_income_allocated_all_jurisdictions_column_4: 100000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.basic_federal_tax_line_42900: 12000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.tax_on_split_income_t1206_line_22: 15000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_subject_to_minimum_tax: false
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t691_federal_surtax_on_income_allocated_outside_canada: 999
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t691_part_6_line_7_for_quebec_abatement: 888
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_newfoundland_and_labrador_tax_part_5_line_1: 100
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_prince_edward_island_tax_part_5_line_2: 200
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_nova_scotia_tax_part_5_line_3: 300
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_new_brunswick_tax_part_5_line_4: 400
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_ontario_tax_part_5_line_5: 500
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_manitoba_tax_part_5_line_6: 600
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_saskatchewan_tax_part_5_line_7: 700
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_alberta_tax_part_5_line_8: 800
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_british_columbia_tax_part_5_line_9: 900
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_yukon_tax_part_5_line_10: 1000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_northwest_territories_tax_part_5_line_11: 1100
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_nunavut_tax_part_5_line_12: 1200
+  output:
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_income_for_allocation_line_1: 105000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_business_income_line_2: 30000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_excess_income_line_3: 75000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_quebec_income_allocated_line_52140: 45000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_other_outside_canada_income_allocated_line_52220: 10000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_quebec_percentage_line_52140: 0.45
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_other_outside_canada_percentage_line_52220: 0.10
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_part_2_line_6: 15000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_surtax_base_line_8: 1500
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_surtax_on_income_allocated_outside_canada_t2203_line_10: 720
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_quebec_abatement_base_line_11: 15000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_quebec_abatement_line_13: 6750
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#refundable_quebec_abatement_line_44000: 1113.75
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#provincial_and_territorial_taxes_line_42800: 7800
+
+- name: t2203_resident_prorates_when_income_less_than_business_income
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.net_income_line_23600: 60000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.split_income_deduction_line_23200: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.net_partnership_income_line_12200: 40000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.business_income_line_13500: 40000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.professional_income_line_13700: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.commission_income_line_13900: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.farming_income_line_14100: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.fishing_income_line_14300: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_resident_of_canada: true
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_quebec_business_income_allocated_column_2_line_52140: 20000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_quebec_excess_income_allocated_column_3_line_52140: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_other_outside_canada_business_income_allocated_column_2_line_52220: 60000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_other_outside_canada_excess_income_allocated_column_3_line_52220: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_total_business_income_allocated_column_2: 80000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_total_income_allocated_all_jurisdictions_column_4: 60000
+  output:
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_excess_income_line_3: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_quebec_income_allocated_line_52140: 15000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_other_outside_canada_income_allocated_line_52220: 45000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_quebec_percentage_line_52140: 0.25
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_other_outside_canada_percentage_line_52220: 0.75
+
+- name: t2203_minimum_tax_uses_t691_overrides
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.net_income_line_23600: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.split_income_deduction_line_23200: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.net_partnership_income_line_12200: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.business_income_line_13500: 1000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.professional_income_line_13700: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.commission_income_line_13900: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.farming_income_line_14100: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.fishing_income_line_14300: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_resident_of_canada: true
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_quebec_business_income_allocated_column_2_line_52140: 1000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_quebec_excess_income_allocated_column_3_line_52140: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_other_outside_canada_business_income_allocated_column_2_line_52220: 1000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_other_outside_canada_excess_income_allocated_column_3_line_52220: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_total_business_income_allocated_column_2: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_total_income_allocated_all_jurisdictions_column_4: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.basic_federal_tax_line_42900: 5000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.tax_on_split_income_t1206_line_22: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t2203_subject_to_minimum_tax: true
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t691_federal_surtax_on_income_allocated_outside_canada: 777
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#input.t691_part_6_line_7_for_quebec_abatement: 9000
+  output:
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_quebec_income_allocated_line_52140: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_other_outside_canada_income_allocated_line_52220: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_quebec_percentage_line_52140: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_other_outside_canada_percentage_line_52220: 0
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_surtax_on_income_allocated_outside_canada_t2203_line_10: 777
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#federal_2025_t2203_quebec_abatement_base_line_11: 9000
+    ca:policies/cra/t1-2025/multiple-jurisdiction-taxes#refundable_quebec_abatement_line_44000: 0

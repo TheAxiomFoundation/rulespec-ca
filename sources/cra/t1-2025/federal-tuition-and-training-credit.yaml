@@ -1,0 +1,20 @@
+source:
+  id: cra-2025-federal-tuition-and-training-credit
+  citation_path: ca/policy/cra/t1-2025/federal-tuition-and-training-credit
+  title: CRA Schedule 11 2025 Federal Tuition Amount and Canada Training Credit
+  documents:
+    - title: Schedule 11 Federal Tuition Amount and Canada Training Credit 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s11/5000-s11-25e.pdf
+  coverage:
+    encoded:
+      - Canada training credit maximum and claimed amount
+      - Canadian and foreign tuition amount availability
+      - Prior-year unused federal tuition claimed in the year
+      - Federal tuition amount on line 32300
+      - Current-year tuition transfer cap and line 32700 transferred amount
+      - Unused federal tuition amount available to carry forward
+    not_encoded:
+      - Student and institution eligibility predicates
+      - Quebec and non-resident Schedule 11 variants
+      - Provincial and territorial S11 schedules
+      - Enrolment-information boxes used for other programs

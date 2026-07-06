@@ -1,0 +1,88 @@
+# Money-atom proof-obligation ratchet.
+#
+# Each count is the number of monetary values (currency parameters,
+# currency parameter-table cells, and currency literals in derived
+# formulas) that still lack a proof atom citing a provision.
+# `axiom-encode proof-validate --require-money-atoms` fails when the
+# untracked missing count exceeds `total_allowed`. Burn this down; do
+# not raise it. Regenerate with `--emit-ratchet`.
+total_allowed: 1175
+# Current per-file backlog (informational):
+#   policies/cra/benefits-2026/federal-family-and-climate-benefits.yaml: 17
+#   policies/cra/benefits-2026/provincial-territorial-cgeb-linked-credits.yaml: 27
+#   policies/cra/t1-2025/ab428-resident-tax.yaml: 26
+#   policies/cra/t1-2025/alternative-minimum-tax.yaml: 1
+#   policies/cra/t1-2025/bc428-resident-tax.yaml: 34
+#   policies/cra/t1-2025/bc479-credits.yaml: 10
+#   policies/cra/t1-2025/canada-workers-benefit.yaml: 43
+#   policies/cra/t1-2025/capital-gains-deduction.yaml: 3
+#   policies/cra/t1-2025/child-care-expenses-deduction.yaml: 3
+#   policies/cra/t1-2025/cpp-contributions-and-overpayment.yaml: 32
+#   policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents.yaml: 7
+#   policies/cra/t1-2025/employee-overpayment-ei-premiums.yaml: 4
+#   policies/cra/t1-2025/employment-insurance-premiums-self-employment.yaml: 3
+#   policies/cra/t1-2025/employment-expenses-deduction.yaml: 2
+#   policies/cra/t1-2025/federal-donations-and-gifts.yaml: 2
+#   policies/cra/t1-2025/federal-non-refundable-credit-aggregation.yaml: 3
+#   policies/cra/t1-2025/federal-other-refundable-credits.yaml: 2
+#   policies/cra/t1-2025/federal-spouse-and-dependant-amounts.yaml: 4
+#   policies/cra/t1-2025/federal-spouse-transfer-amounts.yaml: 2
+#   policies/cra/t1-2025/federal-tax-on-taxable-income.yaml: 8
+#   policies/cra/t1-2025/federal-tuition-and-training-credit.yaml: 2
+#   policies/cra/t1-2025/federal-worksheet-credits-and-repayments.yaml: 14
+#   policies/cra/t1-2025/fhsa-contributions-transfers-and-activities.yaml: 2
+#   policies/cra/t1-2025/joint-election-to-split-pension-income.yaml: 3
+#   policies/cra/t1-2025/mb428-resident-tax.yaml: 19
+#   policies/cra/t1-2025/mb479-credits.yaml: 17
+#   policies/cra/t1-2025/multigenerational-home-renovation-tax-credit.yaml: 2
+#   policies/cra/t1-2025/moving-expenses-deduction.yaml: 1
+#   policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit.yaml: 1
+#   policies/cra/t1-2025/nb428-resident-tax.yaml: 29
+#   policies/cra/t1-2025/nl428-resident-tax.yaml: 35
+#   policies/cra/t1-2025/nl479-credits.yaml: 1
+#   policies/cra/t1-2025/northern-residents-deductions.yaml: 5
+#   policies/cra/t1-2025/ns428-resident-tax.yaml: 28
+#   policies/cra/t1-2025/ns479-credits.yaml: 2
+#   policies/cra/t1-2025/nt428-resident-tax.yaml: 17
+#   policies/cra/t1-2025/nt479-credits.yaml: 7
+#   policies/cra/t1-2025/nu428-resident-tax.yaml: 16
+#   policies/cra/t1-2025/nu479-credits.yaml: 7
+#   policies/cra/t1-2025/on428-resident-tax.yaml: 31
+#   policies/cra/t1-2025/on479-credits.yaml: 15
+#   policies/cra/t1-2025/pe428-resident-tax.yaml: 32
+#   policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions.yaml: 4
+#   policies/cra/t1-2025/sk428-resident-tax.yaml: 22
+#   policies/cra/t1-2025/sk479-credits.yaml: 4
+#   policies/cra/t1-2025/t2203-nb-on-mb-part3-credits.yaml: 27
+#   policies/cra/t1-2025/t2203-newfoundland-pei-tax.yaml: 36
+#   policies/cra/t1-2025/t2203-nl-pe-ns-part3-credits.yaml: 25
+#   policies/cra/t1-2025/t2203-nova-scotia-new-brunswick-tax.yaml: 32
+#   policies/cra/t1-2025/t2203-ontario-manitoba-tax.yaml: 37
+#   policies/cra/t1-2025/t2203-saskatchewan-alberta-british-columbia-tax.yaml: 28
+#   policies/cra/t1-2025/t2203-sk-ab-bc-part3-credits.yaml: 27
+#   policies/cra/t1-2025/t2203-yt-nt-nu-part3-credits.yaml: 11
+#   policies/cra/t1-2025/t2203-yukon-northwest-territories-nunavut-tax.yaml: 17
+#   policies/cra/t1-2025/transport-employee-meals-lodging-deduction.yaml: 1
+#   policies/cra/t1-2025/yt428-resident-tax.yaml: 19
+#   policies/cra/t1-2025/yt479-credits.yaml: 4
+#   policies/cra/t4127-2026/claim-codes.yaml: 52
+#   policies/cra/t4127-2026/federal-income-tax.yaml: 10
+#   policies/cra/t4127-2026/federal-td1-personal-credits.yaml: 16
+#   policies/cra/t4127-2026/payroll-contributions.yaml: 17
+#   policies/cra/tax-rates-2026/provincial-territorial-income-tax.yaml: 85
+#   policies/cra/td1-2026/provincial-territorial-personal-credits.yaml: 72
+#   policies/esdc/benefits-2026/canada-disability-benefit.yaml: 6
+#   policies/revenu-quebec/source-deductions-2026/personal-credit-amounts.yaml: 17
+#   policies/revenu-quebec/tp1-2025/main-return.yaml: 14
+#   policies/revenu-quebec/tp1-2025/schedule-a-dependants.yaml: 2
+#   policies/revenu-quebec/tp1-2025/schedule-b-tax-relief.yaml: 11
+#   policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses.yaml: 11
+#   policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund.yaml: 5
+#   policies/revenu-quebec/tp1-2025/schedule-g-capital-gains-losses.yaml: 2
+#   policies/revenu-quebec/tp1-2025/schedule-h-caregivers.yaml: 5
+#   policies/revenu-quebec/tp1-2025/schedule-j-home-support-seniors.yaml: 8
+#   policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium.yaml: 14
+#   policies/revenu-quebec/tp1-2025/schedule-p-work-premium.yaml: 8
+#   policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium.yaml: 3
+#   policies/revenu-quebec/tp1-2025/schedule-s-student-transfer.yaml: 3
+#   policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees.yaml: 1

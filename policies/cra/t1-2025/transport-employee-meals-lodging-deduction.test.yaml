@@ -1,0 +1,43 @@
+- name: tl2_calculates_allowable_meals_lodging_and_line_22900
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#input.tl2_part_2a_meals_paid_line_1: 1000
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#input.tl2_part_2a_meals_non_taxable_allowance_line_2: 100
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#input.tl2_part_2b_meals_paid_line_4: 800
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#input.tl2_part_2b_meals_non_taxable_allowance_line_5: 100
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#input.tl2_part_2a_lodging_showers_paid_line_7: 300
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#input.tl2_part_2b_lodging_showers_paid_line_8: 500
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#input.tl2_lodging_non_taxable_allowance_line_10: 200
+  output:
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#federal_2025_tl2_part_2a_meals_net_of_allowances: 900
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#federal_2025_tl2_part_2a_allowable_meals_line_3: 450
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#federal_2025_tl2_part_2b_meals_net_of_allowances: 700
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#federal_2025_tl2_part_2b_allowable_meals_line_6: 560
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#federal_2025_tl2_lodging_total_line_9: 800
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#federal_2025_tl2_allowable_lodging_line_11: 600
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#transport_employee_meals_lodging_expenses_line_22900: 1610
+
+- name: tl2_floors_allowances_that_exceed_expenses
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#input.tl2_part_2a_meals_paid_line_1: 100
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#input.tl2_part_2a_meals_non_taxable_allowance_line_2: 200
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#input.tl2_part_2b_meals_paid_line_4: 50
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#input.tl2_part_2b_meals_non_taxable_allowance_line_5: 60
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#input.tl2_part_2a_lodging_showers_paid_line_7: 100
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#input.tl2_part_2b_lodging_showers_paid_line_8: 50
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#input.tl2_lodging_non_taxable_allowance_line_10: 300
+  output:
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#federal_2025_tl2_part_2a_meals_net_of_allowances: 0
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#federal_2025_tl2_part_2a_allowable_meals_line_3: 0
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#federal_2025_tl2_part_2b_meals_net_of_allowances: 0
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#federal_2025_tl2_part_2b_allowable_meals_line_6: 0
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#federal_2025_tl2_lodging_total_line_9: 150
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#federal_2025_tl2_allowable_lodging_line_11: 0
+    ca:policies/cra/t1-2025/transport-employee-meals-lodging-deduction#transport_employee_meals_lodging_expenses_line_22900: 0

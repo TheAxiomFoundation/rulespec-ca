@@ -1,0 +1,17 @@
+source:
+  id: cra-2025-t2203-saskatchewan-alberta-british-columbia-tax
+  citation_path: ca/policy/cra/t1-2025/t2203-saskatchewan-alberta-british-columbia-tax
+  title: CRA Form T2203 2025 SK428MJ, AB428MJ, and BC428MJ Multiple-Jurisdiction Tax
+  documents:
+    - title: Form T2203 Provincial and Territorial Taxes for Multiple Jurisdictions 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t2203/t2203-25e.pdf
+  coverage:
+    encoded:
+      - SK428MJ bracket tax, allocation, resident adjustment, selected credits, and Part 5 line 7
+      - AB428MJ bracket tax, allocation, resident adjustment, selected credits, and Part 5 line 8
+      - BC428MJ bracket tax, allocation, resident adjustment, tax reduction, selected credits, and Part 5 line 9
+    not_encoded:
+      - SK, AB, and BC Part 3 non-refundable credit worksheet calculations
+      - Detailed political contribution worksheet calculations
+      - SK, AB, and BC S2/S11 transfer and tuition schedules
+      - Detailed certificate eligibility predicates

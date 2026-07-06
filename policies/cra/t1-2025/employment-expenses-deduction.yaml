@@ -1,0 +1,619 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T777 for 2025 calculates employment expenses entered on
+    line 22900 of the T1 return. This module encodes the form arithmetic
+    for motor vehicle expenses, labour mobility, work-space-in-the-home
+    expenses, capital cost allowance schedule spines, and the final line
+    22900 deduction.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/employment-expenses-deduction
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Form T777 is the official 2025 T1 form for calculating
+        employment expenses deducted on line 22900.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t777/t777-25e.pdf
+      - https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/t4044/employment-expenses.html
+rules:
+  - name: federal_2025_employment_expenses_meal_entertainment_rate
+    kind: parameter
+    dtype: Number
+    source: CRA T777 2025 line 4 multiplies food, beverages, and entertainment expenses by 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.50
+
+  - name: federal_2025_employment_expenses_tradesperson_tools_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T777 2025 line 9 caps tradesperson's tools expenses at 1000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1000
+
+  - name: federal_2025_labour_mobility_income_rate
+    kind: parameter
+    dtype: Number
+    source: CRA T777 2025 line 38 multiplies eligible tradesperson employment income by 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.50
+
+  - name: federal_2025_labour_mobility_deduction_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T777 2025 lines 39 and 41 cap the labour mobility deduction at 4000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 4000
+
+  - name: federal_2025_employment_cca_class_8_rate
+    kind: parameter
+    dtype: Number
+    source: CRA T777 2025 Part A gives the Class 8 CCA rate as 20%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.20
+
+  - name: federal_2025_employment_cca_class_10_rate
+    kind: parameter
+    dtype: Number
+    source: CRA T777 2025 Part A gives the Class 10 CCA rate as 30%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.30
+
+  - name: federal_2025_employment_cca_class_54_rate
+    kind: parameter
+    dtype: Number
+    source: CRA T777 2025 Part A gives the Class 54 CCA rate as 30%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.30
+
+  - name: federal_2025_employment_cca_class_55_rate
+    kind: parameter
+    dtype: Number
+    source: CRA T777 2025 Part A gives the Class 55 CCA rate as 40%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.40
+
+  - name: federal_2025_employment_cca_class_10_1_rate
+    kind: parameter
+    dtype: Number
+    source: CRA T777 2025 Part B gives the Class 10.1 CCA rate as 30%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.30
+
+  - name: federal_2025_employment_cca_aiip_zev_pre_2025_class_54_factor
+    kind: parameter
+    dtype: Number
+    source: CRA T777 2025 Part A note 8 gives the Class 54 AIIP/ZEV factor as 1 1/2
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1.5
+
+  - name: federal_2025_employment_cca_aiip_zev_pre_2025_class_55_factor
+    kind: parameter
+    dtype: Number
+    source: CRA T777 2025 Part A note 8 gives the Class 55 AIIP/ZEV factor as 7/8
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.875
+
+  - name: federal_2025_employment_cca_riip_zev_after_2024_class_54_factor
+    kind: parameter
+    dtype: Number
+    source: CRA T777 2025 Part A note 9 gives the Class 54 RIIP/ZEV factor as 2 1/3
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2.3333333333
+
+  - name: federal_2025_employment_cca_riip_zev_after_2024_class_55_factor
+    kind: parameter
+    dtype: Number
+    source: CRA T777 2025 Part A note 9 gives the Class 55 RIIP/ZEV factor as 1 1/2
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1.5
+
+  - name: federal_2025_employment_cca_riip_after_2024_class_8_10_factor
+    kind: parameter
+    dtype: Number
+    source: CRA T777 2025 Part A note 9 gives the Class 8 and 10 RIIP factor as 1/2
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.50
+
+  - name: federal_2025_employment_meal_entertainment_expenses_line_4
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 line 4 multiplies food, beverages, and entertainment expenses by 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, employment_food_beverage_entertainment_expenses_line_8523)
+          * federal_2025_employment_expenses_meal_entertainment_rate
+
+  - name: federal_2025_employment_vehicle_use_fraction_line_20
+    kind: derived
+    entity: Person
+    dtype: Number
+    period: Year
+    source: CRA T777 2025 line 20 divides employment kilometres by total kilometres
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if employment_vehicle_total_kilometres_line_19 > 0:
+            max(0, employment_vehicle_employment_kilometres_line_18)
+            / employment_vehicle_total_kilometres_line_19
+          else:
+            0
+
+  - name: federal_2025_employment_vehicle_total_expenses_line_29
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 line 29 adds motor vehicle expense lines 21 through 28
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, employment_vehicle_fuel_electricity_line_21)
+          + max(0, employment_vehicle_maintenance_repairs_line_22)
+          + max(0, employment_vehicle_insurance_line_23)
+          + max(0, employment_vehicle_licence_registration_line_24)
+          + max(0, employment_vehicle_capital_cost_allowance_line_25)
+          + max(0, employment_vehicle_interest_expense_line_26)
+          + max(0, employment_vehicle_leasing_costs_line_27)
+          + max(0, employment_vehicle_other_expenses_line_28)
+
+  - name: federal_2025_employment_vehicle_employment_use_portion_line_30
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 line 30 multiplies line 20 by line 29
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_employment_vehicle_use_fraction_line_20
+          * federal_2025_employment_vehicle_total_expenses_line_29
+
+  - name: federal_2025_employment_vehicle_allowable_expenses_line_32
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 line 32 subtracts non-income motor vehicle rebates, allowances, and reimbursements from line 30
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_employment_vehicle_employment_use_portion_line_30
+            - max(0, employment_vehicle_non_income_rebates_allowances_reimbursements_line_31)
+          )
+
+  - name: federal_2025_labour_mobility_total_relocation_expenses_line_37
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 line 37 adds eligible temporary relocation expenses on lines 33 through 36
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, labour_mobility_current_year_eligible_expenses_line_33)
+          + max(0, labour_mobility_prior_year_carryforward_line_34)
+          + max(0, labour_mobility_transportation_expenses_line_35)
+          + max(0, labour_mobility_meal_expenses_line_36)
+          + max(0, labour_mobility_temporary_lodging_expenses_line_36)
+
+  - name: federal_2025_labour_mobility_income_limit_line_38
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 line 38 multiplies eligible tradesperson employment income by 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, labour_mobility_eligible_tradesperson_income_line_38)
+          * federal_2025_labour_mobility_income_rate
+
+  - name: federal_2025_labour_mobility_current_relocation_deduction_line_39
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 line 39 is the least of line 37, line 38, the amount claimed for the relocation, and 4000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_labour_mobility_total_relocation_expenses_line_37,
+            max(0, federal_2025_labour_mobility_income_limit_line_38),
+            max(0, labour_mobility_amount_claimed_for_relocation_line_39),
+            federal_2025_labour_mobility_deduction_cap
+          )
+
+  - name: federal_2025_labour_mobility_unused_relocation_expenses_line_40
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 line 40 subtracts line 39 from line 37
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_labour_mobility_total_relocation_expenses_line_37
+            - federal_2025_labour_mobility_current_relocation_deduction_line_39
+          )
+
+  - name: federal_2025_labour_mobility_total_deduction_line_41
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 line 41 adds line 39 amounts for all relocations and caps the total at 4000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_labour_mobility_deduction_cap,
+            federal_2025_labour_mobility_current_relocation_deduction_line_39
+            + max(0, labour_mobility_other_relocations_deduction_line_39)
+          )
+
+  - name: federal_2025_workspace_total_expenses_line_47
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 line 47 adds work-space-in-the-home expense lines 42 through 46
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, workspace_electricity_heat_water_internet_line_42)
+          + max(0, workspace_maintenance_line_43)
+          + max(0, workspace_home_insurance_commission_line_44)
+          + max(0, workspace_property_taxes_commission_line_45)
+          + max(0, workspace_other_expenses_rent_line_46)
+
+  - name: federal_2025_workspace_available_expenses_line_50
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 line 50 adds current employment-use amount and prior-year carryforward
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, workspace_employment_use_amount_line_48)
+          + max(0, workspace_prior_year_carryforward_line_49)
+
+  - name: federal_2025_workspace_income_limit_deductions_line_52
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 line 52 enters line 15 and lines 20700 and 21200 amounts that relate to employment income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_employment_expenses_subtotal_line_15
+          + max(0, employment_related_rpp_deduction_line_20700)
+          + max(0, employment_related_annual_union_professional_dues_line_21200)
+
+  - name: federal_2025_workspace_income_limit_line_53
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 line 53 subtracts line 52 from employment income and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, workspace_employment_income_line_51)
+            - federal_2025_workspace_income_limit_deductions_line_52
+          )
+
+  - name: federal_2025_workspace_expenses_claim_line_54
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 line 54 is the lesser of line 50 and line 53
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_workspace_available_expenses_line_50,
+            federal_2025_workspace_income_limit_line_53
+          )
+
+  - name: federal_2025_workspace_expenses_carryforward_line_55
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 line 55 subtracts line 53 from line 50 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_workspace_available_expenses_line_50
+            - federal_2025_workspace_income_limit_line_53
+          )
+
+  - name: federal_2025_employment_cca_part_a_ucc_after_additions_dispositions_column_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 Part A column 7 adds UCC and additions then subtracts proceeds of dispositions
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, employment_cca_part_a_ucc_start_column_2)
+          + max(0, employment_cca_part_a_additions_column_3)
+          - max(0, employment_cca_part_a_disposition_proceeds_column_6)
+
+  - name: federal_2025_employment_cca_part_a_proceeds_reduce_aiip_riip_zev_column_8
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 Part A column 8 subtracts additions from disposition proceeds and adds AIIP, RIIP, and ZEV additions
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, employment_cca_part_a_disposition_proceeds_column_6)
+            - max(0, employment_cca_part_a_additions_column_3)
+            + max(0, employment_cca_part_a_aiip_zev_pre_2025_additions_column_4)
+            + max(0, employment_cca_part_a_riip_zev_after_2024_additions_column_5)
+          )
+
+  - name: federal_2025_employment_cca_part_a_aiip_zev_adjustment_column_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 Part A column 9 applies the relevant factor to AIIP and ZEV additions after column 8 reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, employment_cca_part_a_aiip_zev_pre_2025_additions_column_4)
+            - federal_2025_employment_cca_part_a_proceeds_reduce_aiip_riip_zev_column_8
+          )
+          * max(0, employment_cca_part_a_aiip_zev_pre_2025_relevant_factor)
+
+  - name: federal_2025_employment_cca_part_a_proceeds_reduce_riip_zev_column_10
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 Part A column 10 subtracts column 4 from column 8 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_employment_cca_part_a_proceeds_reduce_aiip_riip_zev_column_8
+            - max(0, employment_cca_part_a_aiip_zev_pre_2025_additions_column_4)
+          )
+
+  - name: federal_2025_employment_cca_part_a_riip_zev_adjustment_column_11
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 Part A column 11 applies the relevant factor to RIIP and ZEV additions after column 10 reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, employment_cca_part_a_riip_zev_after_2024_additions_column_5)
+            - federal_2025_employment_cca_part_a_proceeds_reduce_riip_zev_column_10
+          )
+          * max(0, employment_cca_part_a_riip_zev_after_2024_relevant_factor)
+
+  - name: federal_2025_employment_cca_part_a_half_year_adjustment_column_12
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 Part A column 12 subtracts columns 4, 5, and 6 from column 3, divides by 2, and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            (
+              max(0, employment_cca_part_a_additions_column_3)
+              - max(0, employment_cca_part_a_aiip_zev_pre_2025_additions_column_4)
+              - max(0, employment_cca_part_a_riip_zev_after_2024_additions_column_5)
+              - max(0, employment_cca_part_a_disposition_proceeds_column_6)
+            ) / 2
+          )
+
+  - name: federal_2025_employment_cca_part_a_base_amount_column_13
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 Part A column 13 adds columns 7, 9, and 11, then subtracts column 12
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_employment_cca_part_a_ucc_after_additions_dispositions_column_7
+          + federal_2025_employment_cca_part_a_aiip_zev_adjustment_column_9
+          + federal_2025_employment_cca_part_a_riip_zev_adjustment_column_11
+          - federal_2025_employment_cca_part_a_half_year_adjustment_column_12
+
+  - name: federal_2025_employment_cca_part_a_maximum_column_15
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 Part A column 15 multiplies column 13 by the applicable CCA rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_2025_employment_cca_part_a_base_amount_column_13)
+          * max(0, employment_cca_part_a_rate_column_14)
+
+  - name: federal_2025_employment_cca_part_a_claim_column_15
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 Part A column 15 allows the calculated CCA amount or a lower amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_employment_cca_part_a_maximum_column_15,
+            max(0, employment_cca_part_a_claimed_amount_column_15)
+          )
+
+  - name: federal_2025_employment_cca_part_a_ucc_end_column_16
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 Part A column 16 subtracts column 15 from column 7
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_employment_cca_part_a_ucc_after_additions_dispositions_column_7
+            - federal_2025_employment_cca_part_a_claim_column_15
+          )
+
+  - name: federal_2025_employment_cca_class_10_1_base_column_5
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 Part B note 11 determines the Class 10.1 base amount in column 5
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if employment_cca_class_10_1_bought_and_sold_current_year:
+            0
+          else:
+            max(0, employment_cca_class_10_1_base_amount_column_5)
+
+  - name: federal_2025_employment_cca_class_10_1_maximum_column_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 Part B column 7 multiplies column 5 by the 30% Class 10.1 rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_employment_cca_class_10_1_base_column_5
+          * federal_2025_employment_cca_class_10_1_rate
+
+  - name: federal_2025_employment_cca_class_10_1_claim_column_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 Part B column 7 allows the calculated CCA amount or a lower amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_employment_cca_class_10_1_maximum_column_7,
+            max(0, employment_cca_class_10_1_claimed_amount_column_7)
+          )
+
+  - name: federal_2025_employment_cca_class_10_1_ucc_end_column_8
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 Part B column 8 subtracts column 7 from column 2 or column 3, and is zero when the vehicle is sold or traded
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if employment_cca_class_10_1_sold_or_traded_current_year:
+            0
+          else:
+            max(
+              0,
+              max(0, employment_cca_class_10_1_ucc_end_base_amount)
+              - federal_2025_employment_cca_class_10_1_claim_column_7
+            )
+
+  - name: federal_2025_employment_expenses_subtotal_line_15
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 line 15 adds employment expense lines 1 through 14
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, employment_accounting_legal_fees_line_8862)
+          + max(0, employment_advertising_promotion_line_8520)
+          + federal_2025_employment_vehicle_allowable_expenses_line_32
+          + federal_2025_employment_meal_entertainment_expenses_line_4
+          + max(0, employment_lodging_line_9200)
+          + max(0, employment_parking_line_8910)
+          + max(0, employment_office_supplies_line_8810)
+          + max(0, employment_other_expenses_line_9270)
+          + min(
+            max(0, employment_tradesperson_tools_expenses_line_1770),
+            federal_2025_employment_expenses_tradesperson_tools_cap
+          )
+          + max(0, employment_apprentice_mechanic_tools_expenses_line_9131)
+          + federal_2025_labour_mobility_total_deduction_line_41
+          + max(0, employment_musical_instrument_expenses_line_1776)
+          + max(0, employment_musical_instrument_cca_line_1777)
+          + max(0, employment_artists_employment_expenses_line_9973)
+
+  - name: federal_2025_employment_expenses_workspace_line_16
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 line 16 enters work-space-in-the-home expenses from line 54
+    versions:
+      - effective_from: '2025-01-01'
+        formula: federal_2025_workspace_expenses_claim_line_54
+
+  - name: employment_expenses_deduction_line_22900
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T777 2025 line 17 adds line 15 and line 16 and enters the total on T1 line 22900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_employment_expenses_subtotal_line_15
+          + federal_2025_employment_expenses_workspace_line_16

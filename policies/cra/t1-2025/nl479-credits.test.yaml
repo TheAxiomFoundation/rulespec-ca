@@ -1,0 +1,30 @@
+- name: nl479_physical_activity_cap_and_rd
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/nl479-credits#input.nl479_physical_activity_total_eligible_expenses_line_1: 3000
+    ca:policies/cra/t1-2025/nl479-credits#input.nl479_physical_activity_assistance_line_2: 500
+    ca:policies/cra/t1-2025/nl479-credits#input.nl479_physical_activity_amount_claimed_by_other_individuals_line_4: 300
+    ca:policies/cra/t1-2025/nl479-credits#input.nl479_research_and_development_tax_credit_t1129_line_6: 100
+  output:
+    ca:policies/cra/t1-2025/nl479-credits#nl479_physical_activity_net_expenses_line_3: 2000
+    ca:policies/cra/t1-2025/nl479-credits#nl479_physical_activity_expenses_line_62000: 1700
+    ca:policies/cra/t1-2025/nl479-credits#nl479_physical_activity_tax_credit_line_7: 295.8
+    ca:policies/cra/t1-2025/nl479-credits#newfoundland_and_labrador_credits_line_47900: 395.8
+
+- name: nl479_other_claimants_floor_physical_activity
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/nl479-credits#input.nl479_physical_activity_total_eligible_expenses_line_1: 500
+    ca:policies/cra/t1-2025/nl479-credits#input.nl479_physical_activity_assistance_line_2: 100
+    ca:policies/cra/t1-2025/nl479-credits#input.nl479_physical_activity_amount_claimed_by_other_individuals_line_4: 1000
+    ca:policies/cra/t1-2025/nl479-credits#input.nl479_research_and_development_tax_credit_t1129_line_6: 0
+  output:
+    ca:policies/cra/t1-2025/nl479-credits#nl479_physical_activity_expenses_line_62000: 0
+    ca:policies/cra/t1-2025/nl479-credits#nl479_physical_activity_tax_credit_line_7: 0
+    ca:policies/cra/t1-2025/nl479-credits#newfoundland_and_labrador_credits_line_47900: 0

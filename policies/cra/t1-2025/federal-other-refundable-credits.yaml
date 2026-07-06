@@ -1,0 +1,122 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA 2025 T1 line guidance calculates selected federal credit and
+    refundable-credit lines that are not handled by a dedicated schedule
+    module: the labour-sponsored funds tax credit, the employee and
+    partner GST/HST rebate claim, and the eligible educator school supply
+    tax credit.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/federal-other-refundable-credits
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA line guidance and Form GST370 are the official T1 filing
+        sources for these line calculations. This module encodes the
+        published arithmetic while leaving professional eligibility,
+        share eligibility, expense eligibility, registration, and
+        documentation predicates to deeper fact layers.
+    source_urls:
+      - https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/lines-413-414-labour-sponsored-funds-tax-credit.html
+      - https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/line-45700-employee-partner-gst-hst-rebate.html
+      - https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/lines-46800-46900-eligible-educator-school-supply-tax-credit.html
+rules:
+  - name: federal_2025_lsvcc_net_cost_limit
+    kind: parameter
+    dtype: Money
+    source: CRA lines 41300 and 41400 for 2025 limit the LSVCC calculation to the lesser of $5,000 and net cost
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          5000
+
+  - name: federal_2025_lsvcc_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA lines 41300 and 41400 for 2025 apply a 15% federal LSVCC credit rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.15
+
+  - name: federal_2025_educator_supply_expense_limit
+    kind: parameter
+    dtype: Money
+    source: CRA line 46900 for 2025 allows up to $1,000 of eligible supplies expenses
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          1000
+
+  - name: federal_2025_educator_supply_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA line 46900 for 2025 multiplies eligible supplies expenses by 25%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.25
+
+  - name: federal_2025_lsvcc_net_cost_line_41300
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA lines 41300 and 41400 use the net cost of labour-sponsored venture capital corporation shares reported on line 41300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, labour_sponsored_venture_capital_net_cost_line_41300)
+
+  - name: labour_sponsored_funds_tax_credit_line_41400
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA lines 41300 and 41400 for 2025 calculate the credit as 15% of the lesser of $5,000 and net cost
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_lsvcc_net_cost_line_41300,
+            federal_2025_lsvcc_net_cost_limit
+          ) * federal_2025_lsvcc_credit_rate
+
+  - name: employee_and_partner_gst_hst_rebate_line_45700
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA line 45700 directs taxpayers to claim the rebate calculated on Form GST370
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, gst370_total_employee_and_partner_rebate_line_15)
+
+  - name: federal_2025_eligible_educator_supplies_line_46800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA line 46900 for 2025 directs eligible educators to enter eligible supplies expenses on line 46800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            max(0, eligible_educator_school_supply_expenses_line_46800),
+            federal_2025_educator_supply_expense_limit
+          )
+
+  - name: eligible_educator_school_supply_tax_credit_line_46900
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA line 46900 for 2025 multiplies the eligible amount on line 46800 by 25%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_eligible_educator_supplies_line_46800
+          * federal_2025_educator_supply_credit_rate

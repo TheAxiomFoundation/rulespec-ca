@@ -1,0 +1,227 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Quebec Schedule J 2025 tax credit for home-support services
+    for seniors: rent/condominium/residence/service costs, guide line 75
+    annual expense limits, family income, and TP-1 line 458 credit.
+  source_verification:
+    corpus_citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-j-home-support-seniors
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+      rationale: Revenu Quebec Schedule J and the TP-1 guide are the official 2025 sources for the home-support services for seniors tax credit.
+    source_urls:
+      - https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.J-V%282025-12%29.pdf
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.G-V%282025-12%29.pdf
+rules:
+  - name: quebec_2025_schedule_j_rent_minimum
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule J 2025 line 30 gives the monthly rent minimum as $600
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 600
+
+  - name: quebec_2025_schedule_j_rent_maximum
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule J 2025 line 30 gives the monthly rent maximum as $1,200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1200
+
+  - name: quebec_2025_schedule_j_rent_service_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule J 2025 line 31 multiplies monthly rent by 5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.05
+
+  - name: quebec_2025_schedule_j_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule J 2025 line 88 multiplies eligible costs by 39%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.39
+
+  - name: quebec_2025_schedule_j_reduction_income_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule J 2025 line 89 requires Work Chart 458 if family income is over $71,010
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 71010
+
+  - name: quebec_2025_schedule_j_single_non_dependent_expense_limit
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec TP-1 guide line 458 table gives the line 75 annual expense limit for a single non-dependent senior as $19,500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 19500
+
+  - name: quebec_2025_schedule_j_couple_non_dependent_expense_limit
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec TP-1 guide line 458 table gives the line 75 annual expense limit for a couple of non-dependent seniors as $39,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 39000
+
+  - name: quebec_2025_schedule_j_single_dependent_expense_limit
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec TP-1 guide line 458 table gives the line 75 annual expense limit for a single dependent senior as $25,500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 25500
+
+  - name: quebec_2025_schedule_j_couple_one_dependent_expense_limit
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec TP-1 guide line 458 table gives the line 75 annual expense limit for a couple with one dependent senior and one non-dependent senior as $45,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 45000
+
+  - name: quebec_2025_schedule_j_couple_dependent_expense_limit
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec TP-1 guide line 458 table gives the line 75 annual expense limit for a couple of dependent seniors as $51,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 51000
+
+  - name: schedule_j_private_seniors_residence_services_line_24
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule J 2025 line 24 adds lines 22 and 23 from form TP-1029.61.MD-V
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_j_tp1029_61_md_line_22) + max(0, schedule_j_tp1029_61_md_line_23)
+
+  - name: schedule_j_rent_services_column_1_line_33
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule J 2025 lines 30 to 33 calculate 5% of monthly rent, minimum $600 and maximum $1,200, times months paid
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(quebec_2025_schedule_j_rent_maximum, max(quebec_2025_schedule_j_rent_minimum, schedule_j_monthly_rent_column_1_line_30)) * quebec_2025_schedule_j_rent_service_rate * max(0, schedule_j_months_paid_rent_column_1_line_32)
+
+  - name: schedule_j_rent_services_column_2_line_33
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule J 2025 lines 30 to 33 calculate 5% of monthly rent, minimum $600 and maximum $1,200, times months paid for a second rent period
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(quebec_2025_schedule_j_rent_maximum, max(quebec_2025_schedule_j_rent_minimum, schedule_j_monthly_rent_column_2_line_30)) * quebec_2025_schedule_j_rent_service_rate * max(0, schedule_j_months_paid_rent_column_2_line_32)
+
+  - name: schedule_j_rent_services_total_line_34
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule J 2025 line 34 adds the two line 33 rent service amounts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_j_rent_services_column_1_line_33 + schedule_j_rent_services_column_2_line_33
+
+  - name: schedule_j_direct_home_support_services_line_74
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule J 2025 line 74 adds eligible direct home-support service costs on lines 50 through 56
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_j_housekeeping_ground_snow_services_line_50) + max(0, schedule_j_personal_care_meals_services_line_52) + max(0, schedule_j_nursing_services_line_54) + max(0, schedule_j_other_eligible_services_line_56)
+
+  - name: schedule_j_raw_home_support_services_cost_line_75
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule J 2025 line 75 adds lines 24, 34, 36 and 74 before applying the guide's annual expense limit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_j_private_seniors_residence_services_line_24 + schedule_j_rent_services_total_line_34 + max(0, schedule_j_condominium_services_line_36) + schedule_j_direct_home_support_services_line_74
+
+  - name: schedule_j_annual_expense_limit_line_75
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec TP-1 guide line 458 table gives the annual expense limit by dependent-senior family situation for Schedule J line 75
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_j_claiming_for_couple:
+            if schedule_j_self_dependent_senior:
+              if schedule_j_spouse_dependent_senior:
+                quebec_2025_schedule_j_couple_dependent_expense_limit
+              else:
+                quebec_2025_schedule_j_couple_one_dependent_expense_limit
+            else:
+              if schedule_j_spouse_dependent_senior:
+                quebec_2025_schedule_j_couple_one_dependent_expense_limit
+              else:
+                quebec_2025_schedule_j_couple_non_dependent_expense_limit
+          else:
+            if schedule_j_self_dependent_senior:
+              quebec_2025_schedule_j_single_dependent_expense_limit
+            else:
+              quebec_2025_schedule_j_single_non_dependent_expense_limit
+
+  - name: schedule_j_home_support_services_cost_line_75
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule J 2025 line 75 carries the home-support services cost after the maximum from the TP-1 guide
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(schedule_j_raw_home_support_services_cost_line_75, schedule_j_annual_expense_limit_line_75)
+
+  - name: schedule_j_family_income_line_82
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule J 2025 line 82 adds the taxpayer's and spouse's line 275 net income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_j_self_net_income_line_275) + max(0, schedule_j_spouse_net_income_line_275)
+
+  - name: schedule_j_credit_before_reduction_line_88
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule J 2025 line 88 multiplies line 87 by 39%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_j_home_support_services_cost_line_75 * quebec_2025_schedule_j_credit_rate
+
+  - name: schedule_j_tax_credit_home_support_seniors_line_458
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule J 2025 line 90 subtracts the Work Chart 458 reduction on line 89 from line 88 and floors the result at zero for TP-1 line 458
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_j_family_income_line_82 > quebec_2025_schedule_j_reduction_income_threshold:
+            max(0, schedule_j_credit_before_reduction_line_88 - max(0, schedule_j_work_chart_458_reduction_line_89))
+          else:
+            schedule_j_credit_before_reduction_line_88

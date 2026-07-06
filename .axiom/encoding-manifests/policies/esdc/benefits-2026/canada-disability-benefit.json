@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/esdc/benefits-2026/canada-disability-benefit.test.yaml",
+      "sha256": "a0b024f2e45cf8e5c73c3b8aed86d147910ca970365b5c81f8ba4926091b289f"
+    },
+    {
+      "path": "policies/esdc/benefits-2026/canada-disability-benefit.yaml",
+      "sha256": "4746d37b329b433978768ba098a0f874dd122c15ec970c650caaf4b87647ac14"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "a314fc624967b4e990beb7d9ffc429dae6e26642",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1152",
+    "version_commit": "a314fc624967b4e990beb7d9ffc429dae6e26642"
+  },
+  "axiom_encode_version": "0.2.1152",
+  "backend": "manual",
+  "citation": "ca:policies/esdc/benefits-2026/canada-disability-benefit",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-05T15:04:20.621885+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm/sign-applied-files/policies/esdc/benefits-2026/canada-disability-benefit.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
+  "generated_output_sha256": "4746d37b329b433978768ba098a0f874dd122c15ec970c650caaf4b87647ac14",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "94d3efba76d83e84a9a4589c3b371ba915a9b0436f9baaf68ce38111f351c32a"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/cra/t1-2025/federal-worksheet-credits-and-repayments.test.yaml",
+      "sha256": "0990f45c4be30842ec6c86ff67a6a735822b363c0f3129dec9ce5c91efb676ca"
+    },
+    {
+      "path": "policies/cra/t1-2025/federal-worksheet-credits-and-repayments.yaml",
+      "sha256": "c078b19a18dd08f5a3ede7bcb9f84fb510ae200ba2578b45690bd9889473d51f"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "a314fc624967b4e990beb7d9ffc429dae6e26642",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1152",
+    "version_commit": "a314fc624967b4e990beb7d9ffc429dae6e26642"
+  },
+  "axiom_encode_version": "0.2.1152",
+  "backend": "manual",
+  "citation": "ca:policies/cra/t1-2025/federal-worksheet-credits-and-repayments",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-05T15:04:20.559614+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm/sign-applied-files/policies/cra/t1-2025/federal-worksheet-credits-and-repayments.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
+  "generated_output_sha256": "c078b19a18dd08f5a3ede7bcb9f84fb510ae200ba2578b45690bd9889473d51f",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "20b900a264a6d9f1a869ad498e6df8fb2f87e94d0d4450ce6e9a748220f4ad74"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

@@ -1,0 +1,349 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA T4127 Tables 8.3 through 8.8 provide 2026 CPP, QPP, EI,
+    and Quebec Parental Insurance Plan rates and maximum annual amounts.
+    This module encodes annual employee and employer contribution
+    surfaces used by payroll withholding and tax-credit calculations.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t4127-2026/payroll-contributions
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/canada-pension-plan
+        - ca/statute/employment-insurance-act
+        - ca/statute/quebec-pension-plan
+      rationale: |-
+        T4127 states that its formulas are approved for purposes of the
+        Canada Pension Plan and Employment Insurance Act. This module
+        encodes the official CRA 2026 payroll contribution parameter
+        tables before deeper statutory source expansion.
+    source_urls:
+      - https://www.canada.ca/en/revenue-agency/services/forms-publications/payroll/t4127-payroll-deductions-formulas/t4127-jan/t4127-jan-payroll-deductions-formulas-computer-programs.html
+rules:
+  - name: cpp_2026_ympe
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.3 and Table 8.4, CPP YMPE
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          74600
+
+  - name: cpp_2026_basic_exemption
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.3, CPP basic exemption
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          3500
+
+  - name: cpp_2026_yampe
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.6, CPP additional maximum pensionable earnings
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          85000
+
+  - name: cpp_2026_total_employee_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Table 8.3, CPP total employee and employer contribution rate
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.0595
+
+  - name: qpp_2026_total_employee_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Table 8.3, QPP total employee and employer contribution rate
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.0630
+
+  - name: cpp_2026_max_employee_contribution
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.3, CPP maximum employee and employer total contribution
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          4230.45
+
+  - name: qpp_2026_max_employee_contribution
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.3, QPP maximum employee and employer total contribution
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          4479.30
+
+  - name: cpp_2026_base_employee_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Table 8.4, CPP base contribution rate
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.0495
+
+  - name: qpp_2026_base_employee_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Table 8.4, QPP base contribution rate
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.0530
+
+  - name: cpp_2026_max_base_employee_contribution
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.4, CPP maximum base contribution
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          3519.45
+
+  - name: qpp_2026_max_base_employee_contribution
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.4, QPP maximum base contribution
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          3768.30
+
+  - name: cpp_qpp_2026_first_additional_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Table 8.5, first additional CPP/QPP rate
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.0100
+
+  - name: cpp_qpp_2026_max_first_additional_employee_contribution
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.5, maximum first additional CPP/QPP contribution
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          711.00
+
+  - name: cpp_qpp_2026_second_additional_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Table 8.6, second additional CPP/QPP rate
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.0400
+
+  - name: cpp_qpp_2026_max_second_additional_employee_contribution
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.6, maximum second additional CPP/QPP contribution
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          416.00
+
+  - name: ei_2026_max_insurable_earnings
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.7, EI maximum annual insurable earnings
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          68900
+
+  - name: ei_2026_employee_rate_outside_quebec
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Table 8.7, EI employee contribution rate outside Quebec
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.0163
+
+  - name: ei_2026_employee_rate_quebec
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Table 8.7, EI employee contribution rate in Quebec
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.0130
+
+  - name: ei_2026_employer_rate_outside_quebec
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Table 8.7, EI employer contribution rate outside Quebec
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.02282
+
+  - name: ei_2026_employer_rate_quebec
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Table 8.7, EI employer contribution rate in Quebec
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.01820
+
+  - name: ei_2026_max_employee_premium_outside_quebec
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.7, maximum annual employee EI premium outside Quebec
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          1123.07
+
+  - name: ei_2026_max_employee_premium_quebec
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.7, maximum annual employee EI premium in Quebec
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          895.70
+
+  - name: ei_2026_max_employer_premium_outside_quebec
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.7, maximum annual employer EI premium outside Quebec
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          1572.30
+
+  - name: ei_2026_max_employer_premium_quebec
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.7, maximum annual employer EI premium in Quebec
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          1253.98
+
+  - name: qpip_2026_max_insurable_earnings
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.8, QPIP maximum annual insurable earnings
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          103000
+
+  - name: qpip_2026_employee_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Table 8.8, QPIP employee contribution rate
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.00430
+
+  - name: qpip_2026_employer_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T4127 Table 8.8, QPIP employer contribution rate
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.00602
+
+  - name: qpip_2026_max_employee_premium
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.8, QPIP maximum annual employee premium
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          442.90
+
+  - name: qpip_2026_max_employer_premium
+    kind: parameter
+    dtype: Money
+    source: CRA T4127 Table 8.8, QPIP maximum annual employer premium
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          620.06
+
+  - name: cpp_employee_contribution
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Table 8.3, CPP employee contribution
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          min(cpp_2026_max_employee_contribution, cpp_2026_total_employee_rate * max(0, min(cpp_pensionable_earnings, cpp_2026_ympe) - cpp_2026_basic_exemption))
+
+  - name: qpp_employee_contribution
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Table 8.3, QPP employee contribution
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          min(qpp_2026_max_employee_contribution, qpp_2026_total_employee_rate * max(0, min(qpp_pensionable_earnings, cpp_2026_ympe) - cpp_2026_basic_exemption))
+
+  - name: cpp2_employee_contribution
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Table 8.6, second additional CPP employee contribution
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          min(cpp_qpp_2026_max_second_additional_employee_contribution, cpp_qpp_2026_second_additional_rate * max(0, min(cpp_pensionable_earnings, cpp_2026_yampe) - cpp_2026_ympe))
+
+  - name: ei_employee_premium_outside_quebec
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Table 8.7, EI employee premium outside Quebec
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          min(ei_2026_max_employee_premium_outside_quebec, ei_2026_employee_rate_outside_quebec * max(0, min(ei_insurable_earnings, ei_2026_max_insurable_earnings)))
+
+  - name: ei_employee_premium_quebec
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Table 8.7, EI employee premium in Quebec
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          min(ei_2026_max_employee_premium_quebec, ei_2026_employee_rate_quebec * max(0, min(ei_insurable_earnings, ei_2026_max_insurable_earnings)))
+
+  - name: qpip_employee_premium
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 Table 8.8, QPIP employee premium
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          min(qpip_2026_max_employee_premium, qpip_2026_employee_rate * max(0, min(qpip_insurable_earnings, qpip_2026_max_insurable_earnings)))

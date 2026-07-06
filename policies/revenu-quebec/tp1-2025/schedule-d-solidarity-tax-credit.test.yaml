@@ -1,0 +1,77 @@
+- name: schedule_d_eligible_adult_tenant
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_claimant_age_on_december_31: 40
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_minor_had_spouse: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_minor_parent_of_child_lived_with_claimant: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_minor_emancipated_by_authority: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_resident_in_quebec_on_december_31: true
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_claimant_or_spouse_citizen_permanent_resident_or_protected_person: true
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_claimant_or_spouse_temporary_resident_or_permit_holder: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_temporary_resident_months_in_canada: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_confined_on_december_31: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_days_confined_in_2025: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_family_allowance_paid_for_claimant_december_2025: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_claimant_turned_18_in_december_2025: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_claimant_refugee_protection_claimant_on_december_31: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_had_spouse_on_december_31: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_spouse_refugee_protection_claimant_on_december_31: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_lived_alone_throughout_2025_or_only_with_minors: true
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_living_with_spouse_on_december_31: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_claimant_tenant_or_subtenant_on_december_31: true
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_claimant_owner_on_december_31: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_spouse_tenant_or_subtenant_on_december_31: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_spouse_owner_on_december_31: false
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_age_or_minor_exception_eligible_flag: 1
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_resident_quebec_flag: 1
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_immigration_status_eligible_flag: 1
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_prison_not_disqualifying_flag: 1
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_family_allowance_not_disqualifying_flag: 1
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_refugee_claimant_not_disqualifying_flag: 1
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_overall_eligibility_flag: 1
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_lived_alone_flag_line_12: 1
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_spouse_lived_with_claimant_flag_line_40: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_housing_information_required_flag: 1
+
+- name: schedule_d_disqualified_minor_refugee_claimant
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_claimant_age_on_december_31: 17
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_minor_had_spouse: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_minor_parent_of_child_lived_with_claimant: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_minor_emancipated_by_authority: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_resident_in_quebec_on_december_31: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_claimant_or_spouse_citizen_permanent_resident_or_protected_person: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_claimant_or_spouse_temporary_resident_or_permit_holder: true
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_temporary_resident_months_in_canada: 12
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_confined_on_december_31: true
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_days_confined_in_2025: 200
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_family_allowance_paid_for_claimant_december_2025: true
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_claimant_turned_18_in_december_2025: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_claimant_refugee_protection_claimant_on_december_31: true
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_had_spouse_on_december_31: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_spouse_refugee_protection_claimant_on_december_31: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_lived_alone_throughout_2025_or_only_with_minors: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_living_with_spouse_on_december_31: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_claimant_tenant_or_subtenant_on_december_31: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_claimant_owner_on_december_31: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_spouse_tenant_or_subtenant_on_december_31: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#input.schedule_d_spouse_owner_on_december_31: false
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_age_or_minor_exception_eligible_flag: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_resident_quebec_flag: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_immigration_status_eligible_flag: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_prison_not_disqualifying_flag: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_family_allowance_not_disqualifying_flag: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_refugee_claimant_not_disqualifying_flag: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_overall_eligibility_flag: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_lived_alone_flag_line_12: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_spouse_lived_with_claimant_flag_line_40: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit#schedule_d_housing_information_required_flag: 0

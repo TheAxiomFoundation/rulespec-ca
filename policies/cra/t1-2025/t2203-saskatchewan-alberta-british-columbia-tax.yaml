@@ -1,0 +1,624 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T2203 for 2025 includes SK428MJ, AB428MJ, and BC428MJ for
+    Saskatchewan, Alberta, and British Columbia multiple-jurisdiction tax.
+    This module encodes their main Part 4 bracket tax, allocation, resident
+    adjustment, selected credit, and Part 5 tax lines.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/t2203-saskatchewan-alberta-british-columbia-tax
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: CRA Form T2203 is the official 2025 form for these multiple-jurisdiction provincial taxes.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t2203/t2203-25e.pdf
+rules:
+  - name: federal_2025_t2203_sk_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 SK428MJ bracket threshold is $53,463
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 53463
+  - name: federal_2025_t2203_sk_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 SK428MJ bracket threshold is $152,750
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 152750
+  - name: federal_2025_t2203_sk_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 SK428MJ first rate is 10.5%, encoded as 0.105
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.105
+  - name: federal_2025_t2203_sk_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 SK428MJ second rate is 12.5%, encoded as 0.125
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.125
+  - name: federal_2025_t2203_sk_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 SK428MJ third rate is 14.5%, encoded as 0.145
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.145
+  - name: federal_2025_t2203_sk_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 SK428MJ second base tax amount is $5,613.62
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5613.62
+  - name: federal_2025_t2203_sk_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 SK428MJ third base tax amount is $18,024.49
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 18024.49
+  - name: federal_2025_t2203_sk_minimum_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 SK428MJ lines 16 and 19 use 50%, encoded as 0.50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.50
+  - name: federal_2025_t2203_sk_labour_sponsored_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 SK428MJ line 39 maximum labour-sponsored venture capital tax credit is $875
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 875
+  - name: federal_2025_t2203_ab_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 AB428MJ bracket threshold is $60,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 60000
+  - name: federal_2025_t2203_ab_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 AB428MJ bracket threshold is $151,234
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 151234
+  - name: federal_2025_t2203_ab_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 AB428MJ bracket threshold is $181,481
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 181481
+  - name: federal_2025_t2203_ab_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 AB428MJ bracket threshold is $241,974
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 241974
+  - name: federal_2025_t2203_ab_bracket_5_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 AB428MJ bracket threshold is $362,961
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 362961
+  - name: federal_2025_t2203_ab_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 AB428MJ first rate is 8%, encoded as 0.08
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.08
+  - name: federal_2025_t2203_ab_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 AB428MJ second rate is 10%, encoded as 0.10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.10
+  - name: federal_2025_t2203_ab_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 AB428MJ third rate is 12%, encoded as 0.12
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.12
+  - name: federal_2025_t2203_ab_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 AB428MJ fourth rate is 13%, encoded as 0.13
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.13
+  - name: federal_2025_t2203_ab_bracket_5_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 AB428MJ fifth rate is 14%, encoded as 0.14
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.14
+  - name: federal_2025_t2203_ab_bracket_6_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 AB428MJ sixth rate is 15%, encoded as 0.15
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.15
+  - name: federal_2025_t2203_ab_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 AB428MJ second base tax amount is $4,800.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 4800
+  - name: federal_2025_t2203_ab_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 AB428MJ third base tax amount is $13,923.40
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 13923.40
+  - name: federal_2025_t2203_ab_bracket_4_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 AB428MJ fourth base tax amount is $17,553.04
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 17553.04
+  - name: federal_2025_t2203_ab_minimum_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 AB428MJ lines 21 and 24 use 35%, encoded as 0.35
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.35
+  - name: federal_2025_t2203_bc_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC428MJ bracket threshold is $49,279
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 49279
+  - name: federal_2025_t2203_bc_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC428MJ bracket threshold is $98,560
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 98560
+  - name: federal_2025_t2203_bc_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC428MJ bracket threshold is $113,158
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 113158
+  - name: federal_2025_t2203_bc_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC428MJ bracket threshold is $137,407
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 137407
+  - name: federal_2025_t2203_bc_bracket_5_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC428MJ bracket threshold is $186,306
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 186306
+  - name: federal_2025_t2203_bc_bracket_6_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC428MJ bracket threshold is $259,829
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 259829
+  - name: federal_2025_t2203_bc_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 BC428MJ first rate is 5.06%, encoded as 0.0506
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0506
+  - name: federal_2025_t2203_bc_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 BC428MJ second rate is 7.7%, encoded as 0.077
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.077
+  - name: federal_2025_t2203_bc_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 BC428MJ third rate is 10.5%, encoded as 0.105
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.105
+  - name: federal_2025_t2203_bc_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 BC428MJ fourth rate is 12.29%, encoded as 0.1229
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.1229
+  - name: federal_2025_t2203_bc_bracket_5_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 BC428MJ fifth rate is 14.7%, encoded as 0.147
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.147
+  - name: federal_2025_t2203_bc_bracket_6_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 BC428MJ sixth rate is 16.8%, encoded as 0.168
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.168
+  - name: federal_2025_t2203_bc_bracket_7_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 BC428MJ seventh rate is 20.5%, encoded as 0.205
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.205
+  - name: federal_2025_t2203_bc_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC428MJ second base tax amount is $2,493.52
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2493.52
+  - name: federal_2025_t2203_bc_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC428MJ third base tax amount is $6,288.15
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 6288.15
+  - name: federal_2025_t2203_bc_bracket_4_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC428MJ fourth base tax amount is $7,820.94
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 7820.94
+  - name: federal_2025_t2203_bc_bracket_5_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC428MJ fifth base tax amount is $10,801.15
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 10801.15
+  - name: federal_2025_t2203_bc_bracket_6_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC428MJ sixth base tax amount is $17,989.30
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 17989.30
+  - name: federal_2025_t2203_bc_bracket_7_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC428MJ seventh base tax amount is $30,341.16
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 30341.16
+  - name: federal_2025_t2203_bc_minimum_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 BC428MJ lines 21 and 24 use 34.9%, encoded as 0.349
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.349
+  - name: federal_2025_t2203_bc_tax_reduction_basic
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC428MJ line 39 tax reduction basic amount is $562
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 562
+  - name: federal_2025_t2203_bc_tax_reduction_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC428MJ line 41 tax reduction base amount is $25,020
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 25020
+  - name: federal_2025_t2203_bc_tax_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2203 2025 BC428MJ line 43 tax reduction rate is 3.56%, encoded as 0.0356
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0356
+  - name: federal_2025_t2203_bc_esop_evcc_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T2203 2025 BC428MJ line 56 maximum total ESOP and EVCC credits is $2,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2000
+  - name: federal_2025_t2203_sk_tax_on_taxable_income_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 SK428MJ line 9 is Saskatchewan tax on taxable income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= federal_2025_t2203_sk_bracket_1_threshold:
+            max(0, taxable_income_line_26000) * federal_2025_t2203_sk_bracket_1_rate
+          else:
+            if taxable_income_line_26000 <= federal_2025_t2203_sk_bracket_2_threshold:
+              (taxable_income_line_26000 - federal_2025_t2203_sk_bracket_1_threshold) * federal_2025_t2203_sk_bracket_2_rate + federal_2025_t2203_sk_bracket_2_base_tax
+            else:
+              (taxable_income_line_26000 - federal_2025_t2203_sk_bracket_2_threshold) * federal_2025_t2203_sk_bracket_3_rate + federal_2025_t2203_sk_bracket_3_base_tax
+  - name: federal_2025_t2203_sk_adjusted_income_tax_line_32
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 SK428MJ lines 10 to 32 calculate adjusted Saskatchewan income tax
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            (if t2203_resident_of_saskatchewan:
+                max(
+                  0,
+                  (
+                    max(
+                      0,
+                      federal_2025_t2203_sk_tax_on_taxable_income_line_9
+                      - max(0, sk_farm_and_small_business_capital_gains_tax_credit_line_10)
+                    )
+                    + max(0, sk_unallocated_tax_on_split_income_t1206_line_12)
+                    - (
+                      max(0, sk_non_refundable_tax_credits_part_3_line_c)
+                      + max(0, sk_dividend_tax_credit_line_15)
+                      + max(0, minimum_tax_carryover_line_40427) * federal_2025_t2203_sk_minimum_tax_rate
+                    )
+                  )
+                  + max(0, sk_t691_part_7_line_1_minus_line_2) * federal_2025_t2203_sk_minimum_tax_rate
+                ) * max(0, t2203_saskatchewan_income_allocation_percentage)
+                - (
+                  max(0, sk_resident_adjustment_credit_base_line_58360) * federal_2025_t2203_sk_bracket_1_rate
+                  + max(0, sk_dividend_tax_credit_line_15)
+                ) * max(0, 1 - max(0, t2203_saskatchewan_income_allocation_percentage))
+              else:
+                max(
+                  0,
+                  (
+                    max(
+                      0,
+                      federal_2025_t2203_sk_tax_on_taxable_income_line_9
+                      - max(0, sk_farm_and_small_business_capital_gains_tax_credit_line_10)
+                    )
+                    + max(0, sk_unallocated_tax_on_split_income_t1206_line_12)
+                    - (
+                      max(0, sk_non_refundable_tax_credits_part_3_line_c)
+                      + max(0, sk_dividend_tax_credit_line_15)
+                      + max(0, minimum_tax_carryover_line_40427) * federal_2025_t2203_sk_minimum_tax_rate
+                    )
+                  )
+                  + max(0, sk_t691_part_7_line_1_minus_line_2) * federal_2025_t2203_sk_minimum_tax_rate
+                ) * max(0, t2203_saskatchewan_income_allocation_percentage))
+            - max(0, sk_provincial_foreign_tax_credit_t2036_line_31)
+          )
+  - name: t2203_saskatchewan_tax_part_5_line_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 SK428MJ lines 33 to 46 subtract selected credits and enter Saskatchewan tax on Part 5 line 7
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(
+              0,
+              max(
+                0,
+                federal_2025_t2203_sk_adjusted_income_tax_line_32
+                - max(0, sk_political_contribution_tax_credit_line_35)
+              ) - min(
+                federal_2025_t2203_sk_labour_sponsored_cap,
+                max(0, sk_labour_sponsored_vcc_registered_sk_line_37)
+                + max(0, sk_labour_sponsored_vcc_federally_registered_line_38)
+              )
+            ) - max(0, sk_mineral_exploration_tax_credit_t1279_line_41)
+            - max(0, sk_graduate_tuition_tax_credit_rc360_line_43)
+            - max(0, sk_qualifying_environmental_trust_tax_credit_line_45)
+          )
+  - name: federal_2025_t2203_ab_tax_on_taxable_income_line_16
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 AB428MJ line 16 is Alberta tax on taxable income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= federal_2025_t2203_ab_bracket_1_threshold:
+            max(0, taxable_income_line_26000) * federal_2025_t2203_ab_bracket_1_rate
+          else:
+            if taxable_income_line_26000 <= federal_2025_t2203_ab_bracket_2_threshold:
+              (taxable_income_line_26000 - federal_2025_t2203_ab_bracket_1_threshold) * federal_2025_t2203_ab_bracket_2_rate + federal_2025_t2203_ab_bracket_2_base_tax
+            else:
+              if taxable_income_line_26000 <= federal_2025_t2203_ab_bracket_3_threshold:
+                (taxable_income_line_26000 - federal_2025_t2203_ab_bracket_2_threshold) * federal_2025_t2203_ab_bracket_3_rate + federal_2025_t2203_ab_bracket_3_base_tax
+              else:
+                (taxable_income_line_26000 - federal_2025_t2203_ab_bracket_3_threshold) * federal_2025_t2203_ab_bracket_4_rate + federal_2025_t2203_ab_bracket_4_base_tax
+  - name: federal_2025_t2203_ab_adjusted_income_tax_line_38
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 AB428MJ lines 17 to 38 calculate adjusted Alberta income tax
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            (if t2203_resident_of_alberta:
+                max(
+                  0,
+                  federal_2025_t2203_ab_tax_on_taxable_income_line_16
+                  + max(0, ab_unallocated_tax_on_split_income_t1206_line_17)
+                  - (
+                    max(0, ab_non_refundable_tax_credits_part_3_line_c)
+                    + max(0, ab_dividend_tax_credit_line_20)
+                    + max(0, minimum_tax_carryover_line_40427) * federal_2025_t2203_ab_minimum_tax_rate
+                  )
+                ) + max(0, ab_t691_part_7_line_1_minus_line_2) * federal_2025_t2203_ab_minimum_tax_rate
+              else:
+                max(
+                  0,
+                  federal_2025_t2203_ab_tax_on_taxable_income_line_16
+                  + max(0, ab_unallocated_tax_on_split_income_t1206_line_17)
+                  - (
+                    max(0, ab_non_refundable_tax_credits_part_3_line_c)
+                    + max(0, ab_dividend_tax_credit_line_20)
+                    + max(0, minimum_tax_carryover_line_40427) * federal_2025_t2203_ab_minimum_tax_rate
+                  )
+                ) + max(0, ab_t691_part_7_line_1_minus_line_2) * federal_2025_t2203_ab_minimum_tax_rate)
+            * max(0, t2203_alberta_income_allocation_percentage)
+            - (if t2203_resident_of_alberta:
+                (
+                  max(0, ab_resident_adjustment_credit_base_lines_58330_58360)
+                  * federal_2025_t2203_ab_bracket_1_rate
+                  + max(0, ab_dividend_tax_credit_line_20)
+                ) * max(0, 1 - max(0, t2203_alberta_income_allocation_percentage))
+              else:
+                0)
+            - max(0, ab_provincial_foreign_tax_credit_t2036_line_37)
+          )
+  - name: t2203_alberta_tax_part_5_line_8
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 AB428MJ lines 39 to 43 subtract political and supplemental credits and enter Alberta tax on Part 5 line 8
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, federal_2025_t2203_ab_adjusted_income_tax_line_38 - max(0, ab_political_contribution_tax_credit_line_40) - max(0, ab_supplemental_tax_credit_line_42))
+  - name: federal_2025_t2203_bc_tax_on_taxable_income_line_16
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 BC428MJ line 16 is British Columbia tax on taxable income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= federal_2025_t2203_bc_bracket_1_threshold:
+            max(0, taxable_income_line_26000) * federal_2025_t2203_bc_bracket_1_rate
+          else:
+            if taxable_income_line_26000 <= federal_2025_t2203_bc_bracket_2_threshold:
+              (taxable_income_line_26000 - federal_2025_t2203_bc_bracket_1_threshold) * federal_2025_t2203_bc_bracket_2_rate + federal_2025_t2203_bc_bracket_2_base_tax
+            else:
+              if taxable_income_line_26000 <= federal_2025_t2203_bc_bracket_3_threshold:
+                (taxable_income_line_26000 - federal_2025_t2203_bc_bracket_2_threshold) * federal_2025_t2203_bc_bracket_3_rate + federal_2025_t2203_bc_bracket_3_base_tax
+              else:
+                if taxable_income_line_26000 <= federal_2025_t2203_bc_bracket_4_threshold:
+                  (taxable_income_line_26000 - federal_2025_t2203_bc_bracket_3_threshold) * federal_2025_t2203_bc_bracket_4_rate + federal_2025_t2203_bc_bracket_4_base_tax
+                else:
+                  if taxable_income_line_26000 <= federal_2025_t2203_bc_bracket_5_threshold:
+                    (taxable_income_line_26000 - federal_2025_t2203_bc_bracket_4_threshold) * federal_2025_t2203_bc_bracket_5_rate + federal_2025_t2203_bc_bracket_5_base_tax
+                  else:
+                    if taxable_income_line_26000 <= federal_2025_t2203_bc_bracket_6_threshold:
+                      (taxable_income_line_26000 - federal_2025_t2203_bc_bracket_5_threshold) * federal_2025_t2203_bc_bracket_6_rate + federal_2025_t2203_bc_bracket_6_base_tax
+                    else:
+                      (taxable_income_line_26000 - federal_2025_t2203_bc_bracket_6_threshold) * federal_2025_t2203_bc_bracket_7_rate + federal_2025_t2203_bc_bracket_7_base_tax
+  - name: federal_2025_t2203_bc_adjusted_income_tax_line_38
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 BC428MJ lines 17 to 38 calculate adjusted British Columbia income tax
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            (
+              max(
+                0,
+                federal_2025_t2203_bc_tax_on_taxable_income_line_16
+                + max(0, bc_unallocated_tax_on_split_income_t1206_line_17)
+                - (
+                  max(0, bc_non_refundable_tax_credits_part_3_line_c)
+                  + max(0, bc_dividend_tax_credit_line_20)
+                  + max(0, minimum_tax_carryover_line_40427) * federal_2025_t2203_bc_minimum_tax_rate
+                )
+              ) + max(0, bc_t691_part_7_line_14) * federal_2025_t2203_bc_minimum_tax_rate
+            ) * max(0, t2203_british_columbia_income_allocation_percentage)
+            - (if t2203_resident_of_british_columbia:
+                (
+                  max(0, bc_resident_adjustment_credit_base_lines_58315_58316_58330_58360)
+                  * federal_2025_t2203_bc_bracket_1_rate
+                  + max(0, bc_dividend_tax_credit_line_20)
+                ) * max(0, 1 - max(0, t2203_british_columbia_income_allocation_percentage))
+              else:
+                0)
+            - max(0, bc_provincial_foreign_tax_credit_t2036_line_37)
+          )
+  - name: federal_2025_t2203_bc_tax_reduction_line_47
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 BC428MJ lines 39 to 47 calculate British Columbia tax reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2203_bc_tax_reduction_basic
+            - max(0, bc_net_income_line_23600 - federal_2025_t2203_bc_tax_reduction_threshold)
+            * federal_2025_t2203_bc_tax_reduction_rate
+          ) * max(0, t2203_british_columbia_income_allocation_percentage)
+  - name: t2203_british_columbia_tax_part_5_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2203 2025 BC428MJ lines 48 to 59 subtract selected credits and enter British Columbia tax on Part 5 line 9
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(
+              0,
+              max(
+                0,
+                max(
+                  0,
+                  federal_2025_t2203_bc_adjusted_income_tax_line_38
+                  - federal_2025_t2203_bc_tax_reduction_line_47
+                ) - max(0, bc_logging_tax_credit_line_49)
+              ) - max(0, bc_political_contribution_tax_credit_line_52)
+            ) - min(
+              federal_2025_t2203_bc_esop_evcc_cap,
+              max(0, bc_employee_share_ownership_plan_tax_credit_line_54)
+              + max(0, bc_employee_venture_capital_corporation_tax_credit_line_55)
+            )
+            - max(0, bc_mining_flow_through_share_tax_credit_t1231_line_58)
+          )

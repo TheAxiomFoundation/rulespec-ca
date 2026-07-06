@@ -1,0 +1,746 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Federal Worksheet 2025 calculates line-level T1 amounts that are
+    not in a standalone schedule. This module encodes the worksheet
+    arithmetic for taxable Canadian dividends, the federal dividend tax
+    credit, social benefits repayment, home accessibility expenses,
+    medical expenses for other dependants, the federal political
+    contribution tax credit, the top-up tax credit, and the refundable
+    medical expense supplement.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/federal-worksheet-credits-and-repayments
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Federal Worksheet 2025 is the official return worksheet for
+        these T1 line calculations. This module encodes the published
+        arithmetic while leaving receipt, relationship, dependant,
+        disability, residency, and other fact predicates to deeper source
+        and eligibility layers.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-d1/5000-d1-25e.pdf
+      - https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/line-23500-social-benefits-repayment.html
+rules:
+  - name: federal_2025_eligible_dividend_gross_up_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Federal Worksheet 2025 lines 12000 and 12010 use 138% for actual eligible dividends without an information slip
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          1.38
+
+  - name: federal_2025_other_than_eligible_dividend_gross_up_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Federal Worksheet 2025 lines 12000 and 12010 use 115% for actual other-than-eligible dividends without an information slip
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          1.15
+
+  - name: federal_2025_other_than_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Federal Worksheet 2025 line 40425 applies 9.0301% to taxable other-than-eligible dividends without an information slip
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.090301
+
+  - name: federal_2025_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Federal Worksheet 2025 line 40425 applies 15.0198% to taxable eligible dividends without an information slip
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.150198
+
+  - name: federal_2025_oas_benefits_repayment_base_amount
+    kind: parameter
+    dtype: Money
+    source: CRA Federal Worksheet 2025 line 23500 uses OAS benefits base amount of $93,454
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          93454
+
+  - name: federal_2025_oas_benefits_repayment_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Federal Worksheet 2025 line 23500 line 18 multiplies excess adjusted net income by 15%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.15
+
+  - name: federal_2025_ei_benefits_repayment_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA line 23500 2025 says EI repayment applies when adjusted income is more than $82,125
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 82125
+
+  - name: federal_2025_ei_benefits_repayment_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA line 23500 2025 says the T4E box 7 repayment rate is 30%, encoded as 0.30
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.30
+
+  - name: federal_2025_home_accessibility_expense_limit
+    kind: parameter
+    dtype: Money
+    source: CRA Federal Worksheet 2025 line 31285 caps eligible home accessibility expenses at $20,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          20000
+
+  - name: federal_2025_political_contribution_first_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Federal Worksheet 2025 line 41000 first contribution tier is $400
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          400
+
+  - name: federal_2025_political_contribution_second_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Federal Worksheet 2025 line 41000 second contribution tier is $750
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          750
+
+  - name: federal_2025_political_contribution_full_credit_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Federal Worksheet 2025 line 41000 directs contributions of $1,275 or more to the $650 maximum credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          1275
+
+  - name: federal_2025_political_contribution_maximum_credit
+    kind: parameter
+    dtype: Money
+    source: CRA Federal Worksheet 2025 line 41000 maximum federal political contribution credit is $650
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          650
+
+  - name: federal_2025_political_contribution_second_tier_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA Federal Worksheet 2025 line 41000 second contribution tier starts from $300 of credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          300
+
+  - name: federal_2025_political_contribution_third_tier_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA Federal Worksheet 2025 line 41000 third contribution tier starts from $475 of credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          475
+
+  - name: federal_2025_political_contribution_first_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Federal Worksheet 2025 line 41000 applies 75% in the first contribution tier
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.75
+
+  - name: federal_2025_political_contribution_second_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Federal Worksheet 2025 line 41000 applies 50% in the second contribution tier
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.50
+
+  - name: federal_2025_political_contribution_third_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Federal Worksheet 2025 line 41000 applies 33.33% above $750 before the maximum-credit threshold
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.3333
+
+  - name: federal_2025_top_up_tax_credit_base
+    kind: parameter
+    dtype: Money
+    source: CRA Federal Worksheet 2025 line 34990 subtracts $8,319.38 before applying the top-up rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          8319.38
+
+  - name: federal_2025_top_up_tax_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Federal Worksheet 2025 line 34990 applies 3.45%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.0345
+
+  - name: federal_2025_refundable_medical_supplement_income_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Federal Worksheet 2025 line 45200 line 7 income threshold is $33,294
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          33294
+
+  - name: federal_2025_refundable_medical_supplement_phaseout_ceiling
+    kind: parameter
+    dtype: Money
+    source: CRA Federal Worksheet 2025 line 45200 eligibility requires adjusted family net income below $63,374
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          63374
+
+  - name: federal_2025_refundable_medical_supplement_earned_income_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Federal Worksheet 2025 line 45200 requires qualifying earned income of at least $4,390
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          4390
+
+  - name: federal_2025_refundable_medical_supplement_minimum_age
+    kind: parameter
+    dtype: Number
+    source: CRA Federal Worksheet 2025 line 45200 requires the taxpayer to be 18 years of age or older at the end of 2025
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          18
+
+  - name: federal_2025_refundable_medical_supplement_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Federal Worksheet 2025 line 45200 line 12 multiplies qualifying medical expenses by 25%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.25
+
+  - name: federal_2025_refundable_medical_supplement_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Federal Worksheet 2025 line 45200 line 14 caps the supplement base at $1,504
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          1504
+
+  - name: federal_2025_refundable_medical_supplement_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Federal Worksheet 2025 line 45200 line 15 reduces the supplement by 5% of excess adjusted family net income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.05
+
+  - name: federal_2025_taxable_other_than_eligible_dividends_without_slip
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 12010 line 16 grosses actual other-than-eligible dividends without a slip by 115%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, actual_other_than_eligible_dividends_without_slip)
+          * federal_2025_other_than_eligible_dividend_gross_up_rate
+
+  - name: federal_2025_taxable_eligible_dividends_without_slip
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 12000 line 13 grosses actual eligible dividends without a slip by 138%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, actual_eligible_dividends_without_slip)
+          * federal_2025_eligible_dividend_gross_up_rate
+
+  - name: federal_taxable_dividends_other_than_eligible_line_12010
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 12010 adds taxable other-than-eligible dividends from slips and no-slip dividends
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, taxable_other_than_eligible_dividends_from_slips)
+          + federal_2025_taxable_other_than_eligible_dividends_without_slip
+
+  - name: federal_taxable_dividends_line_12000
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 12000 adds taxable eligible and other-than-eligible dividends
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, taxable_eligible_and_other_than_eligible_dividends_from_slips)
+          + federal_2025_taxable_eligible_dividends_without_slip
+          + federal_2025_taxable_other_than_eligible_dividends_without_slip
+
+  - name: federal_2025_dividend_tax_credit_from_slips
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 40425 line 5 adds dividend tax credit amounts shown on information slips
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, dividend_tax_credit_from_t3_slips)
+          + max(0, dividend_tax_credit_from_t4ps_slips)
+          + max(0, dividend_tax_credit_from_t5_slips)
+          + max(0, dividend_tax_credit_from_t5013_slips)
+
+  - name: federal_2025_dividend_tax_credit_without_slip
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 40425 lines 6 to 8 calculate the no-slip dividend tax credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_taxable_other_than_eligible_dividends_without_slip
+          * federal_2025_other_than_eligible_dividend_credit_rate
+          + federal_2025_taxable_eligible_dividends_without_slip
+          * federal_2025_eligible_dividend_credit_rate
+
+  - name: federal_dividend_tax_credit_line_40425
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 40425 line 9 adds slip and no-slip federal dividend tax credits
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_dividend_tax_credit_from_slips
+          + federal_2025_dividend_tax_credit_without_slip
+
+  - name: federal_2025_oas_and_supplements_after_recovery
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 23500 lines 1 to 5 subtract recovered OAS overpayments from OAS and net federal supplements
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, oas_pension_line_11300)
+            + max(0, net_federal_supplements_line_14600)
+            - max(0, oas_overpayment_recovered_t4a_oas_box_20)
+          )
+
+  - name: federal_2025_social_benefits_repayment_adjusted_net_income
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 23500 lines 6 to 15 calculate adjusted net income for social benefits repayment
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, net_income_before_adjustments_line_23400)
+          - (
+            federal_2025_ei_benefits_repayment_line_7
+            + max(0, uccb_income_line_11700)
+            + max(0, rdsp_income_line_12500)
+          )
+          + (
+            max(0, uccb_repayment_line_21300)
+            + max(0, rdsp_income_repayment_included_line_23200)
+          )
+
+  - name: federal_2025_ei_benefits_repayment_adjusted_income_for_t4e
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA line 23500 EI repayment condition uses line 23400 minus UCCB and RDSP income plus UCCB and RDSP repayments
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, net_income_before_adjustments_line_23400)
+          - max(0, uccb_income_line_11700)
+          - max(0, rdsp_income_line_12500)
+          + max(0, uccb_repayment_line_21300)
+          + max(0, rdsp_income_repayment_included_line_23200)
+
+  - name: federal_2025_ei_benefits_repayment_from_t4e_chart
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA line 23500 and the T4E repayment chart calculate EI repayment when box 15 exists, box 7 is 30%, and adjusted income exceeds $82,125
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t4e_box7_repayment_rate_is_30_percent:
+            min(
+              max(0, t4e_box15_regular_and_other_benefits_paid),
+              max(0, federal_2025_ei_benefits_repayment_adjusted_income_for_t4e - federal_2025_ei_benefits_repayment_threshold)
+            ) * federal_2025_ei_benefits_repayment_rate
+          else:
+            0
+
+  - name: federal_2025_ei_benefits_repayment_line_7
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 23500 line 7 enters the EI repayment from the T4E repayment chart
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            max(0, ei_benefits_repayment_from_t4e_chart),
+            federal_2025_ei_benefits_repayment_from_t4e_chart
+          )
+
+  - name: federal_2025_oas_benefits_repayment
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 23500 lines 16 to 19 calculate the OAS repayment
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_oas_and_supplements_after_recovery,
+            max(
+              0,
+              federal_2025_social_benefits_repayment_adjusted_net_income
+              - federal_2025_oas_benefits_repayment_base_amount
+            ) * federal_2025_oas_benefits_repayment_rate
+          )
+
+  - name: federal_social_benefits_repayment_line_23500_and_42200
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 23500 line 21 adds OAS repayment and EI benefits repayment
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_oas_benefits_repayment
+          + federal_2025_ei_benefits_repayment_line_7
+
+  - name: federal_home_accessibility_expenses_line_31285
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 31285 caps eligible expenses and subtracts amounts claimed by others for the same dwelling
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            min(max(0, eligible_home_accessibility_expenses), federal_2025_home_accessibility_expense_limit)
+            - max(0, home_accessibility_expenses_claimed_by_others)
+          )
+
+  - name: federal_2025_medical_other_dependant_1_allowable
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 33199 calculates each dependant amount as medical expenses minus the dependant income-line amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, medical_expenses_other_dependant_1)
+            - max(0, medical_expenses_other_dependant_1_income_line_amount)
+          )
+
+  - name: federal_2025_medical_other_dependant_2_allowable
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 33199 calculates each dependant amount as medical expenses minus the dependant income-line amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, medical_expenses_other_dependant_2)
+            - max(0, medical_expenses_other_dependant_2_income_line_amount)
+          )
+
+  - name: federal_2025_medical_other_dependant_3_allowable
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 33199 calculates each dependant amount as medical expenses minus the dependant income-line amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, medical_expenses_other_dependant_3)
+            - max(0, medical_expenses_other_dependant_3_income_line_amount)
+          )
+
+  - name: federal_medical_expenses_other_dependants_line_33199
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 33199 line 4 adds allowable amounts for all other dependants
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_medical_other_dependant_1_allowable
+          + federal_2025_medical_other_dependant_2_allowable
+          + federal_2025_medical_other_dependant_3_allowable
+          + max(0, medical_expenses_other_dependants_additional_allowable)
+
+  - name: federal_political_contribution_tax_credit_line_41000
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 41000 calculates the federal political contribution tax credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if max(0, federal_political_contributions_line_40900) >= federal_2025_political_contribution_full_credit_threshold:
+            federal_2025_political_contribution_maximum_credit
+          else:
+            if max(0, federal_political_contributions_line_40900) <= federal_2025_political_contribution_first_threshold:
+              max(0, federal_political_contributions_line_40900)
+              * federal_2025_political_contribution_first_rate
+            else:
+              if max(0, federal_political_contributions_line_40900) <= federal_2025_political_contribution_second_threshold:
+                federal_2025_political_contribution_second_tier_base_credit
+                + max(
+                  0,
+                  max(0, federal_political_contributions_line_40900)
+                  - federal_2025_political_contribution_first_threshold
+                ) * federal_2025_political_contribution_second_rate
+              else:
+                federal_2025_political_contribution_third_tier_base_credit
+                + max(
+                  0,
+                  max(0, federal_political_contributions_line_40900)
+                  - federal_2025_political_contribution_second_threshold
+                ) * federal_2025_political_contribution_third_rate
+
+  - name: federal_top_up_tax_credit_line_34990
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 34990 applies 3.45% to line 33800 plus Schedule 9 line 22 above $8,319.38
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, non_refundable_credits_line_33800)
+            + max(0, schedule_9_line_22_donation_first_tier_credit)
+            - federal_2025_top_up_tax_credit_base
+          ) * federal_2025_top_up_tax_credit_rate
+
+  - name: federal_2025_refundable_medical_claimant_adjusted_net_income
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 45200 lines 1 to 5 calculate adjusted net income for the claimant
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, claimant_net_income_line_23600)
+            + max(0, claimant_uccb_repayment_line_21300)
+            + max(0, claimant_rdsp_income_repayment_included_line_23200)
+            - max(0, claimant_uccb_income_line_11700)
+            - max(0, claimant_rdsp_income_line_12500)
+          )
+
+  - name: federal_2025_refundable_medical_spouse_adjusted_net_income
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 45200 lines 1 to 5 calculate adjusted net income for the spouse or common-law partner
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, spouse_net_income_line_23600)
+            + max(0, spouse_uccb_repayment_line_21300)
+            + max(0, spouse_rdsp_income_repayment_included_line_23200)
+            - max(0, spouse_uccb_income_line_11700)
+            - max(0, spouse_rdsp_income_line_12500)
+          )
+
+  - name: federal_2025_refundable_medical_adjusted_family_net_income
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 45200 line 6 adds claimant and spouse adjusted net income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_refundable_medical_claimant_adjusted_net_income
+          + federal_2025_refundable_medical_spouse_adjusted_net_income
+
+  - name: federal_2025_refundable_medical_employment_income_component
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 45200 income test includes employment income net of specified deductions
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, employment_income_line_10100)
+            + max(0, other_employment_income_line_10400)
+            - max(0, registered_pension_plan_deduction_line_20700)
+            - max(0, annual_union_professional_dues_line_21200)
+            - max(0, other_employment_expenses_line_22900)
+            - max(0, clergy_residence_deduction_line_23100)
+          )
+
+  - name: federal_2025_refundable_medical_self_employment_income_component
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 45200 income test includes positive net self-employment income from lines 13500, 13700, 13900, 14100, and 14300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, business_income_line_13500)
+          + max(0, professional_income_line_13700)
+          + max(0, commission_income_line_13900)
+          + max(0, farming_income_line_14100)
+          + max(0, fishing_income_line_14300)
+
+  - name: federal_2025_refundable_medical_earned_income
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 45200 income test adds qualifying employment and self-employment income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_refundable_medical_employment_income_component
+          + federal_2025_refundable_medical_self_employment_income_component
+
+  - name: federal_2025_refundable_medical_expenses_claimed
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 45200 lines 9 to 11 add medical expenses from lines 21500 and 33200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, medical_expenses_line_21500)
+          + max(0, medical_expenses_line_33200)
+
+  - name: federal_2025_refundable_medical_supplement_before_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 45200 lines 12 to 14 calculate the supplement before income reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_refundable_medical_expenses_claimed
+            * federal_2025_refundable_medical_supplement_rate,
+            federal_2025_refundable_medical_supplement_maximum
+          )
+
+  - name: federal_2025_refundable_medical_supplement_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 45200 line 15 reduces the supplement by 5% of income above the threshold
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_refundable_medical_adjusted_family_net_income
+            - federal_2025_refundable_medical_supplement_income_threshold
+          ) * federal_2025_refundable_medical_supplement_reduction_rate
+
+  - name: federal_refundable_medical_expense_supplement_line_45200
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Federal Worksheet 2025 line 45200 line 16 calculates the refundable medical expense supplement
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if is_resident_canada_all_year
+            and age_at_end_of_year >= federal_2025_refundable_medical_supplement_minimum_age
+            and federal_2025_refundable_medical_expenses_claimed > 0
+            and federal_2025_refundable_medical_adjusted_family_net_income < federal_2025_refundable_medical_supplement_phaseout_ceiling
+            and federal_2025_refundable_medical_earned_income >= federal_2025_refundable_medical_supplement_earned_income_threshold:
+            max(
+              0,
+              federal_2025_refundable_medical_supplement_before_reduction
+              - federal_2025_refundable_medical_supplement_reduction
+            )
+          else:
+            0

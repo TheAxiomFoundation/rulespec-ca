@@ -1,0 +1,57 @@
+- name: tuition_claim_training_credit_transfer_and_carryforward
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#input.eligible_canadian_tuition_fees: 6000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#input.canada_training_credit_limit_from_notice: 1000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#input.canada_training_credit_amount_claimed: 1000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#input.eligible_foreign_tuition_fees: 2000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#input.unused_federal_tuition_from_prior_notice: 1500
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#input.taxable_income: 50000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#input.federal_tax_line_76_amount: 0
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#input.federal_non_refundable_credits_before_tuition_line_101: 45000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#input.federal_tuition_amount_transferred_to_designated_individual: 2000
+  output:
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_2025_canadian_tuition_fees: 6000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_2025_canada_training_credit_limit: 1000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_2025_canada_training_credit_maximum_claim: 1000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#canada_training_credit_line_45350: 1000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_2025_canadian_tuition_available_after_training_credit: 5000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_2025_foreign_tuition_fees: 2000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_2025_current_year_tuition_amount: 7000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_2025_unused_prior_year_tuition_amount: 1500
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_2025_total_tuition_amount_available: 8500
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_2025_tuition_tax_capacity_before_tuition: 50000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_2025_tuition_capacity_after_prior_credits: 5000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_2025_unused_prior_year_tuition_claimed: 1500
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_2025_current_year_tuition_claimed: 3500
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_tuition_amount_line_32300: 5000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_2025_total_unused_tuition_amount: 3500
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_2025_unused_current_year_tuition_available_to_transfer: 1500
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_tuition_amount_transferred_line_32700: 1500
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_2025_unused_tuition_available_to_carry_forward: 2000
+
+- name: high_taxable_income_uses_line_76_divided_by_lowest_rate
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#input.eligible_canadian_tuition_fees: 4000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#input.canada_training_credit_limit_from_notice: 5000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#input.canada_training_credit_amount_claimed: 5000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#input.eligible_foreign_tuition_fees: 0
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#input.unused_federal_tuition_from_prior_notice: 0
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#input.taxable_income: 100000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#input.federal_tax_line_76_amount: 14500
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#input.federal_non_refundable_credits_before_tuition_line_101: 99500
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#input.federal_tuition_amount_transferred_to_designated_individual: 0
+  output:
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_2025_canada_training_credit_maximum_claim: 2000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#canada_training_credit_line_45350: 2000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_2025_tuition_tax_capacity_before_tuition: 100000
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_2025_tuition_capacity_after_prior_credits: 500
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_tuition_amount_line_32300: 500
+    ca:policies/cra/t1-2025/federal-tuition-and-training-credit#federal_2025_unused_tuition_available_to_carry_forward: 1500

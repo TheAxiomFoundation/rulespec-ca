@@ -1,0 +1,19 @@
+source:
+  id: esdc-2026-canada-disability-benefit
+  citation_path: ca/policy/esdc/benefits-2026/canada-disability-benefit
+  title: Canada Disability Benefit 2026 amount and SOR/2025-35 calculation rules
+  documents:
+    - title: Canada Disability Benefit Regulations, SOR/2025-35
+      url: https://laws-lois.justice.gc.ca/eng/regulations/SOR-2025-35/page-1.html
+    - title: Canada Disability Benefit, how much you could receive
+      url: https://www.canada.ca/en/services/benefits/disability/canada-disability-benefit/amount.html
+  coverage:
+    encoded:
+      - SOR/2025-35 income-reduction formulas for single beneficiaries, one-beneficiary couples, and two-beneficiary couples
+      - July 2026 to June 2027 maximum monthly amount and indexed working-income exemptions
+      - Adjusted family net income and working-income exemption calculation surfaces
+      - Monthly and annual benefit amount after income reduction
+    not_encoded:
+      - Application administration, back-payment windows, representative payment administration, and recovery provisions
+      - Detailed Income Tax Act DTC certification predicates
+      - Citizenship, immigration, residency, incarceration, and age-month eligibility predicates beyond formula-case inputs

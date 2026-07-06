@@ -1,0 +1,61 @@
+- name: nu479_cost_of_living_caps_and_political_limited_by_tax
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/nu479-credits#input.nu479_net_income_line_23600: 80000
+    ca:policies/cra/t1-2025/nu479-credits#input.nu479_line_24400_and_25000_total: 1000
+    ca:policies/cra/t1-2025/nu479-credits#input.nu479_foreign_income_exempt_under_tax_treaty_line_62450: 4000
+    ca:policies/cra/t1-2025/nu479-credits#input.nu479_single_parent_at_any_time_in_2025: true
+    ca:policies/cra/t1-2025/nu479-credits#input.nu479_political_contributions_line_63991: 900
+    ca:policies/cra/t1-2025/nu479-credits#input.nu428_line_66: 1800
+  output:
+    ca:policies/cra/t1-2025/nu479-credits#nu479_adjusted_net_income_before_treaty_line_3: 79000
+    ca:policies/cra/t1-2025/nu479-credits#nu479_adjusted_net_income_line_5: 75000
+    ca:policies/cra/t1-2025/nu479-credits#nu479_basic_credit_line_8: 1500
+    ca:policies/cra/t1-2025/nu479-credits#nu479_single_parent_supplement_income_excess_line_11: 15000
+    ca:policies/cra/t1-2025/nu479-credits#nu479_cost_of_living_supplement_line_63940: 255.12
+    ca:policies/cra/t1-2025/nu479-credits#nu479_total_cost_of_living_tax_credit_line_63990: 1755.12
+    ca:policies/cra/t1-2025/nu479-credits#nu479_political_contribution_amount_line_16: 500
+    ca:policies/cra/t1-2025/nu479-credits#nu479_tax_available_for_political_credit_line_19: 44.88
+    ca:policies/cra/t1-2025/nu479-credits#nu479_political_contribution_tax_credit_line_20: 44.88
+    ca:policies/cra/t1-2025/nu479-credits#nunavut_credits_line_47900: 1800
+
+- name: nu479_low_contribution_and_no_single_parent_supplement
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/nu479-credits#input.nu479_net_income_line_23600: 10000
+    ca:policies/cra/t1-2025/nu479-credits#input.nu479_line_24400_and_25000_total: 0
+    ca:policies/cra/t1-2025/nu479-credits#input.nu479_foreign_income_exempt_under_tax_treaty_line_62450: 0
+    ca:policies/cra/t1-2025/nu479-credits#input.nu479_single_parent_at_any_time_in_2025: false
+    ca:policies/cra/t1-2025/nu479-credits#input.nu479_political_contributions_line_63991: 80
+    ca:policies/cra/t1-2025/nu479-credits#input.nu428_line_66: 1000
+  output:
+    ca:policies/cra/t1-2025/nu479-credits#nu479_basic_credit_line_8: 200
+    ca:policies/cra/t1-2025/nu479-credits#nu479_cost_of_living_supplement_line_63940: 0
+    ca:policies/cra/t1-2025/nu479-credits#nu479_political_contribution_amount_line_16: 80
+    ca:policies/cra/t1-2025/nu479-credits#nu479_political_contribution_tax_credit_line_20: 80
+    ca:policies/cra/t1-2025/nu479-credits#nunavut_credits_line_47900: 280
+
+- name: nu479_mid_contribution_formula_and_no_tax_available
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/nu479-credits#input.nu479_net_income_line_23600: 20000
+    ca:policies/cra/t1-2025/nu479-credits#input.nu479_line_24400_and_25000_total: 0
+    ca:policies/cra/t1-2025/nu479-credits#input.nu479_foreign_income_exempt_under_tax_treaty_line_62450: 0
+    ca:policies/cra/t1-2025/nu479-credits#input.nu479_single_parent_at_any_time_in_2025: true
+    ca:policies/cra/t1-2025/nu479-credits#input.nu479_political_contributions_line_63991: 500
+    ca:policies/cra/t1-2025/nu479-credits#input.nu428_line_66: 300
+  output:
+    ca:policies/cra/t1-2025/nu479-credits#nu479_cost_of_living_supplement_line_63940: 0
+    ca:policies/cra/t1-2025/nu479-credits#nu479_political_contribution_amount_line_16: 300
+    ca:policies/cra/t1-2025/nu479-credits#nu479_tax_available_for_political_credit_line_19: 0
+    ca:policies/cra/t1-2025/nu479-credits#nu479_political_contribution_tax_credit_line_20: 0
+    ca:policies/cra/t1-2025/nu479-credits#nunavut_credits_line_47900: 400

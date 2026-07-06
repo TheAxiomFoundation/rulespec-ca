@@ -1,0 +1,421 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T2222 for 2025 calculates northern residents deductions.
+    This module encodes the residency deduction, Chart B travel trip
+    minima, the Zone B 50% travel reduction, and the combined line 25500
+    amount for eligible northern residents.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/northern-residents-deductions
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Form T2222 is the official 2025 T1 form for calculating
+        northern residents deductions claimed on line 25500.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t2222/t2222-25e.txt
+rules:
+  - name: federal_2025_t2222_zone_a_daily_rate
+    kind: parameter
+    dtype: Money
+    source: CRA T2222 2025 Step 2 line 1 and line 2 multiply Zone A days by $11.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          11.00
+
+  - name: federal_2025_t2222_zone_b_daily_rate
+    kind: parameter
+    dtype: Money
+    source: CRA T2222 2025 Step 2 line 6 and line 7 multiply Zone B days by $5.50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          5.50
+
+  - name: federal_2025_t2222_net_income_limit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2222 2025 Step 2 line 12 multiplies net income by 20%, encoded as 0.20
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.20
+
+  - name: federal_2025_t2222_standard_travel_amount_per_individual
+    kind: parameter
+    dtype: Money
+    source: CRA T2222 2025 Step 3 Chart A caps each individual's standard amount allocation at $1,200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          1200
+
+  - name: federal_2025_t2222_zone_b_travel_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2222 2025 Step 3 line 15 multiplies Zone B travel by 50%, encoded as 0.50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.50
+
+  - name: federal_2025_t2222_simplified_meal_rate
+    kind: parameter
+    dtype: Money
+    source: CRA T2222 2025 instructions set the simplified meal rate at $23 per meal
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          23
+
+  - name: federal_2025_t2222_simplified_meal_daily_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA T2222 2025 instructions cap simplified meals at $69 per day per person
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          69
+
+  - name: federal_2025_t2222_zone_a_basic_residency_amount_line_1
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Step 2 line 1 multiplies days in a prescribed northern zone by $11.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t2222_days_in_zone_a_line_1) * federal_2025_t2222_zone_a_daily_rate
+
+  - name: federal_2025_t2222_zone_a_additional_residency_amount_line_2
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Step 2 line 2 multiplies qualifying additional Zone A days by $11.00
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t2222_additional_days_in_zone_a_line_2) * federal_2025_t2222_zone_a_daily_rate
+
+  - name: federal_2025_t2222_zone_a_residency_amount_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Step 2 line 3 adds line 1 and line 2
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2222_zone_a_basic_residency_amount_line_1
+          + federal_2025_t2222_zone_a_additional_residency_amount_line_2
+
+  - name: federal_2025_t2222_zone_a_residency_deduction_line_5
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Step 2 line 5 subtracts line 4 from line 3 and floors the Zone A residency amount at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2222_zone_a_residency_amount_line_3
+            - max(0, t2222_zone_a_special_work_site_benefits_line_4)
+          )
+
+  - name: federal_2025_t2222_zone_b_basic_residency_amount_line_6
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Step 2 line 6 multiplies days in a prescribed intermediate zone by $5.50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t2222_days_in_zone_b_line_6) * federal_2025_t2222_zone_b_daily_rate
+
+  - name: federal_2025_t2222_zone_b_additional_residency_amount_line_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Step 2 line 7 multiplies qualifying additional Zone B days by $5.50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t2222_additional_days_in_zone_b_line_7) * federal_2025_t2222_zone_b_daily_rate
+
+  - name: federal_2025_t2222_zone_b_residency_amount_line_8
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Step 2 line 8 adds line 6 and line 7
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2222_zone_b_basic_residency_amount_line_6
+          + federal_2025_t2222_zone_b_additional_residency_amount_line_7
+
+  - name: federal_2025_t2222_zone_b_residency_deduction_line_10
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Step 2 line 10 subtracts line 9 from line 8 and floors the Zone B residency amount at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2222_zone_b_residency_amount_line_8
+            - max(0, t2222_zone_b_special_work_site_benefits_line_9)
+          )
+
+  - name: federal_2025_t2222_total_residency_amount_line_11
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Step 2 line 11 adds line 5 and line 10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2222_zone_a_residency_deduction_line_5
+          + federal_2025_t2222_zone_b_residency_deduction_line_10
+
+  - name: federal_2025_t2222_net_income_limit_line_12
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Step 2 line 12 multiplies line 23600 net income by 20%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, net_income_line_23600) * federal_2025_t2222_net_income_limit_rate
+
+  - name: federal_2025_t2222_residency_deduction_line_13
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Step 2 line 13 is the lesser of line 11 and line 12
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            max(0, federal_2025_t2222_total_residency_amount_line_11),
+            max(0, federal_2025_t2222_net_income_limit_line_12)
+          )
+
+  - name: federal_2025_t2222_chart_a_individual_1_allocated_standard_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Chart A row C says each individual's allocated standard amount cannot be more than $1,200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_t2222_standard_travel_amount_per_individual,
+            max(0, t2222_chart_a_individual_1_allocated_standard_amount)
+          )
+
+  - name: federal_2025_t2222_other_travel_trip_1_chart_b_minimum
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Chart B Trip 1 enters the lowest amount from columns 3, 4, or 5 in the resident's zone column
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            max(0, t2222_other_travel_trip_1_column_3_benefit_or_standard_amount),
+            max(0, t2222_other_travel_trip_1_column_4_expenses),
+            max(0, t2222_other_travel_trip_1_column_5_lowest_return_airfare)
+          )
+
+  - name: federal_2025_t2222_other_travel_trip_1_zone_a_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Chart B enters Trip 1's lowest amount in Column 6 for Zone A when the resident was in a prescribed northern zone
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t2222_other_travel_trip_1_was_zone_a:
+            federal_2025_t2222_other_travel_trip_1_chart_b_minimum
+          else:
+            0
+
+  - name: federal_2025_t2222_other_travel_trip_1_zone_b_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Chart B enters Trip 1's lowest amount in Column 7 for Zone B when the resident was in a prescribed intermediate zone
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t2222_other_travel_trip_1_was_zone_b:
+            federal_2025_t2222_other_travel_trip_1_chart_b_minimum
+          else:
+            0
+
+  - name: federal_2025_t2222_other_travel_trip_2_chart_b_minimum
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Chart B Trip 2 enters the lowest amount from columns 3, 4, or 5 in the resident's zone column
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            max(0, t2222_other_travel_trip_2_column_3_benefit_or_standard_amount),
+            max(0, t2222_other_travel_trip_2_column_4_expenses),
+            max(0, t2222_other_travel_trip_2_column_5_lowest_return_airfare)
+          )
+
+  - name: federal_2025_t2222_other_travel_trip_2_zone_a_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Chart B enters Trip 2's lowest amount in Column 6 for Zone A when the resident was in a prescribed northern zone
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t2222_other_travel_trip_2_was_zone_a:
+            federal_2025_t2222_other_travel_trip_2_chart_b_minimum
+          else:
+            0
+
+  - name: federal_2025_t2222_other_travel_trip_2_zone_b_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Chart B enters Trip 2's lowest amount in Column 7 for Zone B when the resident was in a prescribed intermediate zone
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t2222_other_travel_trip_2_was_zone_b:
+            federal_2025_t2222_other_travel_trip_2_chart_b_minimum
+          else:
+            0
+
+  - name: federal_2025_t2222_medical_travel_chart_b_minimum
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Chart B Medical travel enters the lowest amount from columns 3, 4, or 5 in the resident's zone column
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            max(0, t2222_medical_travel_column_3_benefit_or_standard_amount),
+            max(0, t2222_medical_travel_column_4_expenses),
+            max(0, t2222_medical_travel_column_5_lowest_return_airfare)
+          )
+
+  - name: federal_2025_t2222_medical_travel_zone_a_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Chart B enters medical travel's lowest amount in Column 6 for Zone A when the resident was in a prescribed northern zone
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t2222_medical_travel_was_zone_a:
+            federal_2025_t2222_medical_travel_chart_b_minimum
+          else:
+            0
+
+  - name: federal_2025_t2222_medical_travel_zone_b_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Chart B enters medical travel's lowest amount in Column 7 for Zone B when the resident was in a prescribed intermediate zone
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t2222_medical_travel_was_zone_b:
+            federal_2025_t2222_medical_travel_chart_b_minimum
+          else:
+            0
+
+  - name: federal_2025_t2222_zone_a_travel_amount_chart_b_amount_a_line_14
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Chart B amount A and line 14 add all Column 6 Zone A travel amounts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2222_other_travel_trip_1_zone_a_amount
+          + federal_2025_t2222_other_travel_trip_2_zone_a_amount
+          + federal_2025_t2222_medical_travel_zone_a_amount
+
+  - name: federal_2025_t2222_zone_b_travel_amount_chart_b_amount_b
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Chart B amount B adds all Column 7 Zone B travel amounts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2222_other_travel_trip_1_zone_b_amount
+          + federal_2025_t2222_other_travel_trip_2_zone_b_amount
+          + federal_2025_t2222_medical_travel_zone_b_amount
+
+  - name: federal_2025_t2222_zone_b_travel_deduction_line_15
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Step 3 line 15 multiplies amount B from Chart B by 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2222_zone_b_travel_amount_chart_b_amount_b
+          * federal_2025_t2222_zone_b_travel_rate
+
+  - name: federal_2025_t2222_travel_deduction_line_16
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Step 3 line 16 adds line 14 and line 15 for the travel deduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2222_zone_a_travel_amount_chart_b_amount_a_line_14
+          + federal_2025_t2222_zone_b_travel_deduction_line_15
+
+  - name: northern_residents_deductions_line_25500
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2222 2025 Step 4 line 19 adds line 17 residency deduction and line 18 travel deduction for line 25500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2222_residency_deduction_line_13
+          + federal_2025_t2222_travel_deduction_line_16

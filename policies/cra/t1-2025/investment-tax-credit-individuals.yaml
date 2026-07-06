@@ -1,0 +1,549 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T2038(IND) for 2025 calculates individual investment tax credits
+    (ITCs), including current-year refundable and non-refundable ITCs, SR&ED
+    recapture, allowable line 41200 claims, carryback/refund amounts, and
+    carryforward.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/investment-tax-credit-individuals
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Form T2038(IND) is the official 2025 form for calculating
+        individual investment tax credits.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t2038-ind/t2038-ind-25e.pdf
+rules:
+  - name: federal_2025_t2038_sred_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2038(IND) 2025 Part A and Part B apply a 15% SR&ED rate, encoded as 0.15
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.15
+
+  - name: federal_2025_t2038_sred_pre_2014_repayment_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2038(IND) 2025 Part B and Part C apply a 20% rate for pre-2014 SR&ED repayments or recapture, encoded as 0.20
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.20
+
+  - name: federal_2025_t2038_qualified_property_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2038(IND) 2025 Part A applies a 10% qualified property rate, encoded as 0.10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.10
+
+  - name: federal_2025_t2038_agricultural_contribution_base_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2038(IND) 2025 Part A line 2 uses 80% of contributions made to agricultural organizations, encoded as 0.80
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.80
+
+  - name: federal_2025_t2038_metc_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2038(IND) 2025 Part B applies a 15% mineral exploration tax credit rate, encoded as 0.15
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.15
+
+  - name: federal_2025_t2038_cmetc_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2038(IND) 2025 Part B applies a 30% critical mineral exploration tax credit rate, encoded as 0.30
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.30
+
+  - name: federal_2025_t2038_ajctc_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2038(IND) 2025 Part B applies a 10% apprenticeship job creation tax credit rate, encoded as 0.10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.10
+
+  - name: federal_2025_t2038_refundable_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2038(IND) 2025 Part E amount 18 gives the refundable rate as 40%, encoded as 0.40
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.40
+
+  - name: federal_2025_t2038_part_a_sred_credit_line_1
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part A line 1 multiplies the SR&ED qualified expenditure base by 15%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t2038_sred_qualified_expenditure_base_line_67120)
+          * federal_2025_t2038_sred_rate
+
+  - name: federal_2025_t2038_part_a_agricultural_sred_credit_line_2
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part A line 2 multiplies 80% of agricultural organization SR&ED contributions by 15%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t2038_agricultural_organization_sred_contributions_line_67130)
+          * federal_2025_t2038_agricultural_contribution_base_rate
+          * federal_2025_t2038_sred_rate
+
+  - name: federal_2025_t2038_part_a_partnership_sred_credit_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part A line 3 enters ITC allocated from a partnership for SR&ED
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t2038_partnership_sred_itc_allocated_line_67135)
+
+  - name: federal_2025_t2038_part_a_qualified_property_credit_line_4
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part A line 4 multiplies total investments in qualified property by 10%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t2038_qualified_property_investment_line_67140)
+          * federal_2025_t2038_qualified_property_rate
+
+  - name: federal_2025_t2038_current_year_refundable_itc_amount_a
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part A amount A adds amounts 1 to 4
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2038_part_a_sred_credit_line_1
+          + federal_2025_t2038_part_a_agricultural_sred_credit_line_2
+          + federal_2025_t2038_part_a_partnership_sred_credit_line_3
+          + federal_2025_t2038_part_a_qualified_property_credit_line_4
+
+  - name: federal_2025_t2038_metc_amount_b
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part B amount B multiplies flow-through mining expenditures by 15%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t2038_flow_through_mining_expenditures_line_67170)
+          * federal_2025_t2038_metc_rate
+
+  - name: federal_2025_t2038_cmetc_amount_c
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part B amount C multiplies critical mineral mining expenditures by 30%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t2038_flow_through_critical_mineral_mining_expenditures_line_67175)
+          * federal_2025_t2038_cmetc_rate
+
+  - name: federal_2025_t2038_ajctc_amount_d
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part B amount D multiplies total apprenticeship job creation tax credit base by 10%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t2038_apprenticeship_job_creation_credit_base_line_67180)
+          * federal_2025_t2038_ajctc_rate
+
+  - name: federal_2025_t2038_sred_repayment_credit_amount_e
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part B amount E adds 20% of pre-2014 SR&ED assistance repayments and 15% of 2015-and-later repayments
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t2038_sred_repayment_pre_2014_line_67184)
+          * federal_2025_t2038_sred_pre_2014_repayment_rate
+          + max(0, t2038_sred_repayment_2015_and_later_line_67185)
+          * federal_2025_t2038_sred_rate
+
+  - name: federal_2025_t2038_current_year_non_refundable_itc_amount_f
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part B amount F adds amounts B, C, D, and E
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2038_metc_amount_b
+          + federal_2025_t2038_cmetc_amount_c
+          + federal_2025_t2038_ajctc_amount_d
+          + federal_2025_t2038_sred_repayment_credit_amount_e
+
+  - name: federal_2025_t2038_sred_recapture_amount_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part C line 3 adds 15% recapture on after-2013 SR&ED expenditures and 20% recapture on before-2014 expenditures
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t2038_sred_recapture_after_2013_expenditure_line_67193)
+          * federal_2025_t2038_sred_rate
+          + max(0, t2038_sred_recapture_before_2014_expenditure_line_67195)
+          * federal_2025_t2038_sred_pre_2014_repayment_rate
+
+  - name: federal_2025_t2038_part_d_subtotal_amount_4
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part D amount 4 adds amount 2 and amount 3
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2038_current_year_refundable_itc_amount_a
+          + federal_2025_t2038_current_year_non_refundable_itc_amount_f
+
+  - name: federal_2025_t2038_part_d_amount_5
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part D amount 5 adds opening balance amount 1 and amount 4
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t2038_itc_opening_balance_and_carryforward_amount_1)
+          + federal_2025_t2038_part_d_subtotal_amount_4
+
+  - name: federal_2025_t2038_total_available_itc_amount_g
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part D amount G subtracts adjustment amount 6 from amount 5
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2038_part_d_amount_5
+            - max(0, t2038_graduated_rate_estate_adjustment_amount_6)
+          )
+
+  - name: federal_2025_t2038_part_d_amount_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part D amount 9 subtracts line 41000 from line 40600 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, federal_tax_line_40600)
+            - max(0, federal_political_contribution_tax_credit_line_41000)
+          )
+
+  - name: federal_2025_t2038_part_d_amount_h
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part D amount H subtracts labour-sponsored funds tax credit line 41400 from amount 9 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2038_part_d_amount_9
+            - max(0, labour_sponsored_funds_tax_credit_line_41400)
+          )
+
+  - name: federal_2025_t2038_part_d_amount_i
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part D amount I is the lesser of amount G or amount H
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_t2038_total_available_itc_amount_g,
+            federal_2025_t2038_part_d_amount_h
+          )
+
+  - name: federal_2025_t2038_part_d_amount_13
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part D amount 13 adds amount 11 and federal foreign tax credit line 40500 when AMT applies
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2038_part_d_amount_h
+          + max(0, federal_foreign_tax_credit_line_40500)
+
+  - name: federal_2025_t2038_part_d_amount_j
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part D amount J subtracts T691 Part 1 line 103 from amount 13 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2038_part_d_amount_13
+            - max(0, t691_part_1_minimum_amount_line_103)
+          )
+
+  - name: federal_2025_t2038_part_d_amount_k
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part D amount K is the lesser of amount G or amount J when AMT applies
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_t2038_total_available_itc_amount_g,
+            federal_2025_t2038_part_d_amount_j
+          )
+
+  - name: investment_tax_credit_line_41200
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part D amount 15 is the ITC claim, not more than amount I or amount K, whichever applies, and is entered on line 41200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t2038_alternative_minimum_tax_applies:
+            federal_2025_t2038_part_d_amount_k
+          else:
+            federal_2025_t2038_part_d_amount_i
+
+  - name: federal_2025_t2038_part_e_amount_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part E amount 3 subtracts opening balance amount 2 from total available ITC amount 1
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2038_total_available_itc_amount_g
+          - max(0, t2038_itc_opening_balance_and_carryforward_amount_1)
+
+  - name: federal_2025_t2038_part_e_amount_6
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part E amount 6 subtracts opening balance from maximum Part D claim and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            investment_tax_credit_line_41200
+            - max(0, t2038_itc_opening_balance_and_carryforward_amount_1)
+          )
+
+  - name: federal_2025_t2038_total_credit_available_for_carryback_amount_l
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part E amount L subtracts amount 6 from amount 3
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2038_part_e_amount_3
+            - federal_2025_t2038_part_e_amount_6
+          )
+
+  - name: federal_2025_t2038_total_credit_designated_for_carryback_amount_m
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part E amount M adds lines 67200, 67210, and 67220 and cannot be more than amount L
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_t2038_total_credit_available_for_carryback_amount_l,
+            max(0, t2038_carryback_third_previous_year_line_67200)
+            + max(0, t2038_carryback_second_previous_year_line_67210)
+            + max(0, t2038_carryback_first_previous_year_line_67220)
+          )
+
+  - name: federal_2025_t2038_part_e_refundable_available_amount_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part E amount 9 subtracts Part D adjustment amount 6 from current-year refundable credit amount A
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2038_current_year_refundable_itc_amount_a
+            - max(0, t2038_graduated_rate_estate_adjustment_amount_6)
+          )
+
+  - name: federal_2025_t2038_part_e_amount_12
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part E amount 12 subtracts opening balance from amount 15
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          investment_tax_credit_line_41200
+          - max(0, t2038_itc_opening_balance_and_carryforward_amount_1)
+
+  - name: federal_2025_t2038_part_e_amount_14
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part E amount 14 adds amount 12 and amount M
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2038_part_e_amount_12
+          + federal_2025_t2038_total_credit_designated_for_carryback_amount_m
+
+  - name: federal_2025_t2038_part_e_amount_16
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part E amount 16 subtracts current-year non-refundable tax credit amount F from amount 14 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2038_part_e_amount_14
+            - federal_2025_t2038_current_year_non_refundable_itc_amount_f
+          )
+
+  - name: federal_2025_t2038_total_credit_available_for_refund_amount_n
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part E amount N subtracts amount 16 from amount 9
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2038_part_e_refundable_available_amount_9
+            - federal_2025_t2038_part_e_amount_16
+          )
+
+  - name: federal_2025_t2038_refund_designation_base_amount_17
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part E amount 17 is the amount designated as a refund and cannot be more than amount N
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_t2038_total_credit_available_for_refund_amount_n,
+            max(0, t2038_refund_designation_requested_amount_17)
+          )
+
+  - name: investment_tax_credit_refund_line_45400
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part E amount O multiplies amount 17 by the 40% refundable rate, encoded as 0.40, and is entered on line 45400
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2038_refund_designation_base_amount_17
+          * federal_2025_t2038_refundable_rate
+
+  - name: federal_2025_t2038_part_f_subtotal_amount_5
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part F amount 5 adds amount 2, amount 3, and amount 4
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          investment_tax_credit_line_41200
+          + federal_2025_t2038_total_credit_designated_for_carryback_amount_m
+          + investment_tax_credit_refund_line_45400
+
+  - name: federal_2025_t2038_carryforward_to_subsequent_year_amount_6
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2038(IND) 2025 Part F amount 6 subtracts amount 5 from total ITC available amount G
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t2038_total_available_itc_amount_g
+            - federal_2025_t2038_part_f_subtotal_amount_5
+          )

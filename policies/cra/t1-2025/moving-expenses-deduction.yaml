@@ -1,0 +1,190 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T1-M for the 2025 T1 return calculates the moving expenses
+    deduction entered on line 21900 and the unused moving expenses
+    available to carry forward. This module encodes the 40-kilometre
+    test and Part 4 arithmetic.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/moving-expenses-deduction
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Form T1-M is the official 2025 T1 form for calculating
+        moving expenses, the line 21900 deduction, and carryforward.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t1-m/t1-m-25e.pdf
+rules:
+  - name: federal_2025_moving_distance_requirement_km
+    kind: parameter
+    dtype: Number
+    source: CRA T1-M 2025 Part 2 requires the new home to be at least 40 kilometres closer
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 40
+
+  - name: federal_2025_moving_old_home_maintenance_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T1-M 2025 Part 4 line 14 caps costs to maintain the old home when vacant at 5000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5000
+
+  - name: federal_2025_moving_distance_difference_line_3
+    kind: derived
+    entity: Person
+    dtype: Number
+    period: Year
+    source: CRA T1-M 2025 Part 2 line 3 subtracts the new-home distance from the old-home distance
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, moving_old_home_distance_to_new_work_or_school_km)
+          - max(0, moving_new_home_distance_to_new_work_or_school_km)
+
+  - name: federal_2025_moving_travel_expenses_line_8
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1-M 2025 Part 4 line 8 adds travel lines 5 through 7
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, moving_vehicle_expenses_line_5)
+          + max(0, moving_accommodation_expenses_line_6)
+          + max(0, moving_meal_expenses_line_7)
+
+  - name: federal_2025_moving_temporary_living_expenses_line_11
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1-M 2025 Part 4 line 11 adds temporary accommodation and meal expenses on lines 9 and 10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, moving_temporary_accommodation_expenses_line_9)
+          + max(0, moving_temporary_meal_expenses_line_10)
+
+  - name: federal_2025_moving_old_home_maintenance_allowed_line_14
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1-M 2025 Part 4 line 14 caps old-home maintenance costs at 5000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            max(0, moving_old_home_maintenance_costs_line_14),
+            federal_2025_moving_old_home_maintenance_cap
+          )
+
+  - name: federal_2025_moving_lease_incidental_old_home_line_15
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1-M 2025 Part 4 line 15 adds lines 12 through 14
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, moving_lease_cancellation_cost_line_12)
+          + max(0, moving_incidental_costs_line_13)
+          + federal_2025_moving_old_home_maintenance_allowed_line_14
+
+  - name: federal_2025_moving_old_home_selling_costs_line_20
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1-M 2025 Part 4 line 20 adds selling-cost lines 16 through 19
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, moving_real_estate_commission_line_16)
+          + max(0, moving_selling_legal_notarial_fees_line_17)
+          + max(0, moving_selling_advertising_line_18)
+          + max(0, moving_other_selling_costs_line_19)
+
+  - name: federal_2025_moving_new_home_buying_costs_line_23
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1-M 2025 Part 4 line 23 adds legal/notarial fees and title-registration or transfer taxes on lines 21 and 22
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, moving_buying_legal_notarial_fees_line_21)
+          + max(0, moving_title_registration_transfer_taxes_line_22)
+
+  - name: federal_2025_moving_total_expenses_line_24
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1-M 2025 Part 4 line 24 adds lines 4, 8, 11, 15, 20, and 23
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, moving_transportation_storage_costs_line_4)
+          + federal_2025_moving_travel_expenses_line_8
+          + federal_2025_moving_temporary_living_expenses_line_11
+          + federal_2025_moving_lease_incidental_old_home_line_15
+          + federal_2025_moving_old_home_selling_costs_line_20
+          + federal_2025_moving_new_home_buying_costs_line_23
+
+  - name: federal_2025_moving_net_expenses_line_26
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1-M 2025 Part 4 line 26 subtracts line 25 reimbursements or allowances from line 24 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_moving_total_expenses_line_24
+            - max(0, moving_reimbursement_or_allowance_line_25)
+          )
+
+  - name: moving_expenses_deduction_line_21900
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1-M 2025 Part 4 line 29 is the lesser of line 27 and line 28, entered on line 21900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if federal_2025_moving_distance_difference_line_3 >= federal_2025_moving_distance_requirement_km:
+            min(
+              federal_2025_moving_net_expenses_line_26,
+              max(0, moving_net_eligible_income_line_28)
+            )
+          else:
+            0
+
+  - name: federal_2025_moving_unused_expenses_carryforward_line_30
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1-M 2025 Part 4 line 30 subtracts line 28 from line 27 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if federal_2025_moving_distance_difference_line_3 >= federal_2025_moving_distance_requirement_km:
+            max(
+              0,
+              federal_2025_moving_net_expenses_line_26
+              - max(0, moving_net_eligible_income_line_28)
+            )
+          else:
+            0

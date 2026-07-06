@@ -1,0 +1,36 @@
+- name: schedule_q_transfer_capped_and_withholding_prorated
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#input.schedule_q_retirement_income_line_122_line_10: 40000
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#input.schedule_q_annuity_rrsp_rrif_prpp_transfer_line_12: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#input.schedule_q_unused_prpp_vrsp_refund_deduction_line_13: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#input.schedule_q_line_293_deduction_line_14: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#input.schedule_q_line_297_point_12_deduction_line_16: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#input.schedule_q_requested_retirement_income_transfer_line_22: 25000
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#input.schedule_q_quebec_income_tax_withheld_line_50: 3600
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#schedule_q_retirement_income_deductions_line_18: 4000
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#schedule_q_eligible_retirement_income_line_20: 36000
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#schedule_q_retirement_income_transferred_line_245: 18000
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#schedule_q_quebec_withholding_transferred_line_451_1: 1800
+
+- name: schedule_q_zero_eligible_income_no_withholding_transfer
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#input.schedule_q_retirement_income_line_122_line_10: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#input.schedule_q_annuity_rrsp_rrif_prpp_transfer_line_12: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#input.schedule_q_unused_prpp_vrsp_refund_deduction_line_13: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#input.schedule_q_line_293_deduction_line_14: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#input.schedule_q_line_297_point_12_deduction_line_16: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#input.schedule_q_requested_retirement_income_transfer_line_22: 100
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#input.schedule_q_quebec_income_tax_withheld_line_50: 500
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#schedule_q_eligible_retirement_income_line_20: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#schedule_q_retirement_income_transferred_line_245: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer#schedule_q_quebec_withholding_transferred_line_451_1: 0

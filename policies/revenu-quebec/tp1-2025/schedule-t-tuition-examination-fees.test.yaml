@@ -1,0 +1,59 @@
+- name: schedule_t_claim_transfer_and_carryforward
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_unused_legacy_20_percent_fees_line_34: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_requested_legacy_credit_claim_line_38: 150
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_2025_tuition_examination_fees_line_40_6: 5000
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_canada_training_credit_refund_line_40_7: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_unused_current_8_percent_fees_line_44: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_requested_current_credit_claim_line_46: 300
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_return_line_401_line_53: 200
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_return_lines_378_381_total_line_54: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_return_lines_377_1_390_391_392_395_396_397_total_line_58: 50
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_requested_tuition_credit_transfer_line_68: 100
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_legacy_tuition_credit_line_37: 200
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_legacy_credit_claim_line_38: 150
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_legacy_unused_credit_line_39: 50
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_legacy_fees_carryforward_line_40: 250
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_current_year_net_fees_line_41: 4500
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_transferable_current_year_credit_line_52: 360
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_basic_credit_reduction_line_56: 100
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_total_other_credits_line_60: 150
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_tax_available_for_tuition_transfer_line_62: 50
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_transferable_tuition_credit_line_66: 310
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_tuition_credit_transferred_line_68: 100
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_transferred_fee_equivalent_line_42: 1250
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_current_year_fees_after_transfer_line_43: 3250
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_current_pool_fees_line_44_1: 5250
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_current_tuition_credit_line_45: 420
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_current_credit_claim_line_46: 300
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_current_unused_credit_line_47: 120
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_current_fees_carryforward_line_48: 1500
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_total_tuition_credit_claim_line_398: 450
+
+- name: schedule_t_current_fees_under_threshold
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_unused_legacy_20_percent_fees_line_34: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_requested_legacy_credit_claim_line_38: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_2025_tuition_examination_fees_line_40_6: 100
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_canada_training_credit_refund_line_40_7: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_unused_current_8_percent_fees_line_44: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_requested_current_credit_claim_line_46: 10
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_return_line_401_line_53: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_return_lines_378_381_total_line_54: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_return_lines_377_1_390_391_392_395_396_397_total_line_58: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#input.schedule_t_requested_tuition_credit_transfer_line_68: 10
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_current_year_net_fees_line_41: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_transferable_tuition_credit_line_66: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_tuition_credit_transferred_line_68: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_current_credit_claim_line_46: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees#schedule_t_total_tuition_credit_claim_line_398: 0

@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund.test.yaml",
+      "sha256": "b146a14bd963d2c4b601973880c6450841e17e0965e5a00448e6b13b4d8144ee"
+    },
+    {
+      "path": "policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund.yaml",
+      "sha256": "58d8d16df84cc30132a0dac57a283e2b2a21f8cff80846a0fbef3c963779bd83"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "a314fc624967b4e990beb7d9ffc429dae6e26642",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1152",
+    "version_commit": "a314fc624967b4e990beb7d9ffc429dae6e26642"
+  },
+  "axiom_encode_version": "0.2.1152",
+  "backend": "manual",
+  "citation": "ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-05T15:04:20.628780+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm/sign-applied-files/policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
+  "generated_output_sha256": "58d8d16df84cc30132a0dac57a283e2b2a21f8cff80846a0fbef3c963779bd83",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "2d8136171669a01434fa44a46f378558c3c48d48620f3b6254a12cbcd94813f9"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

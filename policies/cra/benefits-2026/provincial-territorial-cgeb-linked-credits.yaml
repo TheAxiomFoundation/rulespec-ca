@@ -1,0 +1,657 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA RC4210 2026 guidance describes provincial and territorial
+    credits that are administered with federal Canada Groceries and
+    Essentials Benefit payments. This module encodes the published
+    July 2026 to June 2027 amounts, thresholds, and calculation surfaces
+    for the New Brunswick HST credit, Newfoundland and Labrador income
+    supplement and seniors' benefit, Nova Scotia affordable living tax
+    credit, Ontario sales tax credit, Prince Edward Island sales tax
+    credit, and Saskatchewan low-income tax credit.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/benefits-2026/provincial-territorial-cgeb-linked-credits
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA RC4210 is the official CRA guide for CGEB/GST-HST credit
+        payments and the provincial and territorial programs combined
+        with those payments. This module encodes the published amounts
+        and reductions, while leaving residency, benefit administration,
+        Disability Tax Credit, senior status, and other eligibility
+        predicates to deeper fact layers.
+    source_urls:
+      - https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/rc4210/gst-hst-credit.html
+rules:
+  - name: cgeb_linked_adjusted_family_net_income
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 uses adjusted family net income to calculate provincial and territorial credits combined with CGEB payments
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          max(0, adjusted_family_net_income)
+
+  - name: new_brunswick_hst_credit_individual_amount
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 New Brunswick HST credit provides a maximum annual amount of $300 for an individual
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          300
+
+  - name: new_brunswick_hst_credit_spouse_amount
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 New Brunswick HST credit provides a maximum annual amount of $300 for a spouse or common-law partner
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          300
+
+  - name: new_brunswick_hst_credit_child_amount
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 New Brunswick HST credit provides $100 per child under 19 years of age
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          100
+
+  - name: new_brunswick_hst_credit_single_parent_first_child_amount
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 New Brunswick HST credit provides $300 for the first child in a single parent family
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          300
+
+  - name: new_brunswick_hst_credit_reduction_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 New Brunswick HST credit is reduced by adjusted family net income over $35,000
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          35000
+
+  - name: new_brunswick_hst_credit_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA RC4210 New Brunswick HST credit reduction rate is 2% of adjusted family net income over $35,000
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          0.02
+
+  - name: new_brunswick_hst_credit_child_count
+    kind: derived
+    entity: Family
+    dtype: Integer
+    period: Year
+    source: CRA RC4210 New Brunswick HST credit counts children under 19 years of age
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          max(0, new_brunswick_children_under_19_count)
+
+  - name: new_brunswick_hst_credit_child_component
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 New Brunswick HST credit uses $100 per child, except the first child in a single parent family is $300
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          if new_brunswick_hst_credit_has_spouse_or_partner:
+            new_brunswick_hst_credit_child_count * new_brunswick_hst_credit_child_amount
+          else:
+            if new_brunswick_hst_credit_child_count > 0:
+              new_brunswick_hst_credit_single_parent_first_child_amount
+              + max(0, new_brunswick_hst_credit_child_count - 1) * new_brunswick_hst_credit_child_amount
+            else:
+              0
+
+  - name: new_brunswick_hst_credit_base_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 New Brunswick HST credit adds individual, spouse, and child amounts before the income reduction
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          new_brunswick_hst_credit_individual_amount
+          + new_brunswick_hst_credit_spouse_component
+          + new_brunswick_hst_credit_child_component
+
+  - name: new_brunswick_hst_credit_spouse_component
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 New Brunswick HST credit adds $300 for a spouse or common-law partner when present
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          if new_brunswick_hst_credit_has_spouse_or_partner:
+            new_brunswick_hst_credit_spouse_amount
+          else:
+            0
+
+  - name: new_brunswick_hst_credit_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 New Brunswick HST credit reduction is 2% of adjusted family net income over $35,000
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          max(
+            0,
+            cgeb_linked_adjusted_family_net_income
+            - new_brunswick_hst_credit_reduction_threshold
+          ) * new_brunswick_hst_credit_reduction_rate
+
+  - name: new_brunswick_hst_credit_annual_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 New Brunswick HST credit annual amount is the maximum family amount reduced by the income reduction
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          max(0, new_brunswick_hst_credit_base_amount - new_brunswick_hst_credit_reduction)
+
+  - name: newfoundland_labrador_income_supplement_single_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Newfoundland and Labrador income supplement maximum annual payment is $520 for a single individual
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          520
+
+  - name: newfoundland_labrador_income_supplement_spouse_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Newfoundland and Labrador income supplement maximum annual payment is $589 with a spouse or common-law partner
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          589
+
+  - name: newfoundland_labrador_income_supplement_child_amount
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Newfoundland and Labrador income supplement adds $231 per child under 19 years of age
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          231
+
+  - name: newfoundland_labrador_income_supplement_maximum_annual_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 gives NLIS maximum annual amounts by family situation
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          newfoundland_labrador_income_supplement_adult_amount
+          + max(0, newfoundland_labrador_income_supplement_child_count)
+          * newfoundland_labrador_income_supplement_child_amount
+
+  - name: newfoundland_labrador_income_supplement_adult_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 NLIS uses the spouse/common-law maximum when a spouse or common-law partner is present, otherwise the single maximum
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          if newfoundland_labrador_income_supplement_has_spouse_or_partner:
+            newfoundland_labrador_income_supplement_spouse_maximum
+          else:
+            newfoundland_labrador_income_supplement_single_maximum
+
+  - name: newfoundland_labrador_seniors_benefit_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Newfoundland and Labrador seniors' benefit maximum annual amount is $1,882
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          1882
+
+  - name: newfoundland_labrador_seniors_benefit_full_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Newfoundland and Labrador seniors' benefit full-benefit adjusted family net income threshold is $30,409
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          30409
+
+  - name: newfoundland_labrador_seniors_benefit_partial_ceiling
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Newfoundland and Labrador seniors' benefit partial-benefit adjusted family net income ceiling is $46,549
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          46549
+
+  - name: newfoundland_labrador_seniors_benefit_full_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 provides the full NL seniors' benefit when a senior family has adjusted family net income of $30,409 or less
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          if newfoundland_labrador_seniors_benefit_has_senior:
+            if cgeb_linked_adjusted_family_net_income <= newfoundland_labrador_seniors_benefit_full_threshold:
+              newfoundland_labrador_seniors_benefit_maximum
+            else:
+              0
+          else:
+            0
+
+  - name: nova_scotia_affordable_living_credit_base_amount
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Nova Scotia affordable living tax credit maximum annual credit is $255 for an individual or couple
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          255
+
+  - name: nova_scotia_affordable_living_credit_child_amount
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Nova Scotia affordable living tax credit adds $60 for each child under 19 years of age
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          60
+
+  - name: nova_scotia_affordable_living_credit_reduction_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Nova Scotia affordable living tax credit reduction threshold is adjusted family net income over $30,000
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          30000
+
+  - name: nova_scotia_affordable_living_credit_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA RC4210 Nova Scotia affordable living tax credit reduction rate is 5%
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          0.05
+
+  - name: nova_scotia_affordable_living_credit_base_before_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 Nova Scotia affordable living tax credit base is $255 plus $60 per child
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          nova_scotia_affordable_living_credit_base_amount
+          + max(0, nova_scotia_affordable_living_credit_child_count)
+          * nova_scotia_affordable_living_credit_child_amount
+
+  - name: nova_scotia_affordable_living_credit_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 Nova Scotia affordable living tax credit is reduced by 5% of adjusted family net income over $30,000
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          max(
+            0,
+            cgeb_linked_adjusted_family_net_income
+            - nova_scotia_affordable_living_credit_reduction_threshold
+          ) * nova_scotia_affordable_living_credit_reduction_rate
+
+  - name: nova_scotia_affordable_living_credit_annual_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 Nova Scotia affordable living tax credit annual amount is the base amount minus the income reduction
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          max(
+            0,
+            nova_scotia_affordable_living_credit_base_before_reduction
+            - nova_scotia_affordable_living_credit_reduction
+          )
+
+  - name: ontario_sales_tax_credit_person_amount
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Ontario sales tax credit maximum annual credit is $378 for each adult and each child under 19
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          378
+
+  - name: ontario_sales_tax_credit_single_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Ontario sales tax credit single no-child reduction threshold is $29,047
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          29047
+
+  - name: ontario_sales_tax_credit_family_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Ontario sales tax credit family and single-parent reduction threshold is $36,309
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          36309
+
+  - name: ontario_sales_tax_credit_seniors_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Ontario sales tax credit seniors' income threshold can be $37,273
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          37273
+
+  - name: ontario_sales_tax_credit_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA RC4210 Ontario sales tax credit reduction rate is 4%
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          0.04
+
+  - name: ontario_sales_tax_credit_person_count
+    kind: derived
+    entity: Family
+    dtype: Integer
+    period: Year
+    source: CRA RC4210 Ontario sales tax credit provides an amount for each adult and each child under 19
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          1
+          + ontario_sales_tax_credit_spouse_count
+          + max(0, ontario_sales_tax_credit_child_count)
+
+  - name: ontario_sales_tax_credit_spouse_count
+    kind: derived
+    entity: Family
+    dtype: Integer
+    period: Year
+    source: CRA RC4210 Ontario sales tax credit provides an amount for a spouse or common-law partner when present
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          if ontario_sales_tax_credit_has_spouse_or_partner:
+            1
+          else:
+            0
+
+  - name: ontario_sales_tax_credit_base_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 Ontario sales tax credit maximum amount is $378 for each adult and each child
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          ontario_sales_tax_credit_person_count * ontario_sales_tax_credit_person_amount
+
+  - name: ontario_sales_tax_credit_family_or_seniors_threshold
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 Ontario sales tax credit uses the higher seniors threshold when the seniors threshold applies
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          if ontario_sales_tax_credit_seniors_threshold_applies:
+            max(
+              ontario_sales_tax_credit_family_threshold,
+              ontario_sales_tax_credit_seniors_threshold
+            )
+          else:
+            ontario_sales_tax_credit_family_threshold
+
+  - name: ontario_sales_tax_credit_reduction_threshold
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 Ontario sales tax credit uses the single no-child threshold, the family threshold, or the seniors' threshold where applicable
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          if ontario_sales_tax_credit_has_spouse_or_partner:
+            ontario_sales_tax_credit_family_or_seniors_threshold
+          else:
+            if max(0, ontario_sales_tax_credit_child_count) == 0:
+              ontario_sales_tax_credit_single_threshold
+            else:
+              ontario_sales_tax_credit_family_or_seniors_threshold
+
+  - name: ontario_sales_tax_credit_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 Ontario sales tax credit is reduced by 4% of income over the applicable threshold
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          max(
+            0,
+            cgeb_linked_adjusted_family_net_income
+            - ontario_sales_tax_credit_reduction_threshold
+          ) * ontario_sales_tax_credit_reduction_rate
+
+  - name: ontario_sales_tax_credit_annual_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 Ontario sales tax credit annual amount is the maximum amount minus the income reduction
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          max(0, ontario_sales_tax_credit_base_amount - ontario_sales_tax_credit_reduction)
+
+  - name: prince_edward_island_sales_tax_credit_individual_amount
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Prince Edward Island sales tax credit annual credit is $310 for an individual
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          310
+
+  - name: prince_edward_island_sales_tax_credit_spouse_or_dependant_amount
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Prince Edward Island sales tax credit adds $55 for a spouse, common-law partner, or eligible dependant
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          55
+
+  - name: prince_edward_island_essentials_benefit_minimum
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 says the renamed Prince Edward Island essentials benefit will introduce a $175 minimum payment amount
+    versions:
+      - effective_from: '2026-11-01'
+        formula: |-
+          175
+
+  - name: prince_edward_island_sales_tax_credit_annual_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 Prince Edward Island sales tax credit is $310 plus $55 for a spouse, common-law partner, or eligible dependant
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          prince_edward_island_sales_tax_credit_individual_amount
+          + prince_edward_island_sales_tax_credit_spouse_or_dependant_component
+
+  - name: prince_edward_island_sales_tax_credit_spouse_or_dependant_component
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 Prince Edward Island sales tax credit adds $55 when there is a spouse, common-law partner, or eligible dependant
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          if prince_edward_island_sales_tax_credit_has_spouse_or_eligible_dependant:
+            prince_edward_island_sales_tax_credit_spouse_or_dependant_amount
+          else:
+            0
+
+  - name: saskatchewan_low_income_tax_credit_individual_amount
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Saskatchewan low-income tax credit provides $460 for an individual
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          460
+
+  - name: saskatchewan_low_income_tax_credit_spouse_or_dependant_amount
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Saskatchewan low-income tax credit provides $460 for a spouse, common-law partner, or eligible dependant
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          460
+
+  - name: saskatchewan_low_income_tax_credit_child_amount
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Saskatchewan low-income tax credit provides $181 per child under 19 years of age
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          181
+
+  - name: saskatchewan_low_income_tax_credit_child_cap
+    kind: parameter
+    dtype: Integer
+    source: CRA RC4210 Saskatchewan low-income tax credit child amount is limited to a maximum of 2 children
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          2
+
+  - name: saskatchewan_low_income_tax_credit_family_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Saskatchewan low-income tax credit annual family credit is up to $1,282
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          1282
+
+  - name: saskatchewan_low_income_tax_credit_reduction_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Saskatchewan low-income tax credit starts to be reduced when adjusted family net income is more than $39,345
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          39345
+
+  - name: saskatchewan_low_income_tax_credit_partial_ceiling
+    kind: parameter
+    dtype: Money
+    source: CRA RC4210 Saskatchewan low-income tax credit may be partial for adjusted family net income between $39,345 and $81,668
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          81668
+
+  - name: saskatchewan_low_income_tax_credit_maximum_before_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 Saskatchewan low-income tax credit maximum is individual plus spouse or dependant amount plus up to two child amounts, capped at $1,282
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          min(
+            max(0, saskatchewan_low_income_tax_credit_family_maximum),
+            max(
+              0,
+              saskatchewan_low_income_tax_credit_individual_amount
+              + saskatchewan_low_income_tax_credit_spouse_or_dependant_component
+              + saskatchewan_children_under_19_capped_count
+              * saskatchewan_low_income_tax_credit_child_amount
+            )
+          )
+
+  - name: saskatchewan_children_under_19_capped_count
+    kind: derived
+    entity: Family
+    dtype: Integer
+    period: Year
+    source: CRA RC4210 Saskatchewan low-income tax credit child amount is limited to a maximum of two children under 19
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          min(
+            saskatchewan_low_income_tax_credit_child_cap,
+            max(0, saskatchewan_low_income_tax_credit_child_count)
+          )
+
+  - name: saskatchewan_low_income_tax_credit_spouse_or_dependant_component
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA RC4210 Saskatchewan low-income tax credit adds the spouse/common-law partner or eligible dependant amount when applicable
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          if saskatchewan_low_income_tax_credit_has_spouse_or_eligible_dependant:
+            saskatchewan_low_income_tax_credit_spouse_or_dependant_amount
+          else:
+            0

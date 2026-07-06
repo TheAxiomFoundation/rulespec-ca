@@ -1,0 +1,79 @@
+- name: nt479_low_income_single_gets_supplement
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_net_income_line_23600: 10000
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_line_24400_and_25000_total: 1000
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_foreign_income_exempt_under_tax_treaty_line_62450: 500
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_had_spouse_or_common_law_partner_on_december_31: false
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_spouse_basic_credit_for_self_line_62480: 0
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_under_18_on_december_31: false
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_spouse_or_partner_claimed_family_supplement: false
+  output:
+    ca:policies/cra/t1-2025/nt479-credits#nt479_adjusted_net_income_before_treaty_line_3: 9000
+    ca:policies/cra/t1-2025/nt479-credits#nt479_adjusted_net_income_line_5: 8500
+    ca:policies/cra/t1-2025/nt479-credits#nt479_basic_credit_for_self_line_62460: 221
+    ca:policies/cra/t1-2025/nt479-credits#nt479_spouse_supplement_amount_line_62470: 0
+    ca:policies/cra/t1-2025/nt479-credits#nt479_supplement_base_line_16: 350
+    ca:policies/cra/t1-2025/nt479-credits#nt479_basic_credits_for_supplement_line_19: 221
+    ca:policies/cra/t1-2025/nt479-credits#nt479_cost_of_living_tax_credit_supplement_line_62490: 129
+    ca:policies/cra/t1-2025/nt479-credits#northwest_territories_credit_line_47900: 350
+
+- name: nt479_middle_income_couple_supplement_reduced
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_net_income_line_23600: 30000
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_line_24400_and_25000_total: 0
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_foreign_income_exempt_under_tax_treaty_line_62450: 0
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_had_spouse_or_common_law_partner_on_december_31: true
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_spouse_basic_credit_for_self_line_62480: 100
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_under_18_on_december_31: false
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_spouse_or_partner_claimed_family_supplement: false
+  output:
+    ca:policies/cra/t1-2025/nt479-credits#nt479_basic_credit_for_self_line_62460: 537
+    ca:policies/cra/t1-2025/nt479-credits#nt479_spouse_supplement_amount_line_62470: 350
+    ca:policies/cra/t1-2025/nt479-credits#nt479_supplement_base_line_16: 700
+    ca:policies/cra/t1-2025/nt479-credits#nt479_basic_credits_for_supplement_line_19: 637
+    ca:policies/cra/t1-2025/nt479-credits#nt479_cost_of_living_tax_credit_supplement_line_62490: 63
+    ca:policies/cra/t1-2025/nt479-credits#northwest_territories_credit_line_47900: 600
+
+- name: nt479_high_income_cap_and_under_18_zero_supplement
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_net_income_line_23600: 70000
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_line_24400_and_25000_total: 0
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_foreign_income_exempt_under_tax_treaty_line_62450: 0
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_had_spouse_or_common_law_partner_on_december_31: false
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_spouse_basic_credit_for_self_line_62480: 0
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_under_18_on_december_31: true
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_spouse_or_partner_claimed_family_supplement: false
+  output:
+    ca:policies/cra/t1-2025/nt479-credits#nt479_adjusted_net_income_line_5: 70000
+    ca:policies/cra/t1-2025/nt479-credits#nt479_basic_credit_for_self_line_62460: 942
+    ca:policies/cra/t1-2025/nt479-credits#nt479_cost_of_living_tax_credit_supplement_line_62490: 0
+    ca:policies/cra/t1-2025/nt479-credits#northwest_territories_credit_line_47900: 942
+
+- name: nt479_spouse_claimed_supplement_zero_branch
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_net_income_line_23600: 0
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_line_24400_and_25000_total: 0
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_foreign_income_exempt_under_tax_treaty_line_62450: 0
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_had_spouse_or_common_law_partner_on_december_31: true
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_spouse_basic_credit_for_self_line_62480: 0
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_under_18_on_december_31: false
+    ca:policies/cra/t1-2025/nt479-credits#input.nt479_spouse_or_partner_claimed_family_supplement: true
+  output:
+    ca:policies/cra/t1-2025/nt479-credits#nt479_cost_of_living_tax_credit_supplement_line_62490: 0
+    ca:policies/cra/t1-2025/nt479-credits#northwest_territories_credit_line_47900: 0

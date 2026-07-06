@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/cra/t1-2025/provincial-territorial-foreign-tax-credit.test.yaml",
+      "sha256": "187762fb15bec810db6f2663107a35c21aa8d42297c48a215c3640d72b8d0cd1"
+    },
+    {
+      "path": "policies/cra/t1-2025/provincial-territorial-foreign-tax-credit.yaml",
+      "sha256": "2ce277d0c91c2bb79fb6bcc1c5da65559fd80bd62b8dd7cbbb5cf2830521f596"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "a314fc624967b4e990beb7d9ffc429dae6e26642",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1152",
+    "version_commit": "a314fc624967b4e990beb7d9ffc429dae6e26642"
+  },
+  "axiom_encode_version": "0.2.1152",
+  "backend": "manual",
+  "citation": "ca:policies/cra/t1-2025/provincial-territorial-foreign-tax-credit",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-05T15:04:20.588511+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm/sign-applied-files/policies/cra/t1-2025/provincial-territorial-foreign-tax-credit.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
+  "generated_output_sha256": "2ce277d0c91c2bb79fb6bcc1c5da65559fd80bd62b8dd7cbbb5cf2830521f596",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "53ef066bcf8aa79b5899db6ba8242effdc4cb4b59a1d25a1921baba81f37ced6"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

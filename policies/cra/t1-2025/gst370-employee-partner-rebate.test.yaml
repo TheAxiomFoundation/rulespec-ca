@@ -1,0 +1,83 @@
+- name: gst370_calculates_gst_hst_provincial_hst_and_line_45700
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_gst_eligible_expenses_other_than_cca_line_1: 1050
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_gst_eligible_cca_line_2: 105
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_hst_13_eligible_expenses_other_than_cca_line_5: 1130
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_hst_13_eligible_cca_line_6: 113
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_hst_14_eligible_expenses_other_than_cca_line_5: 1140
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_hst_14_eligible_cca_line_6: 114
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_hst_15_eligible_expenses_other_than_cca_line_5: 1150
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_hst_15_eligible_cca_line_6: 115
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_1_eligible_expenses_line_1: 101
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_1_eligible_cca_line_2: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_2_eligible_expenses_line_1: 102
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_2_eligible_cca_line_2: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_8_eligible_expenses_line_1: 108
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_8_eligible_cca_line_2: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_9_eligible_expenses_line_1: 109
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_9_eligible_cca_line_2: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_10_eligible_expenses_line_1: 110
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_10_eligible_cca_line_2: 0
+  output:
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_total_eligible_expenses_for_gst_line_3: 1155
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_eligible_gst_line_4: 55
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_hst_13_total_line_7: 1243
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_hst_14_total_line_7: 1254
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_hst_15_total_line_7: 1265
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_total_eligible_expenses_for_hst_line_8: 3762
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_hst_13_rebate_line_9: 143
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_hst_14_rebate_line_10: 154
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_hst_15_rebate_line_11: 165
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_total_hst_rebate_line_12: 462
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_chart3_hst_1_total_line_3: 101
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_chart3_hst_2_total_line_3: 102
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_chart3_hst_8_total_line_3: 108
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_chart3_hst_9_total_line_3: 109
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_chart3_hst_10_total_line_3: 110
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_total_expenses_eligible_for_provincial_hst_rebate_line_13: 530
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_chart3_hst_1_rebate_line_5: 1
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_chart3_hst_2_rebate_line_6: 2
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_chart3_hst_8_rebate_line_7: 8
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_chart3_hst_9_rebate_line_8: 9
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_chart3_hst_10_rebate_line_9: 10
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_rebate_for_property_and_services_brought_into_participating_province_line_14: 30
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_total_employee_and_partner_rebate_line_15: 547
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_employee_and_partner_gst_hst_rebate_line_45700: 547
+
+- name: gst370_negative_inputs_floor_to_zero
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_gst_eligible_expenses_other_than_cca_line_1: -1050
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_gst_eligible_cca_line_2: -105
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_hst_13_eligible_expenses_other_than_cca_line_5: -1130
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_hst_13_eligible_cca_line_6: -113
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_hst_14_eligible_expenses_other_than_cca_line_5: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_hst_14_eligible_cca_line_6: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_hst_15_eligible_expenses_other_than_cca_line_5: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_hst_15_eligible_cca_line_6: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_1_eligible_expenses_line_1: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_1_eligible_cca_line_2: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_2_eligible_expenses_line_1: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_2_eligible_cca_line_2: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_8_eligible_expenses_line_1: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_8_eligible_cca_line_2: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_9_eligible_expenses_line_1: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_9_eligible_cca_line_2: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_10_eligible_expenses_line_1: -110
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#input.gst370_chart3_hst_10_eligible_cca_line_2: -11
+  output:
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_total_eligible_expenses_for_gst_line_3: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_eligible_gst_line_4: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_hst_13_total_line_7: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_hst_13_rebate_line_9: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_chart3_hst_10_total_line_3: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_chart3_hst_10_rebate_line_9: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_total_employee_and_partner_rebate_line_15: 0
+    ca:policies/cra/t1-2025/gst370-employee-partner-rebate#gst370_employee_and_partner_gst_hst_rebate_line_45700: 0

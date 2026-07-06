@@ -1,0 +1,23 @@
+source:
+  id: cra-2026-federal-td1-personal-credits
+  citation_path: ca/policy/cra/t4127-2026/federal-td1-personal-credits
+  title: CRA 2026 federal TD1 personal tax credits
+  documents:
+    - title: TD1 2026 Personal Tax Credits Return
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/td1/td1-26e.pdf
+    - title: TD1-WS Worksheet for the 2026 Personal Tax Credits Return
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/td1-ws/td1-ws-26e.pdf
+  coverage:
+    encoded:
+      - Federal TD1 basic personal amount with high-income partial amount
+      - Federal TD1 age amount phaseout
+      - Federal TD1 infirm child caregiver amount
+      - Federal TD1 pension income, tuition, and disability amount claim surfaces
+      - Federal TD1 spouse/common-law partner and eligible dependant amount formulas
+      - Federal TD1 Canada caregiver amount formulas for infirm spouse, eligible dependant, and other infirm dependants age 18 or older
+      - Federal TD1 spouse and dependant transfer amount inputs
+      - Federal TD1 northern residents prescribed-zone deduction surface
+    not_encoded:
+      - Fact predicates for whether a taxpayer satisfies relationship, support, residency, custody, education, disability, or medical certification requirements
+      - Provincial and territorial TD1 personal credit forms
+      - Return-package-only credits not listed on the 2026 federal TD1 form

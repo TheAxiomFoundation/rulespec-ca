@@ -1,0 +1,1348 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA T4127 Tables 8.9 through 8.21 list the 2026 federal,
+    provincial, and territorial claim-code ranges and Option 1
+    personal tax credit amounts. This module encodes claim codes
+    0 through 10 for each table, including the total claim amount
+    range, selected TC/TCP amount, and K1/K1P non-refundable tax
+    credit amount used by payroll deduction formulas.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t4127-2026/claim-codes
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        T4127 is CRA's official payroll formula source for personal
+        claim-code calculations used in tax withholding. This module
+        encodes the published 2026 claim-code tables before deeper
+        TD1 form line-item expansion.
+    source_urls:
+      - https://www.canada.ca/en/revenue-agency/services/forms-publications/payroll/t4127-payroll-deductions-formulas/t4127-jan/t4127-jan-payroll-deductions-formulas-computer-programs.html
+rules:
+  - name: federal_claim_amount_from
+    kind: parameter
+    dtype: Money
+    indexed_by: federal_claim_code
+    source: CRA T4127 2026 Federal claim-code table, total claim amount lower bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 0
+          2: 16452.01
+          3: 19285.01
+          4: 22118.01
+          5: 24951.01
+          6: 27784.01
+          7: 30617.01
+          8: 33450.01
+          9: 36283.01
+          10: 39116.01
+
+  - name: federal_claim_amount_to
+    kind: parameter
+    dtype: Money
+    indexed_by: federal_claim_code
+    source: CRA T4127 2026 Federal claim-code table, total claim amount upper bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 16452
+          2: 19285
+          3: 22118
+          4: 24951
+          5: 27784
+          6: 30617
+          7: 33450
+          8: 36283
+          9: 39116
+          10: 41949
+
+  - name: federal_option_1_total_claim_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: federal_claim_code
+    source: CRA T4127 2026 Federal claim-code table, Option 1 TC amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 16452
+          2: 17868.5
+          3: 20701.5
+          4: 23534.5
+          5: 26367.5
+          6: 29200.5
+          7: 32033.5
+          8: 34866.5
+          9: 37699.5
+          10: 40532.5
+
+  - name: federal_option_1_credit_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: federal_claim_code
+    source: CRA T4127 2026 Federal claim-code table, Option 1 K1 amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 2303.28
+          2: 2501.59
+          3: 2898.21
+          4: 3294.83
+          5: 3691.45
+          6: 4088.07
+          7: 4484.69
+          8: 4881.31
+          9: 5277.93
+          10: 5674.55
+
+  - name: selected_federal_claim_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Federal claim-code table, selected Option 1 TC amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          federal_option_1_total_claim_amount[federal_claim_code]
+
+  - name: selected_federal_claim_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Federal claim-code table, selected Option 1 K1 amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          federal_option_1_credit_amount[federal_claim_code]
+
+  - name: alberta_claim_amount_from
+    kind: parameter
+    dtype: Money
+    indexed_by: alberta_claim_code
+    source: CRA T4127 2026 Alberta claim-code table, total claim amount lower bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 0
+          2: 22769.01
+          3: 26026.01
+          4: 29283.01
+          5: 32540.01
+          6: 35797.01
+          7: 39054.01
+          8: 42311.01
+          9: 45568.01
+          10: 48825.01
+
+  - name: alberta_claim_amount_to
+    kind: parameter
+    dtype: Money
+    indexed_by: alberta_claim_code
+    source: CRA T4127 2026 Alberta claim-code table, total claim amount upper bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 22769
+          2: 26026
+          3: 29283
+          4: 32540
+          5: 35797
+          6: 39054
+          7: 42311
+          8: 45568
+          9: 48825
+          10: 52082
+
+  - name: alberta_option_1_total_claim_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: alberta_claim_code
+    source: CRA T4127 2026 Alberta claim-code table, Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 22769
+          2: 24397.5
+          3: 27654.5
+          4: 30911.5
+          5: 34168.5
+          6: 37425.5
+          7: 40682.5
+          8: 43939.5
+          9: 47196.5
+          10: 50453.5
+
+  - name: alberta_option_1_credit_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: alberta_claim_code
+    source: CRA T4127 2026 Alberta claim-code table, Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 1821.52
+          2: 1951.8
+          3: 2212.36
+          4: 2472.92
+          5: 2733.48
+          6: 2994.04
+          7: 3254.6
+          8: 3515.16
+          9: 3775.72
+          10: 4036.28
+
+  - name: selected_alberta_claim_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Alberta claim-code table, selected Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          alberta_option_1_total_claim_amount[alberta_claim_code]
+
+  - name: selected_alberta_claim_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Alberta claim-code table, selected Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          alberta_option_1_credit_amount[alberta_claim_code]
+
+  - name: british_columbia_claim_amount_from
+    kind: parameter
+    dtype: Money
+    indexed_by: british_columbia_claim_code
+    source: CRA T4127 2026 British Columbia claim-code table, total claim amount lower bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 0
+          2: 13216.01
+          3: 16190.01
+          4: 19164.01
+          5: 22138.01
+          6: 25112.01
+          7: 28086.01
+          8: 31060.01
+          9: 34034.01
+          10: 37008.01
+
+  - name: british_columbia_claim_amount_to
+    kind: parameter
+    dtype: Money
+    indexed_by: british_columbia_claim_code
+    source: CRA T4127 2026 British Columbia claim-code table, total claim amount upper bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 13216
+          2: 16190
+          3: 19164
+          4: 22138
+          5: 25112
+          6: 28086
+          7: 31060
+          8: 34034
+          9: 37008
+          10: 39982
+
+  - name: british_columbia_option_1_total_claim_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: british_columbia_claim_code
+    source: CRA T4127 2026 British Columbia claim-code table, Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 13216
+          2: 14703
+          3: 17677
+          4: 20651
+          5: 23625
+          6: 26599
+          7: 29573
+          8: 32547
+          9: 35521
+          10: 38495
+
+  - name: british_columbia_option_1_credit_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: british_columbia_claim_code
+    source: CRA T4127 2026 British Columbia claim-code table, Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 668.73
+          2: 743.97
+          3: 894.46
+          4: 1044.94
+          5: 1195.43
+          6: 1345.91
+          7: 1496.39
+          8: 1646.88
+          9: 1797.36
+          10: 1947.85
+
+  - name: selected_british_columbia_claim_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 British Columbia claim-code table, selected Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          british_columbia_option_1_total_claim_amount[british_columbia_claim_code]
+
+  - name: selected_british_columbia_claim_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 British Columbia claim-code table, selected Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          british_columbia_option_1_credit_amount[british_columbia_claim_code]
+
+  - name: manitoba_claim_amount_from
+    kind: parameter
+    dtype: Money
+    indexed_by: manitoba_claim_code
+    source: CRA T4127 2026 Manitoba claim-code table, total claim amount lower bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 0
+          2: 15780.01
+          3: 17473.01
+          4: 19166.01
+          5: 20859.01
+          6: 22552.01
+          7: 24245.01
+          8: 25938.01
+          9: 27631.01
+          10: 29324.01
+
+  - name: manitoba_claim_amount_to
+    kind: parameter
+    dtype: Money
+    indexed_by: manitoba_claim_code
+    source: CRA T4127 2026 Manitoba claim-code table, total claim amount upper bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 15780
+          2: 17473
+          3: 19166
+          4: 20859
+          5: 22552
+          6: 24245
+          7: 25938
+          8: 27631
+          9: 29324
+          10: 31017
+
+  - name: manitoba_option_1_total_claim_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: manitoba_claim_code
+    source: CRA T4127 2026 Manitoba claim-code table, Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 15780
+          2: 16626.5
+          3: 18319.5
+          4: 20012.5
+          5: 21705.5
+          6: 23398.5
+          7: 25091.5
+          8: 26784.5
+          9: 28477.5
+          10: 30170.5
+
+  - name: manitoba_option_1_credit_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: manitoba_claim_code
+    source: CRA T4127 2026 Manitoba claim-code table, Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 1704.24
+          2: 1795.66
+          3: 1978.51
+          4: 2161.35
+          5: 2344.19
+          6: 2527.04
+          7: 2709.88
+          8: 2892.73
+          9: 3075.57
+          10: 3258.41
+
+  - name: selected_manitoba_claim_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Manitoba claim-code table, selected Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          manitoba_option_1_total_claim_amount[manitoba_claim_code]
+
+  - name: selected_manitoba_claim_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Manitoba claim-code table, selected Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          manitoba_option_1_credit_amount[manitoba_claim_code]
+
+  - name: new_brunswick_claim_amount_from
+    kind: parameter
+    dtype: Money
+    indexed_by: new_brunswick_claim_code
+    source: CRA T4127 2026 New Brunswick claim-code table, total claim amount lower bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 0
+          2: 13664.01
+          3: 16461.01
+          4: 19258.01
+          5: 22055.01
+          6: 24852.01
+          7: 27649.01
+          8: 30446.01
+          9: 33243.01
+          10: 36040.01
+
+  - name: new_brunswick_claim_amount_to
+    kind: parameter
+    dtype: Money
+    indexed_by: new_brunswick_claim_code
+    source: CRA T4127 2026 New Brunswick claim-code table, total claim amount upper bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 13664
+          2: 16461
+          3: 19258
+          4: 22055
+          5: 24852
+          6: 27649
+          7: 30446
+          8: 33243
+          9: 36040
+          10: 38837
+
+  - name: new_brunswick_option_1_total_claim_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: new_brunswick_claim_code
+    source: CRA T4127 2026 New Brunswick claim-code table, Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 13664
+          2: 15062.5
+          3: 17859.5
+          4: 20656.5
+          5: 23453.5
+          6: 26250.5
+          7: 29047.5
+          8: 31844.5
+          9: 34641.5
+          10: 37438.5
+
+  - name: new_brunswick_option_1_credit_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: new_brunswick_claim_code
+    source: CRA T4127 2026 New Brunswick claim-code table, Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 1284.42
+          2: 1415.88
+          3: 1678.79
+          4: 1941.71
+          5: 2204.63
+          6: 2467.55
+          7: 2730.47
+          8: 2993.38
+          9: 3256.3
+          10: 3519.22
+
+  - name: selected_new_brunswick_claim_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 New Brunswick claim-code table, selected Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          new_brunswick_option_1_total_claim_amount[new_brunswick_claim_code]
+
+  - name: selected_new_brunswick_claim_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 New Brunswick claim-code table, selected Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          new_brunswick_option_1_credit_amount[new_brunswick_claim_code]
+
+  - name: newfoundland_and_labrador_claim_amount_from
+    kind: parameter
+    dtype: Money
+    indexed_by: newfoundland_and_labrador_claim_code
+    source: CRA T4127 2026 Newfoundland and Labrador claim-code table, total claim amount lower bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 0
+          2: 11188.01
+          3: 13604.01
+          4: 16020.01
+          5: 18436.01
+          6: 20852.01
+          7: 23268.01
+          8: 25684.01
+          9: 28100.01
+          10: 30516.01
+
+  - name: newfoundland_and_labrador_claim_amount_to
+    kind: parameter
+    dtype: Money
+    indexed_by: newfoundland_and_labrador_claim_code
+    source: CRA T4127 2026 Newfoundland and Labrador claim-code table, total claim amount upper bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 11188
+          2: 13604
+          3: 16020
+          4: 18436
+          5: 20852
+          6: 23268
+          7: 25684
+          8: 28100
+          9: 30516
+          10: 32932
+
+  - name: newfoundland_and_labrador_option_1_total_claim_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: newfoundland_and_labrador_claim_code
+    source: CRA T4127 2026 Newfoundland and Labrador claim-code table, Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 11188
+          2: 12396
+          3: 14812
+          4: 17228
+          5: 19644
+          6: 22060
+          7: 24476
+          8: 26892
+          9: 29308
+          10: 31724
+
+  - name: newfoundland_and_labrador_option_1_credit_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: newfoundland_and_labrador_claim_code
+    source: CRA T4127 2026 Newfoundland and Labrador claim-code table, Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 973.36
+          2: 1078.45
+          3: 1288.64
+          4: 1498.84
+          5: 1709.03
+          6: 1919.22
+          7: 2129.41
+          8: 2339.6
+          9: 2549.8
+          10: 2759.99
+
+  - name: selected_newfoundland_and_labrador_claim_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Newfoundland and Labrador claim-code table, selected Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          newfoundland_and_labrador_option_1_total_claim_amount[newfoundland_and_labrador_claim_code]
+
+  - name: selected_newfoundland_and_labrador_claim_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Newfoundland and Labrador claim-code table, selected Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          newfoundland_and_labrador_option_1_credit_amount[newfoundland_and_labrador_claim_code]
+
+  - name: nova_scotia_claim_amount_from
+    kind: parameter
+    dtype: Money
+    indexed_by: nova_scotia_claim_code
+    source: CRA T4127 2026 Nova Scotia claim-code table, total claim amount lower bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 0
+          2: 11932.01
+          3: 13608.01
+          4: 15284.01
+          5: 16960.01
+          6: 18636.01
+          7: 20312.01
+          8: 21988.01
+          9: 23664.01
+          10: 25340.01
+
+  - name: nova_scotia_claim_amount_to
+    kind: parameter
+    dtype: Money
+    indexed_by: nova_scotia_claim_code
+    source: CRA T4127 2026 Nova Scotia claim-code table, total claim amount upper bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 11932
+          2: 13608
+          3: 15284
+          4: 16960
+          5: 18636
+          6: 20312
+          7: 21988
+          8: 23664
+          9: 25340
+          10: 27016
+
+  - name: nova_scotia_option_1_total_claim_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: nova_scotia_claim_code
+    source: CRA T4127 2026 Nova Scotia claim-code table, Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 11932
+          2: 12770
+          3: 14446
+          4: 16122
+          5: 17798
+          6: 19474
+          7: 21150
+          8: 22826
+          9: 24502
+          10: 26178
+
+  - name: nova_scotia_option_1_credit_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: nova_scotia_claim_code
+    source: CRA T4127 2026 Nova Scotia claim-code table, Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 1048.82
+          2: 1122.48
+          3: 1269.8
+          4: 1417.12
+          5: 1564.44
+          6: 1711.76
+          7: 1859.09
+          8: 2006.41
+          9: 2153.73
+          10: 2301.05
+
+  - name: selected_nova_scotia_claim_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Nova Scotia claim-code table, selected Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          nova_scotia_option_1_total_claim_amount[nova_scotia_claim_code]
+
+  - name: selected_nova_scotia_claim_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Nova Scotia claim-code table, selected Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          nova_scotia_option_1_credit_amount[nova_scotia_claim_code]
+
+  - name: northwest_territories_claim_amount_from
+    kind: parameter
+    dtype: Money
+    indexed_by: northwest_territories_claim_code
+    source: CRA T4127 2026 Northwest Territories claim-code table, total claim amount lower bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 0
+          2: 18198.01
+          3: 21327.01
+          4: 24456.01
+          5: 27585.01
+          6: 30714.01
+          7: 33843.01
+          8: 36972.01
+          9: 40101.01
+          10: 43230.01
+
+  - name: northwest_territories_claim_amount_to
+    kind: parameter
+    dtype: Money
+    indexed_by: northwest_territories_claim_code
+    source: CRA T4127 2026 Northwest Territories claim-code table, total claim amount upper bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 18198
+          2: 21327
+          3: 24456
+          4: 27585
+          5: 30714
+          6: 33843
+          7: 36972
+          8: 40101
+          9: 43230
+          10: 46359
+
+  - name: northwest_territories_option_1_total_claim_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: northwest_territories_claim_code
+    source: CRA T4127 2026 Northwest Territories claim-code table, Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 18198
+          2: 19762.5
+          3: 22891.5
+          4: 26020.5
+          5: 29149.5
+          6: 32278.5
+          7: 35407.5
+          8: 38536.5
+          9: 41665.5
+          10: 44794.5
+
+  - name: northwest_territories_option_1_credit_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: northwest_territories_claim_code
+    source: CRA T4127 2026 Northwest Territories claim-code table, Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 1073.68
+          2: 1165.99
+          3: 1350.6
+          4: 1535.21
+          5: 1719.82
+          6: 1904.43
+          7: 2089.04
+          8: 2273.65
+          9: 2458.26
+          10: 2642.88
+
+  - name: selected_northwest_territories_claim_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Northwest Territories claim-code table, selected Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          northwest_territories_option_1_total_claim_amount[northwest_territories_claim_code]
+
+  - name: selected_northwest_territories_claim_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Northwest Territories claim-code table, selected Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          northwest_territories_option_1_credit_amount[northwest_territories_claim_code]
+
+  - name: nunavut_claim_amount_from
+    kind: parameter
+    dtype: Money
+    indexed_by: nunavut_claim_code
+    source: CRA T4127 2026 Nunavut claim-code table, total claim amount lower bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 0
+          2: 19659.01
+          3: 22838.01
+          4: 26017.01
+          5: 29196.01
+          6: 32375.01
+          7: 35554.01
+          8: 38733.01
+          9: 41912.01
+          10: 45091.01
+
+  - name: nunavut_claim_amount_to
+    kind: parameter
+    dtype: Money
+    indexed_by: nunavut_claim_code
+    source: CRA T4127 2026 Nunavut claim-code table, total claim amount upper bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 19659
+          2: 22838
+          3: 26017
+          4: 29196
+          5: 32375
+          6: 35554
+          7: 38733
+          8: 41912
+          9: 45091
+          10: 48270
+
+  - name: nunavut_option_1_total_claim_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: nunavut_claim_code
+    source: CRA T4127 2026 Nunavut claim-code table, Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 19659
+          2: 21248.5
+          3: 24427.5
+          4: 27606.5
+          5: 30785.5
+          6: 33964.5
+          7: 37143.5
+          8: 40322.5
+          9: 43501.5
+          10: 46680.5
+
+  - name: nunavut_option_1_credit_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: nunavut_claim_code
+    source: CRA T4127 2026 Nunavut claim-code table, Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 786.36
+          2: 849.94
+          3: 977.1
+          4: 1104.26
+          5: 1231.42
+          6: 1358.58
+          7: 1485.74
+          8: 1612.9
+          9: 1740.06
+          10: 1867.22
+
+  - name: selected_nunavut_claim_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Nunavut claim-code table, selected Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          nunavut_option_1_total_claim_amount[nunavut_claim_code]
+
+  - name: selected_nunavut_claim_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Nunavut claim-code table, selected Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          nunavut_option_1_credit_amount[nunavut_claim_code]
+
+  - name: ontario_claim_amount_from
+    kind: parameter
+    dtype: Money
+    indexed_by: ontario_claim_code
+    source: CRA T4127 2026 Ontario claim-code table, total claim amount lower bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 0
+          2: 12989.01
+          3: 15787.01
+          4: 18585.01
+          5: 21383.01
+          6: 24181.01
+          7: 26979.01
+          8: 29777.01
+          9: 32575.01
+          10: 35373.01
+
+  - name: ontario_claim_amount_to
+    kind: parameter
+    dtype: Money
+    indexed_by: ontario_claim_code
+    source: CRA T4127 2026 Ontario claim-code table, total claim amount upper bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 12989
+          2: 15787
+          3: 18585
+          4: 21383
+          5: 24181
+          6: 26979
+          7: 29777
+          8: 32575
+          9: 35373
+          10: 38171
+
+  - name: ontario_option_1_total_claim_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: ontario_claim_code
+    source: CRA T4127 2026 Ontario claim-code table, Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 12989
+          2: 14388
+          3: 17186
+          4: 19984
+          5: 22782
+          6: 25580
+          7: 28378
+          8: 31176
+          9: 33974
+          10: 36772
+
+  - name: ontario_option_1_credit_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: ontario_claim_code
+    source: CRA T4127 2026 Ontario claim-code table, Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 655.94
+          2: 726.59
+          3: 867.89
+          4: 1009.19
+          5: 1150.49
+          6: 1291.79
+          7: 1433.09
+          8: 1574.39
+          9: 1715.69
+          10: 1856.99
+
+  - name: selected_ontario_claim_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Ontario claim-code table, selected Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          ontario_option_1_total_claim_amount[ontario_claim_code]
+
+  - name: selected_ontario_claim_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Ontario claim-code table, selected Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          ontario_option_1_credit_amount[ontario_claim_code]
+
+  - name: prince_edward_island_claim_amount_from
+    kind: parameter
+    dtype: Money
+    indexed_by: prince_edward_island_claim_code
+    source: CRA T4127 2026 Prince Edward Island claim-code table, total claim amount lower bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 0
+          2: 15000.01
+          3: 16600.01
+          4: 18200.01
+          5: 19800.01
+          6: 21400.01
+          7: 23000.01
+          8: 24600.01
+          9: 26200.01
+          10: 27800.01
+
+  - name: prince_edward_island_claim_amount_to
+    kind: parameter
+    dtype: Money
+    indexed_by: prince_edward_island_claim_code
+    source: CRA T4127 2026 Prince Edward Island claim-code table, total claim amount upper bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 15000
+          2: 16600
+          3: 18200
+          4: 19800
+          5: 21400
+          6: 23000
+          7: 24600
+          8: 26200
+          9: 27800
+          10: 29400
+
+  - name: prince_edward_island_option_1_total_claim_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: prince_edward_island_claim_code
+    source: CRA T4127 2026 Prince Edward Island claim-code table, Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 15000
+          2: 15800
+          3: 17400
+          4: 19000
+          5: 20600
+          6: 22200
+          7: 23800
+          8: 25400
+          9: 27000
+          10: 28600
+
+  - name: prince_edward_island_option_1_credit_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: prince_edward_island_claim_code
+    source: CRA T4127 2026 Prince Edward Island claim-code table, Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 1425
+          2: 1501
+          3: 1653
+          4: 1805
+          5: 1957
+          6: 2109
+          7: 2261
+          8: 2413
+          9: 2565
+          10: 2717
+
+  - name: selected_prince_edward_island_claim_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Prince Edward Island claim-code table, selected Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          prince_edward_island_option_1_total_claim_amount[prince_edward_island_claim_code]
+
+  - name: selected_prince_edward_island_claim_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Prince Edward Island claim-code table, selected Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          prince_edward_island_option_1_credit_amount[prince_edward_island_claim_code]
+
+  - name: saskatchewan_claim_amount_from
+    kind: parameter
+    dtype: Money
+    indexed_by: saskatchewan_claim_code
+    source: CRA T4127 2026 Saskatchewan claim-code table, total claim amount lower bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 0
+          2: 20381.01
+          3: 22874.01
+          4: 25367.01
+          5: 27860.01
+          6: 30353.01
+          7: 32846.01
+          8: 35339.01
+          9: 37832.01
+          10: 40325.01
+
+  - name: saskatchewan_claim_amount_to
+    kind: parameter
+    dtype: Money
+    indexed_by: saskatchewan_claim_code
+    source: CRA T4127 2026 Saskatchewan claim-code table, total claim amount upper bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 20381
+          2: 22874
+          3: 25367
+          4: 27860
+          5: 30353
+          6: 32846
+          7: 35339
+          8: 37832
+          9: 40325
+          10: 42818
+
+  - name: saskatchewan_option_1_total_claim_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: saskatchewan_claim_code
+    source: CRA T4127 2026 Saskatchewan claim-code table, Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 20381
+          2: 21627.5
+          3: 24120.5
+          4: 26613.5
+          5: 29106.5
+          6: 31599.5
+          7: 34092.5
+          8: 36585.5
+          9: 39078.5
+          10: 41571.5
+
+  - name: saskatchewan_option_1_credit_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: saskatchewan_claim_code
+    source: CRA T4127 2026 Saskatchewan claim-code table, Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 2140.01
+          2: 2270.89
+          3: 2532.65
+          4: 2794.42
+          5: 3056.18
+          6: 3317.95
+          7: 3579.71
+          8: 3841.48
+          9: 4103.24
+          10: 4365.01
+
+  - name: selected_saskatchewan_claim_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Saskatchewan claim-code table, selected Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          saskatchewan_option_1_total_claim_amount[saskatchewan_claim_code]
+
+  - name: selected_saskatchewan_claim_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Saskatchewan claim-code table, selected Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          saskatchewan_option_1_credit_amount[saskatchewan_claim_code]
+
+  - name: yukon_claim_amount_from
+    kind: parameter
+    dtype: Money
+    indexed_by: yukon_claim_code
+    source: CRA T4127 2026 Yukon claim-code table, total claim amount lower bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 0
+          2: 16452.01
+          3: 19285.01
+          4: 22118.01
+          5: 24951.01
+          6: 27784.01
+          7: 30617.01
+          8: 33450.01
+          9: 36283.01
+          10: 39116.01
+
+  - name: yukon_claim_amount_to
+    kind: parameter
+    dtype: Money
+    indexed_by: yukon_claim_code
+    source: CRA T4127 2026 Yukon claim-code table, total claim amount upper bound
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 16452
+          2: 19285
+          3: 22118
+          4: 24951
+          5: 27784
+          6: 30617
+          7: 33450
+          8: 36283
+          9: 39116
+          10: 41949
+
+  - name: yukon_option_1_total_claim_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: yukon_claim_code
+    source: CRA T4127 2026 Yukon claim-code table, Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 16452
+          2: 17868.5
+          3: 20701.5
+          4: 23534.5
+          5: 26367.5
+          6: 29200.5
+          7: 32033.5
+          8: 34866.5
+          9: 37699.5
+          10: 40532.5
+
+  - name: yukon_option_1_credit_amount
+    kind: parameter
+    dtype: Money
+    indexed_by: yukon_claim_code
+    source: CRA T4127 2026 Yukon claim-code table, Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        values:
+          0: 0
+          1: 1052.93
+          2: 1143.58
+          3: 1324.9
+          4: 1506.21
+          5: 1687.52
+          6: 1868.83
+          7: 2050.14
+          8: 2231.46
+          9: 2412.77
+          10: 2594.08
+
+  - name: selected_yukon_claim_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Yukon claim-code table, selected Option 1 TCP amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          yukon_option_1_total_claim_amount[yukon_claim_code]
+
+  - name: selected_yukon_claim_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T4127 2026 Yukon claim-code table, selected Option 1 K1P amount
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          yukon_option_1_credit_amount[yukon_claim_code]

@@ -1,0 +1,17 @@
+source:
+  jurisdiction: ca
+  agency: Canada Revenue Agency
+  citation_path: ca/policy/cra/t4127-2026/claim-codes
+  title: CRA T4127 2026 federal, provincial, and territorial claim codes
+  effective_from: '2026-01-01'
+  documents:
+    - title: T4127 Payroll Deductions Formulas, 122nd Edition, effective January 1, 2026
+      url: https://www.canada.ca/en/revenue-agency/services/forms-publications/payroll/t4127-payroll-deductions-formulas/t4127-jan/t4127-jan-payroll-deductions-formulas-computer-programs.html
+  coverage:
+    encoded:
+      - Federal claim codes 0 through 10 from Table 8.9
+      - Provincial and territorial claim codes 0 through 10 from Tables 8.10 through 8.21
+      - Total claim amount range, Option 1 TC/TCP amount, and Option 1 K1/K1P credit amount for each code
+    not_encoded:
+      - TD1 line-item eligibility for underlying credits
+      - Custom claim-code charts when BPAF, BPAMB, or BPAYT is not the maximum

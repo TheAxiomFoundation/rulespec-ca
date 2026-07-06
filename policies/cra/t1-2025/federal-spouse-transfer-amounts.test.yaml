@@ -1,0 +1,49 @@
+- name: spouse_transfer_low_taxable_income
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_transfer_allowed: true
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_age_amount_line_30100: 5000
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_caregiver_infirm_children_amount_line_30500: 2687
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_pension_income_amount_line_31400: 2500
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_disability_amount_line_31600: 10138
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_designated_tuition_amount: 3000
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_taxable_income_line_26000: 30000
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_return_line_76_amount: 0
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_basic_personal_amount_line_30000: 16129
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_return_line_96_amount: 1000
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_tuition_amount_line_32300: 2000
+  output:
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#federal_2025_schedule_2_transferable_pension_income_amount: 2000
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#federal_2025_schedule_2_total_transferable_amounts_line_6: 22825
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#federal_2025_schedule_2_spouse_tax_capacity_line_7: 30000
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#federal_2025_schedule_2_spouse_non_refundable_base_line_11: 19129
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#federal_2025_schedule_2_spouse_adjusted_taxable_income_line_12: 10871
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#federal_amounts_transferred_from_spouse_line_32600: 11954
+
+- name: spouse_transfer_high_income_and_disallowed
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_transfer_allowed: false
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_age_amount_line_30100: 5000
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_caregiver_infirm_children_amount_line_30500: 0
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_pension_income_amount_line_31400: 1000
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_disability_amount_line_31600: 0
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_designated_tuition_amount: 1000
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_taxable_income_line_26000: 60000
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_return_line_76_amount: 7250
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_basic_personal_amount_line_30000: 16129
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_return_line_96_amount: 0
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#input.spouse_tuition_amount_line_32300: 0
+  output:
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#federal_2025_schedule_2_transferable_pension_income_amount: 1000
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#federal_2025_schedule_2_total_transferable_amounts_line_6: 7000
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#federal_2025_schedule_2_spouse_tax_capacity_line_7: 50000
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#federal_2025_schedule_2_spouse_non_refundable_base_line_11: 16129
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#federal_2025_schedule_2_spouse_adjusted_taxable_income_line_12: 33871
+    ca:policies/cra/t1-2025/federal-spouse-transfer-amounts#federal_amounts_transferred_from_spouse_line_32600: 0

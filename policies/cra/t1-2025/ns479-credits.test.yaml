@@ -1,0 +1,34 @@
+- name: ns479_volunteer_and_child_expense_caps
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/ns479-credits#input.ns479_volunteer_firefighters_ground_search_rescue_credit_eligible: true
+    ca:policies/cra/t1-2025/ns479-credits#input.ns479_children_sports_arts_eligible_child_count: 2
+    ca:policies/cra/t1-2025/ns479-credits#input.ns479_children_sports_arts_total_eligible_expenses: 1500
+    ca:policies/cra/t1-2025/ns479-credits#input.ns479_children_sports_arts_assistance_received: 100
+    ca:policies/cra/t1-2025/ns479-credits#input.ns479_children_sports_arts_amounts_claimed_by_others: 200
+  output:
+    ca:policies/cra/t1-2025/ns479-credits#ns479_volunteer_firefighters_ground_search_rescue_tax_credit_line_62400: 500
+    ca:policies/cra/t1-2025/ns479-credits#ns479_children_sports_arts_column_d_capped_expenses: 1000
+    ca:policies/cra/t1-2025/ns479-credits#ns479_children_sports_arts_expenses_line_62410: 800
+    ca:policies/cra/t1-2025/ns479-credits#ns479_children_sports_arts_tax_credit_line_4: 70.32
+    ca:policies/cra/t1-2025/ns479-credits#nova_scotia_credits_line_47900: 570.32
+
+- name: ns479_zero_volunteer_and_other_claimants_floor
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/ns479-credits#input.ns479_volunteer_firefighters_ground_search_rescue_credit_eligible: false
+    ca:policies/cra/t1-2025/ns479-credits#input.ns479_children_sports_arts_eligible_child_count: 1
+    ca:policies/cra/t1-2025/ns479-credits#input.ns479_children_sports_arts_total_eligible_expenses: 400
+    ca:policies/cra/t1-2025/ns479-credits#input.ns479_children_sports_arts_assistance_received: 100
+    ca:policies/cra/t1-2025/ns479-credits#input.ns479_children_sports_arts_amounts_claimed_by_others: 500
+  output:
+    ca:policies/cra/t1-2025/ns479-credits#ns479_volunteer_firefighters_ground_search_rescue_tax_credit_line_62400: 0
+    ca:policies/cra/t1-2025/ns479-credits#ns479_children_sports_arts_expenses_line_62410: 0
+    ca:policies/cra/t1-2025/ns479-credits#ns479_children_sports_arts_tax_credit_line_4: 0
+    ca:policies/cra/t1-2025/ns479-credits#nova_scotia_credits_line_47900: 0

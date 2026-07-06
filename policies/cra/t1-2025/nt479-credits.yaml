@@ -1,0 +1,201 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form NT479 for 2025 calculates the Northwest Territories refundable
+    cost of living tax credit, including adjusted net income, basic credit for
+    self, supplement, and final credit entered on T1 line 47900.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/nt479-credits
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: CRA Form NT479 is the official 2025 Northwest Territories credit calculation form.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5012-tc/5012-tc-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5012-tc/5012-tc-25e.pdf
+rules:
+  - name: nt479_2025_basic_credit_first_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA NT479 2025 basic credit column 1 applies when adjusted net income is $12,000 or less
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 12000
+
+  - name: nt479_2025_basic_credit_second_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA NT479 2025 basic credit column 2 applies when adjusted net income is more than $12,000 but not more than $48,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 48000
+
+  - name: nt479_2025_basic_credit_cap_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA NT479 2025 says if adjusted net income is $66,000 or more, enter $942
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 66000
+
+  - name: nt479_2025_basic_credit_first_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NT479 2025 basic credit column 1 rate is 2.6%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.026
+
+  - name: nt479_2025_basic_credit_second_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NT479 2025 basic credit column 2 rate is 1.25%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0125
+
+  - name: nt479_2025_basic_credit_third_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA NT479 2025 basic credit column 3 rate is 1%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.01
+
+  - name: nt479_2025_basic_credit_second_base
+    kind: parameter
+    dtype: Money
+    source: CRA NT479 2025 basic credit column 2 line 11 base amount is $312
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 312
+
+  - name: nt479_2025_basic_credit_third_base
+    kind: parameter
+    dtype: Money
+    source: CRA NT479 2025 basic credit column 3 line 11 base amount is $762
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 762
+
+  - name: nt479_2025_basic_credit_max
+    kind: parameter
+    dtype: Money
+    source: CRA NT479 2025 line 13 maximum basic credit for self is $942
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 942
+
+  - name: nt479_2025_supplement_basic_amount
+    kind: parameter
+    dtype: Money
+    source: CRA NT479 2025 line 14 basic supplement for self is $350 and line 15 spouse supplement amount is $350
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 350
+
+  - name: nt479_adjusted_net_income_before_treaty_line_3
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA NT479 2025 line 3 subtracts lines 24400 and 25000 from net income and floors the amount at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nt479_net_income_line_23600 - max(0, nt479_line_24400_and_25000_total))
+
+  - name: nt479_adjusted_net_income_line_5
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA NT479 2025 line 5 subtracts foreign income exempt under a tax treaty from line 3 and floors the amount at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, nt479_adjusted_net_income_before_treaty_line_3 - max(0, nt479_foreign_income_exempt_under_tax_treaty_line_62450))
+
+  - name: nt479_basic_credit_for_self_line_62460
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA NT479 2025 lines 6 to 13 calculate the basic credit for self with $12,000, $48,000, and $66,000 thresholds and a $942 maximum
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if nt479_adjusted_net_income_line_5 >= nt479_2025_basic_credit_cap_threshold:
+            nt479_2025_basic_credit_max
+          else:
+            if nt479_adjusted_net_income_line_5 <= nt479_2025_basic_credit_first_threshold:
+              nt479_adjusted_net_income_line_5 * nt479_2025_basic_credit_first_rate
+            else:
+              if nt479_adjusted_net_income_line_5 <= nt479_2025_basic_credit_second_threshold:
+                (nt479_adjusted_net_income_line_5 - nt479_2025_basic_credit_first_threshold) * nt479_2025_basic_credit_second_rate + nt479_2025_basic_credit_second_base
+              else:
+                (nt479_adjusted_net_income_line_5 - nt479_2025_basic_credit_second_threshold) * nt479_2025_basic_credit_third_rate + nt479_2025_basic_credit_third_base
+
+  - name: nt479_spouse_supplement_amount_line_62470
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA NT479 2025 line 15 enters $350 if the taxpayer had a spouse or common-law partner on December 31, 2025, otherwise zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if nt479_had_spouse_or_common_law_partner_on_december_31:
+            nt479_2025_supplement_basic_amount
+          else:
+            0
+
+  - name: nt479_supplement_base_line_16
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA NT479 2025 line 16 adds the $350 basic supplement for self and any spouse amount
+    versions:
+      - effective_from: '2025-01-01'
+        formula: nt479_2025_supplement_basic_amount + nt479_spouse_supplement_amount_line_62470
+
+  - name: nt479_basic_credits_for_supplement_line_19
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA NT479 2025 line 19 adds the taxpayer line 13 amount and spouse basic credit for self, if applicable
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if nt479_had_spouse_or_common_law_partner_on_december_31:
+            nt479_basic_credit_for_self_line_62460 + max(0, nt479_spouse_basic_credit_for_self_line_62480)
+          else:
+            nt479_basic_credit_for_self_line_62460
+
+  - name: nt479_cost_of_living_tax_credit_supplement_line_62490
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA NT479 2025 line 20 gives zero if the taxpayer was under 18 or the spouse claimed the family supplement, otherwise line 16 minus line 19 floored at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if nt479_under_18_on_december_31:
+            0
+          else:
+            if nt479_spouse_or_partner_claimed_family_supplement:
+              0
+            else:
+              max(0, nt479_supplement_base_line_16 - nt479_basic_credits_for_supplement_line_19)
+
+  - name: northwest_territories_credit_line_47900
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA NT479 2025 line 21 adds line 13 and line 20 and enters the Northwest Territories credit on T1 line 47900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(nt479_2025_basic_credit_max, nt479_basic_credit_for_self_line_62460 + nt479_cost_of_living_tax_credit_supplement_line_62490)

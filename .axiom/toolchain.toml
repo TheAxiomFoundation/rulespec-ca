@@ -1,0 +1,6 @@
+[toolchain]
+axiom_encode_ref = "b402f25b8b03c47be8f43acf07b972097b055f5d"
+axiom_encode_version = "0.2.1156"
+axiom_rules_engine_ref = "e19f1b7573c74512f20a6b71a0c55dbbf333d41b"
+axiom_corpus_ref = "7661f3c9a3655e93fc9b2420048d70d231e7d44b"
+rulespec_us_ref = "044e91ad8afb28d8a3f89c451b908c199a71eb93"

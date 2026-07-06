@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment.test.yaml",
+      "sha256": "2942014b44bdc5ea6fcec2fdb99ee121cda1756dfa93e1feab1c4048eb19b4af"
+    },
+    {
+      "path": "policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment.yaml",
+      "sha256": "142897852ae54a9b69618a0e18fbeb76d0094223098262d89120b764e1cab5f8"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "a314fc624967b4e990beb7d9ffc429dae6e26642",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1152",
+    "version_commit": "a314fc624967b4e990beb7d9ffc429dae6e26642"
+  },
+  "axiom_encode_version": "0.2.1152",
+  "backend": "manual",
+  "citation": "ca:policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-05T15:04:20.634443+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm/sign-applied-files/policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
+  "generated_output_sha256": "142897852ae54a9b69618a0e18fbeb76d0094223098262d89120b764e1cab5f8",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "3cc5c2cb4d05ffb0e55b8362ea82bee9ab90b0d7a02818506604c3e24cc6601e"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

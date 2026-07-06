@@ -1,0 +1,46 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Quebec Schedule M 2025 interest paid on a student loan:
+    prior unused interest, current-year interest, TP-1 line 385 claim,
+    and future-year carryforward.
+  source_verification:
+    corpus_citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-m-student-loan-interest
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+      rationale: Revenu Quebec Schedule M is the official 2025 schedule for calculating interest paid on a student loan and carryforward.
+    source_urls:
+      - https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.M-V%282025-12%29.pdf
+rules:
+  - name: schedule_m_student_loan_interest_available_line_52
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule M 2025 line 52 adds unused student-loan interest from line 46 and 2025 interest from line 48
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_m_unused_student_loan_interest_line_46) + max(0, schedule_m_student_loan_interest_paid_2025_line_48)
+
+  - name: schedule_m_student_loan_interest_claim_line_385
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule M 2025 line 52 carries all or part of available student-loan interest to TP-1 line 385
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(schedule_m_student_loan_interest_available_line_52, max(0, schedule_m_student_loan_interest_claimed_line_60))
+
+  - name: schedule_m_student_loan_interest_carryforward_line_62
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule M 2025 line 62 subtracts the amount carried to line 385 from line 52
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_m_student_loan_interest_available_line_52 - schedule_m_student_loan_interest_claim_line_385)

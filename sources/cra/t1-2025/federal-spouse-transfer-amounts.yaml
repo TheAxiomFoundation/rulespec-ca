@@ -1,0 +1,15 @@
+source:
+  id: cra-2025-federal-spouse-transfer-amounts
+  citation_path: ca/policy/cra/t1-2025/federal-spouse-transfer-amounts
+  title: CRA Schedule 2 2025 Federal Amounts Transferred from your Spouse or Common-Law Partner
+  documents:
+    - title: Schedule 2 Federal Amounts Transferred from your Spouse or Common-Law Partner 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s2/5000-s2-25e.pdf
+  coverage:
+    encoded:
+      - Transferable age, caregiver, pension, disability, and tuition amount total
+      - Spouse/common-law partner tax capacity and adjusted taxable income
+      - Federal amounts transferred from spouse or common-law partner line 32600
+    not_encoded:
+      - Separation, relationship, filing, information slip, disability certificate, and tuition designation predicates
+      - Provincial or territorial Schedule S2 transfers

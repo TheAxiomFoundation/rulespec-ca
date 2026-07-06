@@ -1,0 +1,263 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Schedule 5 for the 2025 T1 return calculates amounts for a
+    spouse or common-law partner and dependants. This module encodes the
+    Schedule 5 arithmetic for line 30300, line 30400, line 30425, line
+    30450, and line 30500, while leaving relationship, support,
+    residency, household, custody, infirmity, and support-payment
+    eligibility predicates to fact layers.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/federal-spouse-and-dependant-amounts
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Schedule 5 is the official 2025 T1 return schedule for
+        spouse/common-law partner and dependant amount calculations.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s5/5000-s5-25e.pdf
+rules:
+  - name: federal_2025_schedule_5_caregiver_supplement
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 5 2025 lines 30300 and 30400 enter $2,687 when eligible for the Canada caregiver amount in the base calculation
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          2687
+
+  - name: federal_2025_schedule_5_caregiver_income_base
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 5 2025 lines 30425 and 30450 use base amount $28,798
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          28798
+
+  - name: federal_2025_schedule_5_caregiver_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 5 2025 lines 30425 and 30450 cap each caregiver amount at $8,601
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          8601
+
+  - name: federal_2025_schedule_5_infirm_child_amount
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 5 2025 line 30500 allows $2,687 for each infirm child under 18
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          2687
+
+  - name: federal_2025_schedule_5_spouse_caregiver_supplement_claimed
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    source: CRA Schedule 5 2025 line 30300 line 2 enters $2,687 if eligible for the Canada caregiver amount for a spouse or common-law partner
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if spouse_or_common_law_partner_caregiver_supplement_eligible:
+            federal_2025_schedule_5_caregiver_supplement
+          else:
+            0
+
+  - name: federal_2025_schedule_5_spouse_base_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    source: CRA Schedule 5 2025 line 30300 lines 1 to 3 add basic personal amount and caregiver supplement if applicable
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, basic_personal_amount_line_30000)
+          + federal_2025_schedule_5_spouse_caregiver_supplement_claimed
+
+  - name: spouse_or_common_law_partner_amount_line_30300
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    source: CRA Schedule 5 2025 line 30300 line 5 subtracts spouse or common-law partner net income from the base amount and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if claims_spouse_or_common_law_partner_amount:
+            max(
+              0,
+              federal_2025_schedule_5_spouse_base_amount
+              - max(0, spouse_or_common_law_partner_net_income_line_23600)
+            )
+          else:
+            0
+
+  - name: federal_2025_schedule_5_eligible_dependant_caregiver_supplement_claimed
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    source: CRA Schedule 5 2025 line 30400 line 2 enters $2,687 if eligible for the Canada caregiver amount for the eligible dependant
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if eligible_dependant_caregiver_supplement_eligible:
+            federal_2025_schedule_5_caregiver_supplement
+          else:
+            0
+
+  - name: federal_2025_schedule_5_eligible_dependant_base_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    source: CRA Schedule 5 2025 line 30400 lines 1 to 3 add basic personal amount and caregiver supplement if applicable
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, basic_personal_amount_line_30000)
+          + federal_2025_schedule_5_eligible_dependant_caregiver_supplement_claimed
+
+  - name: eligible_dependant_amount_line_30400
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    source: CRA Schedule 5 2025 line 30400 line 5 subtracts dependant net income from the base amount and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if claims_eligible_dependant_amount:
+            max(
+              0,
+              federal_2025_schedule_5_eligible_dependant_base_amount
+              - max(0, eligible_dependant_net_income_line_23600)
+            )
+          else:
+            0
+
+  - name: federal_2025_schedule_5_caregiver_amount_before_base_claim_offset
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    source: CRA Schedule 5 2025 line 30425 line 3 subtracts net income from $28,798, floors at zero, and caps at $8,601
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_5_caregiver_maximum,
+            max(
+              0,
+              federal_2025_schedule_5_caregiver_income_base
+              - max(0, caregiver_spouse_or_eligible_dependant_net_income_line_23600)
+            )
+          )
+
+  - name: caregiver_amount_for_spouse_or_eligible_dependant_line_30425
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    source: CRA Schedule 5 2025 line 30425 line 5 subtracts any line 30300 or 30400 amount for the person and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if claims_caregiver_amount_for_spouse_or_eligible_dependant:
+            max(
+              0,
+              federal_2025_schedule_5_caregiver_amount_before_base_claim_offset
+              - max(0, spouse_or_eligible_dependant_base_amount_claimed_line_30300_or_30400)
+            )
+          else:
+            0
+
+  - name: federal_2025_schedule_5_other_infirm_dependant_1_allowable
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    source: CRA Schedule 5 2025 line 30450 calculates each other infirm dependant amount as $28,798 minus net income, floored at zero and capped at $8,601
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_5_caregiver_maximum,
+            max(
+              0,
+              federal_2025_schedule_5_caregiver_income_base
+              - max(0, other_infirm_dependant_1_net_income_line_23600)
+            )
+          )
+
+  - name: federal_2025_schedule_5_other_infirm_dependant_2_allowable
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    source: CRA Schedule 5 2025 line 30450 calculates each other infirm dependant amount as $28,798 minus net income, floored at zero and capped at $8,601
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_5_caregiver_maximum,
+            max(
+              0,
+              federal_2025_schedule_5_caregiver_income_base
+              - max(0, other_infirm_dependant_2_net_income_line_23600)
+            )
+          )
+
+  - name: federal_2025_schedule_5_other_infirm_dependant_3_allowable
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    source: CRA Schedule 5 2025 line 30450 calculates each other infirm dependant amount as $28,798 minus net income, floored at zero and capped at $8,601
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_5_caregiver_maximum,
+            max(
+              0,
+              federal_2025_schedule_5_caregiver_income_base
+              - max(0, other_infirm_dependant_3_net_income_line_23600)
+            )
+          )
+
+  - name: caregiver_amount_for_other_infirm_dependants_line_30450
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    source: CRA Schedule 5 2025 line 30450 adds allowable amounts claimed for all other infirm dependants age 18 or older
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if claims_other_infirm_dependants_amount:
+            federal_2025_schedule_5_other_infirm_dependant_1_allowable
+            + federal_2025_schedule_5_other_infirm_dependant_2_allowable
+            + federal_2025_schedule_5_other_infirm_dependant_3_allowable
+            + max(0, other_infirm_dependants_additional_allowable_amount)
+          else:
+            0
+
+  - name: caregiver_amount_for_infirm_children_under_18_line_30500
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    source: CRA Schedule 5 2025 line 30500 multiplies the number of infirm children under 18 by $2,687
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, infirm_children_under_18_count)
+          * federal_2025_schedule_5_infirm_child_amount

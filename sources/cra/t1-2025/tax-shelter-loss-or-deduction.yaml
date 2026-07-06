@@ -1,0 +1,14 @@
+source:
+  id: cra-2025-tax-shelter-loss-or-deduction
+  citation_path: ca/policy/cra/t1-2025/tax-shelter-loss-or-deduction
+  title: CRA Form T5004 2025 Claim for Tax Shelter Loss or Deduction
+  documents:
+    - title: Form T5004 Claim for Tax Shelter Loss or Deduction 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t5004/t5004-25e.pdf
+  coverage:
+    encoded:
+      - Total amount claimed line 67650
+      - T1 routing surfaces named in the form notes and examples
+    not_encoded:
+      - Tax shelter identification-number validation
+      - Per-tax-shelter row storage, document attachment workflow, and audit/penalty determinations

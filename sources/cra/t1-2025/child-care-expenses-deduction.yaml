@@ -1,0 +1,19 @@
+source:
+  id: cra-2025-child-care-expenses-deduction
+  citation_path: ca/policy/cra/t1-2025/child-care-expenses-deduction
+  title: CRA Form T778 2025 Child Care Expenses Deduction
+  documents:
+    - title: Form T778 Child Care Expenses Deduction for 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t778/t778-25e.pdf
+  coverage:
+    encoded:
+      - Part B child-count limits for children under 7, children eligible for the disability amount, and older children or infirm dependants
+      - Earned-income 2/3 limit and basic line 21400 claim spine
+      - Higher-income spouse/common-law partner Part C school, infirmity, prison, and separation week/month limit arithmetic
+      - Part D additional claim calculation for post-secondary attendance by the person with the lower net income
+      - Lower-income and higher-income deduction outputs for line 21400
+    not_encoded:
+      - Child, infirmity, disability-certificate, relationship, support, and residency eligibility predicates
+      - Receipt, provider, boarding-school, overnight-camp, and expense substantiation predicates
+      - Detailed spouse/common-law partner status, separation, confinement, school enrolment, and prison fact extraction
+      - Allocation across more detailed child/provider slots beyond the aggregate T778 line arithmetic

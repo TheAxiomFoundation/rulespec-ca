@@ -1,0 +1,565 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T2017 for 2025 summarizes reserves on dispositions of capital
+    property. This module encodes the reserve roll-forward totals that flow
+    to Schedule 3 line 19200 and the page 3 maximum-reserve calculations.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/capital-gains-reserves
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Form T2017 is the official 2025 form for summarizing capital
+        gains reserves reported on Schedule 3.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t2017/t2017-25e.pdf
+rules:
+  - name: federal_2025_t2017_most_property_year_of_disposition_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2017 2025 page 3 most-property table gives 80% for the year of disposition, encoded as 0.80
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.80
+
+  - name: federal_2025_t2017_year_of_disposition_index
+    kind: parameter
+    dtype: Number
+    source: CRA T2017 2025 page 3 reserve tables identify the year of disposition, encoded as years after disposition 0
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0
+
+  - name: federal_2025_t2017_first_year_after_disposition_index
+    kind: parameter
+    dtype: Number
+    source: CRA T2017 2025 page 3 reserve tables identify the first year after disposition, encoded as years after disposition 1
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          1
+
+  - name: federal_2025_t2017_second_year_after_disposition_index
+    kind: parameter
+    dtype: Number
+    source: CRA T2017 2025 page 3 reserve tables identify the second year after disposition, encoded as years after disposition 2
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          2
+
+  - name: federal_2025_t2017_third_year_after_disposition_index
+    kind: parameter
+    dtype: Number
+    source: CRA T2017 2025 page 3 reserve tables identify the third year after disposition, encoded as years after disposition 3
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          3
+
+  - name: federal_2025_t2017_fourth_year_after_disposition_index
+    kind: parameter
+    dtype: Number
+    source: CRA T2017 2025 page 3 reserve tables identify the fourth year after disposition, encoded as years after disposition 4
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          4
+
+  - name: federal_2025_t2017_fifth_year_after_disposition_index
+    kind: parameter
+    dtype: Number
+    source: CRA T2017 2025 page 3 reserve tables identify the fifth year after disposition, encoded as years after disposition 5
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          5
+
+  - name: federal_2025_t2017_sixth_year_after_disposition_index
+    kind: parameter
+    dtype: Number
+    source: CRA T2017 2025 page 3 reserve tables identify the sixth year after disposition, encoded as years after disposition 6
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          6
+
+  - name: federal_2025_t2017_seventh_year_after_disposition_index
+    kind: parameter
+    dtype: Number
+    source: CRA T2017 2025 page 3 reserve tables identify the seventh year after disposition, encoded as years after disposition 7
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          7
+
+  - name: federal_2025_t2017_eighth_year_after_disposition_index
+    kind: parameter
+    dtype: Number
+    source: CRA T2017 2025 page 3 reserve tables identify the eighth year after disposition, encoded as years after disposition 8
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          8
+
+  - name: federal_2025_t2017_ninth_year_after_disposition_index
+    kind: parameter
+    dtype: Number
+    source: CRA T2017 2025 page 3 extended reserve table identifies the ninth year after disposition, encoded as years after disposition 9
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          9
+
+  - name: federal_2025_t2017_most_property_first_year_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2017 2025 page 3 most-property table gives 60% for the first year after disposition, encoded as 0.60
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.60
+
+  - name: federal_2025_t2017_most_property_second_year_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2017 2025 page 3 most-property table gives 40% for the second year after disposition, encoded as 0.40
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.40
+
+  - name: federal_2025_t2017_most_property_third_year_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2017 2025 page 3 most-property table gives 20% for the third year after disposition, encoded as 0.20
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.20
+
+  - name: federal_2025_t2017_most_property_fourth_year_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2017 2025 page 3 most-property table gives zero for the fourth year after disposition
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0
+
+  - name: federal_2025_t2017_extended_year_of_disposition_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2017 2025 page 3 QFFP child, QSBCS child, QBT, and QCC table gives 90% for the year of disposition, encoded as 0.90
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.90
+
+  - name: federal_2025_t2017_extended_first_year_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2017 2025 page 3 QFFP child, QSBCS child, QBT, and QCC table gives 80% for the first year after disposition, encoded as 0.80
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.80
+
+  - name: federal_2025_t2017_extended_second_year_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2017 2025 page 3 QFFP child, QSBCS child, QBT, and QCC table gives 70% for the second year after disposition, encoded as 0.70
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.70
+
+  - name: federal_2025_t2017_extended_third_year_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2017 2025 page 3 QFFP child, QSBCS child, QBT, and QCC table gives 60% for the third year after disposition, encoded as 0.60
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.60
+
+  - name: federal_2025_t2017_extended_fourth_year_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2017 2025 page 3 QFFP child, QSBCS child, QBT, and QCC table gives 50% for the fourth year after disposition, encoded as 0.50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.50
+
+  - name: federal_2025_t2017_extended_fifth_year_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2017 2025 page 3 QFFP child, QSBCS child, QBT, and QCC table gives 40% for the fifth year after disposition, encoded as 0.40
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.40
+
+  - name: federal_2025_t2017_extended_sixth_year_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2017 2025 page 3 QFFP child, QSBCS child, QBT, and QCC table gives 30% for the sixth year after disposition, encoded as 0.30
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.30
+
+  - name: federal_2025_t2017_extended_seventh_year_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2017 2025 page 3 QFFP child, QSBCS child, QBT, and QCC table gives 20% for the seventh year after disposition, encoded as 0.20
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.20
+
+  - name: federal_2025_t2017_extended_eighth_year_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2017 2025 page 3 QFFP child, QSBCS child, QBT, and QCC table gives 10% for the eighth year after disposition, encoded as 0.10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.10
+
+  - name: federal_2025_t2017_extended_ninth_year_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T2017 2025 page 3 QFFP child, QSBCS child, QBT, and QCC table gives zero for the ninth year after disposition
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0
+
+  - name: federal_2025_t2017_most_property_applicable_percentage
+    kind: derived
+    entity: Person
+    dtype: Rate
+    period: Year
+    source: CRA T2017 2025 page 3 most-property table applies 80%, 60%, 40%, 20%, then zero by year after disposition
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t2017_most_property_years_after_disposition <= federal_2025_t2017_year_of_disposition_index:
+            federal_2025_t2017_most_property_year_of_disposition_rate
+          else:
+            if t2017_most_property_years_after_disposition <= federal_2025_t2017_first_year_after_disposition_index:
+              federal_2025_t2017_most_property_first_year_rate
+            else:
+              if t2017_most_property_years_after_disposition <= federal_2025_t2017_second_year_after_disposition_index:
+                federal_2025_t2017_most_property_second_year_rate
+              else:
+                if t2017_most_property_years_after_disposition <= federal_2025_t2017_third_year_after_disposition_index:
+                  federal_2025_t2017_most_property_third_year_rate
+                else:
+                  federal_2025_t2017_most_property_fourth_year_rate
+
+  - name: federal_2025_t2017_extended_applicable_percentage
+    kind: derived
+    entity: Person
+    dtype: Rate
+    period: Year
+    source: CRA T2017 2025 page 3 QFFP child, QSBCS child, QBT, and QCC table applies 90%, 80%, 70%, 60%, 50%, 40%, 30%, 20%, 10%, then zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t2017_extended_years_after_disposition <= federal_2025_t2017_year_of_disposition_index:
+            federal_2025_t2017_extended_year_of_disposition_rate
+          else:
+            if t2017_extended_years_after_disposition <= federal_2025_t2017_first_year_after_disposition_index:
+              federal_2025_t2017_extended_first_year_rate
+            else:
+              if t2017_extended_years_after_disposition <= federal_2025_t2017_second_year_after_disposition_index:
+                federal_2025_t2017_extended_second_year_rate
+              else:
+                if t2017_extended_years_after_disposition <= federal_2025_t2017_third_year_after_disposition_index:
+                  federal_2025_t2017_extended_third_year_rate
+                else:
+                  if t2017_extended_years_after_disposition <= federal_2025_t2017_fourth_year_after_disposition_index:
+                    federal_2025_t2017_extended_fourth_year_rate
+                  else:
+                    if t2017_extended_years_after_disposition <= federal_2025_t2017_fifth_year_after_disposition_index:
+                      federal_2025_t2017_extended_fifth_year_rate
+                    else:
+                      if t2017_extended_years_after_disposition <= federal_2025_t2017_sixth_year_after_disposition_index:
+                        federal_2025_t2017_extended_sixth_year_rate
+                      else:
+                        if t2017_extended_years_after_disposition <= federal_2025_t2017_seventh_year_after_disposition_index:
+                          federal_2025_t2017_extended_seventh_year_rate
+                        else:
+                          if t2017_extended_years_after_disposition <= federal_2025_t2017_eighth_year_after_disposition_index:
+                            federal_2025_t2017_extended_eighth_year_rate
+                          else:
+                            federal_2025_t2017_extended_ninth_year_rate
+
+  - name: federal_2025_t2017_most_property_ratio_limit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 page 3 most-property reserve limit is capital gain times amount payable after the end of the year divided by proceeds of disposition
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if max(0, t2017_most_property_proceeds_of_disposition) <= 0:
+            0
+          else:
+            max(0, t2017_most_property_capital_gain)
+            * max(0, t2017_most_property_amount_payable_after_year)
+            / max(0, t2017_most_property_proceeds_of_disposition)
+
+  - name: federal_2025_t2017_most_property_percentage_limit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 page 3 most-property reserve limit is also capital gain times the applicable percentage from the table
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t2017_most_property_capital_gain)
+          * federal_2025_t2017_most_property_applicable_percentage
+
+  - name: federal_2025_t2017_most_property_maximum_reserve
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 page 3 most-property reserve cannot be more than the lesser of the amount-payable limit and the percentage limit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_t2017_most_property_ratio_limit,
+            federal_2025_t2017_most_property_percentage_limit
+          )
+
+  - name: federal_2025_t2017_extended_ratio_limit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 page 3 QFFP child, QSBCS child, QBT, and QCC reserve limit is capital gain times amount payable after the end of the year divided by proceeds
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if max(0, t2017_extended_proceeds_of_disposition) <= 0:
+            0
+          else:
+            max(0, t2017_extended_capital_gain)
+            * max(0, t2017_extended_amount_payable_after_year)
+            / max(0, t2017_extended_proceeds_of_disposition)
+
+  - name: federal_2025_t2017_extended_percentage_limit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 page 3 QFFP child, QSBCS child, QBT, and QCC reserve limit is also capital gain times the applicable percentage from the table
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t2017_extended_capital_gain)
+          * federal_2025_t2017_extended_applicable_percentage
+
+  - name: federal_2025_t2017_extended_maximum_reserve
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 page 3 QFFP child, QSBCS child, QBT, and QCC reserve cannot be more than the lesser of the amount-payable limit and the percentage limit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_t2017_extended_ratio_limit,
+            federal_2025_t2017_extended_percentage_limit
+          )
+
+  - name: federal_2025_t2017_non_qualifying_security_maximum_reserve
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 page 3 says a gift of non-qualifying securities reserve cannot be more than the capital gain or the eligible amount of the gift
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            max(0, t2017_non_qualifying_security_capital_gain),
+            max(0, t2017_non_qualifying_security_eligible_gift_amount)
+          )
+
+  - name: federal_2025_t2017_pre_1981_maximum_reserve
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 page 3 pre-November 13, 1981 reserve is capital gain times amount payable after the end of the year divided by proceeds
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if max(0, t2017_pre_1981_proceeds_of_disposition) <= 0:
+            0
+          else:
+            max(0, t2017_pre_1981_capital_gain)
+            * max(0, t2017_pre_1981_amount_payable_after_year)
+            / max(0, t2017_pre_1981_proceeds_of_disposition)
+
+  - name: federal_2025_t2017_qffp_current_reserves_line_66844
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 Part 1 A line 5 adds QFFP reserve lines 2 to 4
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t2017_qffp_current_reserve_child_or_other_line_2)
+          + max(0, t2017_qffp_current_reserve_qbt_line_66831)
+          + max(0, t2017_qffp_current_reserve_qcc_line_66832)
+
+  - name: federal_2025_t2017_qffp_reserve_inclusion_line_6
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 Part 1 A line 6 subtracts line 5 from line 1 and allows negative amounts in brackets
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          t2017_qffp_prior_year_reserve_line_66843
+          - federal_2025_t2017_qffp_current_reserves_line_66844
+
+  - name: federal_2025_t2017_qsbcs_current_reserves_line_66850
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 Part 1 B line 11 adds QSBCS reserve lines 8 to 10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, t2017_qsbcs_current_reserve_child_or_other_line_8)
+          + max(0, t2017_qsbcs_current_reserve_qbt_line_66833)
+          + max(0, t2017_qsbcs_current_reserve_qcc_line_66834)
+
+  - name: federal_2025_t2017_qsbcs_reserve_inclusion_line_12
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 Part 1 B line 12 subtracts line 11 from line 7 and allows negative amounts in brackets
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          t2017_qsbcs_prior_year_reserve_line_66883
+          - federal_2025_t2017_qsbcs_current_reserves_line_66850
+
+  - name: federal_2025_t2017_qffp_qsbcs_total_line_13
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 Part 1 B line 13 adds lines 6 and 12 and allows negative amounts in brackets
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2017_qffp_reserve_inclusion_line_6
+          + federal_2025_t2017_qsbcs_reserve_inclusion_line_12
+
+  - name: federal_2025_t2017_child_other_property_inclusion_line_18
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 Part 1 C line 18 subtracts line 17 from line 16 and allows negative amounts in brackets
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          t2017_child_other_property_prior_year_reserve_line_66910
+          - max(0, t2017_child_other_property_current_reserve_line_66920)
+
+  - name: federal_2025_t2017_child_other_property_total_line_19
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 Part 1 C line 19 adds line 15, which is line 13 from the previous page, and line 18
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2017_qffp_qsbcs_total_line_13
+          + federal_2025_t2017_child_other_property_inclusion_line_18
+
+  - name: federal_2025_t2017_qbt_other_property_inclusion_line_22
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 Part 1 D line 22 subtracts line 21 from line 20 and allows negative amounts in brackets
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          t2017_qbt_other_property_prior_year_reserve_line_66930
+          - max(0, t2017_qbt_other_property_current_reserve_line_66935)
+
+  - name: federal_2025_t2017_qcc_other_property_inclusion_line_25
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 Part 1 E line 25 subtracts line 24 from line 23 and allows negative amounts in brackets
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          t2017_qcc_other_property_prior_year_reserve_line_66937
+          - max(0, t2017_qcc_other_property_current_reserve_line_66939)
+
+  - name: federal_2025_t2017_other_property_inclusion_line_28
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 Part 1 F line 28 subtracts line 27 from line 26 and allows negative amounts in brackets
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          t2017_other_property_prior_year_reserve_line_66960
+          - max(0, t2017_other_property_current_reserve_line_66990)
+
+  - name: federal_2025_t2017_post_1981_total_line_29
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 Part 1 line 29 adds lines 19, 22, 25, and 28 and allows negative amounts in brackets
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2017_child_other_property_total_line_19
+          + federal_2025_t2017_qbt_other_property_inclusion_line_22
+          + federal_2025_t2017_qcc_other_property_inclusion_line_25
+          + federal_2025_t2017_other_property_inclusion_line_28
+
+  - name: federal_2025_t2017_total_reserve_line_19200
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T2017 2025 Part 2 line 31 adds line 29 and line 30 and enters the amount on Schedule 3 line 19200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t2017_post_1981_total_line_29
+          + t2017_pre_november_13_1981_prior_year_reserve_line_67030

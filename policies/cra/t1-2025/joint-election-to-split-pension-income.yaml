@@ -1,0 +1,370 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T1032 for 2025 calculates a joint election to split pension
+    income between spouses or common-law partners. This module encodes
+    the maximum split-pension amount, elected amount, pension-income
+    amount adjustments, and income-tax-deducted allocation.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/joint-election-to-split-pension-income
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Form T1032 is the official 2025 T1 form for jointly electing
+        to split eligible pension income.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t1032/t1032-25e.txt
+rules:
+  - name: federal_2025_t1032_rca_veterans_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T1032 2025 lines 5 and 13 use $131,483.45 in the RCA and veterans benefit caps
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          131483.45
+
+  - name: federal_2025_t1032_tax_year_months
+    kind: parameter
+    dtype: Number
+    source: CRA T1032 2025 line 18 divides by the number of months in the tax year, 12 unless death-year replacement applies
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          12
+
+  - name: federal_2025_t1032_maximum_split_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T1032 2025 line 20 sets the maximum rate at 50%, encoded as 0.50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.50
+
+  - name: federal_2025_t1032_pension_income_amount_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T1032 2025 Step 4 caps each pension income amount at $2,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          2000
+
+  - name: federal_2025_t1032_receiving_spouse_line_33_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA T1032 2025 Step 4 note 1 uses a $4,000 threshold for the receiving spouse line 33 calculation
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          4000
+
+  - name: federal_2025_t1032_eligible_pension_income_line_1
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 line 1 uses eligible pension income from line 8 of the transferring spouse's Federal Worksheet for line 31400
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, transferring_spouse_eligible_pension_income_line_68020)
+
+  - name: federal_2025_t1032_veterans_benefits_line_2
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 line 2 uses the amount from T4A box 128
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, transferring_spouse_t4a_box_128_veterans_benefits_line_68025)
+
+  - name: federal_2025_t1032_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 line 3 subtracts line 2 from line 1
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t1032_eligible_pension_income_line_1
+            - federal_2025_t1032_veterans_benefits_line_2
+          )
+
+  - name: federal_2025_t1032_rca_payments_line_4
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 line 4 uses T4A-RCA box 17 life annuity payments
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, transferring_spouse_t4a_rca_box_17_life_annuity_payments_line_68026)
+
+  - name: federal_2025_t1032_rca_room_line_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 line 7 subtracts line 6 from line 5 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_2025_t1032_rca_veterans_cap - federal_2025_t1032_line_3)
+
+  - name: federal_2025_t1032_rca_eligible_amount_line_8
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 line 8 is the lesser of line 4 and line 7
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(federal_2025_t1032_rca_payments_line_4, federal_2025_t1032_rca_room_line_7)
+
+  - name: federal_2025_t1032_line_12
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 line 12 adds line 10 and line 11
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1032_line_3 + federal_2025_t1032_rca_eligible_amount_line_8
+
+  - name: federal_2025_t1032_veterans_room_line_15
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 line 15 subtracts line 14 from line 13 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_2025_t1032_rca_veterans_cap - federal_2025_t1032_line_12)
+
+  - name: federal_2025_t1032_veterans_eligible_amount_line_16
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 line 16 is the lesser of line 9 and line 15
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(federal_2025_t1032_veterans_benefits_line_2, federal_2025_t1032_veterans_room_line_15)
+
+  - name: federal_2025_t1032_total_eligible_pension_income_line_17
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 line 17 adds lines 3, 8, and 16
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1032_line_3
+          + federal_2025_t1032_rca_eligible_amount_line_8
+          + federal_2025_t1032_veterans_eligible_amount_line_16
+
+  - name: federal_2025_t1032_prorated_eligible_income_line_18
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 line 18 prorates line 17 by months married or common-law divided by months in the tax year
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          (max(0, t1032_months_married_or_common_law_line_68030) / max(1, t1032_months_in_tax_year_for_proration))
+          * federal_2025_t1032_total_eligible_pension_income_line_17
+
+  - name: federal_2025_t1032_eligible_income_after_proration_line_19
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 line 19 uses line 18 if marital-status proration applies, otherwise line 17
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t1032_marital_status_proration_applies:
+            federal_2025_t1032_prorated_eligible_income_line_18
+          else:
+            federal_2025_t1032_total_eligible_pension_income_line_17
+
+  - name: federal_2025_t1032_maximum_split_pension_amount_line_21
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 line 21 multiplies line 19 by the 50% maximum rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1032_eligible_income_after_proration_line_19
+          * federal_2025_t1032_maximum_split_rate
+
+  - name: split_pension_amount_line_21000_and_11600
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 line 22 limits the elected split-pension amount to line 21 and enters it on line 21000 and line 11600
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(max(0, elected_split_pension_amount_line_22), federal_2025_t1032_maximum_split_pension_amount_line_21)
+
+  - name: federal_2025_t1032_line_30
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 Step 4 line 30 adjusts the split amount for RCA amounts when line 8 is present
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if federal_2025_t1032_rca_eligible_amount_line_8 > 0 and federal_2025_t1032_total_eligible_pension_income_line_17 > 0:
+            split_pension_amount_line_21000_and_11600
+            - (
+              (federal_2025_t1032_rca_eligible_amount_line_8 / federal_2025_t1032_total_eligible_pension_income_line_17)
+              * split_pension_amount_line_21000_and_11600
+            )
+          else:
+            split_pension_amount_line_21000_and_11600
+
+  - name: federal_2025_t1032_transferor_pension_income_after_split_line_31
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 Step 4 line 31 subtracts line 30 from line 23
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_2025_t1032_eligible_pension_income_line_1 - federal_2025_t1032_line_30)
+
+  - name: transferor_pension_income_amount_line_31400
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 Step 4 Part A enters the lesser of $2,000 and line 31 on line 31400 of the transferor's return
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(federal_2025_t1032_pension_income_amount_cap, federal_2025_t1032_transferor_pension_income_after_split_line_31)
+
+  - name: federal_2025_t1032_receiving_spouse_line_32
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 Step 4 line 32 uses the receiving spouse's Federal Worksheet line 8 amount if they have line 11500 or 12900 income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, receiving_spouse_federal_worksheet_line_8_for_31400)
+
+  - name: federal_2025_t1032_receiving_spouse_line_33
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 Step 4 line 33 normally uses line 30, with note 1 special calculation for under-65 receiving spouses
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if t1032_receiving_spouse_special_line_33_conditions_apply:
+            if max(0, federal_2025_t1032_eligible_pension_income_line_1 - max(0, t1032_transferor_payments_excluded_for_line_33_note_1)) >= federal_2025_t1032_receiving_spouse_line_33_threshold:
+              federal_2025_t1032_line_30
+            else:
+              min(split_pension_amount_line_21000_and_11600, federal_2025_t1032_line_30)
+          else:
+            federal_2025_t1032_line_30
+
+  - name: federal_2025_t1032_receiving_spouse_line_34
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 Step 4 line 34 adds lines 32 and 33
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1032_receiving_spouse_line_32
+          + federal_2025_t1032_receiving_spouse_line_33
+
+  - name: receiving_spouse_pension_income_amount_line_31400
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 Step 4 Part B enters the lesser of $2,000 and line 34 on line 31400 of the receiving spouse's return
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(federal_2025_t1032_pension_income_amount_cap, federal_2025_t1032_receiving_spouse_line_34)
+
+  - name: federal_2025_t1032_eligible_tax_deducted_line_35
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 line 35 uses total tax deducted from the transferring spouse's pension income entered on line 17
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, transferor_tax_deducted_from_eligible_pension_income_line_68040)
+
+  - name: federal_2025_t1032_tax_deducted_split_amount_line_36
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 line 36 multiplies line 35 by line 22 divided by line 17
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if federal_2025_t1032_total_eligible_pension_income_line_17 <= 0:
+            0
+          else:
+            federal_2025_t1032_eligible_tax_deducted_line_35
+            * split_pension_amount_line_21000_and_11600
+            / federal_2025_t1032_total_eligible_pension_income_line_17
+
+  - name: transferor_income_tax_deducted_line_43700
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 line 39 subtracts line 38 from line 37 and enters the result on line 43700 of the transferor's return
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, transferor_total_tax_deducted_before_split_line_37)
+          - federal_2025_t1032_tax_deducted_split_amount_line_36
+
+  - name: receiving_spouse_income_tax_deducted_line_43700
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T1032 2025 line 42 adds line 41 to line 40 and enters the result on line 43700 of the receiving spouse's return
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, receiving_spouse_total_tax_deducted_before_split_line_40)
+          + federal_2025_t1032_tax_deducted_split_amount_line_36

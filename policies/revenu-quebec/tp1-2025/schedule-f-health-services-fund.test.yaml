@@ -1,0 +1,110 @@
+- name: schedule_f_middle_income_contribution
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_total_income_line_199: 80000
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_income_averaging_forest_producers_line_276: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_employment_income_line_101: 40000
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_correction_of_employment_income_line_105: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_profit_sharing_plan_allocations_line_20: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_old_age_security_pension_line_22: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_taxable_dividend_gross_up_line_25: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_support_payments_received_line_26: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_social_assistance_payments_line_28: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_income_replacement_indemnities_line_29: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_scholarships_bursaries_allowances_line_30: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_spousal_rrsp_recovery_line_31: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_other_excluded_income_line_33: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_repayments_overpayments_line_41: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_wage_loss_replacement_benefits_repayment_line_42: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_schedule_r_line_26_line_43: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_schedule_u_or_le35_total_line_43_1: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_ei_benefits_repaid_federal_line_44: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_line_250_deductions_line_45: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_retirement_income_transferred_to_spouse_line_46: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_support_payments_made_line_54: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_carrying_charges_interest_expenses_line_56: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_business_investment_loss_line_58: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_line_293_deductions_line_60: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_line_297_deductions_line_62: 0
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#schedule_f_income_before_employment_exclusion_line_10: 80000
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#schedule_f_employment_income_adjusted_line_16: 40000
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#schedule_f_income_after_employment_exclusion_line_18: 40000
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#schedule_f_excluded_income_total_line_34: 5000
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#schedule_f_income_before_deductions_line_36: 35000
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#schedule_f_deductions_line_68: 5000
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#schedule_f_income_subject_to_contribution_line_70: 30000
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#schedule_f_contribution_to_health_services_fund_line_446: 118.7
+
+- name: schedule_f_upper_income_maximum
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_total_income_line_199: 200000
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_income_averaging_forest_producers_line_276: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_employment_income_line_101: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_correction_of_employment_income_line_105: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_profit_sharing_plan_allocations_line_20: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_old_age_security_pension_line_22: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_taxable_dividend_gross_up_line_25: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_support_payments_received_line_26: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_social_assistance_payments_line_28: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_income_replacement_indemnities_line_29: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_scholarships_bursaries_allowances_line_30: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_spousal_rrsp_recovery_line_31: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_other_excluded_income_line_33: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_repayments_overpayments_line_41: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_wage_loss_replacement_benefits_repayment_line_42: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_schedule_r_line_26_line_43: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_schedule_u_or_le35_total_line_43_1: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_ei_benefits_repaid_federal_line_44: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_line_250_deductions_line_45: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_retirement_income_transferred_to_spouse_line_46: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_support_payments_made_line_54: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_carrying_charges_interest_expenses_line_56: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_business_investment_loss_line_58: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_line_293_deductions_line_60: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_line_297_deductions_line_62: 0
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#schedule_f_income_subject_to_contribution_line_70: 200000
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#schedule_f_contribution_to_health_services_fund_line_446: 1000
+
+- name: schedule_f_below_threshold_zero
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_total_income_line_199: 10000
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_income_averaging_forest_producers_line_276: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_employment_income_line_101: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_correction_of_employment_income_line_105: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_profit_sharing_plan_allocations_line_20: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_old_age_security_pension_line_22: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_taxable_dividend_gross_up_line_25: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_support_payments_received_line_26: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_social_assistance_payments_line_28: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_income_replacement_indemnities_line_29: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_scholarships_bursaries_allowances_line_30: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_spousal_rrsp_recovery_line_31: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_other_excluded_income_line_33: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_repayments_overpayments_line_41: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_wage_loss_replacement_benefits_repayment_line_42: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_schedule_r_line_26_line_43: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_schedule_u_or_le35_total_line_43_1: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_ei_benefits_repaid_federal_line_44: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_line_250_deductions_line_45: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_retirement_income_transferred_to_spouse_line_46: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_support_payments_made_line_54: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_carrying_charges_interest_expenses_line_56: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_business_investment_loss_line_58: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_line_293_deductions_line_60: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#input.schedule_f_line_297_deductions_line_62: 0
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#schedule_f_income_subject_to_contribution_line_70: 10000
+    ca:policies/revenu-quebec/tp1-2025/schedule-f-health-services-fund#schedule_f_contribution_to_health_services_fund_line_446: 0

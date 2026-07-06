@@ -1,0 +1,419 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA non-resident Schedules A, B, and C for the 2025 T1 package
+    calculate net world income, the allowable amount of federal
+    non-refundable tax credits, eligible section 217 income, and the
+    section 217 tax adjustment. This module encodes those cross-schedule
+    arithmetic surfaces.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/nonresident-world-income-credits-section-217
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Schedules A, B, and C are the official 2025 T1
+        non-resident package schedules for world income, allowable
+        federal non-refundable tax credits, and section 217 election
+        calculations.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5013-sa/5013-sa-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5013-sb/5013-sb-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5013-sc/5013-sc-25e.txt
+rules:
+  - name: federal_2025_schedule_b_percentage_multiplier
+    kind: parameter
+    dtype: Number
+    source: CRA Schedule B 2025 line 3 multiplies line 1 divided by line 2 by 100 to express a percentage
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          100
+
+  - name: federal_2025_schedule_b_full_credit_percentage_threshold
+    kind: parameter
+    dtype: Number
+    source: CRA Schedule B 2025 gives full line 35000 credits when line 3 is 90% or more
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          90
+
+  - name: federal_2025_schedule_b_lowest_federal_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule B 2025 lines 5, 11, and 15 use the applicable rate 14.5%, encoded as 0.145
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.145
+
+  - name: federal_2025_schedule_a_canadian_source_income_line_5
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule A 2025 line 5 adds lines 1 to 4 for income from Canadian sources
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, nonresident_net_income_line_23600)
+          + max(0, canadian_source_net_interest_and_investment_income)
+          + max(0, canadian_source_net_rental_income)
+          + max(0, other_canadian_source_income_schedule_a)
+
+  - name: federal_2025_schedule_a_foreign_source_income_line_13
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule A 2025 line 13 adds lines 6 to 12 for income from sources outside Canada
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, foreign_source_net_employment_income)
+          + max(0, foreign_source_net_pension_income)
+          + max(0, foreign_source_net_interest_and_investment_income)
+          + max(0, foreign_source_taxable_capital_gains)
+          + max(0, foreign_source_net_rental_income)
+          + max(0, foreign_source_net_business_income)
+          + max(0, other_foreign_source_income_schedule_a)
+
+  - name: nonresident_net_world_income_line_16700
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule A 2025 line 14 and line 16700 add line 5 and line 13 as net world income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_a_canadian_source_income_line_5
+          + federal_2025_schedule_a_foreign_source_income_line_13
+
+  - name: federal_2025_schedule_a_adjustments_line_15
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule A 2025 line 15 uses deductions from lines 24900 to 25600 that apply only to Canadian-source employment income, business income, and taxable capital gains from taxable Canadian property
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, nonresident_schedule_a_canadian_source_adjustments_lines_24900_to_25600)
+
+  - name: nonresident_net_world_income_after_adjustments_line_16900
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule A 2025 line 16 and line 16900 subtract line 15 from line 14 and floor at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            nonresident_net_world_income_line_16700
+            - federal_2025_schedule_a_adjustments_line_15
+          )
+
+  - name: federal_2025_schedule_b_net_income_percentage_line_3
+    kind: derived
+    entity: Person
+    dtype: Number
+    period: Year
+    source: CRA Schedule B 2025 line 3 divides net income from line 23600 by net world income from Schedule A line 14 and multiplies by 100
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if nonresident_net_world_income_line_16700 <= 0:
+            0
+          else:
+            (max(0, nonresident_net_income_line_23600) / nonresident_net_world_income_line_16700)
+            * federal_2025_schedule_b_percentage_multiplier
+
+  - name: federal_2025_schedule_b_part_a_selected_credits_line_4
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule B 2025 Part A line 4 totals return lines 30800, 31000, 31200, 31217, 31600, 31900, and 32300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, schedule_b_line_30800_cpp_or_qpp_base_amount)
+          + max(0, schedule_b_line_31000_cpp_or_qpp_self_employment_base_amount)
+          + max(0, schedule_b_line_31200_ei_premiums)
+          + max(0, schedule_b_line_31217_ei_self_employment_premiums)
+          + max(0, schedule_b_line_31600_disability_amount)
+          + max(0, schedule_b_line_31900_student_loan_interest)
+          + max(0, schedule_b_line_32300_tuition_amount)
+
+  - name: federal_2025_schedule_b_part_a_rate_credit_line_6
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule B 2025 Part A line 6 multiplies line 4 by the 14.5% applicable rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_b_part_a_selected_credits_line_4
+          * federal_2025_schedule_b_lowest_federal_rate
+
+  - name: federal_2025_schedule_b_part_a_donations_line_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule B 2025 Part A line 7 totals return lines 34900 and 34990
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, schedule_b_line_34900_donations_and_gifts)
+          + max(0, schedule_b_line_34990_additional_donation_amount)
+
+  - name: federal_2025_schedule_b_part_a_allowable_credits_line_8
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule B 2025 Part A line 8 adds line 6 and line 7 as the amount entered on line 127
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_b_part_a_rate_credit_line_6
+          + federal_2025_schedule_b_part_a_donations_line_7
+
+  - name: federal_2025_schedule_c_total_eligible_income_line_13300
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule C 2025 Part 1 line 15 totals eligible section 217 income from lines 1 to 14 and enters it on line 13300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, section_217_registered_supplementary_unemployment_benefit_plan_income)
+          + max(0, section_217_oas_pension)
+          + max(0, section_217_cpp_or_qpp_benefits)
+          + max(0, section_217_rrsp_income)
+          + max(0, section_217_prpp_income)
+          + max(0, section_217_rrif_income)
+          + max(0, section_217_other_pensions_and_superannuation)
+          + max(0, section_217_ei_benefits)
+          + max(0, section_217_death_benefits)
+          + max(0, section_217_retiring_allowances)
+          + max(0, section_217_deferred_profit_sharing_plan_income)
+          + max(0, section_217_retirement_compensation_arrangement_amounts)
+          + max(0, section_217_prescribed_government_assistance_benefits)
+          + max(0, section_217_auto_pact_benefits)
+
+  - name: federal_2025_schedule_c_required_withholding_line_44300
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule C 2025 Part 1 line 15 totals column 3 non-resident tax required to be withheld
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, section_217_registered_supplementary_unemployment_benefit_plan_income) * max(0, section_217_registered_supplementary_unemployment_benefit_plan_withholding_rate)
+          + max(0, section_217_oas_pension) * max(0, section_217_oas_pension_withholding_rate)
+          + max(0, section_217_cpp_or_qpp_benefits) * max(0, section_217_cpp_or_qpp_benefits_withholding_rate)
+          + max(0, section_217_rrsp_income) * max(0, section_217_rrsp_income_withholding_rate)
+          + max(0, section_217_prpp_income) * max(0, section_217_prpp_income_withholding_rate)
+          + max(0, section_217_rrif_income) * max(0, section_217_rrif_income_withholding_rate)
+          + max(0, section_217_other_pensions_and_superannuation) * max(0, section_217_other_pensions_and_superannuation_withholding_rate)
+          + max(0, section_217_ei_benefits) * max(0, section_217_ei_benefits_withholding_rate)
+          + max(0, section_217_death_benefits) * max(0, section_217_death_benefits_withholding_rate)
+          + max(0, section_217_retiring_allowances) * max(0, section_217_retiring_allowances_withholding_rate)
+          + max(0, section_217_deferred_profit_sharing_plan_income) * max(0, section_217_deferred_profit_sharing_plan_income_withholding_rate)
+          + max(0, section_217_retirement_compensation_arrangement_amounts) * max(0, section_217_retirement_compensation_arrangement_amounts_withholding_rate)
+          + max(0, section_217_prescribed_government_assistance_benefits) * max(0, section_217_prescribed_government_assistance_benefits_withholding_rate)
+          + max(0, section_217_auto_pact_benefits) * max(0, section_217_auto_pact_benefits_withholding_rate)
+
+  - name: federal_2025_schedule_c_total_eligible_income_after_adjustments_line_14800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule C 2025 Part 1 line 18 subtracts line 17 deductions from line 16 total eligible income and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_schedule_c_total_eligible_income_line_13300
+            - max(0, section_217_income_deductions_lines_20700_20800_20805_23200_25000_25600)
+          )
+
+  - name: federal_2025_schedule_b_part_b_total_credits_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule B 2025 Part B line 9 uses total federal non-refundable tax credits from line 35000 of the return
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_non_refundable_tax_credits_line_35000)
+
+  - name: federal_2025_schedule_b_part_b_excluded_credits_line_10
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule B 2025 Part B line 10 totals return lines 31220, 31240, 31270, 31285, 31300, and 31900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, schedule_b_line_31220_employment_amount)
+          + max(0, schedule_b_line_31240_home_buyers_amount)
+          + max(0, schedule_b_line_31270_home_accessibility_expenses)
+          + max(0, schedule_b_line_31285_digital_news_subscription_expenses)
+          + max(0, schedule_b_line_31300_adoption_expenses)
+          + max(0, schedule_b_line_31900_student_loan_interest)
+
+  - name: federal_2025_schedule_b_part_b_excluded_credits_amount_line_12
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule B 2025 Part B line 12 multiplies line 10 by the 14.5% applicable rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_b_part_b_excluded_credits_line_10
+          * federal_2025_schedule_b_lowest_federal_rate
+
+  - name: federal_2025_schedule_b_part_b_credit_pool_line_13
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule B 2025 Part B line 13 subtracts line 12 from line 9
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_schedule_b_part_b_total_credits_line_9
+            - federal_2025_schedule_b_part_b_excluded_credits_amount_line_12
+          )
+
+  - name: federal_2025_schedule_b_part_b_section_217_income_credit_line_16
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule B 2025 Part B line 16 multiplies Schedule C line 13300 by the 14.5% applicable rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_c_total_eligible_income_line_13300
+          * federal_2025_schedule_b_lowest_federal_rate
+
+  - name: federal_2025_schedule_b_part_b_allowable_credits_line_17
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule B 2025 Part B line 17 is the lesser of line 13 and line 16
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_b_part_b_credit_pool_line_13,
+            federal_2025_schedule_b_part_b_section_217_income_credit_line_16
+          )
+
+  - name: nonresident_allowable_federal_non_refundable_tax_credits_line_127
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule B 2025 directs line 127 to use full line 35000 credits when line 3 is 90% or more, otherwise Part A line 8 or Part B line 17
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if federal_2025_schedule_b_net_income_percentage_line_3 >= federal_2025_schedule_b_full_credit_percentage_threshold:
+            max(0, federal_non_refundable_tax_credits_line_35000)
+          else:
+            if electing_under_section_217:
+              federal_2025_schedule_b_part_b_allowable_credits_line_17
+            else:
+              federal_2025_schedule_b_part_a_allowable_credits_line_8
+
+  - name: federal_2025_schedule_c_world_income_excess_line_21
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule C 2025 Part 2 line 21 subtracts taxable income from net world income after adjustments and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            nonresident_net_world_income_after_adjustments_line_16900
+            - max(0, taxable_income_line_26000)
+          )
+
+  - name: federal_2025_schedule_c_line_24
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule C 2025 Part 2 line 24 subtracts Canadian journalism labour tax credit from line 41700 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, federal_tax_line_41700)
+            - max(0, canadian_journalism_labour_tax_credit_box_236)
+          )
+
+  - name: federal_2025_schedule_c_line_26
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule C 2025 Part 2 line 26 subtracts the return of fuel charge proceeds to farmers tax credit from line 24 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_schedule_c_line_24
+            - max(0, return_of_fuel_charge_proceeds_to_farmers_tax_credit_t2043)
+          )
+
+  - name: federal_2025_schedule_c_line_27
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule C 2025 Part 2 line 27 multiplies line 21 by line 26
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_schedule_c_world_income_excess_line_21
+          * federal_2025_schedule_c_line_26
+
+  - name: section_217_tax_adjustment_line_41450
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule C 2025 Part 2 line 29 divides line 27 by line 28 and enters the section 217 tax adjustment on line 41450
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if nonresident_net_world_income_after_adjustments_line_16900 <= 0:
+            0
+          else:
+            federal_2025_schedule_c_line_27
+            / nonresident_net_world_income_after_adjustments_line_16900

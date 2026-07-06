@@ -1,0 +1,132 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Quebec Schedule S 2025 amount transferred by a child 18 or
+    over enrolled in post-secondary studies: RL-8 box A cap, reductions,
+    transferable amount, and parent transfer allocation.
+  source_verification:
+    corpus_citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-s-student-transfer
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+      rationale: Revenu Quebec Schedule S is the official 2025 schedule for amounts transferred by an eligible student child to a parent.
+    source_urls:
+      - https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.S-V%282025-12%29.pdf
+rules:
+  - name: quebec_2025_schedule_s_base_amount_line_2
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule S 2025 line 2 gives $6,012
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 6012
+
+  - name: quebec_2025_schedule_s_post_secondary_box_a_maximum
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule S 2025 line 4 caps the RL-8 box A amount at $7,646
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 7646
+
+  - name: quebec_2025_schedule_s_solidarity_multiplier
+    kind: parameter
+    dtype: Number
+    source: Revenu Quebec Schedule S 2025 line 10 multiplies the solidarity tax credit received in 2025 by 7.14
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 7.14
+
+  - name: quebec_2025_schedule_s_turned_18_monthly_reduction
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule S 2025 work chart line 25 gives $501
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 501
+
+  - name: schedule_s_post_secondary_amount_line_4
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule S 2025 line 4 enters the RL-8 box A amount for post-secondary studies, capped at $7,646
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(quebec_2025_schedule_s_post_secondary_box_a_maximum, max(0, schedule_s_rl8_box_a_amount))
+
+  - name: schedule_s_pre_reduction_transferable_amount_line_6
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule S 2025 line 6 adds lines 2 and 4, but is zero if there is no RL-8 slip or no amount in box A
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_s_has_rl8_slip and schedule_s_rl8_box_a_amount > 0:
+            quebec_2025_schedule_s_base_amount_line_2 + schedule_s_post_secondary_amount_line_4
+          else:
+            0
+
+  - name: schedule_s_turned_18_reduction_line_8
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule S 2025 work chart line 27 multiplies $501 by the number of months preceding the birthday including the birthday month and carries the result to line 8
+    versions:
+      - effective_from: '2025-01-01'
+        formula: quebec_2025_schedule_s_turned_18_monthly_reduction * max(0, schedule_s_months_before_birthday_including_birthday_month_line_26)
+
+  - name: schedule_s_solidarity_credit_reduction_line_10
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule S 2025 line 10 multiplies the solidarity tax credit received in 2025 by 7.14
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_s_solidarity_tax_credit_received_2025) * quebec_2025_schedule_s_solidarity_multiplier
+
+  - name: schedule_s_total_reductions_line_11
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule S 2025 line 11 adds lines 8 through 10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_s_turned_18_reduction_line_8 + max(0, schedule_s_amount_from_return_line_358_line_9) + schedule_s_solidarity_credit_reduction_line_10
+
+  - name: schedule_s_transferable_after_reductions_line_12
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule S 2025 line 12 subtracts line 11 from line 6 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_s_pre_reduction_transferable_amount_line_6 - schedule_s_total_reductions_line_11)
+
+  - name: schedule_s_amount_that_can_be_transferred_line_16
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule S 2025 line 16 subtracts line 14 from line 12 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_s_transferable_after_reductions_line_12 - max(0, schedule_s_amount_from_return_line_299_line_14))
+
+  - name: schedule_s_total_amount_transferred_to_parents_line_20
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule S 2025 Part B transfers all or part of line 16 to one or two individuals on lines 20.1 and 20.2
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(schedule_s_amount_that_can_be_transferred_line_16, max(0, schedule_s_amount_transferred_first_individual_line_20_1) + max(0, schedule_s_amount_transferred_second_individual_line_20_2))

@@ -1,0 +1,294 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Schedule 7 for the 2025 T1 return calculates RRSP/PRPP/SPP
+    contributions, HBP and LLP repayments, the RRSP deduction on line
+    20800, unused contributions carried forward, HBP/LLP withdrawals, and
+    amateur athlete trust income. This module encodes the Schedule 7
+    arithmetic surfaces and the HBP/LLP minimum repayment shortfall
+    surfaces used for line 12900 income inclusion.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/rrsp-prpp-spp-hbp-llp
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Schedule 7 is the official 2025 T1 return schedule for
+        RRSP/PRPP/SPP contributions, transfers, HBP/LLP activities, and
+        the RRSP deduction.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s7/5000-s7-25e.pdf
+      - https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/rrsps-related-plans/what-home-buyers-plan/repay-funds-withdrawn-rrsp-s-under-home-buyers-plan.html
+      - https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/rrsps-related-plans/lifelong-learning-plan/repayments-your-rrsp-under.html
+rules:
+  - name: federal_2025_hbp_standard_repayment_years
+    kind: parameter
+    dtype: Count
+    source: CRA HBP guidance says the HBP repayment period is 15 years
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 15
+
+  - name: federal_2025_llp_standard_repayment_years
+    kind: parameter
+    dtype: Count
+    source: CRA LLP guidance gives a 10-year repayment period and examples calculate required repayments as one-tenth
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 10
+
+  - name: federal_2025_schedule_7_current_period_contributions_line_24500
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 7 2025 Part A line 4 adds contributions from March 4, 2025 to December 31, 2025 and January 1, 2026 to March 2, 2026
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, rrsp_prpp_spp_contributions_mar4_to_dec31_2025)
+          + max(0, rrsp_prpp_spp_contributions_jan1_to_mar2_2026)
+
+  - name: federal_2025_schedule_7_total_contributions_line_5
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 7 2025 Part A line 5 adds unused prior contributions and line 4 current-period contributions
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, unused_rrsp_prpp_spp_contributions_available_for_2025)
+          + federal_2025_schedule_7_current_period_contributions_line_24500
+
+  - name: federal_2025_schedule_7_hbp_llp_repayments_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 7 2025 Part B line 9 adds HBP and LLP repayments
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, hbp_repayment_designated_line_24600)
+          + max(0, llp_repayment_designated_line_24620)
+
+  - name: federal_2025_hbp_minimum_required_repayment
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA HBP guidance says the minimum required repayment for the next year is the HBP balance divided by the number of years remaining in the repayment period
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if max(0, hbp_repayment_years_remaining_for_2025) <= 0:
+            0
+          else:
+            max(0, hbp_balance_at_start_of_2025)
+            / max(0, hbp_repayment_years_remaining_for_2025)
+
+  - name: federal_2025_hbp_repayment_shortfall_income_line_12900
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA HBP guidance says if designated HBP repayments are less than the minimum required repayment, the difference is included as RRSP income on line 12900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_hbp_minimum_required_repayment
+            - max(0, hbp_repayment_designated_line_24600)
+          )
+
+  - name: federal_2025_llp_minimum_required_repayment
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA LLP guidance says the amount required for the next year is the LLP balance divided by the years left in the repayment period
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if max(0, llp_repayment_years_remaining_for_2025) <= 0:
+            0
+          else:
+            max(0, llp_balance_at_start_of_2025)
+            / max(0, llp_repayment_years_remaining_for_2025)
+
+  - name: federal_2025_llp_repayment_shortfall_income_line_12900
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA LLP guidance says if designated LLP repayments are less than the amount required, the difference is included on line 12900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_llp_minimum_required_repayment
+            - max(0, llp_repayment_designated_line_24620)
+          )
+
+  - name: rrsp_income_from_hbp_llp_repayment_shortfalls_line_12900
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA HBP and LLP guidance includes repayment shortfalls as RRSP income on line 12900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_hbp_repayment_shortfall_income_line_12900
+          + federal_2025_llp_repayment_shortfall_income_line_12900
+
+  - name: federal_2025_schedule_7_contributions_available_to_deduct_line_10
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 7 2025 Part B line 10 subtracts HBP and LLP repayments from total contributions
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_schedule_7_total_contributions_line_5
+            - federal_2025_schedule_7_hbp_llp_repayments_line_9
+          )
+
+  - name: federal_2025_schedule_7_rrsp_limit_after_prpp_line_13
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 7 2025 Part C line 13 subtracts employer PRPP contributions from the RRSP deduction limit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, rrsp_deduction_limit_2025_line_11)
+            - max(0, employer_prpp_contributions_line_20810)
+          )
+
+  - name: federal_2025_schedule_7_contributions_after_transfers_line_16
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 7 2025 Part C line 16 subtracts transfers from contributions available to deduct
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_schedule_7_contributions_available_to_deduct_line_10
+            - max(0, rrsp_transfers_line_24640)
+          )
+
+  - name: federal_2025_schedule_7_max_regular_deduction_line_17
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 7 2025 Part C line 17 is the lesser of line 13 and line 16
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_7_rrsp_limit_after_prpp_line_13,
+            federal_2025_schedule_7_contributions_after_transfers_line_16
+          )
+
+  - name: federal_2025_schedule_7_regular_deduction_claimed_line_18
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 7 2025 Part C line 18 is the RRSP/PRPP/SPP contributions deducted for 2025, not more than line 17
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            max(0, rrsp_prpp_spp_regular_deduction_claimed_line_18),
+            federal_2025_schedule_7_max_regular_deduction_line_17
+          )
+
+  - name: federal_2025_schedule_7_line_19
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 7 2025 Part C line 19 adds transfers and regular deduction claimed
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, rrsp_transfers_line_24640)
+          + federal_2025_schedule_7_regular_deduction_claimed_line_18
+
+  - name: rrsp_deduction_line_20800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 7 2025 Part C line 20 is the lesser of contributions available to deduct and line 19, entered on line 20800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_schedule_7_contributions_available_to_deduct_line_10,
+            federal_2025_schedule_7_line_19
+          )
+
+  - name: federal_2025_schedule_7_unused_contributions_carryforward_line_23
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 7 2025 Part D line 23 subtracts RRSP deduction from contributions available to deduct
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_schedule_7_contributions_available_to_deduct_line_10
+            - rrsp_deduction_line_20800
+          )
+
+  - name: hbp_withdrawals_line_24700
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 7 2025 Part E line 24 reports HBP withdrawals from T4RSP box 27
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, hbp_withdrawals_from_t4rsp_box_27)
+
+  - name: llp_withdrawals_line_26300
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 7 2025 Part E line 26 reports LLP withdrawals from T4RSP box 25
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, llp_withdrawals_from_t4rsp_box_25)
+
+  - name: amateur_athlete_trust_income_line_26700
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Schedule 7 2025 Part F line 28 reports qualifying performance income contributed to an amateur athlete trust
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, amateur_athlete_trust_contributions_2025)

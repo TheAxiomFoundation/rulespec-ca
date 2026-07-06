@@ -1,0 +1,42 @@
+- name: schedule_s_capped_rl8_and_parent_transfer
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#input.schedule_s_has_rl8_slip: true
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#input.schedule_s_rl8_box_a_amount: 8000
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#input.schedule_s_months_before_birthday_including_birthday_month_line_26: 2
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#input.schedule_s_amount_from_return_line_358_line_9: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#input.schedule_s_solidarity_tax_credit_received_2025: 100
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#input.schedule_s_amount_from_return_line_299_line_14: 500
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#input.schedule_s_amount_transferred_first_individual_line_20_1: 6000
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#input.schedule_s_amount_transferred_second_individual_line_20_2: 10000
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#schedule_s_post_secondary_amount_line_4: 7646
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#schedule_s_pre_reduction_transferable_amount_line_6: 13658
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#schedule_s_turned_18_reduction_line_8: 1002
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#schedule_s_solidarity_credit_reduction_line_10: 714
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#schedule_s_total_reductions_line_11: 2716
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#schedule_s_transferable_after_reductions_line_12: 10942
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#schedule_s_amount_that_can_be_transferred_line_16: 10442
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#schedule_s_total_amount_transferred_to_parents_line_20: 10442
+
+- name: schedule_s_no_rl8_no_transfer
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#input.schedule_s_has_rl8_slip: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#input.schedule_s_rl8_box_a_amount: 5000
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#input.schedule_s_months_before_birthday_including_birthday_month_line_26: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#input.schedule_s_amount_from_return_line_358_line_9: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#input.schedule_s_solidarity_tax_credit_received_2025: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#input.schedule_s_amount_from_return_line_299_line_14: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#input.schedule_s_amount_transferred_first_individual_line_20_1: 100
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#input.schedule_s_amount_transferred_second_individual_line_20_2: 0
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#schedule_s_pre_reduction_transferable_amount_line_6: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#schedule_s_amount_that_can_be_transferred_line_16: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-s-student-transfer#schedule_s_total_amount_transferred_to_parents_line_20: 0

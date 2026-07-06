@@ -1,0 +1,399 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form T657 for 2025 calculates the capital gains deduction. This
+    module encodes Step 1 annual gains limit, Step 2 cumulative gains
+    limit, the two 2025 chart surfaces, and the final line 25400 elected
+    deduction cap.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/capital-gains-deduction
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Form T657 is the official 2025 form for calculating the
+        capital gains deduction claimed on line 25400.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t657/t657-25e.pdf
+rules:
+  - name: federal_2025_t657_inclusion_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA T657 2025 Step 1 line 4 uses the 1/2 inclusion rate, encoded as 0.50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.50
+
+  - name: federal_2025_t657_lcge_deduction_limit
+    kind: parameter
+    dtype: Money
+    source: CRA T657 2025 states the 2025 capital gains deduction limit is $625,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          625000
+
+  - name: federal_2025_t657_period1_2024_deduction_limit
+    kind: parameter
+    dtype: Money
+    source: CRA T657 2025 Chart 2025 Part 1 sets the Period 1 2024 deduction limit at $522,145
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          522145
+
+  - name: federal_2025_t657_1985_allowable_capital_loss_cap
+    kind: parameter
+    dtype: Money
+    source: CRA T657 2025 Step 2 line 10 caps allowable capital losses claimed in 1985 at $2,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          2000
+
+  - name: federal_2025_t657_step1_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Step 1 line 3 adds lines 1 and 2 and may be negative
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          schedule_3_qffp_qsbcs_lines_10700_11000_12400
+          + t2017_total_reserves_line_13
+
+  - name: federal_2025_t657_step1_line_5
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Step 1 line 5 multiplies line 3 by the inclusion rate and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_2025_t657_step1_line_3 * federal_2025_t657_inclusion_rate)
+
+  - name: federal_2025_t657_qualifying_taxable_capital_gains_line_7
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Step 1 line 7 subtracts Form T2048 line 17216 from line 5
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t657_step1_line_5
+          - max(0, t2048_line_17216)
+
+  - name: federal_2025_t657_step1_line_10
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Step 1 line 10 subtracts line 9 from Schedule 3 line 19900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          schedule_3_total_taxable_capital_gains_or_losses_line_19900
+          - (max(0, schedule_3_line_17600) * federal_2025_t657_inclusion_rate)
+
+  - name: federal_2025_t657_step1_line_12
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Step 1 line 12 subtracts Form T2048 line 17215 from line 10
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t657_step1_line_10 - max(0, t2048_line_17215)
+
+  - name: federal_2025_t657_eligible_taxable_capital_gains_line_13
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Step 1 line 13 is the lesser of line 7 and line 12
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            min(
+              federal_2025_t657_qualifying_taxable_capital_gains_line_7,
+              federal_2025_t657_step1_line_12
+            )
+          )
+
+  - name: federal_2025_t657_adjusted_net_capital_losses_line_16
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Step 1 line 16 subtracts line 15 from line 14 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            net_capital_losses_other_years_deducted_line_25300
+            - max(0, t936_chart_a_line_14_non_eligible_taxable_capital_gains)
+          )
+
+  - name: federal_2025_t657_adjusted_abil_line_19
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Step 1 line 19 subtracts Form T2048 line 17217 from line 21700 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, allowable_business_investment_losses_line_21700 - max(0, t2048_line_17217))
+
+  - name: federal_2025_t657_total_losses_for_annual_gains_limit_line_20
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Step 1 line 20 adds line 16 and line 19
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t657_adjusted_net_capital_losses_line_16
+          + federal_2025_t657_adjusted_abil_line_19
+
+  - name: annual_gains_limit_line_21
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Step 1 line 21 subtracts line 20 from line 13 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t657_eligible_taxable_capital_gains_line_13
+            - federal_2025_t657_total_losses_for_annual_gains_limit_line_20
+          )
+
+  - name: federal_2025_t657_cumulative_eligible_taxable_capital_gains_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Step 2 line 9 adds lines 1 to 8
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, cumulative_eligible_taxable_capital_gains_before_2025)
+          + federal_2025_t657_eligible_taxable_capital_gains_line_13
+
+  - name: federal_2025_t657_total_allowable_business_investment_losses_line_13
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Step 2 line 13 subtracts line 12 from line 11 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, prior_years_allowable_business_investment_losses_line_11 - max(0, t2048_2024_line_17217_line_12))
+
+  - name: federal_2025_t657_step2_total_reductions_line_18
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Step 2 line 18 adds lines 10 and 13 to 17
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(federal_2025_t657_1985_allowable_capital_loss_cap, max(0, allowable_capital_losses_claimed_1985_line_10))
+          + federal_2025_t657_total_allowable_business_investment_losses_line_13
+          + max(0, prior_year_net_capital_losses_chart1_column_g_line_14)
+          + federal_2025_t657_total_losses_for_annual_gains_limit_line_20
+          + max(0, cumulative_net_investment_loss_t936_part_3_line_c)
+          + max(0, capital_gains_deductions_claimed_before_2025_line_17)
+
+  - name: cumulative_gains_limit_line_19
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Step 2 line 19 subtracts line 18 from line 9 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t657_cumulative_eligible_taxable_capital_gains_line_9
+            - federal_2025_t657_step2_total_reductions_line_18
+          )
+
+  - name: federal_2025_t657_2025_period1_available_amount_e
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Chart 2025 Part 1 amount E subtracts amounts B and D from $522,145 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t657_period1_2024_deduction_limit
+            - max(0, t657_2025_period1_prior_eligible_amount_b)
+            - max(0, t657_2025_period1_previous_deductions_amount_d)
+          )
+
+  - name: federal_2025_t657_2025_period1_taxable_gains_amount_k
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Chart 2025 Part 1 amount K adds amounts F to J, floors at zero, and multiplies by 1/2
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            t657_2025_period1_t3_t5013_qsbcs_amount_f
+            + t657_2025_period1_t3_t5013_qffp_amount_g
+            + t657_2025_period1_t5013_box_155_amount_h
+            + t657_2025_period1_t2017_qffp_reserve_amount_i
+            + t657_2025_period1_t2017_qsbcs_reserve_amount_j
+          )
+          * federal_2025_t657_inclusion_rate
+
+  - name: federal_2025_t657_2025_period1_eligible_amount_p
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Chart 2025 Part 1 amount P adds amount N and amount O
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_t657_2025_period1_available_amount_e,
+            max(0, federal_2025_t657_2025_period1_taxable_gains_amount_k - max(0, t657_2025_period1_t2048_line_17216_amount_l))
+          )
+          + max(0, t657_2025_period1_prior_eligible_amount_b)
+
+  - name: federal_2025_t657_2025_period1_chart_maximum_amount_q
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Chart 2025 Part 1 amount Q is the lesser of line 21, line 19, or amount P
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            annual_gains_limit_line_21,
+            cumulative_gains_limit_line_19,
+            federal_2025_t657_2025_period1_eligible_amount_p
+          )
+
+  - name: federal_2025_t657_2025_part2_available_amount_e
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Chart 2025 Part 2 amount E subtracts amounts B and D from $625,000 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t657_lcge_deduction_limit
+            - max(0, t657_2025_part2_prior_eligible_amount_b)
+            - max(0, t657_2025_part2_previous_deductions_amount_d)
+          )
+
+  - name: federal_2025_t657_2025_part2_taxable_gains_amount_k
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Chart 2025 Part 2 amount K adds amounts F to J, floors at zero, and multiplies by 1/2
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            t657_2025_part2_schedule_3_line_10700_amount_f
+            + t657_2025_part2_schedule_3_line_11000_amount_g
+            + t657_2025_part2_schedule_3_line_12400_amount_h
+            + t657_2025_part2_t2017_qffp_reserve_amount_i
+            + t657_2025_part2_t2017_qsbcs_reserve_amount_j
+          )
+          * federal_2025_t657_inclusion_rate
+
+  - name: federal_2025_t657_2025_part2_eligible_amount_p
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Chart 2025 Part 2 amount P adds amount N and amount O
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_t657_2025_part2_available_amount_e,
+            max(0, federal_2025_t657_2025_part2_taxable_gains_amount_k - max(0, t657_2025_part2_t2048_line_17216_amount_l))
+          )
+          + max(0, t657_2025_part2_prior_eligible_amount_b)
+
+  - name: federal_2025_t657_2025_part2_chart_maximum_amount_q
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 Chart 2025 Part 2 amount Q is the lesser of line 21, line 19, or amount P
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            annual_gains_limit_line_21,
+            cumulative_gains_limit_line_19,
+            federal_2025_t657_2025_part2_eligible_amount_p
+          )
+
+  - name: federal_2025_t657_maximum_capital_gains_deduction_for_2025
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 says the capital gains deduction is limited to annual gains limit, cumulative gains limit, eligible taxable capital gains, and maximum available chart deduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            annual_gains_limit_line_21,
+            cumulative_gains_limit_line_19,
+            max(
+              federal_2025_t657_2025_period1_chart_maximum_amount_q,
+              federal_2025_t657_2025_part2_chart_maximum_amount_q,
+              max(0, t657_prior_year_reserve_chart_maximum_deduction)
+            )
+          )
+
+  - name: capital_gains_deduction_line_25400
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA T657 2025 chart amount Q states the taxpayer may choose to claim less than the maximum on line 25400
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            max(0, elected_capital_gains_deduction_line_25400),
+            federal_2025_t657_maximum_capital_gains_deduction_for_2025
+          )

@@ -1,0 +1,46 @@
+- name: selected_claim_code_amounts_and_credits
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    ca:policies/cra/t4127-2026/claim-codes#input.federal_claim_code: 10
+    ca:policies/cra/t4127-2026/claim-codes#input.alberta_claim_code: 2
+    ca:policies/cra/t4127-2026/claim-codes#input.british_columbia_claim_code: 3
+    ca:policies/cra/t4127-2026/claim-codes#input.manitoba_claim_code: 10
+    ca:policies/cra/t4127-2026/claim-codes#input.new_brunswick_claim_code: 4
+    ca:policies/cra/t4127-2026/claim-codes#input.newfoundland_and_labrador_claim_code: 5
+    ca:policies/cra/t4127-2026/claim-codes#input.nova_scotia_claim_code: 6
+    ca:policies/cra/t4127-2026/claim-codes#input.northwest_territories_claim_code: 7
+    ca:policies/cra/t4127-2026/claim-codes#input.nunavut_claim_code: 8
+    ca:policies/cra/t4127-2026/claim-codes#input.ontario_claim_code: 9
+    ca:policies/cra/t4127-2026/claim-codes#input.prince_edward_island_claim_code: 10
+    ca:policies/cra/t4127-2026/claim-codes#input.saskatchewan_claim_code: 1
+    ca:policies/cra/t4127-2026/claim-codes#input.yukon_claim_code: 0
+  output:
+    ca:policies/cra/t4127-2026/claim-codes#selected_federal_claim_amount: 40532.5
+    ca:policies/cra/t4127-2026/claim-codes#selected_federal_claim_credit: 5674.55
+    ca:policies/cra/t4127-2026/claim-codes#selected_alberta_claim_amount: 24397.5
+    ca:policies/cra/t4127-2026/claim-codes#selected_alberta_claim_credit: 1951.8
+    ca:policies/cra/t4127-2026/claim-codes#selected_british_columbia_claim_amount: 17677
+    ca:policies/cra/t4127-2026/claim-codes#selected_british_columbia_claim_credit: 894.46
+    ca:policies/cra/t4127-2026/claim-codes#selected_manitoba_claim_amount: 30170.5
+    ca:policies/cra/t4127-2026/claim-codes#selected_manitoba_claim_credit: 3258.41
+    ca:policies/cra/t4127-2026/claim-codes#selected_new_brunswick_claim_amount: 20656.5
+    ca:policies/cra/t4127-2026/claim-codes#selected_new_brunswick_claim_credit: 1941.71
+    ca:policies/cra/t4127-2026/claim-codes#selected_newfoundland_and_labrador_claim_amount: 19644
+    ca:policies/cra/t4127-2026/claim-codes#selected_newfoundland_and_labrador_claim_credit: 1709.03
+    ca:policies/cra/t4127-2026/claim-codes#selected_nova_scotia_claim_amount: 19474
+    ca:policies/cra/t4127-2026/claim-codes#selected_nova_scotia_claim_credit: 1711.76
+    ca:policies/cra/t4127-2026/claim-codes#selected_northwest_territories_claim_amount: 35407.5
+    ca:policies/cra/t4127-2026/claim-codes#selected_northwest_territories_claim_credit: 2089.04
+    ca:policies/cra/t4127-2026/claim-codes#selected_nunavut_claim_amount: 40322.5
+    ca:policies/cra/t4127-2026/claim-codes#selected_nunavut_claim_credit: 1612.9
+    ca:policies/cra/t4127-2026/claim-codes#selected_ontario_claim_amount: 33974
+    ca:policies/cra/t4127-2026/claim-codes#selected_ontario_claim_credit: 1715.69
+    ca:policies/cra/t4127-2026/claim-codes#selected_prince_edward_island_claim_amount: 28600
+    ca:policies/cra/t4127-2026/claim-codes#selected_prince_edward_island_claim_credit: 2717
+    ca:policies/cra/t4127-2026/claim-codes#selected_saskatchewan_claim_amount: 20381
+    ca:policies/cra/t4127-2026/claim-codes#selected_saskatchewan_claim_credit: 2140.01
+    ca:policies/cra/t4127-2026/claim-codes#selected_yukon_claim_amount: 0
+    ca:policies/cra/t4127-2026/claim-codes#selected_yukon_claim_credit: 0

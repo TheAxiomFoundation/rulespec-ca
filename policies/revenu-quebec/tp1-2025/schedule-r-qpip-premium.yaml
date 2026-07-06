@@ -1,0 +1,213 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Quebec Schedule R 2025 Quebec parental insurance plan premium:
+    self-employment and family-resource earnings, outside-Quebec employment,
+    maximum insurable earnings, premium rates, federal offset, line 439
+    premium, and line 248 deduction.
+  source_verification:
+    corpus_citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-r-qpip-premium
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+      rationale: Revenu Quebec Schedule R is the official 2025 schedule for calculating QPIP premiums.
+    source_urls:
+      - https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.R-V%282025-12%29.pdf
+rules:
+  - name: quebec_2025_schedule_r_minimum_income_threshold
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule R 2025 says no QPIP premium is payable if the total relevant income is less than $2,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2000
+
+  - name: quebec_2025_schedule_r_maximum_insurable_earnings
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule R 2025 lines 13 and 33 give maximum insurable earnings of $98,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 98000
+
+  - name: quebec_2025_schedule_r_self_employment_qpip_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule R 2025 line 24 multiplies line 22 by 0.878%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.00878
+
+  - name: quebec_2025_schedule_r_self_employment_qpip_maximum
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule R 2025 line 24 caps the self-employment QPIP premium at $860.44
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 860.44
+
+  - name: quebec_2025_schedule_r_qpip_deduction_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule R 2025 line 26 multiplies line 24 by 43.736%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.43736
+
+  - name: quebec_2025_schedule_r_outside_quebec_qpip_rate
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule R 2025 line 37 multiplies line 36 by 0.494%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.00494
+
+  - name: schedule_r_self_employment_earnings_line_12
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule R 2025 line 12 adds nonnegative Schedule L line 27 net business income and Schedule L line 40 insurable earnings
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_r_schedule_l_net_business_income_line_27_line_10) + max(0, schedule_r_schedule_l_family_resource_earnings_line_40_line_11)
+
+  - name: schedule_r_outside_quebec_employment_income_line_32
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule R 2025 line 32 adds employment income in Canada outside Quebec and employment income outside Canada without an RL-1 slip
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_r_canada_outside_quebec_employment_income_line_30) + max(0, schedule_r_outside_canada_employment_income_no_rl1_line_31)
+
+  - name: schedule_r_employment_income_subject_qpip_line_18
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule R 2025 line 18 adds RL-1 box I or A amounts on line 14 and employment income outside Quebec on line 16
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_r_rl1_box_i_or_a_total_line_14) + schedule_r_outside_quebec_employment_income_line_32
+
+  - name: schedule_r_total_relevant_income_for_threshold
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule R 2025 no-premium rule uses net business income, employment income subject to QPIP, and family/intermediate resource insurable earnings
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_r_self_employment_earnings_line_12 + schedule_r_employment_income_subject_qpip_line_18
+
+  - name: schedule_r_self_employment_insurable_room_line_20
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule R 2025 line 20 subtracts line 18 from line 13 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, quebec_2025_schedule_r_maximum_insurable_earnings - schedule_r_employment_income_subject_qpip_line_18)
+
+  - name: schedule_r_self_employment_insurable_amount_line_22
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule R 2025 line 22 enters the lesser of line 12 and line 20
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(schedule_r_self_employment_earnings_line_12, schedule_r_self_employment_insurable_room_line_20)
+
+  - name: schedule_r_self_employment_qpip_premium_line_24
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule R 2025 line 24 multiplies line 22 by 0.878%, capped at $860.44, and carries the result to TP-1 line 439
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_r_total_relevant_income_for_threshold < quebec_2025_schedule_r_minimum_income_threshold:
+            0
+          else:
+            min(quebec_2025_schedule_r_self_employment_qpip_maximum, schedule_r_self_employment_insurable_amount_line_22 * quebec_2025_schedule_r_self_employment_qpip_rate)
+
+  - name: schedule_r_qpip_deduction_line_248
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule R 2025 line 26 multiplies line 24 by 43.736% and carries the result to TP-1 line 248
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_r_self_employment_qpip_premium_line_24 * quebec_2025_schedule_r_qpip_deduction_rate
+
+  - name: schedule_r_outside_quebec_insurable_room_line_35
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule R 2025 line 35 subtracts line 34 from line 33 and floors the result at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, quebec_2025_schedule_r_maximum_insurable_earnings - max(0, schedule_r_rl1_box_i_total_line_34))
+
+  - name: schedule_r_outside_quebec_insurable_amount_line_36
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule R 2025 line 36 enters the lesser of line 32 and line 35
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(schedule_r_outside_quebec_employment_income_line_32, schedule_r_outside_quebec_insurable_room_line_35)
+
+  - name: schedule_r_outside_quebec_gross_premium_line_37
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule R 2025 line 37 multiplies line 36 by 0.494%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_r_total_relevant_income_for_threshold < quebec_2025_schedule_r_minimum_income_threshold:
+            0
+          else:
+            schedule_r_outside_quebec_insurable_amount_line_36 * quebec_2025_schedule_r_outside_quebec_qpip_rate
+
+  - name: schedule_r_federal_qpip_offset_line_42
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule R 2025 line 42 subtracts federal return line 45100 from line 45000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_r_federal_return_line_45000_line_38 - max(0, schedule_r_federal_return_line_45100_line_40))
+
+  - name: schedule_r_outside_quebec_qpip_premium_line_44
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule R 2025 line 44 subtracts line 42 from line 37 and carries the result to TP-1 line 439
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_r_outside_quebec_gross_premium_line_37 - schedule_r_federal_qpip_offset_line_42)
+
+  - name: schedule_r_total_qpip_premium_line_439
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule R 2025 lines 24 and 44 carry QPIP premium amounts to TP-1 line 439
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_r_self_employment_qpip_premium_line_24 + schedule_r_outside_quebec_qpip_premium_line_44

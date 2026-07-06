@@ -1,0 +1,313 @@
+format: rulespec/v1
+module:
+  summary: |-
+    Revenu Quebec Schedule C 2025 tax credit for childcare expenses:
+    qualifying expenses, child expense limits, family income, rate table,
+    and TP-1 line 455 credit.
+  source_verification:
+    corpus_citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-c-childcare-expenses
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - quebec/statute/taxation-act
+      rationale: Revenu Quebec Schedule C is the official 2025 schedule for the refundable childcare expenses tax credit.
+    source_urls:
+      - https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+      - https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.C-V%282025-12%29.pdf
+rules:
+  - name: quebec_2025_schedule_c_eligible_child_net_income_limit
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule C 2025 says a dependant child can be eligible only if the child's income for the year was not more than $13,658
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 13658
+
+  - name: quebec_2025_schedule_c_severe_impairment_child_limit
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule C 2025 line 43 multiplies eligible children with a severe and prolonged impairment by $16,800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 16800
+
+  - name: quebec_2025_schedule_c_child_born_after_2018_limit
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule C 2025 line 45 multiplies eligible children born after December 31, 2018 by $12,275
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 12275
+
+  - name: quebec_2025_schedule_c_child_born_after_2008_or_infirmity_limit
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule C 2025 line 47 multiplies eligible children born after December 31, 2008 or with an infirmity by $6,180
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 6180
+
+  - name: quebec_2025_schedule_c_rate_threshold_1
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule C 2025 tax credit rate table first threshold is $24,795
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 24795
+
+  - name: quebec_2025_schedule_c_rate_threshold_2
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule C 2025 tax credit rate table second threshold is $43,725
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 43725
+
+  - name: quebec_2025_schedule_c_rate_threshold_3
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule C 2025 tax credit rate table third threshold is $45,340
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 45340
+
+  - name: quebec_2025_schedule_c_rate_threshold_4
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule C 2025 tax credit rate table fourth threshold is $46,970
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 46970
+
+  - name: quebec_2025_schedule_c_rate_threshold_5
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule C 2025 tax credit rate table fifth threshold is $48,570
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 48570
+
+  - name: quebec_2025_schedule_c_rate_threshold_6
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule C 2025 tax credit rate table sixth threshold is $50,195
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 50195
+
+  - name: quebec_2025_schedule_c_rate_threshold_7
+    kind: parameter
+    dtype: Money
+    source: Revenu Quebec Schedule C 2025 tax credit rate table seventh threshold is $119,835
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 119835
+
+  - name: quebec_2025_schedule_c_rate_1
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule C 2025 tax credit rate table first rate is 78%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.78
+
+  - name: quebec_2025_schedule_c_rate_2
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule C 2025 tax credit rate table second rate is 75%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.75
+
+  - name: quebec_2025_schedule_c_rate_3
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule C 2025 tax credit rate table third rate is 74%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.74
+
+  - name: quebec_2025_schedule_c_rate_4
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule C 2025 tax credit rate table fourth rate is 73%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.73
+
+  - name: quebec_2025_schedule_c_rate_5
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule C 2025 tax credit rate table fifth rate is 72%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.72
+
+  - name: quebec_2025_schedule_c_rate_6
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule C 2025 tax credit rate table sixth rate is 71%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.71
+
+  - name: quebec_2025_schedule_c_rate_7
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule C 2025 tax credit rate table seventh rate is 70%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.70
+
+  - name: quebec_2025_schedule_c_rate_8
+    kind: parameter
+    dtype: Rate
+    source: Revenu Quebec Schedule C 2025 tax credit rate table final rate is 67%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.67
+
+  - name: schedule_c_total_childcare_expenses_line_39
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule C 2025 line 39 adds lines 26.1 through 38.1
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, schedule_c_childcare_expense_row_1)
+          + max(0, schedule_c_childcare_expense_row_2)
+          + max(0, schedule_c_childcare_expense_row_3)
+          + max(0, schedule_c_childcare_expense_row_4)
+          + max(0, schedule_c_childcare_expense_row_5)
+          + max(0, schedule_c_childcare_expense_row_6)
+          + max(0, schedule_c_childcare_expense_row_7)
+          + max(0, schedule_c_childcare_expense_row_8)
+          + max(0, schedule_c_childcare_expense_row_9)
+          + max(0, schedule_c_childcare_expense_row_10)
+          + max(0, schedule_c_childcare_expense_row_11)
+          + max(0, schedule_c_childcare_expense_row_12)
+          + max(0, schedule_c_additional_childcare_expenses_line_38_1)
+
+  - name: schedule_c_qualifying_childcare_expenses_line_41
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule C 2025 line 41 subtracts childcare expense allowances or reimbursements from line 39
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_c_total_childcare_expenses_line_39 - max(0, schedule_c_childcare_expense_allowance_or_reimbursement_line_40))
+
+  - name: schedule_c_severe_impairment_child_limit_line_43
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule C 2025 line 43 multiplies the line 42 count by $16,800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_c_count_children_severe_impairment_line_42) * quebec_2025_schedule_c_severe_impairment_child_limit
+
+  - name: schedule_c_young_child_limit_line_45
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule C 2025 line 45 multiplies the line 44 count by $12,275
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_c_count_children_born_after_2018_line_44) * quebec_2025_schedule_c_child_born_after_2018_limit
+
+  - name: schedule_c_child_under_16_or_infirmity_limit_line_47
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule C 2025 line 47 multiplies the line 46 count by $6,180
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_c_count_children_born_after_2008_or_infirmity_line_46) * quebec_2025_schedule_c_child_born_after_2008_or_infirmity_limit
+
+  - name: schedule_c_childcare_expense_limit_line_50
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule C 2025 line 50 adds lines 43, 45, and 47
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_c_severe_impairment_child_limit_line_43 + schedule_c_young_child_limit_line_45 + schedule_c_child_under_16_or_infirmity_limit_line_47
+
+  - name: schedule_c_family_income_line_80
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule C 2025 lines 76 to 80 add the taxpayer's and spouse's line 275 net income
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_c_self_net_income_line_275) + max(0, schedule_c_spouse_net_income_line_275)
+
+  - name: schedule_c_childcare_expenses_credit_base_line_85
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule C 2025 line 85 is the lesser of qualifying childcare expenses on line 41 and the childcare expense limit on line 50
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(schedule_c_qualifying_childcare_expenses_line_41, schedule_c_childcare_expense_limit_line_50)
+
+  - name: schedule_c_tax_credit_rate_line_92
+    kind: derived
+    entity: Family
+    dtype: Rate
+    period: Year
+    source: Revenu Quebec Schedule C 2025 tax credit rate table assigns the rate by family income on line 80
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if schedule_c_family_income_line_80 <= quebec_2025_schedule_c_rate_threshold_1:
+            quebec_2025_schedule_c_rate_1
+          else:
+            if schedule_c_family_income_line_80 <= quebec_2025_schedule_c_rate_threshold_2:
+              quebec_2025_schedule_c_rate_2
+            else:
+              if schedule_c_family_income_line_80 <= quebec_2025_schedule_c_rate_threshold_3:
+                quebec_2025_schedule_c_rate_3
+              else:
+                if schedule_c_family_income_line_80 <= quebec_2025_schedule_c_rate_threshold_4:
+                  quebec_2025_schedule_c_rate_4
+                else:
+                  if schedule_c_family_income_line_80 <= quebec_2025_schedule_c_rate_threshold_5:
+                    quebec_2025_schedule_c_rate_5
+                  else:
+                    if schedule_c_family_income_line_80 <= quebec_2025_schedule_c_rate_threshold_6:
+                      quebec_2025_schedule_c_rate_6
+                    else:
+                      if schedule_c_family_income_line_80 <= quebec_2025_schedule_c_rate_threshold_7:
+                        quebec_2025_schedule_c_rate_7
+                      else:
+                        quebec_2025_schedule_c_rate_8
+
+  - name: schedule_c_childcare_expenses_credit_before_spouse_line_94
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule C 2025 line 94 multiplies line 85 by the line 92 tax credit rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: schedule_c_childcare_expenses_credit_base_line_85 * schedule_c_tax_credit_rate_line_92
+
+  - name: schedule_c_childcare_expenses_tax_credit_line_455
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Revenu Quebec Schedule C 2025 line 98 subtracts the spouse's line 455 claim from line 94 for transfer to TP-1 line 455
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, schedule_c_childcare_expenses_credit_before_spouse_line_94 - max(0, schedule_c_amount_spouse_claiming_line_455_line_96))

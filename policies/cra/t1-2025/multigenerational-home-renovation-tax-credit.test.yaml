@@ -1,0 +1,39 @@
+- name: mhrtc_single_renovation_with_reimbursements_and_other_claimants
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#input.is_mhrtc_eligible_individual: true
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#input.mhrtc_renovation_1_total_qualifying_expenditures: 60000
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#input.mhrtc_renovation_1_reimbursements_or_assistance: 5000
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#input.mhrtc_renovation_1_expenses_claimed_by_others: 10000
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#input.mhrtc_additional_renovations_qualifying_expenditures: 0
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#input.mhrtc_qualifying_renovation_count: 1
+  output:
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#federal_2025_mhrtc_renovation_1_net_expenditures: 50000
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#federal_2025_mhrtc_renovation_1_claim_capacity: 40000
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#federal_2025_mhrtc_renovation_1_qualifying_expenditures: 40000
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#federal_2025_mhrtc_total_qualifying_expenditures_line_45354: 40000
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#federal_2025_mhrtc_credit_cap: 7250
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#multigenerational_home_renovation_tax_credit_line_45355: 5800
+
+- name: mhrtc_credit_cap_and_ineligible_zero
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#input.is_mhrtc_eligible_individual: false
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#input.mhrtc_renovation_1_total_qualifying_expenditures: 50000
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#input.mhrtc_renovation_1_reimbursements_or_assistance: 0
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#input.mhrtc_renovation_1_expenses_claimed_by_others: 0
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#input.mhrtc_additional_renovations_qualifying_expenditures: 10000
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#input.mhrtc_qualifying_renovation_count: 2
+  output:
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#federal_2025_mhrtc_renovation_1_net_expenditures: 50000
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#federal_2025_mhrtc_renovation_1_claim_capacity: 50000
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#federal_2025_mhrtc_renovation_1_qualifying_expenditures: 50000
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#federal_2025_mhrtc_total_qualifying_expenditures_line_45354: 60000
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#federal_2025_mhrtc_credit_cap: 14500
+    ca:policies/cra/t1-2025/multigenerational-home-renovation-tax-credit#multigenerational_home_renovation_tax_credit_line_45355: 0

@@ -1,0 +1,15 @@
+source:
+  id: cra-2025-t2203-nb-on-mb-part3-credits
+  citation_path: ca/policy/cra/t1-2025/t2203-nb-on-mb-part3-credits
+  title: CRA Form T2203 2025 Part 3 NB, ON, and MB Non-Refundable Tax Credits
+  documents:
+    - title: Form T2203 Provincial and Territorial Taxes for Multiple Jurisdictions 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t2203/t2203-25e.pdf
+  coverage:
+    encoded:
+      - NB, ON, and MB Part 3 subtotal, Schedule 9 split-rate credit, and total non-refundable tax credit line D
+      - Selected worksheet formulas for age amount, spouse amount, eligible dependant amount, Manitoba basic personal amount, and medical expenses
+      - Province-specific caps for volunteer amounts, adoption expenses, Manitoba fitness and arts amounts, and pension income amounts
+    not_encoded:
+      - Per-dependant row tables for infirm dependants, Ontario caregivers, caregiver amounts, disability transfers, and medical expenses for other dependants
+      - S2/S11 detailed transfer schedules and Schedule MB428-A MJ family tax benefit details

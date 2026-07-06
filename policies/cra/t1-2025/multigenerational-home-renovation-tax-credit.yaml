@@ -1,0 +1,136 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Schedule 12 for the 2025 T1 return calculates the refundable
+    multigenerational home renovation tax credit on line 45355. This
+    module encodes qualifying expenditure limits, reimbursement
+    reductions, other-claimant coordination, and the 14.5 percent credit
+    rate while leaving dwelling, relationship, renovation, residence, and
+    disability eligibility predicates to fact layers.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/multigenerational-home-renovation-tax-credit
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Schedule 12 is the official 2025 T1 return schedule for the
+        multigenerational home renovation tax credit.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s12/5000-s12-25e.pdf
+rules:
+  - name: federal_2025_mhrtc_qualifying_expenditure_limit_per_renovation
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 12 2025 Step 1 line 3 and line 4 cap qualifying expenditures at $50,000 per qualifying renovation
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          50000
+
+  - name: federal_2025_mhrtc_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Schedule 12 2025 Step 2 line 9 applies 14.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          0.145
+
+  - name: federal_2025_mhrtc_maximum_credit_per_renovation
+    kind: parameter
+    dtype: Money
+    source: CRA Schedule 12 2025 Step 2 line 10 maximum credit is $7,250 per qualifying renovation
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          7250
+
+  - name: federal_2025_mhrtc_renovation_1_net_expenditures
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 12 2025 Step 1 line 3 subtracts reimbursements from total qualifying expenditures and caps at $50,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_mhrtc_qualifying_expenditure_limit_per_renovation,
+            max(
+              0,
+              max(0, mhrtc_renovation_1_total_qualifying_expenditures)
+              - max(0, mhrtc_renovation_1_reimbursements_or_assistance)
+            )
+          )
+
+  - name: federal_2025_mhrtc_renovation_1_claim_capacity
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 12 2025 Step 1 lines 4 to 6 subtract amounts claimed by other eligible individuals from the $50,000 limit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_mhrtc_qualifying_expenditure_limit_per_renovation
+            - max(0, mhrtc_renovation_1_expenses_claimed_by_others)
+          )
+
+  - name: federal_2025_mhrtc_renovation_1_qualifying_expenditures
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 12 2025 Step 1 line 7 is the lesser of net expenditures and remaining claim capacity
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(
+            federal_2025_mhrtc_renovation_1_net_expenditures,
+            federal_2025_mhrtc_renovation_1_claim_capacity
+          )
+
+  - name: federal_2025_mhrtc_total_qualifying_expenditures_line_45354
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 12 2025 Step 2 line 8 adds line 7 qualifying expenditures for each qualifying renovation
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_mhrtc_renovation_1_qualifying_expenditures
+          + max(0, mhrtc_additional_renovations_qualifying_expenditures)
+
+  - name: federal_2025_mhrtc_credit_cap
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 12 2025 Step 2 line 10 caps the credit at $7,250 per qualifying renovation
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(1, mhrtc_qualifying_renovation_count)
+          * federal_2025_mhrtc_maximum_credit_per_renovation
+
+  - name: multigenerational_home_renovation_tax_credit_line_45355
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: CRA Schedule 12 2025 Step 2 line 10 multiplies total qualifying expenditures by 14.5% and applies the per-renovation credit cap
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if is_mhrtc_eligible_individual:
+            min(
+              federal_2025_mhrtc_total_qualifying_expenditures_line_45354
+              * federal_2025_mhrtc_rate,
+              federal_2025_mhrtc_credit_cap
+            )
+          else:
+            0

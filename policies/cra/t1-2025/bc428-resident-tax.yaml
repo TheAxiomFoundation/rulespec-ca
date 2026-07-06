@@ -1,0 +1,940 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form BC428 for 2025 calculates ordinary British Columbia resident
+    tax: British Columbia tax on taxable income, non-refundable credits,
+    donations, farmers' food donation credit, minimum tax carryover, dividend
+    tax credit, tax reduction, political contribution tax credit, ESOP/EVCC
+    credits, mining flow-through share credit, and final tax entered on T1
+    line 42800.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/bc428-resident-tax
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Form BC428 and Worksheet BC428 are the official 2025 British
+        Columbia tax calculation documents for British Columbia residents.
+        This module encodes the ordinary resident BC428 arithmetic while
+        leaving detailed dependant worksheet calculations, schedule
+        eligibility, residency predicates, and component line values to
+        dedicated modules or fact inputs.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5010-c/5010-c-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5010-c/5010-c-25e.pdf
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5010-d/5010-d-25e.txt
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5010-d/5010-d-25e.pdf
+rules:
+  - name: bc428_2025_bracket_1_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 Part A column 1 applies to taxable income of $49,279 or less
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 49279
+
+  - name: bc428_2025_bracket_2_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 Part A column 2 applies above $49,279 and not more than $98,560
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 98560
+
+  - name: bc428_2025_bracket_3_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 Part A column 3 applies above $98,560 and not more than $113,158
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 113158
+
+  - name: bc428_2025_bracket_4_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 Part A column 4 applies above $113,158 and not more than $137,407
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 137407
+
+  - name: bc428_2025_bracket_5_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 Part A line 10 column 1 threshold is $137,407
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 137407
+
+  - name: bc428_2025_bracket_6_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 Part A line 10 column 2 threshold is $186,306
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 186306
+
+  - name: bc428_2025_bracket_7_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 Part A line 10 column 3 threshold is $259,829
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 259829
+
+  - name: bc428_2025_bracket_1_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA BC428 2025 Part A column 1 line 5 gives the rate as 5.06%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0506
+
+  - name: bc428_2025_bracket_2_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA BC428 2025 Part A column 2 line 5 gives the rate as 7.7%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.077
+
+  - name: bc428_2025_bracket_3_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA BC428 2025 Part A column 3 line 5 gives the rate as 10.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.105
+
+  - name: bc428_2025_bracket_4_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA BC428 2025 Part A column 4 line 5 gives the rate as 12.29%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.1229
+
+  - name: bc428_2025_bracket_5_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA BC428 2025 Part A line 12 column 1 gives the rate as 14.7%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.147
+
+  - name: bc428_2025_bracket_6_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA BC428 2025 Part A line 12 column 2 gives the rate as 16.8%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.168
+
+  - name: bc428_2025_bracket_7_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA BC428 2025 Part A line 12 column 3 gives the rate as 20.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.205
+
+  - name: bc428_2025_bracket_2_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 Part A column 2 line 7 gives base tax of $2,493.52
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2493.52
+
+  - name: bc428_2025_bracket_3_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 Part A column 3 line 7 gives base tax of $6,288.15
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 6288.15
+
+  - name: bc428_2025_bracket_4_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 Part A column 4 line 7 gives base tax of $7,820.94
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 7820.94
+
+  - name: bc428_2025_bracket_5_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 Part A line 14 column 1 gives base tax of $10,801.15
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 10801.15
+
+  - name: bc428_2025_bracket_6_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 Part A line 14 column 2 gives base tax of $17,989.30
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 17989.30
+
+  - name: bc428_2025_bracket_7_base_tax
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 Part A line 14 column 3 gives base tax of $30,341.16
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 30341.16
+
+  - name: bc428_2025_basic_personal_amount
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 line 16 and line 58040 basic personal amount is $12,932
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 12932
+
+  - name: bc428_2025_age_amount_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 line 58080 maximum age amount is $5,799
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 5799
+
+  - name: bc428_2025_age_amount_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet BC428 2025 line 58080 starts reducing the age amount above $43,169
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 43169
+
+  - name: bc428_2025_age_amount_zero_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet BC428 2025 line 58080 gives zero age amount at $81,829 or more
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 81829
+
+  - name: bc428_2025_age_amount_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet BC428 2025 line 58080 uses a 15% age amount reduction rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.15
+
+  - name: bc428_2025_spouse_or_dependant_base_amount
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 lines 18 and 21 use a base amount of $12,181
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 12181
+
+  - name: bc428_2025_spouse_or_dependant_maximum
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 lines 20 and 23 cap spouse and eligible dependant amounts at $11,073
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 11073
+
+  - name: bc428_2025_pension_income_amount_cap
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 line 58360 pension income amount maximum is $1,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1000
+
+  - name: bc428_2025_disability_amount_for_self
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 line 58440 disability amount for self is $9,699 unless the under-18 worksheet applies
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 9699
+
+  - name: bc428_2025_medical_expense_income_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA BC428 2025 line 48 gives the medical expense income rate as 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.03
+
+  - name: bc428_2025_medical_expense_threshold_cap
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 line 50 uses the lesser of $2,689 and line 49
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2689
+
+  - name: bc428_2025_low_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA BC428 2025 line 55 gives the British Columbia non-refundable tax credit rate as 5.06%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0506
+
+  - name: bc428_2025_farmers_food_donation_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA BC428 2025 line 58980 multiplies qualifying gifts by 25%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.25
+
+  - name: bc428_2025_minimum_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA BC428 2025 lines 66 and 69 multiply minimum tax amounts by 34.9%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.349
+
+  - name: bc428_2025_other_than_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet BC428 2025 line 61520 multiplies line 12010 by 1.96%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0196
+
+  - name: bc428_2025_eligible_dividend_credit_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet BC428 2025 line 61520 multiplies line 12000 minus line 12010 by 12%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.12
+
+  - name: bc428_2025_donation_first_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet BC428 2025 line 58969 applies the first donation tier to $200
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 200
+
+  - name: bc428_2025_taxable_income_high_donation_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet BC428 2025 line 58969 uses taxable income threshold $259,829
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 259829
+
+  - name: bc428_2025_donation_middle_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet BC428 2025 line 58969 multiplies middle donations by 16.8%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.168
+
+  - name: bc428_2025_donation_high_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet BC428 2025 line 58969 multiplies high-income donations by 20.5%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.205
+
+  - name: bc428_2025_tax_reduction_income_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 tax reduction is zero when net income is $40,807 or more
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 40807
+
+  - name: bc428_2025_tax_reduction_basic_amount
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 line 73 basic reduction is $562
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 562
+
+  - name: bc428_2025_tax_reduction_base_income
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 line 75 tax reduction base amount is $25,020
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 25020
+
+  - name: bc428_2025_tax_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA BC428 2025 line 77 tax reduction rate is 3.56%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.0356
+
+  - name: bc428_2025_political_first_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet BC428 2025 line 84 first political contribution threshold is $100
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 100
+
+  - name: bc428_2025_political_second_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet BC428 2025 line 84 second political contribution threshold is $550
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 550
+
+  - name: bc428_2025_political_cap_threshold
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet BC428 2025 line 84 gives the maximum credit directly when contributions are more than $1,150
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 1150
+
+  - name: bc428_2025_political_cap
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 line 84 maximum British Columbia political contribution tax credit is $500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 500
+
+  - name: bc428_2025_political_first_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet BC428 2025 line 84 first political contribution rate is 75%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.75
+
+  - name: bc428_2025_political_second_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet BC428 2025 line 84 second political contribution rate is 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.50
+
+  - name: bc428_2025_political_third_rate
+    kind: parameter
+    dtype: Rate
+    source: CRA Worksheet BC428 2025 line 84 third political contribution rate is 33.33%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.3333
+
+  - name: bc428_2025_political_second_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet BC428 2025 line 84 second column base credit is $75
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 75
+
+  - name: bc428_2025_political_third_base_credit
+    kind: parameter
+    dtype: Money
+    source: CRA Worksheet BC428 2025 line 84 third column base credit is $300
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 300
+
+  - name: bc428_2025_esop_evcc_credit_cap
+    kind: parameter
+    dtype: Money
+    source: CRA BC428 2025 line 88 caps total ESOP and EVCC credits at $2,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 2000
+
+  - name: bc428_tax_on_taxable_income_line_61
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 Part A line 61 calculates British Columbia tax on taxable income using the selected bracket column
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if taxable_income_line_26000 <= bc428_2025_bracket_1_threshold:
+            max(0, taxable_income_line_26000) * bc428_2025_bracket_1_rate
+          else:
+            if taxable_income_line_26000 <= bc428_2025_bracket_2_threshold:
+              (taxable_income_line_26000 - bc428_2025_bracket_1_threshold)
+              * bc428_2025_bracket_2_rate
+              + bc428_2025_bracket_2_base_tax
+            else:
+              if taxable_income_line_26000 <= bc428_2025_bracket_3_threshold:
+                (taxable_income_line_26000 - bc428_2025_bracket_2_threshold)
+                * bc428_2025_bracket_3_rate
+                + bc428_2025_bracket_3_base_tax
+              else:
+                if taxable_income_line_26000 <= bc428_2025_bracket_4_threshold:
+                  (taxable_income_line_26000 - bc428_2025_bracket_3_threshold)
+                  * bc428_2025_bracket_4_rate
+                  + bc428_2025_bracket_4_base_tax
+                else:
+                  if taxable_income_line_26000 <= bc428_2025_bracket_6_threshold:
+                    (taxable_income_line_26000 - bc428_2025_bracket_5_threshold)
+                    * bc428_2025_bracket_5_rate
+                    + bc428_2025_bracket_5_base_tax
+                  else:
+                    if taxable_income_line_26000 <= bc428_2025_bracket_7_threshold:
+                      (taxable_income_line_26000 - bc428_2025_bracket_6_threshold)
+                      * bc428_2025_bracket_6_rate
+                      + bc428_2025_bracket_6_base_tax
+                    else:
+                      (taxable_income_line_26000 - bc428_2025_bracket_7_threshold)
+                      * bc428_2025_bracket_7_rate
+                      + bc428_2025_bracket_7_base_tax
+
+  - name: bc428_age_amount_line_58080
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet BC428 2025 line 58080 calculates the British Columbia age amount for persons born in 1960 or earlier
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if bc428_age_amount_eligible:
+            if net_income_line_23600 <= bc428_2025_age_amount_threshold:
+              bc428_2025_age_amount_maximum
+            else:
+              if net_income_line_23600 >= bc428_2025_age_amount_zero_threshold:
+                0
+              else:
+                max(
+                  0,
+                  bc428_2025_age_amount_maximum
+                  - (net_income_line_23600 - bc428_2025_age_amount_threshold)
+                  * bc428_2025_age_amount_reduction_rate
+                )
+          else:
+            0
+
+  - name: bc428_spouse_or_partner_amount_line_58120
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 20 subtracts spouse or common-law partner net income from the base amount and caps the claim
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(bc428_2025_spouse_or_dependant_maximum, max(0, bc428_2025_spouse_or_dependant_base_amount - max(0, spouse_net_income_line_23600)))
+
+  - name: bc428_eligible_dependant_amount_line_58160
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 23 subtracts eligible dependant net income from the base amount and caps the claim
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(bc428_2025_spouse_or_dependant_maximum, max(0, bc428_2025_spouse_or_dependant_base_amount - max(0, eligible_dependant_net_income_line_23600)))
+
+  - name: bc428_credit_subtotal_line_25
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 25 adds lines 16, 17, 20, 23, and 24
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          bc428_2025_basic_personal_amount
+          + bc428_age_amount_line_58080
+          + bc428_spouse_or_partner_amount_line_58120
+          + bc428_eligible_dependant_amount_line_58160
+          + max(0, british_columbia_caregiver_amount_line_58175)
+
+  - name: bc428_credit_subtotal_line_33
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 33 adds lines 27 to 32
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, cpp_qpp_contributions_employment_line_30800)
+          + max(0, cpp_qpp_contributions_self_employment_line_31000)
+          + max(0, employment_insurance_premiums_line_31200)
+          + max(0, self_employment_ei_premiums_line_31217)
+          + max(0, volunteer_firefighters_amount_line_58315)
+          + max(0, search_and_rescue_volunteers_amount_line_58316)
+
+  - name: bc428_credit_subtotal_line_35
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 35 adds lines 26, 33, and 34
+    versions:
+      - effective_from: '2025-01-01'
+        formula: bc428_credit_subtotal_line_25 + bc428_credit_subtotal_line_33 + max(0, adoption_expenses_line_58330)
+
+  - name: bc428_pension_income_amount_line_58360
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 58360 caps the pension income amount at $1,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(bc428_2025_pension_income_amount_cap, max(0, pension_income_amount_line_58360))
+
+  - name: bc428_credit_subtotal_line_37
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 37 adds line 35 and line 36
+    versions:
+      - effective_from: '2025-01-01'
+        formula: bc428_credit_subtotal_line_35 + bc428_pension_income_amount_line_58360
+
+  - name: bc428_credit_subtotal_line_40
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 40 adds lines 37 to 39
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          bc428_credit_subtotal_line_37
+          + max(0, disability_amount_for_self_line_58440)
+          + max(0, disability_amount_transferred_from_dependant_line_58480)
+
+  - name: bc428_credit_subtotal_line_45
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 45 adds lines 40 to 44
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          bc428_credit_subtotal_line_40
+          + max(0, student_loan_interest_line_58520)
+          + max(0, tuition_and_education_amounts_line_58560)
+          + max(0, tuition_amounts_transferred_from_child_or_grandchild_line_58600)
+          + max(0, spouse_or_partner_transfers_line_58640)
+
+  - name: bc428_medical_expense_income_base_line_49
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 49 multiplies net income line 23600 by 3%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, net_income_line_23600) * bc428_2025_medical_expense_income_rate
+
+  - name: bc428_medical_expense_threshold_line_50
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 50 uses the lesser of $2,689 and line 49
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(bc428_2025_medical_expense_threshold_cap, bc428_medical_expense_income_base_line_49)
+
+  - name: bc428_allowable_family_medical_expenses_line_51
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 51 subtracts line 50 from line 46 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, max(0, medical_expenses_line_58689) - bc428_medical_expense_threshold_line_50)
+
+  - name: bc428_total_medical_expenses_line_58769
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 53 and line 58769 add line 51 and line 52
+    versions:
+      - effective_from: '2025-01-01'
+        formula: bc428_allowable_family_medical_expenses_line_51 + max(0, medical_expenses_other_dependants_line_58729)
+
+  - name: bc428_total_claim_amount_line_58800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 54 and line 58800 add line 45 and line 53
+    versions:
+      - effective_from: '2025-01-01'
+        formula: bc428_credit_subtotal_line_45 + bc428_total_medical_expenses_line_58769
+
+  - name: bc428_net_non_refundable_tax_credits_line_58840
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 56 and line 58840 multiply line 54 by the 5.06% credit rate
+    versions:
+      - effective_from: '2025-01-01'
+        formula: bc428_total_claim_amount_line_58800 * bc428_2025_low_credit_rate
+
+  - name: bc428_donations_and_gifts_line_58969
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet BC428 2025 line 58969 calculates British Columbia donations and gifts
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          min(max(0, federal_schedule_9_line_12_amount), bc428_2025_donation_first_threshold)
+          * bc428_2025_low_credit_rate
+          + min(
+            max(0, federal_schedule_9_line_12_amount - min(max(0, federal_schedule_9_line_12_amount), bc428_2025_donation_first_threshold)),
+            max(0, taxable_income_line_26000 - bc428_2025_taxable_income_high_donation_threshold)
+          )
+          * bc428_2025_donation_high_rate
+          + max(
+            0,
+            max(0, federal_schedule_9_line_12_amount - min(max(0, federal_schedule_9_line_12_amount), bc428_2025_donation_first_threshold))
+            - min(
+              max(0, federal_schedule_9_line_12_amount - min(max(0, federal_schedule_9_line_12_amount), bc428_2025_donation_first_threshold)),
+              max(0, taxable_income_line_26000 - bc428_2025_taxable_income_high_donation_threshold)
+            )
+          )
+          * bc428_2025_donation_middle_rate
+
+  - name: bc428_credit_subtotal_line_58
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 58 adds line 56 and line 57
+    versions:
+      - effective_from: '2025-01-01'
+        formula: bc428_net_non_refundable_tax_credits_line_58840 + bc428_donations_and_gifts_line_58969
+
+  - name: bc428_farmers_food_donation_tax_credit_line_58980
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 58980 multiplies qualifying gifts also claimed on line 57 by 25%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, british_columbia_farmers_food_donation_qualifying_gifts_line_58980) * bc428_2025_farmers_food_donation_credit_rate
+
+  - name: bc428_total_non_refundable_tax_credits_line_61500
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 60 and line 61500 add British Columbia non-refundable credits and farmers' food donation tax credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: bc428_credit_subtotal_line_58 + bc428_farmers_food_donation_tax_credit_line_58980
+
+  - name: bc428_tax_plus_tax_on_split_income_line_63
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 63 adds British Columbia tax on taxable income and tax on split income line 61510
+    versions:
+      - effective_from: '2025-01-01'
+        formula: bc428_tax_on_taxable_income_line_61 + max(0, british_columbia_tax_on_split_income_line_61510)
+
+  - name: bc428_dividend_tax_credit_line_61520
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet BC428 2025 line 61520 calculates the British Columbia dividend tax credit from line 12000 and line 12010
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, taxable_dividends_other_than_eligible_line_12010)
+          * bc428_2025_other_than_eligible_dividend_credit_rate
+          + max(0, taxable_dividends_line_12000 - max(0, taxable_dividends_other_than_eligible_line_12010))
+          * bc428_2025_eligible_dividend_credit_rate
+
+  - name: bc428_minimum_tax_carryover_line_61540
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 66 and line 61540 multiply federal minimum tax carryover line 40427 by 34.9%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, minimum_tax_carryover_line_40427) * bc428_2025_minimum_tax_rate
+
+  - name: bc428_credit_and_carryover_subtotal_line_67
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 67 adds lines 64 to 66
+    versions:
+      - effective_from: '2025-01-01'
+        formula: bc428_total_non_refundable_tax_credits_line_61500 + bc428_dividend_tax_credit_line_61520 + bc428_minimum_tax_carryover_line_61540
+
+  - name: bc428_tax_after_credits_and_carryover_line_68
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 68 subtracts line 67 from line 63 and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, bc428_tax_plus_tax_on_split_income_line_63 - bc428_credit_and_carryover_subtotal_line_67)
+
+  - name: bc428_additional_tax_for_minimum_tax_purposes_line_69
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 69 multiplies Form T691 Part 7 line 14 by 34.9%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, t691_part_7_line_14_amount) * bc428_2025_minimum_tax_rate
+
+  - name: bc428_tax_after_additional_minimum_tax_line_70
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 70 adds line 68 and line 69
+    versions:
+      - effective_from: '2025-01-01'
+        formula: bc428_tax_after_credits_and_carryover_line_68 + bc428_additional_tax_for_minimum_tax_purposes_line_69
+
+  - name: bc428_tax_after_foreign_tax_credit_line_72
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 72 subtracts the provincial foreign tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, bc428_tax_after_additional_minimum_tax_line_70 - max(0, provincial_foreign_tax_credit_line_71))
+
+  - name: bc428_tax_reduction_line_79
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 lines 73 to 79 calculate the British Columbia tax reduction
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if net_income_line_23600 >= bc428_2025_tax_reduction_income_threshold:
+            0
+          else:
+            max(
+              0,
+              bc428_2025_tax_reduction_basic_amount
+              - max(0, net_income_line_23600 - bc428_2025_tax_reduction_base_income)
+              * bc428_2025_tax_reduction_rate
+            )
+
+  - name: bc428_tax_after_tax_reduction_line_80
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 80 subtracts the British Columbia tax reduction and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, bc428_tax_after_foreign_tax_credit_line_72 - bc428_tax_reduction_line_79)
+
+  - name: bc428_tax_after_logging_tax_credit_line_82
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 82 subtracts the British Columbia logging tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, bc428_tax_after_tax_reduction_line_80 - max(0, british_columbia_logging_tax_credit_line_81))
+
+  - name: bc428_political_contribution_tax_credit_line_84
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA Worksheet BC428 2025 line 84 calculates the British Columbia political contribution tax credit capped at $500
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          if british_columbia_political_contributions_line_60400 > bc428_2025_political_cap_threshold:
+            bc428_2025_political_cap
+          else:
+            min(
+              bc428_2025_political_cap,
+              if british_columbia_political_contributions_line_60400 <= bc428_2025_political_first_threshold:
+                max(0, british_columbia_political_contributions_line_60400) * bc428_2025_political_first_rate
+              else:
+                if british_columbia_political_contributions_line_60400 <= bc428_2025_political_second_threshold:
+                  (british_columbia_political_contributions_line_60400 - bc428_2025_political_first_threshold)
+                  * bc428_2025_political_second_rate
+                  + bc428_2025_political_second_base_credit
+                else:
+                  (british_columbia_political_contributions_line_60400 - bc428_2025_political_second_threshold)
+                  * bc428_2025_political_third_rate
+                  + bc428_2025_political_third_base_credit
+            )
+
+  - name: bc428_tax_after_political_contribution_credit_line_85
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 85 subtracts the British Columbia political contribution tax credit and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, bc428_tax_after_logging_tax_credit_line_82 - bc428_political_contribution_tax_credit_line_84)
+
+  - name: bc428_employee_share_and_venture_capital_credit_line_88
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 88 adds ESOP and EVCC credits and caps the total at $2,000
+    versions:
+      - effective_from: '2025-01-01'
+        formula: min(bc428_2025_esop_evcc_credit_cap, max(0, bc_employee_share_ownership_plan_tax_credit_line_60450) + max(0, bc_employee_venture_capital_corporation_tax_credit_line_60470))
+
+  - name: bc428_tax_after_employee_share_and_venture_credit_line_89
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 89 subtracts ESOP and EVCC credits and floors negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, bc428_tax_after_political_contribution_credit_line_85 - bc428_employee_share_and_venture_capital_credit_line_88)
+
+  - name: british_columbia_tax_line_42800
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA BC428 2025 line 91 subtracts the mining flow-through share tax credit and enters British Columbia tax on T1 line 42800
+    versions:
+      - effective_from: '2025-01-01'
+        formula: max(0, bc428_tax_after_employee_share_and_venture_credit_line_89 - max(0, british_columbia_mining_flow_through_share_tax_credit_line_68810))

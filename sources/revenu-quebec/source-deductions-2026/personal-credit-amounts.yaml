@@ -1,0 +1,17 @@
+source:
+  id: revenu-quebec-2026-source-deduction-personal-credit-amounts
+  citation_path: ca/policy/revenu-quebec/source-deductions-2026/personal-credit-amounts
+  title: Revenu Québec 2026 source deduction personal credit amounts
+  documents:
+    - title: Employers, Principal Changes for 2026
+      url: https://www.revenuquebec.ca/en/businesses/source-deductions-and-employer-contributions/employers-principal-changes-for-2026/
+  coverage:
+    encoded:
+      - 2026 personal income tax indexation rate
+      - 2026 TP-1015.3-V personal tax credit amounts listed by Revenu Québec
+      - 2026 career extension source deduction thresholds
+      - 2026 worker deduction, emergency services volunteer, gratuities, and RDSP withholding thresholds
+    not_encoded:
+      - Full TP-1015.3-V worksheet formulas
+      - Full Quebec TP-1 return and Schedule B calculations
+      - Eligibility predicates for dependants, impairment, living alone, retirement income, career extension, worker deduction, emergency services volunteering, and RDSP withholding

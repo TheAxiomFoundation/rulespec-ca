@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/cra/t1-2025/moving-expenses-deduction.test.yaml",
+      "sha256": "8f4297b8c787c9f2fb39d6d8799a2f73c2339549b972b18d479dc09633e01a58"
+    },
+    {
+      "path": "policies/cra/t1-2025/moving-expenses-deduction.yaml",
+      "sha256": "bf9590a2c8998f1ec5ea301b3d768e924c5fcaf74d4d016376f6f129cec94459"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "b402f25b8b03c47be8f43acf07b972097b055f5d",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1156",
+    "version_commit": "b402f25b8b03c47be8f43acf07b972097b055f5d"
+  },
+  "axiom_encode_version": "0.2.1156",
+  "backend": "manual",
+  "citation": "ca:policies/cra/t1-2025/moving-expenses-deduction",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-06T03:57:14.300026+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmprvlm0h22/sign-applied-files/policies/cra/t1-2025/moving-expenses-deduction.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmprvlm0h22",
+  "generated_output_sha256": "bf9590a2c8998f1ec5ea301b3d768e924c5fcaf74d4d016376f6f129cec94459",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "79a57a9b29f45fc4fa8568620034a3a3c184eafad5c55aae66217005abdfa7b4"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

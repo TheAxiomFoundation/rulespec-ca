@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/cra/t1-2025/t2203-nb-on-mb-part3-credits.test.yaml",
+      "sha256": "13ab015a92e72e225aae84dae70018365302addc331a93410977aec580d1d5f1"
+    },
+    {
+      "path": "policies/cra/t1-2025/t2203-nb-on-mb-part3-credits.yaml",
+      "sha256": "f9bb0d5f31b10a2fd9c61b126bb8ca9a16d9758af0fb8b4422342af3b1133bde"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "a314fc624967b4e990beb7d9ffc429dae6e26642",
+    "dirty_tracked": false,
+    "root": "/Users/pavelmakarchuk/axiom-encode",
+    "version": "0.2.1152",
+    "version_commit": "a314fc624967b4e990beb7d9ffc429dae6e26642"
+  },
+  "axiom_encode_version": "0.2.1152",
+  "backend": "manual",
+  "citation": "ca:policies/cra/t1-2025/t2203-nb-on-mb-part3-credits",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-07-05T15:04:20.598380+00:00",
+  "generated_output_file": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm/sign-applied-files/policies/cra/t1-2025/t2203-nb-on-mb-part3-credits.yaml",
+  "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
+  "generated_output_sha256": "f9bb0d5f31b10a2fd9c61b126bb8ca9a16d9758af0fb8b4422342af3b1133bde",
+  "generation_prompt_sha256": null,
+  "model": "",
+  "run_id": null,
+  "runner": "manual-attestation",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "024bd360066183a26da5529ee1aef5489352763996fce66e27adebdad5462e5e"
+  },
+  "tool": "axiom-encode sign-applied-files",
+  "trace_file": null,
+  "trace_sha256": null
+}

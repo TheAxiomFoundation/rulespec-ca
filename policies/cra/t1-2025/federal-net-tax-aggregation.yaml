@@ -1,0 +1,141 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA 2025 T1 return Step 5 Part C aggregates federal tax on
+    taxable income, tax on split income, non-refundable credits,
+    dividend and minimum-tax credits, surtax, foreign tax credit,
+    recapture, logging credit, political contribution credit,
+    investment tax credit, and labour-sponsored funds credit to
+    calculate basic federal tax line 42900, federal tax line 40600,
+    and line 41700 before ACWB and special taxes.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/federal-net-tax-aggregation
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Form 5000-R is the official 2025 T1 return for residents of
+        PE, NS, NB, MB, and SK, and its federal Step 5 Part C gives the
+        common resident-return net federal tax aggregation arithmetic.
+        This module encodes the aggregation while leaving the source
+        schedule calculations for component lines to dedicated modules
+        or fact inputs.
+    source_urls:
+      - https://www.canada.ca/en/revenue-agency/services/forms-publications/tax-packages-years/general-income-tax-benefit-package/5000-r.html
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-r/5000-r-25e.txt
+rules:
+  - name: federal_2025_t1_tax_and_tosi_line_40400
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part C line 121 and line 40400 add federal tax on taxable income line 119 and TOSI line 120
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_tax_on_taxable_income_line_119)
+          + max(0, federal_tax_on_split_income_line_40424)
+
+  - name: federal_2025_t1_credit_subtotal_line_125
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part C line 125 adds total federal non-refundable tax credits, federal dividend tax credit, and minimum tax carryover
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, total_federal_non_refundable_tax_credits_line_35000)
+          + max(0, federal_dividend_tax_credit_line_40425)
+          + max(0, minimum_tax_carryover_line_40427)
+
+  - name: basic_federal_tax_line_42900
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part C line 126 and line 42900 subtract line 125 from line 121 and floor negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t1_tax_and_tosi_line_40400
+            - federal_2025_t1_credit_subtotal_line_125
+          )
+
+  - name: federal_2025_t1_basic_tax_plus_surtax_line_128
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part C line 128 adds basic federal tax line 126 and federal surtax on income earned outside Canada line 127
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          basic_federal_tax_line_42900
+          + max(0, federal_surtax_on_income_earned_outside_canada)
+
+  - name: federal_2025_t1_after_foreign_tax_credit_line_130
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part C line 130 subtracts federal foreign tax credit line 40500 from line 128
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1_basic_tax_plus_surtax_line_128
+          - max(0, federal_foreign_tax_credit_line_40500)
+
+  - name: federal_2025_t1_tax_before_logging_credit_line_132
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part C line 132 adds investment tax credit recapture line 131 to line 130
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_t1_after_foreign_tax_credit_line_130
+          + max(0, investment_tax_credit_recapture_line_131)
+
+  - name: federal_tax_line_40600
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part C line 134 and line 40600 subtract federal logging tax credit line 133 from line 132 and floor negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_t1_tax_before_logging_credit_line_132
+            - max(0, federal_logging_tax_credit_line_133)
+          )
+
+  - name: tax_credit_line_41600
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part C line 138 and line 41600 add federal political contribution tax credit, investment tax credit, and labour-sponsored funds tax credit
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_political_contribution_tax_credit_line_41000)
+          + max(0, investment_tax_credit_line_41200)
+          + max(0, labour_sponsored_funds_tax_credit_line_41400)
+
+  - name: federal_tax_after_selected_credits_line_41700
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA 2025 T1 Step 5 Part C line 139 and line 41700 subtract line 138 from line 134 and floor negative amounts at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, federal_tax_line_40600 - tax_credit_line_41600)

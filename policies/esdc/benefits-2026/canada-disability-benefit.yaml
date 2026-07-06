@@ -1,0 +1,279 @@
+format: rulespec/v1
+module:
+  summary: |-
+    The Canada Disability Benefit Regulations define eligibility and the
+    monthly benefit formula for eligible working-age persons with
+    disabilities. ESDC publishes the indexed July 2026 to June 2027
+    maximum monthly amount and working-income exemptions. This module
+    encodes the income-tested monthly and annual benefit surface for a
+    beneficiary using the regulatory reduction formulas.
+  source_verification:
+    corpus_citation_path: ca/policy/esdc/benefits-2026/canada-disability-benefit
+    upstream_source_check:
+      status: checked_higher_authority
+      checked_paths:
+        - ca/regulations/sor-2025-35
+        - ca/statute/canada-disability-benefit-act
+        - ca/statute/income-tax-act
+      rationale: |-
+        SOR/2025-35 provides the legal eligibility and calculation
+        formula. ESDC publishes the indexed July 2026 to June 2027
+        administrative amounts. The executable formulas here use the
+        regulation as the legal formula source and the ESDC page for the
+        current payment-period parameters.
+    source_urls:
+      - https://laws-lois.justice.gc.ca/eng/regulations/SOR-2025-35/page-1.html
+      - https://www.canada.ca/en/services/benefits/disability/canada-disability-benefit/amount.html
+rules:
+  - name: canada_disability_benefit_base_monthly_amount
+    kind: parameter
+    dtype: Money
+    source: Canada Disability Benefit amount page, July 2025 to June 2026 maximum monthly benefit, $200
+    versions:
+      - effective_from: '2025-07-01'
+        formula: |-
+          200
+
+  - name: canada_disability_benefit_2026_monthly_amount
+    kind: parameter
+    dtype: Money
+    source: Canada Disability Benefit amount page, July 2026 to June 2027 maximum monthly benefit, $204.20
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          204.20
+
+  - name: canada_disability_benefit_months_per_year
+    kind: parameter
+    dtype: Integer
+    source: Canada Disability Benefit calculation steps divide annual benefit amount by 12 to determine monthly benefit
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          12
+
+  - name: canada_disability_benefit_indexing_factor_2026
+    kind: derived
+    entity: Family
+    dtype: Decimal
+    period: Year
+    source: SOR/2025-35 indexes dollar amounts for the payment period; ESDC publishes $204.20 compared with $200 for the prior period
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          canada_disability_benefit_2026_monthly_amount / canada_disability_benefit_base_monthly_amount
+
+  - name: canada_disability_benefit_maximum_annual_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Canada Disability Benefit maximum monthly amount annualized for the July 2026 to June 2027 payment period
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          canada_disability_benefit_2026_monthly_amount * canada_disability_benefit_months_per_year
+
+  - name: canada_disability_benefit_single_threshold_base
+    kind: parameter
+    dtype: Money
+    source: SOR/2025-35 subsection 6(2), single-beneficiary threshold base of $23,000 times indexing factor A
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          23000
+
+  - name: canada_disability_benefit_couple_threshold_base
+    kind: parameter
+    dtype: Money
+    source: SOR/2025-35 subsections 6(3) and 6(4), couple threshold base of $32,500 times indexing factor A
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          32500
+
+  - name: canada_disability_benefit_single_working_income_exemption_base
+    kind: parameter
+    dtype: Money
+    source: SOR/2025-35 subsection 6(2), single working-income exemption base of $10,000 times indexing factor A
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          10000
+
+  - name: canada_disability_benefit_couple_working_income_exemption_base
+    kind: parameter
+    dtype: Money
+    source: SOR/2025-35 subsections 6(3) and 6(4), couple working-income exemption base of $14,000 times indexing factor A
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          14000
+
+  - name: canada_disability_benefit_single_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: SOR/2025-35 subsection 6(2), single-beneficiary reduction rate of 20%
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          0.20
+
+  - name: canada_disability_benefit_couple_one_beneficiary_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: SOR/2025-35 subsection 6(3), reduction rate of 20% when a cohabiting spouse or common-law partner is not a beneficiary
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          0.20
+
+  - name: canada_disability_benefit_couple_both_beneficiaries_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: SOR/2025-35 subsection 6(4), reduction rate of 10% when a cohabiting spouse or common-law partner is also a beneficiary
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          0.10
+
+  - name: canada_disability_benefit_adjusted_family_net_income
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: ESDC Canada Disability Benefit page defines adjusted family net income from line 23600 less UCCB/RDSP income and plus UCCB/RDSP repayments
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          max(0, adjusted_family_net_income)
+
+  - name: canada_disability_benefit_working_income
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: ESDC Canada Disability Benefit page excludes employment, self-employment, and taxable scholarship working income up to the applicable exemption
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          max(0, beneficiary_working_income + spouse_or_common_law_partner_working_income)
+
+  - name: canada_disability_benefit_has_cohabiting_spouse_or_partner
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Year
+    source: SOR/2025-35 applies separate formulas depending on whether the beneficiary has a cohabiting spouse or common-law partner
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          has_cohabiting_spouse_or_common_law_partner
+
+  - name: canada_disability_benefit_spouse_or_partner_is_beneficiary
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Year
+    source: SOR/2025-35 subsection 6(4) applies when the cohabiting spouse or common-law partner is also a beneficiary
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          spouse_or_common_law_partner_is_canada_disability_benefit_beneficiary
+
+  - name: canada_disability_benefit_income_threshold
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: SOR/2025-35 uses $23,000 x A for single beneficiaries and $32,500 x A for beneficiaries with a cohabiting spouse or common-law partner
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          if canada_disability_benefit_has_cohabiting_spouse_or_partner:
+            canada_disability_benefit_couple_threshold_base * canada_disability_benefit_indexing_factor_2026
+          else:
+            canada_disability_benefit_single_threshold_base * canada_disability_benefit_indexing_factor_2026
+
+  - name: canada_disability_benefit_working_income_exemption
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: ESDC publishes July 2026 to June 2027 working-income exemptions of $10,210 for single beneficiaries and $14,294 for beneficiaries with a spouse or common-law partner
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          if canada_disability_benefit_has_cohabiting_spouse_or_partner:
+            canada_disability_benefit_couple_working_income_exemption_base * canada_disability_benefit_indexing_factor_2026
+          else:
+            canada_disability_benefit_single_working_income_exemption_base * canada_disability_benefit_indexing_factor_2026
+
+  - name: canada_disability_benefit_income_after_working_exemption
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Canada Disability Benefit calculation subtracts working income up to the exemption before subtracting the income threshold
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          max(
+            0,
+            canada_disability_benefit_adjusted_family_net_income
+            - min(canada_disability_benefit_working_income, canada_disability_benefit_working_income_exemption)
+          )
+
+  - name: canada_disability_benefit_reduction_rate
+    kind: derived
+    entity: Family
+    dtype: Rate
+    period: Year
+    source: SOR/2025-35 uses 20% for single beneficiaries or one-beneficiary couples, and 10% for each member of a two-beneficiary couple
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          if canada_disability_benefit_has_cohabiting_spouse_or_partner and canada_disability_benefit_spouse_or_partner_is_beneficiary:
+            canada_disability_benefit_couple_both_beneficiaries_reduction_rate
+          else:
+            if canada_disability_benefit_has_cohabiting_spouse_or_partner:
+              canada_disability_benefit_couple_one_beneficiary_reduction_rate
+            else:
+              canada_disability_benefit_single_reduction_rate
+
+  - name: canada_disability_benefit_annual_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: SOR/2025-35 section 6 reduction based on income is floored at zero
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          max(
+            0,
+            canada_disability_benefit_reduction_rate
+            * max(0, canada_disability_benefit_income_after_working_exemption - canada_disability_benefit_income_threshold)
+          )
+
+  - name: canada_disability_benefit_annual_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    source: Canada Disability Benefit calculation subtracts the income reduction from the annual benefit amount and floors the result at zero
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          max(0, canada_disability_benefit_maximum_annual_amount - canada_disability_benefit_annual_reduction)
+
+  - name: canada_disability_benefit_monthly_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    source: Canada Disability Benefit calculation divides the annual benefit amount by 12 to calculate monthly payments
+    versions:
+      - effective_from: '2026-07-01'
+        formula: |-
+          canada_disability_benefit_annual_amount / canada_disability_benefit_months_per_year

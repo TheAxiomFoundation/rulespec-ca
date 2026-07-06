@@ -1,0 +1,73 @@
+- name: spouse_and_eligible_dependant_base_amounts
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.basic_personal_amount_line_30000: 16129
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.claims_spouse_or_common_law_partner_amount: true
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.spouse_or_common_law_partner_caregiver_supplement_eligible: true
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.spouse_or_common_law_partner_net_income_line_23600: 12000
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.claims_eligible_dependant_amount: true
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.eligible_dependant_caregiver_supplement_eligible: false
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.eligible_dependant_net_income_line_23600: 10000
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.claims_caregiver_amount_for_spouse_or_eligible_dependant: false
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.caregiver_spouse_or_eligible_dependant_net_income_line_23600: 0
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.spouse_or_eligible_dependant_base_amount_claimed_line_30300_or_30400: 0
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.claims_other_infirm_dependants_amount: false
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.other_infirm_dependant_1_net_income_line_23600: 0
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.other_infirm_dependant_2_net_income_line_23600: 0
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.other_infirm_dependant_3_net_income_line_23600: 0
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.other_infirm_dependants_additional_allowable_amount: 0
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.infirm_children_under_18_count: 0
+  output:
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#federal_2025_schedule_5_spouse_caregiver_supplement_claimed: 2687
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#federal_2025_schedule_5_spouse_base_amount: 18816
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#spouse_or_common_law_partner_amount_line_30300: 6816
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#federal_2025_schedule_5_eligible_dependant_caregiver_supplement_claimed: 0
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#federal_2025_schedule_5_eligible_dependant_base_amount: 16129
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#eligible_dependant_amount_line_30400: 6129
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#federal_2025_schedule_5_caregiver_amount_before_base_claim_offset: 8601
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#caregiver_amount_for_spouse_or_eligible_dependant_line_30425: 0
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#federal_2025_schedule_5_other_infirm_dependant_1_allowable: 8601
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#federal_2025_schedule_5_other_infirm_dependant_2_allowable: 8601
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#federal_2025_schedule_5_other_infirm_dependant_3_allowable: 8601
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#caregiver_amount_for_other_infirm_dependants_line_30450: 0
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#caregiver_amount_for_infirm_children_under_18_line_30500: 0
+
+- name: caregiver_dependants_and_infirm_children
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.basic_personal_amount_line_30000: 16129
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.claims_spouse_or_common_law_partner_amount: false
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.spouse_or_common_law_partner_caregiver_supplement_eligible: false
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.spouse_or_common_law_partner_net_income_line_23600: 0
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.claims_eligible_dependant_amount: false
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.eligible_dependant_caregiver_supplement_eligible: false
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.eligible_dependant_net_income_line_23600: 0
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.claims_caregiver_amount_for_spouse_or_eligible_dependant: true
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.caregiver_spouse_or_eligible_dependant_net_income_line_23600: 25000
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.spouse_or_eligible_dependant_base_amount_claimed_line_30300_or_30400: 2000
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.claims_other_infirm_dependants_amount: true
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.other_infirm_dependant_1_net_income_line_23600: 20000
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.other_infirm_dependant_2_net_income_line_23600: 28000
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.other_infirm_dependant_3_net_income_line_23600: 30000
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.other_infirm_dependants_additional_allowable_amount: 500
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#input.infirm_children_under_18_count: 2
+  output:
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#federal_2025_schedule_5_spouse_caregiver_supplement_claimed: 0
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#federal_2025_schedule_5_spouse_base_amount: 16129
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#spouse_or_common_law_partner_amount_line_30300: 0
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#federal_2025_schedule_5_eligible_dependant_caregiver_supplement_claimed: 0
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#federal_2025_schedule_5_eligible_dependant_base_amount: 16129
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#eligible_dependant_amount_line_30400: 0
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#federal_2025_schedule_5_caregiver_amount_before_base_claim_offset: 3798
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#caregiver_amount_for_spouse_or_eligible_dependant_line_30425: 1798
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#federal_2025_schedule_5_other_infirm_dependant_1_allowable: 8601
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#federal_2025_schedule_5_other_infirm_dependant_2_allowable: 798
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#federal_2025_schedule_5_other_infirm_dependant_3_allowable: 0
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#caregiver_amount_for_other_infirm_dependants_line_30450: 9899
+    ca:policies/cra/t1-2025/federal-spouse-and-dependant-amounts#caregiver_amount_for_infirm_children_under_18_line_30500: 5374
