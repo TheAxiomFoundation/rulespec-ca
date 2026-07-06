@@ -1,0 +1,15 @@
+source:
+  id: revenu-quebec-2025-schedule-k-prescription-drug-premium
+  citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium
+  title: Revenu Quebec Schedule K 2025 - Quebec Prescription Drug Insurance Plan Premium
+  documents:
+  - title: Revenu Quebec Schedule K 2025 - Quebec Prescription Drug Insurance Plan Premium source 1
+    url: https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+  - title: Revenu Quebec Schedule K 2025 - Quebec Prescription Drug Insurance Plan Premium source 2
+    url: https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.K-V%282025-12%29.pdf
+  coverage:
+    encoded:
+    - 'Revenu Quebec Schedule K 2025 premium payable under the Quebec prescription drug insurance plan: income base, family deductions, exemption months, premium table, annual maximums, spouse premium, and TP-1 line 447 carryforward.'
+    not_encoded:
+    - Claimant-specific eligibility, certification, residency, filing, receipt, election, slip-level, and administrative fact predicates not represented as arithmetic in this module.
+    - Component calculations delegated to dedicated modules or upstream fact inputs where this module aggregates or routes line amounts.

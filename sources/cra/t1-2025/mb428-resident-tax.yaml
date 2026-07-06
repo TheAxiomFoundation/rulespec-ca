@@ -1,0 +1,19 @@
+source:
+  id: cra-2025-mb428-resident-tax
+  citation_path: ca/policy/cra/t1-2025/mb428-resident-tax
+  title: CRA Form MB428 and Worksheet MB428 2025 Manitoba Resident Tax
+  documents:
+  - title: CRA Form MB428 and Worksheet MB428 2025 Manitoba Resident Tax source 1
+    url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5007-c/5007-c-25e.txt
+  - title: CRA Form MB428 and Worksheet MB428 2025 Manitoba Resident Tax source 2
+    url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5007-c/5007-c-25e.pdf
+  - title: CRA Form MB428 and Worksheet MB428 2025 Manitoba Resident Tax source 3
+    url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5007-d/5007-d-25e.txt
+  - title: CRA Form MB428 and Worksheet MB428 2025 Manitoba Resident Tax source 4
+    url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5007-d/5007-d-25e.pdf
+  coverage:
+    encoded:
+    - 'CRA Form MB428 for 2025 calculates ordinary Manitoba resident tax: Manitoba tax on taxable income, Manitoba non-refundable tax credits, minimum tax carryover, additional minimum tax, Manitoba political contribution credit, investment and foreign tax credits, and final Manitoba tax entered on T1 line 42800.'
+    not_encoded:
+    - Claimant-specific eligibility, certification, residency, filing, receipt, election, slip-level, and administrative fact predicates not represented as arithmetic in this module.
+    - Component calculations delegated to dedicated modules or upstream fact inputs where this module aggregates or routes line amounts.

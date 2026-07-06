@@ -1,0 +1,15 @@
+source:
+  id: revenu-quebec-2025-schedule-s-student-transfer
+  citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-s-student-transfer
+  title: Revenu Quebec Schedule S 2025 - Amount Transferred by a Child 18 or Over Enrolled in Post-Secondary Studies
+  documents:
+  - title: Revenu Quebec Schedule S 2025 - Amount Transferred by a Child 18 or Over Enrolled in Post-Secondary Studies source 1
+    url: https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+  - title: Revenu Quebec Schedule S 2025 - Amount Transferred by a Child 18 or Over Enrolled in Post-Secondary Studies source 2
+    url: https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.S-V%282025-12%29.pdf
+  coverage:
+    encoded:
+    - 'Revenu Quebec Schedule S 2025 amount transferred by a child 18 or over enrolled in post-secondary studies: RL-8 box A cap, reductions, transferable amount, and parent transfer allocation.'
+    not_encoded:
+    - Claimant-specific eligibility, certification, residency, filing, receipt, election, slip-level, and administrative fact predicates not represented as arithmetic in this module.
+    - Component calculations delegated to dedicated modules or upstream fact inputs where this module aggregates or routes line amounts.

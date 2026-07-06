@@ -1,0 +1,15 @@
+source:
+  id: revenu-quebec-2025-schedule-b-tax-relief
+  citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-b-tax-relief
+  title: Revenu Quebec Schedule B 2025 - Tax Relief Measures
+  documents:
+  - title: Revenu Quebec Schedule B 2025 - Tax Relief Measures source 1
+    url: https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+  - title: Revenu Quebec Schedule B 2025 - Tax Relief Measures source 2
+    url: https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.B-V%282025-12%29.pdf
+  coverage:
+    encoded:
+    - 'Revenu Quebec Schedule B 2025 tax relief measures: family income, age/person-living-alone/retirement-income amounts, medical expenses, refundable medical expense credit, and independent living tax credit for seniors.'
+    not_encoded:
+    - Claimant-specific eligibility, certification, residency, filing, receipt, election, slip-level, and administrative fact predicates not represented as arithmetic in this module.
+    - Component calculations delegated to dedicated modules or upstream fact inputs where this module aggregates or routes line amounts.

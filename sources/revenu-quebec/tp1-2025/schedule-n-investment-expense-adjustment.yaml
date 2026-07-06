@@ -1,0 +1,15 @@
+source:
+  id: revenu-quebec-2025-schedule-n-investment-expense-adjustment
+  citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment
+  title: Revenu Quebec Schedule N 2025 - Adjustment of Investment Expenses
+  documents:
+  - title: Revenu Quebec Schedule N 2025 - Adjustment of Investment Expenses source 1
+    url: https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+  - title: Revenu Quebec Schedule N 2025 - Adjustment of Investment Expenses source 2
+    url: https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.N-V%282025-12%29.pdf
+  coverage:
+    encoded:
+    - 'Revenu Quebec Schedule N 2025 adjustment of investment expenses: investment expense and income totals, line 260 and line 276 adjustments, line 252 use, and carryforward.'
+    not_encoded:
+    - Claimant-specific eligibility, certification, residency, filing, receipt, election, slip-level, and administrative fact predicates not represented as arithmetic in this module.
+    - Component calculations delegated to dedicated modules or upstream fact inputs where this module aggregates or routes line amounts.

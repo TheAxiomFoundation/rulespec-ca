@@ -1,0 +1,15 @@
+source:
+  id: revenu-quebec-2025-schedule-q-retirement-income-transfer
+  citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer
+  title: Revenu Quebec Schedule Q 2025 - Retirement Income Transferred to Your Spouse
+  documents:
+  - title: Revenu Quebec Schedule Q 2025 - Retirement Income Transferred to Your Spouse source 1
+    url: https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+  - title: Revenu Quebec Schedule Q 2025 - Retirement Income Transferred to Your Spouse source 2
+    url: https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.Q-V%282025-12%29.pdf
+  coverage:
+    encoded:
+    - 'Revenu Quebec Schedule Q 2025 retirement income transferred to a spouse: eligible retirement income after deductions, 50% transfer cap, TP-1 line 245 transfer, and proportional Quebec withholding transfer.'
+    not_encoded:
+    - Claimant-specific eligibility, certification, residency, filing, receipt, election, slip-level, and administrative fact predicates not represented as arithmetic in this module.
+    - Component calculations delegated to dedicated modules or upstream fact inputs where this module aggregates or routes line amounts.

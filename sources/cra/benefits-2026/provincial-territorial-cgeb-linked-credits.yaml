@@ -1,0 +1,13 @@
+source:
+  id: cra-2026-provincial-territorial-cgeb-linked-credits
+  citation_path: ca/policy/cra/benefits-2026/provincial-territorial-cgeb-linked-credits
+  title: CRA RC4210 2026 Provincial and Territorial CGEB-linked credits
+  documents:
+  - title: CRA RC4210 2026 Provincial and Territorial CGEB-linked credits
+    url: https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/rc4210/gst-hst-credit.html
+  coverage:
+    encoded:
+    - CRA RC4210 2026 guidance describes provincial and territorial credits that are administered with federal Canada Groceries and Essentials Benefit payments. This module encodes the published July 2026 to June 2027 amounts, thresholds, and calculation surfaces for the New Brunswick HST credit, Newfoundland and Labrador income supplement and seniors' benefit, Nova Scotia affordable living tax credit, Ontario sales tax credit, Prince Edward Island sales tax credit, and Saskatchewan low-income tax credit.
+    not_encoded:
+    - Claimant-specific eligibility, certification, residency, filing, receipt, election, slip-level, and administrative fact predicates not represented as arithmetic in this module.
+    - Component calculations delegated to dedicated modules or upstream fact inputs where this module aggregates or routes line amounts.

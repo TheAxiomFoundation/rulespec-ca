@@ -1,0 +1,17 @@
+source:
+  id: revenu-quebec-2025-schedule-j-home-support-seniors
+  citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-j-home-support-seniors
+  title: Revenu Quebec Schedule J 2025 - Tax Credit for Home-Support Services for Seniors
+  documents:
+  - title: Revenu Quebec Schedule J 2025 - Tax Credit for Home-Support Services for Seniors source 1
+    url: https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+  - title: Revenu Quebec Schedule J 2025 - Tax Credit for Home-Support Services for Seniors source 2
+    url: https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.J-V%282025-12%29.pdf
+  - title: Revenu Quebec Schedule J 2025 - Tax Credit for Home-Support Services for Seniors source 3
+    url: https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.G-V%282025-12%29.pdf
+  coverage:
+    encoded:
+    - 'Revenu Quebec Schedule J 2025 tax credit for home-support services for seniors: rent/condominium/residence/service costs, guide line 75 annual expense limits, family income, and TP-1 line 458 credit.'
+    not_encoded:
+    - Claimant-specific eligibility, certification, residency, filing, receipt, election, slip-level, and administrative fact predicates not represented as arithmetic in this module.
+    - Component calculations delegated to dedicated modules or upstream fact inputs where this module aggregates or routes line amounts.
