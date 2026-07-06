@@ -1,0 +1,15 @@
+source:
+  id: revenu-quebec-2025-schedule-d-solidarity-tax-credit
+  citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit
+  title: Revenu Quebec Schedule D 2025 - Solidarity Tax Credit
+  documents:
+  - title: Revenu Quebec Schedule D 2025 - Solidarity Tax Credit source 1
+    url: https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+  - title: Revenu Quebec Schedule D 2025 - Solidarity Tax Credit source 2
+    url: https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.D-V%282025-12%29.pdf
+  coverage:
+    encoded:
+    - Revenu Quebec Schedule D 2025 solidarity tax credit eligibility and claim information flags. The schedule establishes eligibility, spouse, dwelling, tenant, and owner facts; Revenu Quebec determines the credit amount from the submitted schedule and Family Allowance data.
+    not_encoded:
+    - Claimant-specific eligibility, certification, residency, filing, receipt, election, slip-level, and administrative fact predicates not represented as arithmetic in this module.
+    - Component calculations delegated to dedicated modules or upstream fact inputs where this module aggregates or routes line amounts.

@@ -1,0 +1,15 @@
+source:
+  id: cra-2025-federal-net-tax-aggregation
+  citation_path: ca/policy/cra/t1-2025/federal-net-tax-aggregation
+  title: CRA 2025 T1 Federal Net Tax Aggregation
+  documents:
+  - title: CRA 2025 T1 Federal Net Tax Aggregation source 1
+    url: https://www.canada.ca/en/revenue-agency/services/forms-publications/tax-packages-years/general-income-tax-benefit-package/5000-r.html
+  - title: CRA 2025 T1 Federal Net Tax Aggregation source 2
+    url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-r/5000-r-25e.txt
+  coverage:
+    encoded:
+    - CRA 2025 T1 return Step 5 Part C aggregates federal tax on taxable income, tax on split income, non-refundable credits, dividend and minimum-tax credits, surtax, foreign tax credit, recapture, logging credit, political contribution credit, investment tax credit, and labour-sponsored funds credit to calculate basic federal tax line 42900, federal tax line 40600, and line 41700 before ACWB and special taxes.
+    not_encoded:
+    - Claimant-specific eligibility, certification, residency, filing, receipt, election, slip-level, and administrative fact predicates not represented as arithmetic in this module.
+    - Component calculations delegated to dedicated modules or upstream fact inputs where this module aggregates or routes line amounts.

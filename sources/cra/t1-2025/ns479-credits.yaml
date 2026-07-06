@@ -1,0 +1,15 @@
+source:
+  id: cra-2025-ns479-credits
+  citation_path: ca/policy/cra/t1-2025/ns479-credits
+  title: CRA Form NS479 2025 Nova Scotia Credits
+  documents:
+  - title: CRA Form NS479 2025 Nova Scotia Credits source 1
+    url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5003-tc/5003-tc-25e.txt
+  - title: CRA Form NS479 2025 Nova Scotia Credits source 2
+    url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5003-tc/5003-tc-25e.pdf
+  coverage:
+    encoded:
+    - 'CRA Form NS479 for 2025 calculates Nova Scotia refundable credits: volunteer firefighters and ground search and rescue tax credit, children''s sports and arts tax credit, and final credits entered on T1 line 47900.'
+    not_encoded:
+    - Claimant-specific eligibility, certification, residency, filing, receipt, election, slip-level, and administrative fact predicates not represented as arithmetic in this module.
+    - Component calculations delegated to dedicated modules or upstream fact inputs where this module aggregates or routes line amounts.

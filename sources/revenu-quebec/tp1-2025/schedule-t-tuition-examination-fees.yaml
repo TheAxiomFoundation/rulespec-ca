@@ -1,0 +1,15 @@
+source:
+  id: revenu-quebec-2025-schedule-t-tuition-examination-fees
+  citation_path: ca/policy/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees
+  title: Revenu Quebec Schedule T 2025 - Tax Credit for Tuition or Examination Fees
+  documents:
+  - title: Revenu Quebec Schedule T 2025 - Tax Credit for Tuition or Examination Fees source 1
+    url: https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+  - title: Revenu Quebec Schedule T 2025 - Tax Credit for Tuition or Examination Fees source 2
+    url: https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.T-V%282025-12%29.pdf
+  coverage:
+    encoded:
+    - 'Revenu Quebec Schedule T 2025 tax credit for tuition or examination fees: 20% and 8% tuition credit pools, line 398 claim, carryforwards, current-year transfer to an eligible relative, and Schedule A transfer.'
+    not_encoded:
+    - Claimant-specific eligibility, certification, residency, filing, receipt, election, slip-level, and administrative fact predicates not represented as arithmetic in this module.
+    - Component calculations delegated to dedicated modules or upstream fact inputs where this module aggregates or routes line amounts.

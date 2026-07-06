@@ -1,0 +1,15 @@
+source:
+  id: cra-2025-nt479-credits
+  citation_path: ca/policy/cra/t1-2025/nt479-credits
+  title: CRA Form NT479 2025 Northwest Territories Credit
+  documents:
+  - title: CRA Form NT479 2025 Northwest Territories Credit source 1
+    url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5012-tc/5012-tc-25e.txt
+  - title: CRA Form NT479 2025 Northwest Territories Credit source 2
+    url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5012-tc/5012-tc-25e.pdf
+  coverage:
+    encoded:
+    - CRA Form NT479 for 2025 calculates the Northwest Territories refundable cost of living tax credit, including adjusted net income, basic credit for self, supplement, and final credit entered on T1 line 47900.
+    not_encoded:
+    - Claimant-specific eligibility, certification, residency, filing, receipt, election, slip-level, and administrative fact predicates not represented as arithmetic in this module.
+    - Component calculations delegated to dedicated modules or upstream fact inputs where this module aggregates or routes line amounts.

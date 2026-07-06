@@ -1,0 +1,17 @@
+source:
+  id: cra-2025-federal-other-refundable-credits
+  citation_path: ca/policy/cra/t1-2025/federal-other-refundable-credits
+  title: CRA 2025 Federal Other Refundable Credits
+  documents:
+  - title: CRA 2025 Federal Other Refundable Credits source 1
+    url: https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/lines-413-414-labour-sponsored-funds-tax-credit.html
+  - title: CRA 2025 Federal Other Refundable Credits source 2
+    url: https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/line-45700-employee-partner-gst-hst-rebate.html
+  - title: CRA 2025 Federal Other Refundable Credits source 3
+    url: https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/lines-46800-46900-eligible-educator-school-supply-tax-credit.html
+  coverage:
+    encoded:
+    - 'CRA 2025 T1 line guidance calculates selected federal credit and refundable-credit lines that are not handled by a dedicated schedule module: the labour-sponsored funds tax credit, the employee and partner GST/HST rebate claim, and the eligible educator school supply tax credit.'
+    not_encoded:
+    - Claimant-specific eligibility, certification, residency, filing, receipt, election, slip-level, and administrative fact predicates not represented as arithmetic in this module.
+    - Component calculations delegated to dedicated modules or upstream fact inputs where this module aggregates or routes line amounts.

@@ -1,0 +1,17 @@
+source:
+  id: revenu-quebec-2025-tp1-main-return
+  citation_path: ca/policy/revenu-quebec/tp1-2025/main-return
+  title: Revenu Quebec TP-1.D-V and TP-1.D.GR-V 2025 Main Income Tax Return
+  documents:
+  - title: Revenu Quebec TP-1.D-V and TP-1.D.GR-V 2025 Main Income Tax Return source 1
+    url: https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/tp-1-v/
+  - title: Revenu Quebec TP-1.D-V and TP-1.D.GR-V 2025 Main Income Tax Return source 2
+    url: https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D-V%282025-12%29.pdf
+  - title: Revenu Quebec TP-1.D-V and TP-1.D.GR-V 2025 Main Income Tax Return source 3
+    url: https://www.revenuquebec.ca/documents/en/formulaires/tp/2025-12/TP-1.D.GR-V%282025-12%29.pdf
+  coverage:
+    encoded:
+    - 'Revenu Quebec TP-1.D-V 2025 main income tax return arithmetic: total income, net income, taxable income, core non-refundable credits, income tax on taxable income, selected work-chart credits, income tax and contributions, payments, refund, and balance due.'
+    not_encoded:
+    - Claimant-specific eligibility, certification, residency, filing, receipt, election, slip-level, and administrative fact predicates not represented as arithmetic in this module.
+    - Component calculations delegated to dedicated modules or upstream fact inputs where this module aggregates or routes line amounts.
