@@ -1,0 +1,19 @@
+source:
+  id: cra-2025-transport-employee-meals-lodging-deduction
+  citation_path: ca/policy/cra/t1-2025/transport-employee-meals-lodging-deduction
+  title: CRA Form TL2 2025 Claim for Meals and Lodging Expenses
+  documents:
+    - title: Form TL2 Claim for Meals and Lodging Expenses 2025
+      url: https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/tl2/tl2-25e.pdf
+    - title: T4044 Employment Expenses 2025
+      url: https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/t4044/employment-expenses.html
+  coverage:
+    encoded:
+      - Part 2A ordinary transport employee meals net of non-taxable allowances and deductible at 50%
+      - Part 2B eligible long-haul truck driver meals net of non-taxable allowances and deductible at 80%
+      - Lodging and shower expenses net of non-taxable allowances
+      - Final line 22900 allowable claim from TL2 line 12
+      - Guide T4044 simplified meal rate and TL2 long-haul hours, distance, and gross-vehicle-weight thresholds
+    not_encoded:
+      - Employer certification, transport business, railway employee, long-haul truck driver, home-terminal, and eligible-travel-period predicates
+      - Detailed trip log, service classification, subsidized meal, allowance T4 reporting, receipt, and simplified/detailed/batching method substantiation

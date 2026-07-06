@@ -1,0 +1,160 @@
+format: rulespec/v1
+module:
+  summary: |-
+    CRA Form TL2 for 2025 calculates meals and lodging expenses for
+    transport employees, including long-haul truck drivers, entered on
+    line 22900 of the T1 return.
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/transport-employee-meals-lodging-deduction
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - ca/statute/income-tax-act
+      rationale: |-
+        CRA Form TL2 is the official 2025 form for calculating transport
+        employee meals and lodging expenses deducted on line 22900.
+    source_urls:
+      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/tl2/tl2-25e.pdf
+      - https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/t4044/employment-expenses.html
+rules:
+  - name: federal_2025_tl2_transport_employee_meal_rate
+    kind: parameter
+    dtype: Number
+    source: CRA TL2 2025 line 3 deducts ordinary transport employee meals at 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.50
+
+  - name: federal_2025_tl2_long_haul_meal_rate
+    kind: parameter
+    dtype: Number
+    source: CRA TL2 2025 line 6 deducts eligible long-haul truck driver meals at 80%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 0.80
+
+  - name: federal_2025_tl2_simplified_meal_rate
+    kind: parameter
+    dtype: Money
+    source: CRA TL2 2025 employment conditions refer to Guide T4044 simplified method rate of 23 per meal
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 23
+
+  - name: federal_2025_tl2_long_haul_minimum_hours
+    kind: parameter
+    dtype: Number
+    source: CRA TL2 2025 says an eligible long-haul travel period requires at least 24 hours away
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 24
+
+  - name: federal_2025_tl2_long_haul_minimum_kilometres
+    kind: parameter
+    dtype: Number
+    source: CRA TL2 2025 says an eligible long-haul travel period requires transporting goods at least 160 kilometres from the establishment
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 160
+
+  - name: federal_2025_tl2_long_haul_truck_gvwr_threshold_kg
+    kind: parameter
+    dtype: Number
+    source: CRA TL2 2025 defines a long-haul truck as more than 11788 kg gross vehicle weight rating
+    versions:
+      - effective_from: '2025-01-01'
+        formula: 11788
+
+  - name: federal_2025_tl2_part_2a_meals_net_of_allowances
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TL2 2025 line 3 subtracts non-taxable amounts from Part 2A meals and floors at zero before applying 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, tl2_part_2a_meals_paid_line_1)
+            - max(0, tl2_part_2a_meals_non_taxable_allowance_line_2)
+          )
+
+  - name: federal_2025_tl2_part_2a_allowable_meals_line_3
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TL2 2025 line 3 multiplies Part 2A meals net of non-taxable amounts by 50%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_tl2_part_2a_meals_net_of_allowances
+          * federal_2025_tl2_transport_employee_meal_rate
+
+  - name: federal_2025_tl2_part_2b_meals_net_of_allowances
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TL2 2025 line 6 subtracts non-taxable amounts from Part 2B meals and floors at zero before applying 80%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            max(0, tl2_part_2b_meals_paid_line_4)
+            - max(0, tl2_part_2b_meals_non_taxable_allowance_line_5)
+          )
+
+  - name: federal_2025_tl2_part_2b_allowable_meals_line_6
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TL2 2025 line 6 multiplies Part 2B long-haul meals net of non-taxable amounts by 80%
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_tl2_part_2b_meals_net_of_allowances
+          * federal_2025_tl2_long_haul_meal_rate
+
+  - name: federal_2025_tl2_lodging_total_line_9
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TL2 2025 line 9 adds lodging and showers from Part 2A line 7 and Part 2B line 8
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(0, tl2_part_2a_lodging_showers_paid_line_7)
+          + max(0, tl2_part_2b_lodging_showers_paid_line_8)
+
+  - name: federal_2025_tl2_allowable_lodging_line_11
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TL2 2025 line 11 subtracts non-taxable lodging amounts from line 9 and floors at zero
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          max(
+            0,
+            federal_2025_tl2_lodging_total_line_9
+            - max(0, tl2_lodging_non_taxable_allowance_line_10)
+          )
+
+  - name: transport_employee_meals_lodging_expenses_line_22900
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    source: CRA TL2 2025 line 12 adds lines 3, 6, and 11 and enters the amount on T1 line 22900
+    versions:
+      - effective_from: '2025-01-01'
+        formula: |-
+          federal_2025_tl2_part_2a_allowable_meals_line_3
+          + federal_2025_tl2_part_2b_allowable_meals_line_6
+          + federal_2025_tl2_allowable_lodging_line_11
