@@ -1,0 +1,51 @@
+- name: moving_expenses_limited_by_new_location_income
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_old_home_distance_to_new_work_or_school_km: 70
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_new_home_distance_to_new_work_or_school_km: 20
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_transportation_storage_costs_line_4: 3000
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_vehicle_expenses_line_5: 400
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_accommodation_expenses_line_6: 600
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_meal_expenses_line_7: 200
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_temporary_accommodation_expenses_line_9: 900
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_temporary_meal_expenses_line_10: 300
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_lease_cancellation_cost_line_12: 500
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_incidental_costs_line_13: 250
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_old_home_maintenance_costs_line_14: 7000
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_real_estate_commission_line_16: 2000
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_selling_legal_notarial_fees_line_17: 800
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_selling_advertising_line_18: 100
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_other_selling_costs_line_19: 100
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_buying_legal_notarial_fees_line_21: 900
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_title_registration_transfer_taxes_line_22: 600
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_reimbursement_or_allowance_line_25: 1000
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_net_eligible_income_line_28: 9000
+  output:
+    ca:policies/cra/t1-2025/moving-expenses-deduction#federal_2025_moving_distance_difference_line_3: 50
+    ca:policies/cra/t1-2025/moving-expenses-deduction#federal_2025_moving_travel_expenses_line_8: 1200
+    ca:policies/cra/t1-2025/moving-expenses-deduction#federal_2025_moving_temporary_living_expenses_line_11: 1200
+    ca:policies/cra/t1-2025/moving-expenses-deduction#federal_2025_moving_old_home_maintenance_allowed_line_14: 5000
+    ca:policies/cra/t1-2025/moving-expenses-deduction#federal_2025_moving_lease_incidental_old_home_line_15: 5750
+    ca:policies/cra/t1-2025/moving-expenses-deduction#federal_2025_moving_old_home_selling_costs_line_20: 3000
+    ca:policies/cra/t1-2025/moving-expenses-deduction#federal_2025_moving_new_home_buying_costs_line_23: 1500
+    ca:policies/cra/t1-2025/moving-expenses-deduction#federal_2025_moving_total_expenses_line_24: 15650
+    ca:policies/cra/t1-2025/moving-expenses-deduction#federal_2025_moving_net_expenses_line_26: 14650
+    ca:policies/cra/t1-2025/moving-expenses-deduction#moving_expenses_deduction_line_21900: 9000
+    ca:policies/cra/t1-2025/moving-expenses-deduction#federal_2025_moving_unused_expenses_carryforward_line_30: 5650
+
+- name: moving_expenses_denied_when_distance_test_fails
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_old_home_distance_to_new_work_or_school_km: 50
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_new_home_distance_to_new_work_or_school_km: 20
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_transportation_storage_costs_line_4: 2000
+    ca:policies/cra/t1-2025/moving-expenses-deduction#input.moving_net_eligible_income_line_28: 5000
+  output:
+    ca:policies/cra/t1-2025/moving-expenses-deduction#moving_expenses_deduction_line_21900: 0
+    ca:policies/cra/t1-2025/moving-expenses-deduction#federal_2025_moving_unused_expenses_carryforward_line_30: 0

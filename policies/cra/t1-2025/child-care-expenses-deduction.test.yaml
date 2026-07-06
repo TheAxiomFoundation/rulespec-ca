@@ -1,0 +1,78 @@
+- name: basic_lower_income_child_care_claim
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_children_under_7_no_disability_count: 1
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_children_disability_amount_count: 0
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_older_children_or_infirm_no_disability_count: 1
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_total_expenses_line_67950: 9000
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_earned_income: 15000
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_other_higher_income_line_21400: 0
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_part_c_applies: false
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_part_d_applies: false
+  output:
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_basic_limit_line_4: 13000
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_earned_income_limit_line_6: 10000.0000005
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_basic_claim_line_7: 9000
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_lower_income_allowable_line_9: 9000
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_pre_part_d_base_claim: 9000
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#child_care_expenses_deduction_line_21400: 9000
+
+- name: higher_income_part_c_limit
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_children_under_7_no_disability_count: 1
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_children_disability_amount_count: 0
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_older_children_or_infirm_no_disability_count: 0
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_total_expenses_line_67950: 8000
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_earned_income: 30000
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_part_c_weeks_full_time_or_infirmity_prison_separation: 6
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_part_c_months_part_time_school: 2
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_part_c_applies: true
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_part_d_applies: false
+  output:
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_basic_limit_line_4: 8000
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_earned_income_limit_line_6: 20000.000001
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_basic_claim_line_7: 8000
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_higher_income_week_month_unit_line_10: 200
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_higher_income_part_c_limit_line_13: 1600
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_higher_income_allowable_line_14: 1600
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_pre_part_d_base_claim: 1600
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_part_d_part_c_excess_line_22: 0
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#child_care_expenses_deduction_line_21400: 1600
+
+- name: student_part_d_additional_claim
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_children_under_7_no_disability_count: 1
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_children_disability_amount_count: 0
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_older_children_or_infirm_no_disability_count: 0
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_total_expenses_line_67950: 8000
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_earned_income: 12000
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_other_higher_income_line_21400: 0
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_part_d_full_time_school_weeks: 10
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_part_d_part_time_or_same_months: 0
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_net_income_excluding_lines_21400_23500: 15000
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_part_c_applies: false
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#input.child_care_part_d_applies: true
+  output:
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_basic_limit_line_4: 8000
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_earned_income_limit_line_6: 8000.0000004
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_basic_claim_line_7: 8000
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_lower_income_allowable_line_9: 8000
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_part_d_week_month_unit_line_15: 200
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_part_d_limit_line_18: 2000
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_pre_part_d_base_claim: 8000
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_part_d_remaining_basic_limit_line_19: 0
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_part_d_remaining_expense_line_20: 0
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_part_d_net_income_limit_line_21: 10000.0000005
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#federal_2025_child_care_part_d_additional_claim_line_23: 0
+    ca:policies/cra/t1-2025/child-care-expenses-deduction#child_care_expenses_deduction_line_21400: 8000
