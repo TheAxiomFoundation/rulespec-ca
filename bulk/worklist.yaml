@@ -1,0 +1,26 @@
+version: 1
+defaults:
+  backend: codex
+  model: gpt-5.5
+# rulespec-ca bulk-encode worklist (flat layout; local codex generation).
+#
+# Each `citation` is a corpus citation_path (jurisdiction `ca`, all doc_type
+# `policy`) that the encoder resolves from the Supabase `corpus.current_provisions`
+# view (241 CA provisions; not committed as provisions/ca/ blobs in any pinned
+# axiom-corpus ref, so Supabase is the resolution source). Every entry below was
+# verified to exist by exact citation_path in current_provisions BEFORE listing
+# (never invent Canadian numbers).
+#
+# The encoder maps a `ca/policy/<rest>` citation to the flat module
+# `policies/<rest>.yaml` via its source-root token map (see bulk/README.md); no
+# `ca/` directory and no encoder change is involved.
+#
+# Selection: guidance-grade CRA/Revenu-Québec/ESDC forms and worksheets, so the
+# queue prefers provisions with clear standalone amounts/rates/formulas
+# (bracket rates, credit amounts, phase-out formulas) and SKIPS aggregation/
+# rollup forms and cross-reference-heavy ones.
+#
+# VOLUME STAYS MINIMAL until the first canary drains cleanly through the local
+# codex path (held at the oracle-coverage gate, auto-merge armed). This is a
+# pilot queue, not a full drain.
+entries: []
