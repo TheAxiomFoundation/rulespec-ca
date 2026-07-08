@@ -83,6 +83,7 @@ and never merges directly.
 
 | Status | Meaning |
 | --- | --- |
+| `staged` | Corpus-verified fuel, held back from the drain (not selected). Promote to `pending` to release. |
 | `pending` | Queued. The next drain may pick it up. |
 | `in-progress` | A run is encoding it (transient). |
 | `needs-fixtures` | Encoded + applied, but companion fixtures hit the #1060 ceiling. The PR opens; auto-merge holds on the red required check until fixtures land. |
