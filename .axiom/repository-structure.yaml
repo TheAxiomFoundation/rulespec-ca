@@ -2,6 +2,7 @@ version: 1
 allowed_root_directories:
   - .axiom
   - .github
+  - bulk
   - data
   - policies
   - regulations
@@ -9,6 +10,9 @@ allowed_root_directories:
   - statutes
 allowed_root_files:
   - CLAUDE.md
+  - LICENSE
+  - LICENSE-CODE
+  - NOTICE
   - README.md
   - known-missing-money-atoms.yaml
 path_rules:
@@ -22,6 +26,12 @@ path_rules:
       - ".github/**"
     allow_extensions:
       - ".yml"
+      - ".yaml"
+  - patterns:
+      - "bulk/**"
+    allow_extensions:
+      - ".md"
+      - ".py"
       - ".yaml"
   - patterns:
       - "data/**"

@@ -1,0 +1,179 @@
+version: 1
+defaults:
+  backend: codex
+  model: gpt-5.5
+# rulespec-ca bulk-encode worklist (flat layout; local codex generation).
+#
+# Each `citation` is a corpus citation_path (jurisdiction `ca`, all doc_type
+# `policy`) resolved from the Supabase `corpus.current_provisions` view (241 CA
+# provisions; not committed as provisions/ca/ blobs in any pinned axiom-corpus
+# ref, so Supabase is the source). Every entry below was verified to exist by
+# exact citation_path via corpus_q.py `get` BEFORE listing (never invent
+# Canadian numbers). The encoder maps `ca/policy/<rest>` -> `policies/<rest>.yaml`
+# natively (bulk/README.md); each `target_module` is a NEW path (no file
+# collision).
+#
+# ── READ THIS: the CA corpus is fully encoded ────────────────────────────────
+# There are 0 genuine content gaps. All 99 L1 provisions (a form/schedule) are
+# already encoded as policies/**/*.yaml, and the L1 modules fold in their L2
+# children's arithmetic. The only remaining corpus provisions are 142 L2
+# sub-provisions, so every entry here is a finer-granularity RE-ENCODE of content
+# already in its L1 parent module — useful as local-codex smoke-test fuel and as
+# a 1:1 corpus->module granularity pass, NOT as net-new coverage.
+#
+# NAMESPACE CAVEAT: RuleSpec rule names are global descriptive identifiers (e.g.
+# `canada_disability_benefit_base_monthly_amount`), not module-scoped. A re-encode
+# that regenerates the same rule names as its L1 parent will be refused by
+# `encode --apply` (fail-closed on duplicate rules, no PR) — a correct, accountable
+# behavior. A clean per-provision-granularity drain therefore needs either
+# distinct rule names per sub-provision or retiring the folded L1 rules first.
+# Both are adjudicated by the encoder + gates; this queue never forces a merge.
+#
+# Handoff: the CANARY is `status: pending` (the local codex drain selects only
+# `pending`). The remaining entries are `status: staged` corpus-verified fuel —
+# promote to `pending` to drain once the namespace approach above is decided.
+entries:
+# ── CANARY (status: pending) ─────────────────────────────────────────────────
+- citation: ca/policy/esdc/benefits-2026/canada-disability-benefit/sor-2025-35
+  repo: rulespec-ca
+  batch: A
+  status: pending
+  heading: Canada Disability Benefit 2026 amount and SOR/2025-35 calculation rules
+  class: mechanics
+  target_module: policies/esdc/benefits-2026/canada-disability-benefit/sor-2025-35.yaml
+  mode: re-encode
+  note: >-
+    CANARY. Cleanest fully self-contained arithmetic in the CA corpus: monthly
+    benefit (($2,400 x A) - B) / 12; reduction B = 20% x (adjusted_income -
+    working_income_exemption - $23,000 x A) single, $32,500 x A couple, 10% if
+    both beneficiaries; working-income caps $10,000/$14,000; CPI indexing factor
+    A. Every constant inline, zero cross-form refs. Built-in oracle: existing L1
+    canada-disability-benefit.yaml (23 rules) encodes the same formula.
+# ── STAGED fuel (corpus-verified; promote to pending to drain) ────────────────
+- citation: ca/policy/cra/t1-2025/ab428-resident-tax/values
+  repo: rulespec-ca
+  batch: A
+  status: staged
+  heading: CRA Form AB428 and Worksheet AB428 2025 Alberta Resident Tax Values
+  class: rate
+  target_module: policies/cra/t1-2025/ab428-resident-tax/values.yaml
+  mode: re-encode
+  note: >-
+    Worksheet AB428 discrete line values: age amount max $6,221 (threshold
+    $46,308, 15% reduction), infirm-dependant base $21,458 (max $12,922/dependant).
+- citation: ca/policy/cra/t1-2025/bc428-resident-tax/values
+  repo: rulespec-ca
+  batch: A
+  status: staged
+  heading: CRA Form BC428 and Worksheet BC428 2025 British Columbia Resident Tax Values
+  class: rate
+  target_module: policies/cra/t1-2025/bc428-resident-tax/values.yaml
+  mode: re-encode
+  note: Worksheet BC428 provincial non-refundable credit line values, thresholds, reduction rates.
+- citation: ca/policy/cra/t1-2025/mb428-resident-tax/values
+  repo: rulespec-ca
+  batch: A
+  status: staged
+  heading: CRA Form MB428 and Worksheet MB428 2025 Manitoba Resident Tax Values
+  class: rate
+  target_module: policies/cra/t1-2025/mb428-resident-tax/values.yaml
+  mode: re-encode
+  note: Worksheet MB428 credit line values and income thresholds; self-contained provincial worksheet.
+- citation: ca/policy/cra/t1-2025/ns428-resident-tax/values
+  repo: rulespec-ca
+  batch: A
+  status: staged
+  heading: CRA Form NS428 and Worksheet NS428 2025 Nova Scotia Resident Tax Values
+  class: rate
+  target_module: policies/cra/t1-2025/ns428-resident-tax/values.yaml
+  mode: re-encode
+  note: Worksheet NS428 credit line values and thresholds; self-contained worksheet.
+- citation: ca/policy/cra/t1-2025/sk428-resident-tax/values
+  repo: rulespec-ca
+  batch: A
+  status: staged
+  heading: CRA Form SK428 and Worksheet SK428 2025 Saskatchewan Resident Tax Values
+  class: rate
+  target_module: policies/cra/t1-2025/sk428-resident-tax/values.yaml
+  mode: re-encode
+  note: Worksheet SK428 credit line values and thresholds; self-contained worksheet.
+- citation: ca/policy/cra/t1-2025/pe428-resident-tax/values
+  repo: rulespec-ca
+  batch: A
+  status: staged
+  heading: CRA Form PE428 and Worksheet PE428 2025 Prince Edward Island Resident Tax Values
+  class: rate
+  target_module: policies/cra/t1-2025/pe428-resident-tax/values.yaml
+  mode: re-encode
+  note: Worksheet PE428 credit line values and thresholds; self-contained worksheet.
+- citation: ca/policy/cra/t1-2025/nl428-resident-tax/values
+  repo: rulespec-ca
+  batch: A
+  status: staged
+  heading: CRA Form NL428 and Worksheet NL428 2025 Newfoundland and Labrador Resident Tax Values
+  class: rate
+  target_module: policies/cra/t1-2025/nl428-resident-tax/values.yaml
+  mode: re-encode
+  note: Worksheet NL428 credit line values and thresholds; self-contained worksheet.
+- citation: ca/policy/cra/t1-2025/mb479-credits/values
+  repo: rulespec-ca
+  batch: A
+  status: staged
+  heading: CRA Form MB479 2025 Manitoba Credits Values
+  class: mechanics
+  target_module: policies/cra/t1-2025/mb479-credits/values.yaml
+  mode: re-encode
+  note: >-
+    MB479 refundable-credits worksheet: adjusted-family-net-income calc (UCCB/RDSP
+    add-backs) plus fixed credit amounts (e.g. basic credit $195.00). Self-contained.
+- citation: ca/policy/cra/td1-2026/provincial-territorial-personal-credits/ontario
+  repo: rulespec-ca
+  batch: A
+  status: staged
+  heading: CRA 2026 TD1ON Ontario personal tax credit amounts
+  class: rate
+  target_module: policies/cra/td1-2026/provincial-territorial-personal-credits/ontario.yaml
+  mode: re-encode
+  note: >-
+    TD1ON 2026: basic $12,989, age $6,342 (net<=$47,210 -> $89,490), pension $1,796,
+    disability $10,494, spouse/eligible-dependant $11,029 (net<=$1,103 -> $12,132).
+- citation: ca/policy/cra/td1-2026/provincial-territorial-personal-credits/british-columbia
+  repo: rulespec-ca
+  batch: A
+  status: staged
+  heading: CRA 2026 TD1BC British Columbia personal tax credit amounts
+  class: rate
+  target_module: policies/cra/td1-2026/provincial-territorial-personal-credits/british-columbia.yaml
+  mode: re-encode
+  note: TD1BC 2026 personal credit amounts (basic, age, pension, disability, spouse) with phase-out thresholds.
+- citation: ca/policy/cra/td1-2026/provincial-territorial-personal-credits/manitoba
+  repo: rulespec-ca
+  batch: A
+  status: staged
+  heading: CRA 2026 TD1MB Manitoba personal tax credit amounts
+  class: rate
+  target_module: policies/cra/td1-2026/provincial-territorial-personal-credits/manitoba.yaml
+  mode: re-encode
+  note: TD1MB 2026 personal credit amounts and thresholds. Discrete amounts, self-contained.
+- citation: ca/policy/cra/t4127-2026/federal-income-tax/rates
+  repo: rulespec-ca
+  batch: A
+  status: staged
+  heading: CRA 2026 federal income tax rates and T4127 payroll formulas
+  class: rate
+  target_module: policies/cra/t4127-2026/federal-income-tax/rates.yaml
+  mode: re-encode
+  note: >-
+    2026 federal brackets: 14% up to $58,523; 20.5% to $117,045; 26% to $181,440;
+    29% to $258,482; 33% above. (Strip Canada.ca nav-wrapper noise.)
+- citation: ca/policy/cra/t1-2025/multigenerational-home-renovation-tax-credit/step-2
+  repo: rulespec-ca
+  batch: A
+  status: staged
+  heading: "MHRTC Step 2: calculating your credit"
+  class: rate
+  target_module: policies/cra/t1-2025/multigenerational-home-renovation-tax-credit/step-2.yaml
+  mode: re-encode
+  note: >-
+    Single clean formula: MHRTC = total_qualifying_expenditures x 14.5%, max
+    $7,250/renovation (expenditure limit $50,000). Thin body but unambiguous.
