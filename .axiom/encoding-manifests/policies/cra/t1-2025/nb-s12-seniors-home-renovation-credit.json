@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit.test.yaml",
+      "path": "ca/policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit.test.yaml",
       "sha256": "f7f59d15e4c0cdb745905e4ef78a36c89bdc92d040656419a0e817e288a2392c"
     },
     {
-      "path": "policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit.yaml",
+      "path": "ca/policies/cra/t1-2025/nb-s12-seniors-home-renovation-credit.yaml",
       "sha256": "82db6ff3c9690df6742313dea3fa665ff657a9e920b61e957c3986b12a841e7a"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "82db6ff3c9690df6742313dea3fa665ff657a9e920b61e957c3986b12a841e7a",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "0baa0f62ca7c2fd83873ad16a4e7a091e4a011f52a4173bda5175fca5493f9b4"
+    "value": "b120cac88cf204f1848fb9616fe009f4c220427c680b73f0009e2985755a2ade"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

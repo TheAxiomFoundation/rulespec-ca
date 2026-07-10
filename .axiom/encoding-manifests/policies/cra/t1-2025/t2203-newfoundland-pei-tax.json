@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/t2203-newfoundland-pei-tax.test.yaml",
+      "path": "ca/policies/cra/t1-2025/t2203-newfoundland-pei-tax.test.yaml",
       "sha256": "706f618073915df1388372dc55cb14d30d9b8499331afab37116cc3d8e4a5727"
     },
     {
-      "path": "policies/cra/t1-2025/t2203-newfoundland-pei-tax.yaml",
+      "path": "ca/policies/cra/t1-2025/t2203-newfoundland-pei-tax.yaml",
       "sha256": "bed037eb79c8127fd51581bb8de0b42864d0387ca903368c8ac3b11d875fa76b"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "bed037eb79c8127fd51581bb8de0b42864d0387ca903368c8ac3b11d875fa76b",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "2c6c8228bc3014038bc47d0f9db6477a268b86dd4b4b96f47d19344ba57ef282"
+    "value": "cc85dd3d61b76d344988700663ed89a18164dfc4447a877011576448c5f9a43a"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

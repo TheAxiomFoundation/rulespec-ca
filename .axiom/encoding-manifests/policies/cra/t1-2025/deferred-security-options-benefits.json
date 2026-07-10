@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/deferred-security-options-benefits.test.yaml",
+      "path": "ca/policies/cra/t1-2025/deferred-security-options-benefits.test.yaml",
       "sha256": "988ff7523ccb1cf44c08623c857b19667a70aa17d65da7c7d275e54c1499275e"
     },
     {
-      "path": "policies/cra/t1-2025/deferred-security-options-benefits.yaml",
+      "path": "ca/policies/cra/t1-2025/deferred-security-options-benefits.yaml",
       "sha256": "fd3329a55b6033cd7afa218fc1f1e9caf9fcc9cae568ac502fb4641feaf2345b"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "fd3329a55b6033cd7afa218fc1f1e9caf9fcc9cae568ac502fb4641feaf2345b",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "3b0a141e2c0d320540912937300c19f2651ddd09e191069a7dc48abd15d1114d"
+    "value": "7fb3910c7e5cee24b84385db8f47175c32c4232de2c73b57cea50796d35034a5"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

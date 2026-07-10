@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees.test.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees.test.yaml",
       "sha256": "5d0cc94588ef6fd3279454c505820f3473610094693904272fbce84c4301174f"
     },
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-t-tuition-examination-fees.yaml",
       "sha256": "405a2080c6fa8d77fb3e2a8e5762142b3037af11c2767a6539e832eb06116588"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "405a2080c6fa8d77fb3e2a8e5762142b3037af11c2767a6539e832eb06116588",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "abe2ef73fb237f8f1e0f0f0a72c5c7edc92afc6979b561607038ed41b4e8dac5"
+    "value": "1f39567a40e8cda8a4723cffd7680d62f500c6e6cb2ecf2ac31cf2a3e4497b25"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

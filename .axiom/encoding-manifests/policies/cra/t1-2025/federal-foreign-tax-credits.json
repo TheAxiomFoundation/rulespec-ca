@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/federal-foreign-tax-credits.test.yaml",
+      "path": "ca/policies/cra/t1-2025/federal-foreign-tax-credits.test.yaml",
       "sha256": "99e9b8fa944cf64aff190c91d1cd70e450f149adb28b8687cbd5d77ed9fd2776"
     },
     {
-      "path": "policies/cra/t1-2025/federal-foreign-tax-credits.yaml",
+      "path": "ca/policies/cra/t1-2025/federal-foreign-tax-credits.yaml",
       "sha256": "50b873354323fe510a54993905d45e53b73ce7f0fc1a2e91c5d93f44f508f698"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "50b873354323fe510a54993905d45e53b73ce7f0fc1a2e91c5d93f44f508f698",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "81ead03512c2661515b55043c850605fb83228d00bb99149bd9480924fc38761"
+    "value": "7cbae8db76e129475a502e56daf3fc13f7f44d31b24c7c6e0fa70ff2d801b824"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

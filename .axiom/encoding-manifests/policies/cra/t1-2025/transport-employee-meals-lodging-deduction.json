@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/transport-employee-meals-lodging-deduction.test.yaml",
+      "path": "ca/policies/cra/t1-2025/transport-employee-meals-lodging-deduction.test.yaml",
       "sha256": "902674ad691086c38bd84736416ed5352d806550af58517d025cf2a41c11ddb5"
     },
     {
-      "path": "policies/cra/t1-2025/transport-employee-meals-lodging-deduction.yaml",
+      "path": "ca/policies/cra/t1-2025/transport-employee-meals-lodging-deduction.yaml",
       "sha256": "53607208b2b87443fcbc6bd6302173f92ffbc6d548d4d0421f5bda4eb33f6b65"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpbt1y62pf",
   "generated_output_sha256": "53607208b2b87443fcbc6bd6302173f92ffbc6d548d4d0421f5bda4eb33f6b65",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "019aed4ad8ad430684f4fad741cf7c2b26c3c788353911b0927af39ac4119476"
+    "value": "976e078639abb1f80f73fabfcd12e0c7aa67c20486e81d94e2ed1874fe708447"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

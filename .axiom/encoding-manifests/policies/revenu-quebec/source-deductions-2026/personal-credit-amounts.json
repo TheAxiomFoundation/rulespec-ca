@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/revenu-quebec/source-deductions-2026/personal-credit-amounts.test.yaml",
+      "path": "ca/policies/revenu-quebec/source-deductions-2026/personal-credit-amounts.test.yaml",
       "sha256": "30e89fc259340f2a37044644806a29371399e82c3390269e9574200173458a89"
     },
     {
-      "path": "policies/revenu-quebec/source-deductions-2026/personal-credit-amounts.yaml",
+      "path": "ca/policies/revenu-quebec/source-deductions-2026/personal-credit-amounts.yaml",
       "sha256": "924f48ed37f6c9f5d24025f3beb298b678e493ffac600124bc35c41cfbbe8095"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "924f48ed37f6c9f5d24025f3beb298b678e493ffac600124bc35c41cfbbe8095",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "9682df6fe666030767e266175ee74adb3a443d249ed07701e0abaae1b32f79d3"
+    "value": "0e0eb661483bb8f487edcadf2d49f85e5c7979dad7f1d2295120c99c454e7551"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

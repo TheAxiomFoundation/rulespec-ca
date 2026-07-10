@@ -2,12 +2,10 @@ version: 1
 allowed_root_directories:
   - .axiom
   - .github
-  - bulk
+  - ca
   - data
-  - policies
-  - regulations
+  - manifests
   - sources
-  - statutes
 allowed_root_files:
   - CLAUDE.md
   - LICENSE
@@ -29,19 +27,15 @@ path_rules:
       - ".yml"
       - ".yaml"
   - patterns:
-      - "bulk/**"
-    allow_extensions:
-      - ".md"
-      - ".py"
-      - ".yaml"
-  - patterns:
       - "data/**"
     allow_extensions:
       - ".jsonl"
   - patterns:
-      - "policies/**"
-      - "regulations/**"
-      - "statutes/**"
+      - "manifests/**"
+    allow_extensions:
+      - ".json"
+  - patterns:
+      - "ca/**"
     allow_extensions:
       - ".yaml"
   - patterns:

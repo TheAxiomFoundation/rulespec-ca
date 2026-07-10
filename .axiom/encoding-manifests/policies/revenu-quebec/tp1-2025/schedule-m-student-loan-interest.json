@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-m-student-loan-interest.test.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-m-student-loan-interest.test.yaml",
       "sha256": "8da45c5615916b54980dd1760ff6d10181bb28051e3b07ee1efe90c9efd67fe4"
     },
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-m-student-loan-interest.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-m-student-loan-interest.yaml",
       "sha256": "81cfbee0f8d8603f1b92d7264ab7adf25b15d23c0f409aa4a22bdd6289fa34b6"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "81cfbee0f8d8603f1b92d7264ab7adf25b15d23c0f409aa4a22bdd6289fa34b6",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "b0211339e83d772417a7931adf5d686683376effcd4a9954590d7f3399bc22a8"
+    "value": "76567922ae80423e7ad563497aff8f52542f3ae3562dade83c9df1315e748763"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

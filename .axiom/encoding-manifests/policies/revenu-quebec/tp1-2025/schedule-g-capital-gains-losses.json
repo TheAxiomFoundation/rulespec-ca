@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-g-capital-gains-losses.test.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-g-capital-gains-losses.test.yaml",
       "sha256": "274e73f314ddd10f0bb0fb487bc22f0c9afacf509507de3499f015957ebf1f9c"
     },
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-g-capital-gains-losses.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-g-capital-gains-losses.yaml",
       "sha256": "2ddf5105784b52428fd65dd0d77e871a20d26f865dd4cbdfccb36d415995ccee"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "2ddf5105784b52428fd65dd0d77e871a20d26f865dd4cbdfccb36d415995ccee",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "0c8dc1d9a2f2870be01adba9b61d98276352733389f78157826d80e7a7635e65"
+    "value": "56467e2b4e6bfb73f0049bbecb2cfb771df7ea6b61fe7c51223c670f1c5950c6"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

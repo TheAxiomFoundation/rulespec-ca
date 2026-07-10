@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit.test.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit.test.yaml",
       "sha256": "2b93f8e2f1070166d6e8758eff5b5b4243675692533f058f0b680b0b5564d3cf"
     },
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-d-solidarity-tax-credit.yaml",
       "sha256": "f392bf3d190fa61acf5b9bfbe3eeae7f1b705568c5ce65dcf83c4874654b756b"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "f392bf3d190fa61acf5b9bfbe3eeae7f1b705568c5ce65dcf83c4874654b756b",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "6621d5019e2241eeb3116009edc08bc47d9f2a4808341f89f99232290f874fe8"
+    "value": "1537dad78750921ca149e715ca05f6ef9873731b3f1ab6244220e5c24bd8d763"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

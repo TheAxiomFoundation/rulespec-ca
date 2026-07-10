@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses.test.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses.test.yaml",
       "sha256": "d54619c9e1f4a0495348853018725834dffc70eedf121cab9a30712f2c0c640e"
     },
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-c-childcare-expenses.yaml",
       "sha256": "77a8f117643f7472d93a99bd890cbe08a1347fbe1e7fed1e3a77c0258a83c40d"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "77a8f117643f7472d93a99bd890cbe08a1347fbe1e7fed1e3a77c0258a83c40d",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "e4ee8e5e0a4986e5bf51822f4714ba0d8be49cbac920e6f630e4503c9dae43ad"
+    "value": "cd7e4db0793845d258923cb8d8f6eccaa8e218c25b513225a4a8c0867477c3bc"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

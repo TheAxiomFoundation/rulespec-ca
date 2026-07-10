@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment.test.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment.test.yaml",
       "sha256": "2942014b44bdc5ea6fcec2fdb99ee121cda1756dfa93e1feab1c4048eb19b4af"
     },
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-n-investment-expense-adjustment.yaml",
       "sha256": "142897852ae54a9b69618a0e18fbeb76d0094223098262d89120b764e1cab5f8"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "142897852ae54a9b69618a0e18fbeb76d0094223098262d89120b764e1cab5f8",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "3cc5c2cb4d05ffb0e55b8362ea82bee9ab90b0d7a02818506604c3e24cc6601e"
+    "value": "9156d5fc47302c6b8086211870924818d23b2fece576aaaf0156487c1ca067b5"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

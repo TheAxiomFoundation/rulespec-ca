@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/multigenerational-home-renovation-tax-credit.test.yaml",
+      "path": "ca/policies/cra/t1-2025/multigenerational-home-renovation-tax-credit.test.yaml",
       "sha256": "0541621cd4709adce3171bd1932c2ffe0da086772f70e49310d494c03b037d82"
     },
     {
-      "path": "policies/cra/t1-2025/multigenerational-home-renovation-tax-credit.yaml",
+      "path": "ca/policies/cra/t1-2025/multigenerational-home-renovation-tax-credit.yaml",
       "sha256": "507867b51749b0cf80c9203942f0fff08389f71d593a4385020731b791438df8"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "507867b51749b0cf80c9203942f0fff08389f71d593a4385020731b791438df8",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "30091e28b506f34397ebc628d937d23be38e0df0510f1447d508e7d324bb7c8b"
+    "value": "29144bc1c459aa407408d5dc932755ca1a52fbeffc11a239de76945b08a15501"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

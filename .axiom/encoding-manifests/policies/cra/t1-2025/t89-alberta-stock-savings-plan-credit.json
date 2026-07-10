@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/t89-alberta-stock-savings-plan-credit.test.yaml",
+      "path": "ca/policies/cra/t1-2025/t89-alberta-stock-savings-plan-credit.test.yaml",
       "sha256": "3ad4ce2d35cc44cb415450a5fdf8d49ffbd9f4f7036bd2dc12aef99e4d0c120c"
     },
     {
-      "path": "policies/cra/t1-2025/t89-alberta-stock-savings-plan-credit.yaml",
+      "path": "ca/policies/cra/t1-2025/t89-alberta-stock-savings-plan-credit.yaml",
       "sha256": "69962c2f937acc97f8e48b9cdea12912e891ca8d11f60a95f6db9a0606d1d371"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "69962c2f937acc97f8e48b9cdea12912e891ca8d11f60a95f6db9a0606d1d371",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "2cd70073357214a565a44971dbbc02e6a2bba8f482f1d7fe456076f34dbbcd9a"
+    "value": "d4a0c44c59128689aab8079afb0b5148f5e9a3fb899f9e5b18304c6e0c3ba623"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

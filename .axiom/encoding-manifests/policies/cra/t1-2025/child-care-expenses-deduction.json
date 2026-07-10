@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/child-care-expenses-deduction.test.yaml",
+      "path": "ca/policies/cra/t1-2025/child-care-expenses-deduction.test.yaml",
       "sha256": "099d3b5a28e5e2024a7d06aa0d969634f2b28b40878b28ea933236c61a573687"
     },
     {
-      "path": "policies/cra/t1-2025/child-care-expenses-deduction.yaml",
+      "path": "ca/policies/cra/t1-2025/child-care-expenses-deduction.yaml",
       "sha256": "297ca5e41a4d94c251716f3fb55d1f0740c5f8bb4142ade9308eef47a57c3b9f"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmprvlm0h22",
   "generated_output_sha256": "297ca5e41a4d94c251716f3fb55d1f0740c5f8bb4142ade9308eef47a57c3b9f",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "6fa1e538c250612d4b189f2e6680c75bde522d1ec670675f5858295dd81dc02b"
+    "value": "83c68de1f386e61d6f57ddb462e2bda76ab79d4da6ae80f14cb2088470dadd26"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/federal-tuition-and-training-credit.test.yaml",
+      "path": "ca/policies/cra/t1-2025/federal-tuition-and-training-credit.test.yaml",
       "sha256": "e4ae43f176bba26db6b9c7d7c6791d89297cb59ff9721d3f271c15c7683ded19"
     },
     {
-      "path": "policies/cra/t1-2025/federal-tuition-and-training-credit.yaml",
+      "path": "ca/policies/cra/t1-2025/federal-tuition-and-training-credit.yaml",
       "sha256": "a7fc6dd5f2a544bddd06788f96a03f3a7b16684e389850dbbe7a91cdaea5cbc2"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "a7fc6dd5f2a544bddd06788f96a03f3a7b16684e389850dbbe7a91cdaea5cbc2",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "2218044a2ddc4053a65969828ba432020f51c01ac7f8fc17dbbc007608ca3ed8"
+    "value": "8747c687862d06f74155aff55a75496f72394f500a43e6708a74911ae4981541"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

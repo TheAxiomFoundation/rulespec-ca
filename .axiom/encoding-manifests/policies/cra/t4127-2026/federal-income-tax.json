@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t4127-2026/federal-income-tax.test.yaml",
+      "path": "ca/policies/cra/t4127-2026/federal-income-tax.test.yaml",
       "sha256": "a4152f643ffd63e76f4ac4b4fc7dcf6341f4764e67b86bde883faf8771211767"
     },
     {
-      "path": "policies/cra/t4127-2026/federal-income-tax.yaml",
+      "path": "ca/policies/cra/t4127-2026/federal-income-tax.yaml",
       "sha256": "c88bffb0446007dfa9e5f38167036f2893db4320b24933ecb107f6975085ad5f"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "c88bffb0446007dfa9e5f38167036f2893db4320b24933ecb107f6975085ad5f",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "7ba27eb1971fdb71870aea51b663ac9c063e5e8d0c3cae0a7bf1257bf490aaa2"
+    "value": "c9c28ce17eef579a34f4b313b0fa2181aed89bf8e26857c62d0338617d785213"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

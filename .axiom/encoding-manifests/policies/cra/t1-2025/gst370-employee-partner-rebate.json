@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/gst370-employee-partner-rebate.test.yaml",
+      "path": "ca/policies/cra/t1-2025/gst370-employee-partner-rebate.test.yaml",
       "sha256": "3beded987f3a00994e540bc8c523e057387551fbe29e244cca8c539cf8674c20"
     },
     {
-      "path": "policies/cra/t1-2025/gst370-employee-partner-rebate.yaml",
+      "path": "ca/policies/cra/t1-2025/gst370-employee-partner-rebate.yaml",
       "sha256": "1dc2bb73774274f0b373734091571c1c1bef09361873767d1bb716b930f336ba"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmp_z9qlzqo",
   "generated_output_sha256": "1dc2bb73774274f0b373734091571c1c1bef09361873767d1bb716b930f336ba",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "5ae3866cc6f4fab50cfa4251098aa78af94f304603e8da00f463459c96522d1d"
+    "value": "d3290393a3b63f3e978c94811ee878bb318c91138261a32af2b9a0ec00924cb0"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

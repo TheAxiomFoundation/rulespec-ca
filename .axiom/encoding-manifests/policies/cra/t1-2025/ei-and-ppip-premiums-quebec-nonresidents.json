@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents.test.yaml",
+      "path": "ca/policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents.test.yaml",
       "sha256": "4f9173c1f7a88a6627761668c9b2853c56c282f9b4a584aff55c1a58e5420868"
     },
     {
-      "path": "policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents.yaml",
+      "path": "ca/policies/cra/t1-2025/ei-and-ppip-premiums-quebec-nonresidents.yaml",
       "sha256": "d4a4294ea8053a87764846fbdc38ef7f79e139e1cf36be5c024eac563998f641"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "d4a4294ea8053a87764846fbdc38ef7f79e139e1cf36be5c024eac563998f641",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "8bce695338d2914bc16708ad42c9e0c5231bceee47775eee91cbf466881816cc"
+    "value": "7c74913994c6fb078e0819fab56ed8717b14aa07b85fe7338dfa079946028c74"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

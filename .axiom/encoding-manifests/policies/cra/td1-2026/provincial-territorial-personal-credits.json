@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/td1-2026/provincial-territorial-personal-credits.test.yaml",
+      "path": "ca/policies/cra/td1-2026/provincial-territorial-personal-credits.test.yaml",
       "sha256": "c6d81e985a78a93d779bbcadb9e55b1fb1f48c86b9a2616b160bae2e0b753ecd"
     },
     {
-      "path": "policies/cra/td1-2026/provincial-territorial-personal-credits.yaml",
+      "path": "ca/policies/cra/td1-2026/provincial-territorial-personal-credits.yaml",
       "sha256": "d11b023775befb916b3589bc46968d772bcf59aa975df9b80b0b255dbb162b14"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "d11b023775befb916b3589bc46968d772bcf59aa975df9b80b0b255dbb162b14",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "8908061247273090ed1c09015008a20351d96e4cd1c5d3eeb3867f8d40d2e920"
+    "value": "06a21a7fd9e5722754cdf3f9aebfededb50e409f174f8f451819ee86027500e1"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/t1-income-net-taxable-income.test.yaml",
+      "path": "ca/policies/cra/t1-2025/t1-income-net-taxable-income.test.yaml",
       "sha256": "9c45e22ccf0e7d0c26b2f0399cf2e63bc5140dfccc8fe5592c2eee6432206f1d"
     },
     {
-      "path": "policies/cra/t1-2025/t1-income-net-taxable-income.yaml",
+      "path": "ca/policies/cra/t1-2025/t1-income-net-taxable-income.yaml",
       "sha256": "73c11563d431192e05907aad06346bd86753d5fe7d2e81973eb4f0f1613045af"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "73c11563d431192e05907aad06346bd86753d5fe7d2e81973eb4f0f1613045af",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "b88ba0ee7037dbb50f01b039f6e815d7cfdcabbf610c0591befd6e25d19c0230"
+    "value": "75a4d377c845627dd4965640d93c9216e4959f0a7dc587b7a9a2f012f5b47fc0"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,
