@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/nl479-credits.test.yaml",
+      "path": "ca/policies/cra/t1-2025/nl479-credits.test.yaml",
       "sha256": "b38f3995b1b48e1a2fdb13b72e8f4d81c9e94eefb0f8bb9403c605d29d153815"
     },
     {
-      "path": "policies/cra/t1-2025/nl479-credits.yaml",
+      "path": "ca/policies/cra/t1-2025/nl479-credits.yaml",
       "sha256": "c5892a31bafcef01e83931953063d4d3f0dd4babbd8fb12e35c9af95c1af87bd"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "c5892a31bafcef01e83931953063d4d3f0dd4babbd8fb12e35c9af95c1af87bd",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "4b95c92279b5e4465dbf4a584d5cb321020edbb836bd559102385d2e6cea8645"
+    "value": "285ba1db465f1509b8b756b9e4308b9960b19541b5917dec67b9aacc8eede08f"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

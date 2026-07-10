@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-b-tax-relief.test.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-b-tax-relief.test.yaml",
       "sha256": "4933c85766073660afb230a25fce23d2b3b350920cdd88d0bac9e46da5dc8afb"
     },
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-b-tax-relief.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-b-tax-relief.yaml",
       "sha256": "eaf005281729cf06af54be95c2b53d23701aeeea353e3d0d4b1d58a35b78b137"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "eaf005281729cf06af54be95c2b53d23701aeeea353e3d0d4b1d58a35b78b137",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "9cb8cbcf17313e0dcc57621dd4e3007664e98dd54a3e83716a4ad3450b4df04f"
+    "value": "fd7fc50e0566c621adaf4243203774097448ea3f9dcf24b135a9303d4b482b97"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

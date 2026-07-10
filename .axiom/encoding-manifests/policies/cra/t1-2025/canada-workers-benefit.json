@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/canada-workers-benefit.test.yaml",
+      "path": "ca/policies/cra/t1-2025/canada-workers-benefit.test.yaml",
       "sha256": "3693158ba976ca70de646fd627d633586baeba2b6473c5c6bfc2c852648336d6"
     },
     {
-      "path": "policies/cra/t1-2025/canada-workers-benefit.yaml",
+      "path": "ca/policies/cra/t1-2025/canada-workers-benefit.yaml",
       "sha256": "6d61a8fe8afcc79cb201058093969cfcd2408fc940aa2bd32282458e9cbb8280"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "6d61a8fe8afcc79cb201058093969cfcd2408fc940aa2bd32282458e9cbb8280",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "46bfe642e69132f7447f6f7589a86afd3b7adf3b3964568ade34d680debd4dda"
+    "value": "1c98c3bdf349aacbec97f840df3b7f956343a18bf9ba1080df4ce4f869467b59"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

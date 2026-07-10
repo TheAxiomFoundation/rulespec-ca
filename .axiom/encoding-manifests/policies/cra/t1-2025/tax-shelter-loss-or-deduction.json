@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/tax-shelter-loss-or-deduction.test.yaml",
+      "path": "ca/policies/cra/t1-2025/tax-shelter-loss-or-deduction.test.yaml",
       "sha256": "55d2a3a553de32151282cc2c02ff244e77678d7718da542a6344ef2ffae0a4f6"
     },
     {
-      "path": "policies/cra/t1-2025/tax-shelter-loss-or-deduction.yaml",
+      "path": "ca/policies/cra/t1-2025/tax-shelter-loss-or-deduction.yaml",
       "sha256": "6dcd8bfad3ee27b5e3acc407f7b60f70b3fbafe218c3a0200a9ed70750fd1740"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "6dcd8bfad3ee27b5e3acc407f7b60f70b3fbafe218c3a0200a9ed70750fd1740",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "530e00bc9797c296d7f0e12da8a1a79781bcd1dc9bb0c38067cc2cf08adb62cc"
+    "value": "a5788b377bca5ba9fe2245f0c592106cec4fb16e3b441a085edd73aa7f8560b8"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

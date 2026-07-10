@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer.test.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer.test.yaml",
       "sha256": "5da41782b61adfb524685249929592504e1f87702e8d7346574f07039b733c1a"
     },
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-q-retirement-income-transfer.yaml",
       "sha256": "8572ab626ae6623e3184db2d819cca82adb20e47d27731db0c86b55f10abd191"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "8572ab626ae6623e3184db2d819cca82adb20e47d27731db0c86b55f10abd191",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "06e3b2f2463d72c19f5d4afdf28a2dd5a6b43cc9c84faa8a1d51e483e87c0764"
+    "value": "e9531fd7e938d0f250820d37743a5f4a5bf0ee4f1ddd78c5e08104fe612e0c42"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/nonresident-world-income-credits-section-217.test.yaml",
+      "path": "ca/policies/cra/t1-2025/nonresident-world-income-credits-section-217.test.yaml",
       "sha256": "28eecb54101df9988d72a0b390a787409bd7eb24dabf91dbe99e705c0da92634"
     },
     {
-      "path": "policies/cra/t1-2025/nonresident-world-income-credits-section-217.yaml",
+      "path": "ca/policies/cra/t1-2025/nonresident-world-income-credits-section-217.yaml",
       "sha256": "c25f6c482a444ca7cc4e5dea1b9cb47c7b83b814c46084d06dd695b8f30ac314"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "c25f6c482a444ca7cc4e5dea1b9cb47c7b83b814c46084d06dd695b8f30ac314",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "a85df2eb88293ed002b8dcf559eff06f8edbcd61e67fe42af4a2d9680816d35a"
+    "value": "5940ca1277745c8ab6d5cf0c1df26765dbed7c65dfccee2c3ae4ee14c49ad3a4"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

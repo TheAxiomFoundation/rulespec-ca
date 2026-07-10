@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/ab428-resident-tax.test.yaml",
+      "path": "ca/policies/cra/t1-2025/ab428-resident-tax.test.yaml",
       "sha256": "1b5eeddce6f75eb3e49a2bcb9b7c4e20029b94cd6b184e3394dca10a77b6d9d9"
     },
     {
-      "path": "policies/cra/t1-2025/ab428-resident-tax.yaml",
+      "path": "ca/policies/cra/t1-2025/ab428-resident-tax.yaml",
       "sha256": "28195c93b968804ab476ec2bf8c95d69fa672e66cd73ac4e200f8c4863fbf79b"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "28195c93b968804ab476ec2bf8c95d69fa672e66cd73ac4e200f8c4863fbf79b",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "7891d82a819ef16a62c1f2edf30a144b6c432784a3ce98fa11157c059bb66428"
+    "value": "1ad0fd9aac4b3cfed2d937414ae2233bb1a9c0dfda3fb80818d5764fd24ff847"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/esdc/benefits-2026/canada-disability-benefit.test.yaml",
+      "path": "ca/policies/esdc/benefits-2026/canada-disability-benefit.test.yaml",
       "sha256": "a0b024f2e45cf8e5c73c3b8aed86d147910ca970365b5c81f8ba4926091b289f"
     },
     {
-      "path": "policies/esdc/benefits-2026/canada-disability-benefit.yaml",
+      "path": "ca/policies/esdc/benefits-2026/canada-disability-benefit.yaml",
       "sha256": "4746d37b329b433978768ba098a0f874dd122c15ec970c650caaf4b87647ac14"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "4746d37b329b433978768ba098a0f874dd122c15ec970c650caaf4b87647ac14",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "94d3efba76d83e84a9a4589c3b371ba915a9b0436f9baaf68ce38111f351c32a"
+    "value": "74b2d9626cf46502b47792808f3e7e26bbe1b409458d5e542359428476f58985"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

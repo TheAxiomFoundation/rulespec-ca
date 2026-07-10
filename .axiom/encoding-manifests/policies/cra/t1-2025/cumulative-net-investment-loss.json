@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/cumulative-net-investment-loss.test.yaml",
+      "path": "ca/policies/cra/t1-2025/cumulative-net-investment-loss.test.yaml",
       "sha256": "f536ea5b328861f2232d166e75a09395320154c2bf93c352b58292387eea72cf"
     },
     {
-      "path": "policies/cra/t1-2025/cumulative-net-investment-loss.yaml",
+      "path": "ca/policies/cra/t1-2025/cumulative-net-investment-loss.yaml",
       "sha256": "04186d97a2a54991ec8b592aff18c5a4102bac07a999c611139fa6b0db515340"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "04186d97a2a54991ec8b592aff18c5a4102bac07a999c611139fa6b0db515340",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "8f3c037bcd26051ec63bd25d476873f83eb290b4e635761725df377c6ff2dca7"
+    "value": "343dc84f1a5b423c30327bbe781abc5fc060c6a7b121bb75433a34463c806fff"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

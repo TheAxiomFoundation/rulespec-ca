@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/benefits-2026/provincial-territorial-cgeb-linked-credits.test.yaml",
+      "path": "ca/policies/cra/benefits-2026/provincial-territorial-cgeb-linked-credits.test.yaml",
       "sha256": "c9124f0a7689f652473ea4d6bbc832289f20373f850125a26569160fccbea66f"
     },
     {
-      "path": "policies/cra/benefits-2026/provincial-territorial-cgeb-linked-credits.yaml",
+      "path": "ca/policies/cra/benefits-2026/provincial-territorial-cgeb-linked-credits.yaml",
       "sha256": "087aabc804b35a82373850e042a27f3db446b91edd82127f03440b51e3f01f87"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "087aabc804b35a82373850e042a27f3db446b91edd82127f03440b51e3f01f87",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "638c27fcb730f48c52bf03b04991e3682c181daa7156b1ffacdfea8b6d2a0b29"
+    "value": "50115c67b69c2b842958d8ee2deb6730dc40159ab642534d8027ef0f4b641071"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

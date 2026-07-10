@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/fhsa-contributions-transfers-and-activities.test.yaml",
+      "path": "ca/policies/cra/t1-2025/fhsa-contributions-transfers-and-activities.test.yaml",
       "sha256": "016e5fb6ffb4ce1740b158cab64e9a6427cfffb1ed2bd1c3ae221ddf0ee5d3bb"
     },
     {
-      "path": "policies/cra/t1-2025/fhsa-contributions-transfers-and-activities.yaml",
+      "path": "ca/policies/cra/t1-2025/fhsa-contributions-transfers-and-activities.yaml",
       "sha256": "b7af0deb23f4d89b6d3b14d98f617bf24f22a91bb71275ea03be55c6446566c7"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "b7af0deb23f4d89b6d3b14d98f617bf24f22a91bb71275ea03be55c6446566c7",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "7cc89f772c620ddd493655e3461f87434a826d16b93fdc1949c3dd2207d55795"
+    "value": "fa3c86dfc85b6c32d32ba2e7318a4264b739575cc41c1d885ca549aa0e4bea0c"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

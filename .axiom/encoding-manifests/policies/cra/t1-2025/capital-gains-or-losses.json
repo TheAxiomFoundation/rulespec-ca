@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/capital-gains-or-losses.test.yaml",
+      "path": "ca/policies/cra/t1-2025/capital-gains-or-losses.test.yaml",
       "sha256": "a7850a23f67fac52f1f20b30b0f864c14e4ac7d2936ef439bd81c4e3c4f663b4"
     },
     {
-      "path": "policies/cra/t1-2025/capital-gains-or-losses.yaml",
+      "path": "ca/policies/cra/t1-2025/capital-gains-or-losses.yaml",
       "sha256": "9118529e9cb16db83744082d72eac9c37e7f2e11156b724ef6d8d083a30cfa49"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "9118529e9cb16db83744082d72eac9c37e7f2e11156b724ef6d8d083a30cfa49",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "520aca6da0aa52f8d179381072f91692b967b9b68261a797f3e600bbcdc83ef8"
+    "value": "629c5bf2b04fbe9e44cb6e1b32630a9f4195e9d8067a67406ababd537c13e4ba"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

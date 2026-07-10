@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/federal-other-refundable-credits.test.yaml",
+      "path": "ca/policies/cra/t1-2025/federal-other-refundable-credits.test.yaml",
       "sha256": "877c4301d2d23cfcf22fc96bbfeb6d69765fcf5ff2bea6c421beb6124840e9b4"
     },
     {
-      "path": "policies/cra/t1-2025/federal-other-refundable-credits.yaml",
+      "path": "ca/policies/cra/t1-2025/federal-other-refundable-credits.yaml",
       "sha256": "f643f7225e241b7597655b23d887696004f2031c5a92c61b8b8e102d42d1a5c2"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "f643f7225e241b7597655b23d887696004f2031c5a92c61b8b8e102d42d1a5c2",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "1fd3f7fde221e4bfda722457bcc486c56ddcbf3b177ed05f5013c56dcbb4b037"
+    "value": "7c2aa70393c3dc01506eeed37707e610b38dd9e4d853ec66b15f9d20d782d9df"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-s-student-transfer.test.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-s-student-transfer.test.yaml",
       "sha256": "ffb0fa16a2a386a80b8f82a8ffb8c9011ac2fc2c4ed60663a94557d5d5ac76f0"
     },
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-s-student-transfer.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-s-student-transfer.yaml",
       "sha256": "1e812bd477e78258097d236a88a3181bf63e7a2051f286134560fc8c7b3a0bba"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "1e812bd477e78258097d236a88a3181bf63e7a2051f286134560fc8c7b3a0bba",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "d9dd94eb3e6b78fe30136b05ecb54e728ee0ae967c4dd117d6af58a95c4fc06a"
+    "value": "a0a27ff9e7eac8ec49525c7bb0e02ee7d76bcb4396007602e1f2b2d6db1cfd16"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

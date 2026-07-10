@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/t2203-saskatchewan-alberta-british-columbia-tax.test.yaml",
+      "path": "ca/policies/cra/t1-2025/t2203-saskatchewan-alberta-british-columbia-tax.test.yaml",
       "sha256": "39fcfe27bdaf307b047c71c1e4a4917baccd73af48714dabe96a74366c3b23c1"
     },
     {
-      "path": "policies/cra/t1-2025/t2203-saskatchewan-alberta-british-columbia-tax.yaml",
+      "path": "ca/policies/cra/t1-2025/t2203-saskatchewan-alberta-british-columbia-tax.yaml",
       "sha256": "15bcd1c9971578525f9259fc0be84edac67cf6a6b937ead01fa821a30f13aabd"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "15bcd1c9971578525f9259fc0be84edac67cf6a6b937ead01fa821a30f13aabd",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "3e2b52b69d2f8c612ca0a9c758d51bca3f203d211a9899ff79b806bc8d75f43f"
+    "value": "8a3a9867f8540408300bc711c84a9e3820ae7c8ef40743ba2eba732792bf5a51"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

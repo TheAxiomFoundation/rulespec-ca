@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium.test.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium.test.yaml",
       "sha256": "6965fa4549cecb5ff4ae32535adcc6429fbf4aee35ca104957fe76164787cf5c"
     },
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-r-qpip-premium.yaml",
       "sha256": "acfe3e36140c168f833c89008ba297b0cbbd3d7b017c138f262bff23ef314e6c"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "acfe3e36140c168f833c89008ba297b0cbbd3d7b017c138f262bff23ef314e6c",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "a641b2d420b467e04364527b7865704270088f67f26ceed0c5235eff6f675419"
+    "value": "c09f92311db29dd04dacd2573d2762bf309928be263faba68cca672ab1fdff62"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

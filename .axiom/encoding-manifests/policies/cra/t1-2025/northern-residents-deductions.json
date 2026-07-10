@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/northern-residents-deductions.test.yaml",
+      "path": "ca/policies/cra/t1-2025/northern-residents-deductions.test.yaml",
       "sha256": "e58d800a1e7fe5629ba56d1f8fa0a06cf2f09f92340d7944f7bea28d2241356d"
     },
     {
-      "path": "policies/cra/t1-2025/northern-residents-deductions.yaml",
+      "path": "ca/policies/cra/t1-2025/northern-residents-deductions.yaml",
       "sha256": "3dad478373d751ee1f8ad3285a69facd11b5441c7ac0642e064a4144180911c8"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "3dad478373d751ee1f8ad3285a69facd11b5441c7ac0642e064a4144180911c8",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "4ab95296fa65e3f82ba330dbd49fd2f1db72e0e6cd853d5d06f0f6cbd5be6ea0"
+    "value": "89ab9e2d209a83b4dcc1276bf97417a9953c1613009b434fda7891da1eec1c27"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

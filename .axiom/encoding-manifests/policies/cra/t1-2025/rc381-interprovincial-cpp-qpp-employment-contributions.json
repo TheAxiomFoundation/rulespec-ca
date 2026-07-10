@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions.test.yaml",
+      "path": "ca/policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions.test.yaml",
       "sha256": "d708290039e0c9d589d31e91d8c918e69b351f16bb4b2bebdc918d8dd5b3c582"
     },
     {
-      "path": "policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions.yaml",
+      "path": "ca/policies/cra/t1-2025/rc381-interprovincial-cpp-qpp-employment-contributions.yaml",
       "sha256": "0dac7303750fc815e1c92c772e05c3fa6d5f9e95d90a725da7ffb8a160701ede"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmp_z9qlzqo",
   "generated_output_sha256": "0dac7303750fc815e1c92c772e05c3fa6d5f9e95d90a725da7ffb8a160701ede",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "d623bdd46694d79eec7e6bb924ca0966a4666cec370a25ae33b674aeef113617"
+    "value": "6889526666ac534a3ce094a2fa21be3c36de42194aab076eeeb648c299f9eab0"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

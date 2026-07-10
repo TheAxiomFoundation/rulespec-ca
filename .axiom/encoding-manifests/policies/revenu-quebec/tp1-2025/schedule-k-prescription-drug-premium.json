@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium.test.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium.test.yaml",
       "sha256": "097942c9e8ed56f9f33b1f90ee5cec536c3c7591e895d029f22fbfbac5e0becc"
     },
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-k-prescription-drug-premium.yaml",
       "sha256": "1445e19e69f39fdea5aaff39e0922a6de48f01b38474a697a2cbbf436a8ddb97"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "1445e19e69f39fdea5aaff39e0922a6de48f01b38474a697a2cbbf436a8ddb97",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "e09c668190792129a26f812fcd7bc233df39d602fe067cb01608bb94949121b4"
+    "value": "7a0115e488e77a2734d4da0a407b34c13bf947b14db3e588856a0b0b50c3a09a"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

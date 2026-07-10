@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp.test.yaml",
+      "path": "ca/policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp.test.yaml",
       "sha256": "9cf4bf86f051c0ad3bdcf54838c5e23c25b2e3dad4477e784a1691fe98819eb4"
     },
     {
-      "path": "policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp.yaml",
+      "path": "ca/policies/cra/t1-2025/rrsp-prpp-spp-hbp-llp.yaml",
       "sha256": "22d9f39b702dff2c8e015907d92c8f180aed93136cbc642baa83970ac2937243"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "22d9f39b702dff2c8e015907d92c8f180aed93136cbc642baa83970ac2937243",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "c037005f40a271682cc55aeaae190b4b411a4f86424e651eb478462465a1c6c5"
+    "value": "ad2b90af6eac5a373f32062d0aa1347fcea46f506e537bc421c38725ec23c9f7"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

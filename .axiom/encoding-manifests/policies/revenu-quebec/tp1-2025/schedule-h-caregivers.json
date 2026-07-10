@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-h-caregivers.test.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-h-caregivers.test.yaml",
       "sha256": "c8bbe01bcfcc48fbc33a7c3d864575094b3172abf507ccc0f5d179eae93b706c"
     },
     {
-      "path": "policies/revenu-quebec/tp1-2025/schedule-h-caregivers.yaml",
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-h-caregivers.yaml",
       "sha256": "8c4ab37eb2460e2b2087102be0eaecfd4887d55270513bd193d3d6cc611ec5ef"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "8c4ab37eb2460e2b2087102be0eaecfd4887d55270513bd193d3d6cc611ec5ef",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "2237117974ebaae64bf2f6b9eb1c3e5d68920cd5b0229bb49d1eb337c0019de5"
+    "value": "a9a1e8809170b553247e03a896372cc11f82309e8fc11e0447faa016fa1e76b2"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

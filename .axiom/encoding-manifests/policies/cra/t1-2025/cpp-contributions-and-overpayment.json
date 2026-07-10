@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/cpp-contributions-and-overpayment.test.yaml",
+      "path": "ca/policies/cra/t1-2025/cpp-contributions-and-overpayment.test.yaml",
       "sha256": "4631f22d44e742585e787e506bd00b073d3bc31e0b7a6f36bcab402b144e7511"
     },
     {
-      "path": "policies/cra/t1-2025/cpp-contributions-and-overpayment.yaml",
+      "path": "ca/policies/cra/t1-2025/cpp-contributions-and-overpayment.yaml",
       "sha256": "b7c0496bb4a9db0029b25dffdc2a6de04556d929e7f16eb715bfbe13cb0baa21"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "b7c0496bb4a9db0029b25dffdc2a6de04556d929e7f16eb715bfbe13cb0baa21",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "44b855da93f4dc55d637b6c20420142313d6bd58def273979de31f2229666b3e"
+    "value": "d8f9a2db9b2b73a0ce2ff28ad03737971696be4dd575f600a9469556095b4c44"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,

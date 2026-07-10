@@ -1,11 +1,11 @@
 {
   "applied_files": [
     {
-      "path": "policies/cra/t1-2025/investment-tax-credit-individuals.test.yaml",
+      "path": "ca/policies/cra/t1-2025/investment-tax-credit-individuals.test.yaml",
       "sha256": "8e61f72acc9783d3b378e8b65ef343385fd37bef815046a9692558adf589b68a"
     },
     {
-      "path": "policies/cra/t1-2025/investment-tax-credit-individuals.yaml",
+      "path": "ca/policies/cra/t1-2025/investment-tax-credit-individuals.yaml",
       "sha256": "e2f22b218a082f2baf55ea9cda07dae9c4266ed5e0dd32dae1a457fda789f4ce"
     }
   ],
@@ -26,6 +26,7 @@
   "generated_output_root": "/var/folders/g0/_wy6p84d4811b6z4xgyy5c3w0000gn/T/tmpsdyosjxm",
   "generated_output_sha256": "e2f22b218a082f2baf55ea9cda07dae9c4266ed5e0dd32dae1a457fda789f4ce",
   "generation_prompt_sha256": null,
+  "manual_exception": "TheAxiomFoundation/rulespec-us#782",
   "model": "",
   "run_id": null,
   "runner": "manual-attestation",
@@ -33,7 +34,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "ea911d3a463d3a0d8b1cdd042216853a265dae1e1f3b329ee72718bf6abd6656"
+    "value": "660f2438a6dc05f2c2e176facb9e7698608d92e6348f06ee624f551634a7bac8"
   },
   "tool": "axiom-encode sign-applied-files",
   "trace_file": null,
