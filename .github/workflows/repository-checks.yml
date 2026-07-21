@@ -8,5 +8,13 @@ on:
 
 jobs:
   validate:
-    uses: TheAxiomFoundation/.github/.github/workflows/validate-rulespec.yml@55686f89c852b45b26b25ddd4157d6b37bf81926 # pinned (was @main); axiom-encode#1101
+    uses: TheAxiomFoundation/.github/.github/workflows/validate-rulespec.yml@38bae63a1638757b83913eb32f1ee8ec989186de # pinned; named corpus release validation
     secrets: inherit
+    with:
+      axiom-encode-ref: fc04012d30d0546e73969bd422b882d5d7efc483
+      axiom-rules-engine-ref: e19f1b7573c74512f20a6b71a0c55dbbf333d41b
+      axiom-corpus-ref: 252cba501089f8bce76927a1a311b63309391c4c
+      rulespec-us-ref: 044e91ad8afb28d8a3f89c451b908c199a71eb93
+      corpus-release-registry-url: ${{ vars.AXIOM_SUPABASE_URL }}
+      corpus-release-registry-anon-key: ${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+      validate-roots: auto
