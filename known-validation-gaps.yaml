@@ -1,18 +1,18 @@
 validate_failures:
   ca/policies/cra/benefits-2026/federal-family-and-climate-benefits.yaml:
-    pending:
+    active:
       fingerprint: "sha256:470b4408312a0ade43ae84b55923d8f29557d840192ae3eb4fb65cff757e300e"
       owner: "@PavelMakarchuk"
       issue: "https://github.com/TheAxiomFoundation/rulespec-ca/issues/12"
       expires: "2026-08-15"
   ca/policies/cra/td1-2026/provincial-territorial-personal-credits.yaml:
-    pending:
+    active:
       fingerprint: "sha256:600e686087ade166e73473625d7d16a9deeb55a7a10c344ad3b9e4af78d7076f"
       owner: "@PavelMakarchuk"
       issue: "https://github.com/TheAxiomFoundation/rulespec-ca/issues/12"
       expires: "2026-08-15"
   ca/policies/revenu-quebec/tp1-2025/main-return.yaml:
-    pending:
+    active:
       fingerprint: "sha256:964c6cbd45f0eb908e284d801d0288b0b7b9dfbfbca7a4e4ed36bea4a4ad4403"
       owner: "@PavelMakarchuk"
       issue: "https://github.com/TheAxiomFoundation/rulespec-ca/issues/12"
