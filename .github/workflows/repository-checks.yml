@@ -13,7 +13,7 @@ jobs:
     with:
       axiom-encode-ref: fc04012d30d0546e73969bd422b882d5d7efc483
       axiom-rules-engine-ref: de0efdc73b469132ee268e1c832e8f7148b91431
-      axiom-corpus-ref: 252cba501089f8bce76927a1a311b63309391c4c
+      axiom-corpus-ref: 93c6d39807bcdd7853578d3bc61297c2b92a6d2c
       rulespec-us-ref: 044e91ad8afb28d8a3f89c451b908c199a71eb93
       corpus-release-registry-url: ${{ vars.AXIOM_SUPABASE_URL }}
       corpus-release-registry-anon-key: ${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
