@@ -6,7 +6,7 @@
 # `axiom-encode proof-validate --require-money-atoms` fails when the
 # untracked missing count exceeds `total_allowed`. Burn this down; do
 # not raise it. Regenerate with `--emit-ratchet`.
-total_allowed: 1175
+total_allowed: 1103
 # Current per-file backlog (informational):
 #   ca/policies/cra/benefits-2026/federal-family-and-climate-benefits.yaml: 17
 #   ca/policies/cra/benefits-2026/provincial-territorial-cgeb-linked-credits.yaml: 27
@@ -70,7 +70,6 @@ total_allowed: 1175
 #   ca/policies/cra/t4127-2026/federal-td1-personal-credits.yaml: 16
 #   ca/policies/cra/t4127-2026/payroll-contributions.yaml: 17
 #   ca/policies/cra/tax-rates-2026/provincial-territorial-income-tax.yaml: 85
-#   ca/policies/cra/td1-2026/provincial-territorial-personal-credits.yaml: 72
 #   ca/policies/esdc/benefits-2026/canada-disability-benefit.yaml: 6
 #   ca/policies/revenu-quebec/source-deductions-2026/personal-credit-amounts.yaml: 17
 #   ca/policies/revenu-quebec/tp1-2025/main-return.yaml: 14
