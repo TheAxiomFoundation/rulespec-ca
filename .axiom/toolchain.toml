@@ -1,4 +1,4 @@
 [toolchain]
 axiom_corpus_release = "ca-rulespec-2026-07-21-oracle-complete-v2"
 axiom_corpus_release_content_sha256 = "5acdb15ce948857a13baf9088c2179951716edd47a0327c078b4e97be6eb0ef4"
-validation_waiver_set_sha256 = "b23925b9875e56e571a131b550f25008a109f5a9d2939b305e239da0c58af334"
+validation_waiver_set_sha256 = "4c6e4e1845684b96d653d03d87ffc02260aa126695aaf2306d63a2b7be625660"
