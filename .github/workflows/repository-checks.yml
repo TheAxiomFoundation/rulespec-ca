@@ -11,7 +11,7 @@ jobs:
     uses: TheAxiomFoundation/.github/.github/workflows/validate-rulespec.yml@38bae63a1638757b83913eb32f1ee8ec989186de # pinned; named corpus release validation
     secrets: inherit
     with:
-      axiom-encode-ref: 5a5b5e6255a0f941fbd0dd9150f50f980d7c5423
+      axiom-encode-ref: 029d61ef8ebcc2b781e4712d8fe0c7614e929c7c
       axiom-rules-engine-ref: de0efdc73b469132ee268e1c832e8f7148b91431
       axiom-corpus-ref: d24cbde7e6d125a6f859f43c188b0ffbd115b835
       rulespec-us-ref: 044e91ad8afb28d8a3f89c451b908c199a71eb93
