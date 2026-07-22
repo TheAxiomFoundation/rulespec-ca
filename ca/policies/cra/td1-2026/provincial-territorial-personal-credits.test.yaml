@@ -3,6 +3,7 @@
     period_kind: tax_year
     start: '2026-01-01'
     end: '2026-12-31'
+  input: {}
   output:
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#alberta_td1_2026_basic_personal_amount: 22769
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#alberta_td1_2026_age_amount_maximum: 6345
@@ -28,11 +29,14 @@
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#new_brunswick_td1_2026_age_amount_partial_upper_income: 86898
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#new_brunswick_td1_2026_pension_income_amount_cap: 1000
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#new_brunswick_td1_2026_disability_amount: 10210
-    ca:policies/cra/td1-2026/provincial-territorial-personal-credits#newfoundland_and_labrador_td1_2026_basic_personal_amount: 11188
+    ca:policies/cra/td1-2026/provincial-territorial-personal-credits#newfoundland_and_labrador_td1_2026_basic_personal_amount: 13094
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#newfoundland_and_labrador_td1_2026_age_amount_maximum: 7142
-    ca:policies/cra/td1-2026/provincial-territorial-personal-credits#newfoundland_and_labrador_td1_2026_age_amount_full_income_ceiling: 39138
-    ca:policies/cra/td1-2026/provincial-territorial-personal-credits#newfoundland_and_labrador_td1_2026_age_amount_partial_upper_income: 86752
-    ca:policies/cra/td1-2026/provincial-territorial-personal-credits#newfoundland_and_labrador_td1_2026_pension_income_amount_cap: 1000
+    ? ca:policies/cra/td1-2026/provincial-territorial-personal-credits#newfoundland_and_labrador_td1_2026_age_amount_full_income_ceiling
+    : 39138
+    ? ca:policies/cra/td1-2026/provincial-territorial-personal-credits#newfoundland_and_labrador_td1_2026_age_amount_partial_upper_income
+    : 86752
+    ? ca:policies/cra/td1-2026/provincial-territorial-personal-credits#newfoundland_and_labrador_td1_2026_pension_income_amount_cap
+    : 1000
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#newfoundland_and_labrador_td1_2026_disability_amount: 7549
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#nova_scotia_td1_2026_basic_personal_amount: 11932
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#nova_scotia_td1_2026_age_amount_maximum: 5826
@@ -42,8 +46,10 @@
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#nova_scotia_td1_2026_disability_amount: 7341
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#northwest_territories_td1_2026_basic_personal_amount: 18198
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#northwest_territories_td1_2026_age_amount_maximum: 8902
-    ca:policies/cra/td1-2026/provincial-territorial-personal-credits#northwest_territories_td1_2026_age_amount_full_income_ceiling: 46432
-    ca:policies/cra/td1-2026/provincial-territorial-personal-credits#northwest_territories_td1_2026_age_amount_partial_upper_income: 105779
+    ? ca:policies/cra/td1-2026/provincial-territorial-personal-credits#northwest_territories_td1_2026_age_amount_full_income_ceiling
+    : 46432
+    ? ca:policies/cra/td1-2026/provincial-territorial-personal-credits#northwest_territories_td1_2026_age_amount_partial_upper_income
+    : 105779
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#northwest_territories_td1_2026_pension_income_amount_cap: 1000
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#northwest_territories_td1_2026_disability_amount: 14758
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#nunavut_td1_2026_basic_personal_amount: 19659
@@ -60,8 +66,10 @@
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#ontario_td1_2026_disability_amount: 10494
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#prince_edward_island_td1_2026_basic_personal_amount: 15000
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#prince_edward_island_td1_2026_age_amount_maximum: 6510
-    ca:policies/cra/td1-2026/provincial-territorial-personal-credits#prince_edward_island_td1_2026_age_amount_full_income_ceiling: 36600
-    ca:policies/cra/td1-2026/provincial-territorial-personal-credits#prince_edward_island_td1_2026_age_amount_partial_upper_income: 80000
+    ? ca:policies/cra/td1-2026/provincial-territorial-personal-credits#prince_edward_island_td1_2026_age_amount_full_income_ceiling
+    : 36600
+    ? ca:policies/cra/td1-2026/provincial-territorial-personal-credits#prince_edward_island_td1_2026_age_amount_partial_upper_income
+    : 80000
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#prince_edward_island_td1_2026_pension_income_amount_cap: 1000
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#prince_edward_island_td1_2026_disability_amount: 6890
     ca:policies/cra/td1-2026/provincial-territorial-personal-credits#saskatchewan_td1_2026_basic_personal_amount: 20381
