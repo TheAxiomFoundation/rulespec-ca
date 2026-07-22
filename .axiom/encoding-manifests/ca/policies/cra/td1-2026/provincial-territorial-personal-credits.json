@@ -2,7 +2,7 @@
   "applied_files": [
     {
       "path": "ca/policies/cra/td1-2026/provincial-territorial-personal-credits.yaml",
-      "sha256": "3fe521d7f6fa5b3a758db39277a0d32f2be334b709feb2604a721c1ab59f2765"
+      "sha256": "9a13fae67ea2821173cae9c7e7d55c1e2873fd8d1906310d968768ae2b8dced9"
     },
     {
       "path": "ca/policies/cra/td1-2026/provincial-territorial-personal-credits.test.yaml",
@@ -10,31 +10,31 @@
     }
   ],
   "axiom_encode_git": {
-    "commit": "88e7f3f196e7ea48a642d4cef84cc75f1c7a326b",
+    "commit": "0bf49c919aa1e4b761d3a17452b5379bef9fa2ee",
     "dirty_tracked": false,
     "identity_source": "trusted-runtime-attestation",
     "root": "/opt/axiom-verification/python/runtime-attestation.json",
-    "version": "0.2.1320",
-    "version_commit": "88e7f3f196e7ea48a642d4cef84cc75f1c7a326b"
+    "version": "0.2.1323",
+    "version_commit": "0bf49c919aa1e4b761d3a17452b5379bef9fa2ee"
   },
-  "axiom_encode_version": "0.2.1320",
+  "axiom_encode_version": "0.2.1323",
   "backend": "openai",
   "citation": "ca/policy/cra/td1-2026/provincial-territorial-personal-credits",
   "context_manifest_file": "/home/runner/work/_temp/generated/_eval_workspaces/openai-gpt-5.6-sol/ca-policy-cra-td1-2026-provincial-territorial-personal-credits/workspace/context-manifest.json",
-  "context_manifest_sha256": "074d74a5f6d1c7b51ea23c721086144c5f14823c5d24e559011b9e70ef012576",
-  "generated_at": "2026-07-22T11:25:17.098931+00:00",
+  "context_manifest_sha256": "d166d8e87135d09b1397c94a1e96ec6d9ab0be0b70d540a4cabc0a0b17a78577",
+  "generated_at": "2026-07-22T14:15:49.607961+00:00",
   "generated_output_file": "/home/runner/work/_temp/generated/openai-gpt-5.6-sol/policies/cra/td1-2026/provincial-territorial-personal-credits.yaml",
   "generated_output_root": "/home/runner/work/_temp/generated",
-  "generated_output_sha256": "3fe521d7f6fa5b3a758db39277a0d32f2be334b709feb2604a721c1ab59f2765",
-  "generation_prompt_sha256": "b8e6d8a42efd7c195241e101aa18571d7014622a785462899838be9698c5a692",
+  "generated_output_sha256": "9a13fae67ea2821173cae9c7e7d55c1e2873fd8d1906310d968768ae2b8dced9",
+  "generation_prompt_sha256": "63331816a3637f5a7a57fc4ccd6b767c29a4a3e4eae8bb29ae9fb99650c562db",
   "model": "gpt-5.6-sol",
-  "run_id": "443ecb86",
+  "run_id": "012b05b3",
   "runner": "openai-gpt-5.6-sol",
   "schema_version": "axiom-encode/applied-rulespec/v5",
   "signature": {
     "algorithm": "ed25519-domain-v1",
     "key_id": "sha256:24a78725a23b1c83cfc38bdc22f75401d8008e7a8477796b55179d1fc79c4d9a",
-    "value": "UJje5g6IqaR8/rX+MisneeXY8AZ15y3LbeR0yOaAQd2sgRkFP//FLBNqSuW8W1z4wB8I6gmpHbDxngfmxwT3DQ=="
+    "value": "hVPRjszbSqsiPnTPMangur3q0is1b/r4if7YeBUaHXU3S4ErMeeFnl2OUKaebsQgNlV66D1G7fDrI67Q/KZ+Aw=="
   },
   "source_attestation": {
     "component_rows": [
@@ -238,27 +238,27 @@
   },
   "tool": "axiom-encode encode --apply",
   "trace_file": "/home/runner/work/_temp/generated/traces/openai-gpt-5.6-sol/ca-policy-cra-td1-2026-provincial-territorial-personal-credits.json",
-  "trace_sha256": "d79aaa5f8a9584d565fa73df664dd4e5d1585e8f8d715d04ee33dfc56655f3d3",
+  "trace_sha256": "0a850c43cdc5db69921ed8fa28b2e5d9ee161d6320b1386a1fae986c65ebdd16",
   "validation_execution": {
     "axiom_encode": {
-      "commit": "88e7f3f196e7ea48a642d4cef84cc75f1c7a326b",
+      "commit": "0bf49c919aa1e4b761d3a17452b5379bef9fa2ee",
       "identity_source": "trusted-runtime-attestation",
       "repository": "github.com/TheAxiomFoundation/axiom-encode",
-      "version": "0.2.1320"
+      "version": "0.2.1323"
     },
     "axiom_rules_engine": {
       "commit": "de0efdc73b469132ee268e1c832e8f7148b91431",
       "repository": "github.com/TheAxiomFoundation/axiom-rules-engine"
     },
     "policy_pre_apply": {
-      "pre_apply_content_sha256": "342ff3bcca9f53339f176b1db5351de9de7cf2fa388bd774e739dddb61ac3445",
+      "pre_apply_content_sha256": "226fc702061f7c91edd8562e9c474f929d6121deced247b5f1573ffd8304578c",
       "pre_apply_file_count": 206,
       "rulespec_root": "rulespec-ca/ca",
-      "toolchain_contract_sha256": "edb2980c04249b6bf312cfb17860794735a2e810f67e84a16a0d71fa3524e3e4",
-      "validation_waiver_set_sha256": "b23925b9875e56e571a131b550f25008a109f5a9d2939b305e239da0c58af334"
+      "toolchain_contract_sha256": "60524228914560cd819902e8c5f85953fcf4d916cf06922d101d84b2139b9510",
+      "validation_waiver_set_sha256": "4c6e4e1845684b96d653d03d87ffc02260aa126695aaf2306d63a2b7be625660"
     },
     "rulespec_dependencies": [],
     "schema": "axiom-encode/apply-validation-execution/v1"
   },
-  "validation_waiver_set_sha256": "b23925b9875e56e571a131b550f25008a109f5a9d2939b305e239da0c58af334"
+  "validation_waiver_set_sha256": "4c6e4e1845684b96d653d03d87ffc02260aa126695aaf2306d63a2b7be625660"
 }

@@ -5,7 +5,11 @@ module:
   source_verification:
     corpus_citation_path: ca/policy/cra/td1-2026/provincial-territorial-personal-credits
     source_sha256: 080950449d606e54c01c3425190ca79cb97fd8129d2fdd8419515c6174d157b0
-  summary: CRA 2026 provincial and territorial TD1 personal credit amounts
+  summary: 'CRA 2026 provincial and territorial TD1 personal credit amounts.
+
+    Each return states the basic personal amount, age amount and income limits,
+
+    pension income amount cap, and disability amount used for 2026 deductions.'
 rules:
 - name: alberta_td1_2026_basic_personal_amount
   kind: parameter
@@ -19,10 +23,7 @@ rules:
         kind: amount
         source:
           corpus_citation_path: ca/policy/cra/td1-2026/provincial-territorial-personal-credits/alberta
-          excerpt: 'Page 1 of 2
-
-
-            22,769'
+          excerpt: 22,769
   versions:
   - effective_from: '2026-01-01'
     formula: '22769'
@@ -125,10 +126,7 @@ rules:
         kind: amount
         source:
           corpus_citation_path: ca/policy/cra/td1-2026/provincial-territorial-personal-credits/british-columbia
-          excerpt: 'Page 1 of 2
-
-
-            13,216'
+          excerpt: 13,216
   versions:
   - effective_from: '2026-01-01'
     formula: '13216'
@@ -333,10 +331,7 @@ rules:
         kind: amount
         source:
           corpus_citation_path: ca/policy/cra/td1-2026/provincial-territorial-personal-credits/new-brunswick
-          excerpt: 'Page 1 of 2
-
-
-            13,664'
+          excerpt: 13,664
   versions:
   - effective_from: '2026-01-01'
     formula: '13664'
@@ -439,10 +434,7 @@ rules:
         kind: amount
         source:
           corpus_citation_path: ca/policy/cra/td1-2026/provincial-territorial-personal-credits/newfoundland-and-labrador
-          excerpt: 'Page 1 of 2
-
-
-            13,094'
+          excerpt: 13,094
   versions:
   - effective_from: '2026-01-01'
     formula: '13094'
@@ -538,10 +530,7 @@ rules:
         kind: amount
         source:
           corpus_citation_path: ca/policy/cra/td1-2026/provincial-territorial-personal-credits/nova-scotia
-          excerpt: 'Page 1 of 2
-
-
-            11,932'
+          excerpt: 11,932
   versions:
   - effective_from: '2026-01-01'
     formula: '11932'
@@ -643,10 +632,7 @@ rules:
         kind: amount
         source:
           corpus_citation_path: ca/policy/cra/td1-2026/provincial-territorial-personal-credits/northwest-territories
-          excerpt: 'Page 1 of 2
-
-
-            18,198'
+          excerpt: 18,198
   versions:
   - effective_from: '2026-01-01'
     formula: '18198'
@@ -749,10 +735,7 @@ rules:
         kind: amount
         source:
           corpus_citation_path: ca/policy/cra/td1-2026/provincial-territorial-personal-credits/nunavut
-          excerpt: 'Page 1 of 2
-
-
-            19,659'
+          excerpt: 19,659
   versions:
   - effective_from: '2026-01-01'
     formula: '19659'
@@ -848,10 +831,7 @@ rules:
         kind: amount
         source:
           corpus_citation_path: ca/policy/cra/td1-2026/provincial-territorial-personal-credits/ontario
-          excerpt: 'Page 1 of 2
-
-
-            12,989'
+          excerpt: 12,989
   versions:
   - effective_from: '2026-01-01'
     formula: '12989'
@@ -915,7 +895,13 @@ rules:
         kind: amount
         source:
           corpus_citation_path: ca/policy/cra/td1-2026/provincial-territorial-personal-credits/ontario
-          excerpt: $1,796 or
+          excerpt: '3. Pension income amount – If you will receive regular pension
+            payments from a pension plan or fund (not including Canada Pension
+
+            Plan, Quebec Pension Plan, Old Age Security, or Guaranteed Income Supplement
+            payments), enter whichever is less: $1,796 or
+
+            your estimated annual pension.'
   versions:
   - effective_from: '2026-01-01'
     formula: '1796'
@@ -947,10 +933,7 @@ rules:
         kind: amount
         source:
           corpus_citation_path: ca/policy/cra/td1-2026/provincial-territorial-personal-credits/prince-edward-island
-          excerpt: 'Page 1 of 2
-
-
-            15,000'
+          excerpt: 15,000
   versions:
   - effective_from: '2026-01-01'
     formula: '15000'
@@ -1021,7 +1004,13 @@ rules:
         kind: amount
         source:
           corpus_citation_path: ca/policy/cra/td1-2026/provincial-territorial-personal-credits/prince-edward-island
-          excerpt: $1,000 or your
+          excerpt: '3. Pension income amount – If you will receive regular pension
+            payments from a pension plan or fund (not including Canada Pension
+
+            Plan, Quebec Pension Plan, old age security, or guaranteed income supplement
+            payments), enter whichever is less: $1,000 or your
+
+            estimated annual pension.'
   versions:
   - effective_from: '2026-01-01'
     formula: '1000'
@@ -1053,10 +1042,7 @@ rules:
         kind: amount
         source:
           corpus_citation_path: ca/policy/cra/td1-2026/provincial-territorial-personal-credits/saskatchewan
-          excerpt: 'Page 1 of 2
-
-
-            20,381'
+          excerpt: 20,381
   versions:
   - effective_from: '2026-01-01'
     formula: '20381'
