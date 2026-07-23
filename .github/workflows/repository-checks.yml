@@ -8,11 +8,11 @@ on:
 
 jobs:
   validate:
-    uses: TheAxiomFoundation/.github/.github/workflows/validate-rulespec.yml@38bae63a1638757b83913eb32f1ee8ec989186de # pinned; named corpus release validation
+    uses: TheAxiomFoundation/.github/.github/workflows/validate-rulespec.yml@842c69d6aa62a0d75a4da850fabc3d0df20701d7 # pinned; named corpus release validation
     secrets: inherit
     with:
       # axiom-encode 0.2.1323; protected TD1 regeneration (axiom-encode#1226).
-      axiom-encode-ref: 0bf49c919aa1e4b761d3a17452b5379bef9fa2ee
+      axiom-encode-ref: b9d376684cfb5e86202daa3451b8fc716703ed19
       axiom-rules-engine-ref: de0efdc73b469132ee268e1c832e8f7148b91431
       axiom-corpus-ref: d24cbde7e6d125a6f859f43c188b0ffbd115b835
       rulespec-us-ref: 044e91ad8afb28d8a3f89c451b908c199a71eb93
