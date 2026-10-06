@@ -1,0 +1,8 @@
+# Immutable validation and generation identities.
+# Signed corpus release and waiver evidence remain in toolchain.toml.
+[workflow_toolchain]
+axiom_encode_version = "0.2.2092"
+axiom_encode_ref = "3bf5a2afbff0391261ad65bd7497f1b0efaaff85"
+axiom_rules_engine_ref = "89571cc2a938707fd60a5489b951135345697296"
+axiom_corpus_ref = "d24cbde7e6d125a6f859f43c188b0ffbd115b835"
+rulespec_us_ref = "044e91ad8afb28d8a3f89c451b908c199a71eb93"
