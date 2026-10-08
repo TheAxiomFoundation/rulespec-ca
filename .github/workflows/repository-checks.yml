@@ -8,12 +8,12 @@ on:
 
 jobs:
   validate:
-    uses: TheAxiomFoundation/.github/.github/workflows/validate-rulespec.yml@842c69d6aa62a0d75a4da850fabc3d0df20701d7 # pinned; named corpus release validation
+    uses: TheAxiomFoundation/.github/.github/workflows/validate-rulespec.yml@8d291d286eba337d7defd5498e1c1bb41526c9af # pinned; named corpus release validation
     secrets: inherit
     with:
-      # axiom-encode 0.2.1323; protected TD1 regeneration (axiom-encode#1226).
-      axiom-encode-ref: b9d376684cfb5e86202daa3451b8fc716703ed19
-      axiom-rules-engine-ref: de0efdc73b469132ee268e1c832e8f7148b91431
+      # axiom-encode 0.2.2137; immutable pins match .axiom/workflow-toolchain.toml.
+      axiom-encode-ref: 76d2c221cab4ee7da77ed6283dbf555da899ec97
+      axiom-rules-engine-ref: 89571cc2a938707fd60a5489b951135345697296
       axiom-corpus-ref: d24cbde7e6d125a6f859f43c188b0ffbd115b835
       rulespec-us-ref: 044e91ad8afb28d8a3f89c451b908c199a71eb93
       corpus-release-registry-url: ${{ vars.AXIOM_SUPABASE_URL }}
