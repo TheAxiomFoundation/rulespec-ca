@@ -1,0 +1,571 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-2
+    source_sha256: 88e38d85594e8d0126b0d0593da04bb261d8f4cc1eb242540822f00570c66199
+  summary: Step 2 reports income from all sources inside and outside Canada. Line
+    21 adds lines 1 to 20; line 27 adds lines 22 to 26; line 28 adds lines 21 and
+    27; line 32 adds lines 29 to 31; line 33 reports total income by adding lines
+    28 and 32.
+inputs:
+- name: cpp_or_qpp_benefits_line_11400
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: elected_split_pension_amount_line_11600
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: employment_income_line_10100
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: employment_insurance_and_other_benefits_line_11900
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: interest_and_other_investment_income_line_12100
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: net_business_income_line_13500
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: net_commission_income_line_13900
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: net_farming_income_line_14100
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: net_federal_supplements_line_14600
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: net_fishing_income_line_14300
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: net_partnership_income_line_12200
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: net_professional_income_line_13700
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: net_rental_income_line_12600
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: old_age_security_pension_line_11300
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: other_employment_income_line_10400
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: other_income_line_13000
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: other_pensions_and_superannuation_line_11500
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: rdsp_income_line_12500
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: rrsp_income_line_12900
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: social_assistance_payments_line_14500
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: taxable_capital_gains_line_12700
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: taxable_dividends_line_12000
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: taxable_fhsa_income_line_12905
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: taxable_fhsa_income_other_line_12906
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: taxable_scholarships_line_13010
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: taxable_support_payments_received_line_12800
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: universal_child_care_benefit_line_11700
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: workers_compensation_benefits_line_14400
+  dtype: Money
+  unit: CAD
+  entity: Person
+  period: Year
+- name: employment_insurance_entry_reported_line_11900
+  dtype: Bool
+  entity: Person
+  period: Year
+- name: old_age_security_entry_reported_line_11300
+  dtype: Bool
+  entity: Person
+  period: Year
+- name: federal_supplements_entry_reported_line_14600
+  dtype: Bool
+  entity: Person
+  period: Year
+rules:
+- name: federal_2025_t1_income_subtotal_line_21
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Year
+  unit: CAD
+  source: CRA 2025 T1 Step 2 line 21 adds income lines 1 to 20.
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-2
+          excerpt: 'Line 21: Add lines 1 to 20. = ^'
+      - path: versions[0].effective_from
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+      - path: versions[0].effective_to
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+  versions:
+  - effective_from: '2025-01-01'
+    effective_to: '2025-12-31'
+    formula: 'employment_income_line_10100
+
+      + other_employment_income_line_10400
+
+      + old_age_security_pension_line_11300
+
+      + cpp_or_qpp_benefits_line_11400
+
+      + other_pensions_and_superannuation_line_11500
+
+      + elected_split_pension_amount_line_11600
+
+      + universal_child_care_benefit_line_11700
+
+      + employment_insurance_and_other_benefits_line_11900
+
+      + taxable_dividends_line_12000
+
+      + interest_and_other_investment_income_line_12100
+
+      + net_partnership_income_line_12200
+
+      + rdsp_income_line_12500
+
+      + net_rental_income_line_12600
+
+      + taxable_capital_gains_line_12700
+
+      + taxable_support_payments_received_line_12800
+
+      + rrsp_income_line_12900
+
+      + taxable_fhsa_income_line_12905
+
+      + taxable_fhsa_income_other_line_12906
+
+      + other_income_line_13000
+
+      + taxable_scholarships_line_13010'
+- name: net_self_employment_income_line_27
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Year
+  unit: CAD
+  source: CRA 2025 T1 Step 2 line 27 adds net business, professional, commission,
+    farming, and fishing income.
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-2
+          excerpt: 'Line 27: Add lines 22 to 26. Net self-employment income = ^'
+      - path: versions[0].effective_from
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+      - path: versions[0].effective_to
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+  versions:
+  - effective_from: '2025-01-01'
+    effective_to: '2025-12-31'
+    formula: 'net_business_income_line_13500
+
+      + net_professional_income_line_13700
+
+      + net_commission_income_line_13900
+
+      + net_farming_income_line_14100
+
+      + net_fishing_income_line_14300'
+- name: federal_2025_t1_income_before_social_benefits_line_28
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Year
+  unit: CAD
+  source: CRA 2025 T1 Step 2 line 28 adds line 21 and line 27.
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-2
+          excerpt: 'Line 28: Line 21 plus line 27 = ^'
+      - path: versions[0].effective_from
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+      - path: versions[0].effective_to
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+  versions:
+  - effective_from: '2025-01-01'
+    effective_to: '2025-12-31'
+    formula: 'federal_2025_t1_income_subtotal_line_21
+
+      + net_self_employment_income_line_27'
+- name: social_benefit_inclusions_line_14700
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Year
+  unit: CAD
+  source: CRA 2025 T1 Step 2 line 32 and line 14700 add lines 29 to 31.
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-2
+          excerpt: 'Line 32 and line 14700: Add lines 29 to 31 (see line 25000 in
+            Step 4). = ^'
+      - path: versions[0].effective_from
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+      - path: versions[0].effective_to
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+  versions:
+  - effective_from: '2025-01-01'
+    effective_to: '2025-12-31'
+    formula: 'workers_compensation_benefits_line_14400
+
+      + social_assistance_payments_line_14500
+
+      + net_federal_supplements_line_14600'
+- name: total_income_line_15000
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Year
+  unit: CAD
+  source: CRA 2025 T1 Step 2 line 33 and line 15000 add line 28 and line 32 as total
+    income.
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-2
+          excerpt: 'Line 33 and line 15000: Line 28 plus line 32 Total income = ^'
+      - path: versions[0].effective_from
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+      - path: versions[0].effective_to
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+  versions:
+  - effective_from: '2025-01-01'
+    effective_to: '2025-12-31'
+    formula: 'federal_2025_t1_income_before_social_benefits_line_28
+
+      + social_benefit_inclusions_line_14700'
+- name: reported_employment_insurance_entry_reported_line_11900
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Year
+  source: CRA 2025 T1 Step 2 line 8/11900 reports EI and other benefits; the entered-amount
+    observation reflects the Step 3 wording.
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-2
+          excerpt: 'Line 8 and line 11900: Employment insurance (EI) and other benefits
+            (box 14 of the T4E slip) ^'
+      - path: versions[0].effective_from
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+      - path: versions[0].effective_to
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+      - path: versions[0].formula
+        kind: predicate
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-3
+          excerpt: You entered an amount for EI and other benefits on line 11900 and
+            the amount on line 23400 is more than $82,125
+  versions:
+  - effective_from: '2025-01-01'
+    effective_to: '2025-12-31'
+    formula: employment_insurance_entry_reported_line_11900
+- name: reported_employment_insurance_and_other_benefits_line_11900
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Year
+  unit: CAD
+  source: CRA 2025 T1 Step 2 line 8/11900 reports employment insurance and other benefits.
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-2
+          excerpt: 'Line 8 and line 11900: Employment insurance (EI) and other benefits
+            (box 14 of the T4E slip) ^'
+      - path: versions[0].effective_from
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+      - path: versions[0].effective_to
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+  versions:
+  - effective_from: '2025-01-01'
+    effective_to: '2025-12-31'
+    formula: employment_insurance_and_other_benefits_line_11900
+- name: reported_old_age_security_entry_reported_line_11300
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Year
+  source: CRA 2025 T1 Step 2 line 3/11300 reports OAS pension; the entered-amount
+    observation reflects the Step 3 wording.
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-2
+          excerpt: 'Line 3 and line 11300: Old age security (OAS) pension (box 18
+            of the T4A(OAS) slip) ^'
+      - path: versions[0].effective_from
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+      - path: versions[0].effective_to
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+      - path: versions[0].formula
+        kind: predicate
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-3
+          excerpt: You entered an amount for OAS pension on line 11300 or net federal
+            supplements paid on line 14600 and the amount on line 23400 is more than
+            $93,454
+  versions:
+  - effective_from: '2025-01-01'
+    effective_to: '2025-12-31'
+    formula: old_age_security_entry_reported_line_11300
+- name: reported_old_age_security_pension_line_11300
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Year
+  unit: CAD
+  source: CRA 2025 T1 Step 2 line 3/11300 reports old age security pension.
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-2
+          excerpt: 'Line 3 and line 11300: Old age security (OAS) pension (box 18
+            of the T4A(OAS) slip) ^'
+      - path: versions[0].effective_from
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+      - path: versions[0].effective_to
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+  versions:
+  - effective_from: '2025-01-01'
+    effective_to: '2025-12-31'
+    formula: old_age_security_pension_line_11300
+- name: reported_federal_supplements_entry_reported_line_14600
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Year
+  source: CRA 2025 T1 Step 2 line 31/14600 reports net federal supplements; the entered-amount
+    observation reflects the Step 3 wording.
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-2
+          excerpt: 'Line 31 and line 14600: Net federal supplements paid (box 21 of
+            the T4A(OAS) slip) ^'
+      - path: versions[0].effective_from
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+      - path: versions[0].effective_to
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+      - path: versions[0].formula
+        kind: predicate
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-3
+          excerpt: You entered an amount for OAS pension on line 11300 or net federal
+            supplements paid on line 14600 and the amount on line 23400 is more than
+            $93,454
+  versions:
+  - effective_from: '2025-01-01'
+    effective_to: '2025-12-31'
+    formula: federal_supplements_entry_reported_line_14600
+- name: reported_net_federal_supplements_line_14600
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Year
+  unit: CAD
+  source: CRA 2025 T1 Step 2 line 31/14600 reports net federal supplements paid.
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-2
+          excerpt: 'Line 31 and line 14600: Net federal supplements paid (box 21 of
+            the T4A(OAS) slip) ^'
+      - path: versions[0].effective_from
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+      - path: versions[0].effective_to
+        kind: effective_period
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/t1-income-net-taxable-income/primary-document
+          excerpt: T1 2025
+  versions:
+  - effective_from: '2025-01-01'
+    effective_to: '2025-12-31'
+    formula: net_federal_supplements_line_14600
+units:
+- name: CAD
+  kind: currency
+  minor_units: 2

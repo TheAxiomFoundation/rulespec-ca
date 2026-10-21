@@ -1,0 +1,111 @@
+{
+  "applied_files": [
+    {
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-m-student-loan-interest.yaml",
+      "sha256": "18cb6474a21ba1333bda29c1b04c1bfc30a0f125d34d3a464065f0e180563eee"
+    },
+    {
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-m-student-loan-interest.test.yaml",
+      "sha256": "91fd2eadbfff8d52abb7fc5390926264002fda1ad1f966c0d3c3efe314101e0b"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "1576dae71a727f9518d713fc91a011a360e45a61",
+    "dirty_tracked": false,
+    "identity_source": "trusted-runtime-attestation",
+    "root": "/opt/axiom-verification/python/runtime-attestation.json",
+    "version": "0.2.2228",
+    "version_commit": "1576dae71a727f9518d713fc91a011a360e45a61"
+  },
+  "axiom_encode_version": "0.2.2228",
+  "backend": "openai",
+  "citation": "ca/policy/revenu-quebec/tp1-2025/schedule-m-student-loan-interest",
+  "context_manifest_file": "/home/runner/work/_temp/generated/target/_eval_workspaces/openai-gpt-6-sol/ca-policy-revenu-quebec-tp1-2025-schedule-m-student-loan-interest/workspace/context-manifest.json",
+  "context_manifest_sha256": "4e93b53d8d12611d591aeb31ceab1cc12862b338cc3e9577a4905b032ea75897",
+  "generated_at": "2026-10-20T01:55:54.811056+00:00",
+  "generated_output_file": "/home/runner/work/_temp/generated/target/openai-gpt-6-sol/policies/revenu-quebec/tp1-2025/schedule-m-student-loan-interest.yaml",
+  "generated_output_root": "/home/runner/work/_temp/generated/target",
+  "generated_output_sha256": "18cb6474a21ba1333bda29c1b04c1bfc30a0f125d34d3a464065f0e180563eee",
+  "generation_prompt_sha256": "4a083f02952521d756146a429ca0f57275624b087ce180804c0e44210878edc5",
+  "model": "gpt-6-sol",
+  "run_id": "b72083d6",
+  "runner": "openai-gpt-6-sol",
+  "schema_version": "axiom-encode/applied-rulespec/v5",
+  "signature": {
+    "algorithm": "ed25519-domain-v1",
+    "key_id": "sha256:24a78725a23b1c83cfc38bdc22f75401d8008e7a8477796b55179d1fc79c4d9a",
+    "value": "DvV35GN7+LbR/vS3ElIQgPCFbJ82Do/WJrum6FMkib53x86k/4ZvVfLg9sje6QTwhYOw00Qeiq38PwEnIgwcDw=="
+  },
+  "source_attestation": {
+    "component_rows": [
+      {
+        "body_sha256": "7e00c4a4ee6e41a4c737964d0590170a6167bd8c357bf7a54875e30b3be3f44c",
+        "citation_path": "ca/policy/revenu-quebec/tp1-2025/schedule-m-student-loan-interest/primary-document",
+        "document_class": "policy",
+        "expression_date": "2025-01-01",
+        "jurisdiction": "ca",
+        "line_number": 452,
+        "provision_file": "data/corpus/provisions/ca/policy/2026-07-21-ca-rulespec-oracle-complete-v2.jsonl",
+        "provision_file_sha256": "e6de7777ae00634cf4dc60d37f3d0b018b367759146e89f42f96cd76ae59075a",
+        "record_id": "8d21fa20-ce79-5fdb-a842-0612ca724bbc",
+        "source_as_of": "2026-07-04",
+        "source_path": "sources/ca/policy/2026-07-21-ca-rulespec-oracle-complete-v2/2026-07-21-ca-rulespec-oracle-complete/2026-07-21-ca-rulespec-source-complete/2026-07-04-revenu-quebec-2025-schedule-m-student-loan-interest/official-documents/tp-1-d-m-v-2025.txt",
+        "version": "2026-07-21-ca-rulespec-oracle-complete-v2"
+      }
+    ],
+    "corpus_release": "ca-rulespec-2026-07-21-oracle-complete-v2",
+    "corpus_release_content_sha256": "5acdb15ce948857a13baf9088c2179951716edd47a0327c078b4e97be6eb0ef4",
+    "corpus_release_selector_sha256": "4b4f9723c443aa4e7e4ef3b867786713eec408338e4b55aa28811dd69aadf693",
+    "corpus_source": "local",
+    "expression_date": "2025-01-01",
+    "generation_input_sha256": "e8a905d1a3e9dd708c46ffc0090fafeeeb5c840a0c708a8c80dff2674b78c90a",
+    "provision_file": "data/corpus/provisions/ca/policy/2026-07-21-ca-rulespec-oracle-complete-v2.jsonl",
+    "provision_file_sha256": "e6de7777ae00634cf4dc60d37f3d0b018b367759146e89f42f96cd76ae59075a",
+    "requested_corpus_citation_path": "ca/policy/revenu-quebec/tp1-2025/schedule-m-student-loan-interest",
+    "resolved_corpus_citation_path": "ca/policy/revenu-quebec/tp1-2025/schedule-m-student-loan-interest",
+    "resolved_text_sha256": "e8a905d1a3e9dd708c46ffc0090fafeeeb5c840a0c708a8c80dff2674b78c90a",
+    "row": {
+      "body_sha256": null,
+      "citation_path": "ca/policy/revenu-quebec/tp1-2025/schedule-m-student-loan-interest",
+      "document_class": "policy",
+      "expression_date": "2025-01-01",
+      "jurisdiction": "ca",
+      "line_number": 451,
+      "provision_file": "data/corpus/provisions/ca/policy/2026-07-21-ca-rulespec-oracle-complete-v2.jsonl",
+      "provision_file_sha256": "e6de7777ae00634cf4dc60d37f3d0b018b367759146e89f42f96cd76ae59075a",
+      "record_id": "4fee736f-c076-582c-ac9a-caf880a5851d",
+      "source_as_of": "2026-07-04",
+      "source_path": "sources/ca/policy/2026-07-21-ca-rulespec-oracle-complete-v2/2026-07-21-ca-rulespec-oracle-complete/2026-07-21-ca-rulespec-source-complete/2026-07-04-revenu-quebec-2025-schedule-m-student-loan-interest/official-documents/tp-1-d-m-v-2025.txt",
+      "version": "2026-07-21-ca-rulespec-oracle-complete-v2"
+    },
+    "rulespec_root": "rulespec-ca/ca",
+    "source_as_of": "2026-07-04",
+    "source_sha256": "e8a905d1a3e9dd708c46ffc0090fafeeeb5c840a0c708a8c80dff2674b78c90a"
+  },
+  "tool": "axiom-encode encode --apply",
+  "trace_file": "/home/runner/work/_temp/generated/target/traces/openai-gpt-6-sol/ca-policy-revenu-quebec-tp1-2025-schedule-m-student-loan-interest.json",
+  "trace_sha256": "7df5f3895336da6c58a2c1dc95f422d5f510772aa419fdf87010fe1f2593f547",
+  "validation_execution": {
+    "axiom_encode": {
+      "commit": "1576dae71a727f9518d713fc91a011a360e45a61",
+      "identity_source": "trusted-runtime-attestation",
+      "repository": "github.com/TheAxiomFoundation/axiom-encode",
+      "version": "0.2.2228"
+    },
+    "axiom_rules_engine": {
+      "commit": "89571cc2a938707fd60a5489b951135345697296",
+      "repository": "github.com/TheAxiomFoundation/axiom-rules-engine"
+    },
+    "policy_pre_apply": {
+      "pre_apply_content_sha256": "21535683b35a740ffd7ae5f8f50011f4879f8a431ed4a8388558e22d64e04268",
+      "pre_apply_file_count": 206,
+      "rulespec_root": "rulespec-ca/ca",
+      "toolchain_contract_sha256": "60524228914560cd819902e8c5f85953fcf4d916cf06922d101d84b2139b9510",
+      "validation_waiver_set_sha256": "4c6e4e1845684b96d653d03d87ffc02260aa126695aaf2306d63a2b7be625660"
+    },
+    "rulespec_dependencies": [],
+    "rulespec_scope": "active_jurisdiction_and_country_ancestors",
+    "schema": "axiom-encode/apply-validation-execution/v2"
+  },
+  "validation_waiver_set_sha256": "4c6e4e1845684b96d653d03d87ffc02260aa126695aaf2306d63a2b7be625660"
+}
