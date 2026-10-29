@@ -10,31 +10,31 @@
     }
   ],
   "axiom_encode_git": {
-    "commit": "882541f454fcc9057695fb67e397878bb65118e0",
+    "commit": "b7aa1686b4cb409c0d9e0943253e72b204718d55",
     "dirty_tracked": false,
     "identity_source": "trusted-runtime-attestation",
     "root": "/opt/axiom-verification/python/runtime-attestation.json",
-    "version": "0.2.2242",
-    "version_commit": "882541f454fcc9057695fb67e397878bb65118e0"
+    "version": "0.2.2259",
+    "version_commit": "b7aa1686b4cb409c0d9e0943253e72b204718d55"
   },
-  "axiom_encode_version": "0.2.2242",
+  "axiom_encode_version": "0.2.2259",
   "backend": "openai",
   "citation": "ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-2",
-  "context_manifest_file": "/home/runner/work/_temp/generated/target/_eval_workspaces/openai-gpt-6-luna/ca-policy-cra-t1-2025-t1-income-net-taxable-income-step-2/workspace/context-manifest.json",
-  "context_manifest_sha256": "106812343f7ea932cbc015c50f8b33e04b905e172bb5feaebac10279e07f9744",
-  "generated_at": "2026-10-21T03:17:16.921942+00:00",
-  "generated_output_file": "/home/runner/work/_temp/generated/target/openai-gpt-6-luna/policies/cra/t1-2025/t1-income-net-taxable-income/step-2.yaml",
-  "generated_output_root": "/home/runner/work/_temp/generated/target",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-10-29T20:20:18.482782+00:00",
+  "generated_output_file": "/tmp/tmp4tqrdeqg/openai-gpt-6-luna/policies/cra/t1-2025/t1-income-net-taxable-income/step-2.yaml",
+  "generated_output_root": "/tmp/tmp4tqrdeqg",
   "generated_output_sha256": "8a6775eee53c35028680361004bd645a5e4efe9dc0daa170ed8deb646f5f111a",
   "generation_prompt_sha256": "01809298eb47e55b11c3d612b4ca851e731a197d6ecbcf812bfc6d7cd91a8a3f",
   "model": "gpt-6-luna",
-  "run_id": "ce024d6f",
+  "run_id": "40947389617",
   "runner": "openai-gpt-6-luna",
   "schema_version": "axiom-encode/applied-rulespec/v5",
   "signature": {
     "algorithm": "ed25519-domain-v1",
     "key_id": "sha256:24a78725a23b1c83cfc38bdc22f75401d8008e7a8477796b55179d1fc79c4d9a",
-    "value": "fCRyk7OQGkdjb3Z1vE6o85DtPMgn1D6h9tpDV6fIiKI88f/lE1XudJLmidJsPi4I9dFaflJbrw+TLXMiFrcwAQ=="
+    "value": "G7WTt32Hxy3uEP6ylMzeTSgEuwZHCI7ZHA9Ko0QFt/n8D85tGzFVTMV/8LFjMYGNKpP+JXckAit6CicR7VtoBw=="
   },
   "source_attestation": {
     "component_rows": [],
@@ -68,22 +68,22 @@
     "source_sha256": "88e38d85594e8d0126b0d0593da04bb261d8f4cc1eb242540822f00570c66199"
   },
   "tool": "axiom-encode encode --apply",
-  "trace_file": "/home/runner/work/_temp/generated/target/traces/openai-gpt-6-luna/ca-policy-cra-t1-2025-t1-income-net-taxable-income-step-2.json",
-  "trace_sha256": "f5268f6e46afbb2922f759f3091171a452b679209fc14f436ca5e6d807d81895",
+  "trace_file": null,
+  "trace_sha256": null,
   "validation_execution": {
     "axiom_encode": {
-      "commit": "882541f454fcc9057695fb67e397878bb65118e0",
+      "commit": "b7aa1686b4cb409c0d9e0943253e72b204718d55",
       "identity_source": "trusted-runtime-attestation",
       "repository": "github.com/TheAxiomFoundation/axiom-encode",
-      "version": "0.2.2242"
+      "version": "0.2.2259"
     },
     "axiom_rules_engine": {
       "commit": "89571cc2a938707fd60a5489b951135345697296",
       "repository": "github.com/TheAxiomFoundation/axiom-rules-engine"
     },
     "policy_pre_apply": {
-      "pre_apply_content_sha256": "21535683b35a740ffd7ae5f8f50011f4879f8a431ed4a8388558e22d64e04268",
-      "pre_apply_file_count": 206,
+      "pre_apply_content_sha256": "980e11cfe5754916d2d5262977587e6d8087077755425aa9ec8b11f7f1473822",
+      "pre_apply_file_count": 208,
       "rulespec_root": "rulespec-ca/ca",
       "toolchain_contract_sha256": "60524228914560cd819902e8c5f85953fcf4d916cf06922d101d84b2139b9510",
       "validation_waiver_set_sha256": "4c6e4e1845684b96d653d03d87ffc02260aa126695aaf2306d63a2b7be625660"
