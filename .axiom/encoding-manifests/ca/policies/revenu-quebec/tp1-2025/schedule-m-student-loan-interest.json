@@ -10,31 +10,31 @@
     }
   ],
   "axiom_encode_git": {
-    "commit": "1576dae71a727f9518d713fc91a011a360e45a61",
+    "commit": "b7aa1686b4cb409c0d9e0943253e72b204718d55",
     "dirty_tracked": false,
     "identity_source": "trusted-runtime-attestation",
     "root": "/opt/axiom-verification/python/runtime-attestation.json",
-    "version": "0.2.2228",
-    "version_commit": "1576dae71a727f9518d713fc91a011a360e45a61"
+    "version": "0.2.2259",
+    "version_commit": "b7aa1686b4cb409c0d9e0943253e72b204718d55"
   },
-  "axiom_encode_version": "0.2.2228",
+  "axiom_encode_version": "0.2.2259",
   "backend": "openai",
   "citation": "ca/policy/revenu-quebec/tp1-2025/schedule-m-student-loan-interest",
-  "context_manifest_file": "/home/runner/work/_temp/generated/target/_eval_workspaces/openai-gpt-6-sol/ca-policy-revenu-quebec-tp1-2025-schedule-m-student-loan-interest/workspace/context-manifest.json",
-  "context_manifest_sha256": "4e93b53d8d12611d591aeb31ceab1cc12862b338cc3e9577a4905b032ea75897",
-  "generated_at": "2026-10-20T01:55:54.811056+00:00",
-  "generated_output_file": "/home/runner/work/_temp/generated/target/openai-gpt-6-sol/policies/revenu-quebec/tp1-2025/schedule-m-student-loan-interest.yaml",
-  "generated_output_root": "/home/runner/work/_temp/generated/target",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-10-29T19:29:47.105734+00:00",
+  "generated_output_file": "/tmp/tmpm41s8k4m/openai-gpt-6-sol/policies/revenu-quebec/tp1-2025/schedule-m-student-loan-interest.yaml",
+  "generated_output_root": "/tmp/tmpm41s8k4m",
   "generated_output_sha256": "18cb6474a21ba1333bda29c1b04c1bfc30a0f125d34d3a464065f0e180563eee",
   "generation_prompt_sha256": "4a083f02952521d756146a429ca0f57275624b087ce180804c0e44210878edc5",
   "model": "gpt-6-sol",
-  "run_id": "b72083d6",
+  "run_id": "40939619925",
   "runner": "openai-gpt-6-sol",
   "schema_version": "axiom-encode/applied-rulespec/v5",
   "signature": {
     "algorithm": "ed25519-domain-v1",
     "key_id": "sha256:24a78725a23b1c83cfc38bdc22f75401d8008e7a8477796b55179d1fc79c4d9a",
-    "value": "DvV35GN7+LbR/vS3ElIQgPCFbJ82Do/WJrum6FMkib53x86k/4ZvVfLg9sje6QTwhYOw00Qeiq38PwEnIgwcDw=="
+    "value": "SHTwLHLpCjeeeo5oMuWUgUG58MSN4WTHp97O8smFkXDVJQNLxdbIbne7xQcav/pU2Cu1gYExTobfO1oidsdDDw=="
   },
   "source_attestation": {
     "component_rows": [
@@ -83,28 +83,28 @@
     "source_sha256": "e8a905d1a3e9dd708c46ffc0090fafeeeb5c840a0c708a8c80dff2674b78c90a"
   },
   "tool": "axiom-encode encode --apply",
-  "trace_file": "/home/runner/work/_temp/generated/target/traces/openai-gpt-6-sol/ca-policy-revenu-quebec-tp1-2025-schedule-m-student-loan-interest.json",
-  "trace_sha256": "7df5f3895336da6c58a2c1dc95f422d5f510772aa419fdf87010fe1f2593f547",
+  "trace_file": null,
+  "trace_sha256": null,
   "validation_execution": {
     "axiom_encode": {
-      "commit": "1576dae71a727f9518d713fc91a011a360e45a61",
+      "commit": "b7aa1686b4cb409c0d9e0943253e72b204718d55",
       "identity_source": "trusted-runtime-attestation",
       "repository": "github.com/TheAxiomFoundation/axiom-encode",
-      "version": "0.2.2228"
+      "version": "0.2.2259"
     },
     "axiom_rules_engine": {
       "commit": "89571cc2a938707fd60a5489b951135345697296",
       "repository": "github.com/TheAxiomFoundation/axiom-rules-engine"
     },
     "policy_pre_apply": {
-      "pre_apply_content_sha256": "21535683b35a740ffd7ae5f8f50011f4879f8a431ed4a8388558e22d64e04268",
-      "pre_apply_file_count": 206,
+      "pre_apply_content_sha256": "980e11cfe5754916d2d5262977587e6d8087077755425aa9ec8b11f7f1473822",
+      "pre_apply_file_count": 208,
       "rulespec_root": "rulespec-ca/ca",
       "toolchain_contract_sha256": "60524228914560cd819902e8c5f85953fcf4d916cf06922d101d84b2139b9510",
       "validation_waiver_set_sha256": "4c6e4e1845684b96d653d03d87ffc02260aa126695aaf2306d63a2b7be625660"
     },
     "rulespec_dependencies": [],
-    "rulespec_scope": "active_jurisdiction_and_country_ancestors",
+    "rulespec_scope": "full_checkout",
     "schema": "axiom-encode/apply-validation-execution/v2"
   },
   "validation_waiver_set_sha256": "4c6e4e1845684b96d653d03d87ffc02260aa126695aaf2306d63a2b7be625660"
