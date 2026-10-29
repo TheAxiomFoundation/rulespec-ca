@@ -1,0 +1,96 @@
+{
+  "applied_files": [
+    {
+      "path": "ca/policies/cra/t1-2025/t1-income-net-taxable-income/step-2.yaml",
+      "sha256": "8a6775eee53c35028680361004bd645a5e4efe9dc0daa170ed8deb646f5f111a"
+    },
+    {
+      "path": "ca/policies/cra/t1-2025/t1-income-net-taxable-income/step-2.test.yaml",
+      "sha256": "648fcd7703eed0764ffba9c451dd47797702c1b94e2afaea2deca721c2607250"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "b7aa1686b4cb409c0d9e0943253e72b204718d55",
+    "dirty_tracked": false,
+    "identity_source": "trusted-runtime-attestation",
+    "root": "/opt/axiom-verification/python/runtime-attestation.json",
+    "version": "0.2.2259",
+    "version_commit": "b7aa1686b4cb409c0d9e0943253e72b204718d55"
+  },
+  "axiom_encode_version": "0.2.2259",
+  "backend": "openai",
+  "citation": "ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-2",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-10-29T20:20:18.482782+00:00",
+  "generated_output_file": "/tmp/tmp4tqrdeqg/openai-gpt-6-luna/policies/cra/t1-2025/t1-income-net-taxable-income/step-2.yaml",
+  "generated_output_root": "/tmp/tmp4tqrdeqg",
+  "generated_output_sha256": "8a6775eee53c35028680361004bd645a5e4efe9dc0daa170ed8deb646f5f111a",
+  "generation_prompt_sha256": "01809298eb47e55b11c3d612b4ca851e731a197d6ecbcf812bfc6d7cd91a8a3f",
+  "model": "gpt-6-luna",
+  "run_id": "40947389617",
+  "runner": "openai-gpt-6-luna",
+  "schema_version": "axiom-encode/applied-rulespec/v5",
+  "signature": {
+    "algorithm": "ed25519-domain-v1",
+    "key_id": "sha256:24a78725a23b1c83cfc38bdc22f75401d8008e7a8477796b55179d1fc79c4d9a",
+    "value": "G7WTt32Hxy3uEP6ylMzeTSgEuwZHCI7ZHA9Ko0QFt/n8D85tGzFVTMV/8LFjMYGNKpP+JXckAit6CicR7VtoBw=="
+  },
+  "source_attestation": {
+    "component_rows": [],
+    "corpus_release": "ca-rulespec-2026-07-21-oracle-complete-v2",
+    "corpus_release_content_sha256": "5acdb15ce948857a13baf9088c2179951716edd47a0327c078b4e97be6eb0ef4",
+    "corpus_release_selector_sha256": "4b4f9723c443aa4e7e4ef3b867786713eec408338e4b55aa28811dd69aadf693",
+    "corpus_source": "local",
+    "expression_date": "2025-01-01",
+    "generation_input_sha256": "88e38d85594e8d0126b0d0593da04bb261d8f4cc1eb242540822f00570c66199",
+    "provision_file": "data/corpus/provisions/ca/policy/2026-07-21-ca-rulespec-oracle-complete-v2.jsonl",
+    "provision_file_sha256": "e6de7777ae00634cf4dc60d37f3d0b018b367759146e89f42f96cd76ae59075a",
+    "requested_corpus_citation_path": "ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-2",
+    "resolved_corpus_citation_path": "ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-2",
+    "resolved_text_sha256": "88e38d85594e8d0126b0d0593da04bb261d8f4cc1eb242540822f00570c66199",
+    "row": {
+      "body_sha256": "88e38d85594e8d0126b0d0593da04bb261d8f4cc1eb242540822f00570c66199",
+      "citation_path": "ca/policy/cra/t1-2025/t1-income-net-taxable-income/step-2",
+      "document_class": "policy",
+      "expression_date": "2025-01-01",
+      "jurisdiction": "ca",
+      "line_number": 277,
+      "provision_file": "data/corpus/provisions/ca/policy/2026-07-21-ca-rulespec-oracle-complete-v2.jsonl",
+      "provision_file_sha256": "e6de7777ae00634cf4dc60d37f3d0b018b367759146e89f42f96cd76ae59075a",
+      "record_id": "818ebadd-9e7a-59c3-9fb7-2d0d62ecd89c",
+      "source_as_of": "2026-07-02",
+      "source_path": "sources/ca/policy/2026-07-21-ca-rulespec-oracle-complete-v2/2026-07-21-ca-rulespec-oracle-complete/2026-07-21-ca-rulespec-source-complete/2026-07-02-cra-2025-t1-income-net-taxable-income/official-documents/5000-r-25e.txt",
+      "version": "2026-07-21-ca-rulespec-oracle-complete-v2"
+    },
+    "rulespec_root": "rulespec-ca/ca",
+    "source_as_of": "2026-07-02",
+    "source_sha256": "88e38d85594e8d0126b0d0593da04bb261d8f4cc1eb242540822f00570c66199"
+  },
+  "tool": "axiom-encode encode --apply",
+  "trace_file": null,
+  "trace_sha256": null,
+  "validation_execution": {
+    "axiom_encode": {
+      "commit": "b7aa1686b4cb409c0d9e0943253e72b204718d55",
+      "identity_source": "trusted-runtime-attestation",
+      "repository": "github.com/TheAxiomFoundation/axiom-encode",
+      "version": "0.2.2259"
+    },
+    "axiom_rules_engine": {
+      "commit": "89571cc2a938707fd60a5489b951135345697296",
+      "repository": "github.com/TheAxiomFoundation/axiom-rules-engine"
+    },
+    "policy_pre_apply": {
+      "pre_apply_content_sha256": "980e11cfe5754916d2d5262977587e6d8087077755425aa9ec8b11f7f1473822",
+      "pre_apply_file_count": 208,
+      "rulespec_root": "rulespec-ca/ca",
+      "toolchain_contract_sha256": "60524228914560cd819902e8c5f85953fcf4d916cf06922d101d84b2139b9510",
+      "validation_waiver_set_sha256": "4c6e4e1845684b96d653d03d87ffc02260aa126695aaf2306d63a2b7be625660"
+    },
+    "rulespec_dependencies": [],
+    "rulespec_scope": "full_checkout",
+    "schema": "axiom-encode/apply-validation-execution/v2"
+  },
+  "validation_waiver_set_sha256": "4c6e4e1845684b96d653d03d87ffc02260aa126695aaf2306d63a2b7be625660"
+}
