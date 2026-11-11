@@ -5,9 +5,26 @@ Axiom Foundation — RuleSpec corpus licensing
   International license (CC BY 4.0) — see LICENSE.
 - Incidental tooling and scripts (CI harnesses, runners, conversion utilities)
   are licensed under the Apache License 2.0 — see LICENSE-CODE.
-- The statutes, regulations, and other government documents these files encode
-  are edicts of government and remain in the public domain. No license is
-  claimed over the law itself.
+- We claim no rights in the statutes, regulations, and other government
+  documents these files encode. Neither license above covers them, or any of
+  their text that these files reproduce. "Source material" below cites the law
+  on their status.
 
 Suggested attribution: "Axiom Foundation RuleSpec corpus (CC BY 4.0),
 https://github.com/TheAxiomFoundation"
+
+Source material
+
+- These files encode forms, guides, and other publications of the Canada
+  Revenue Agency, Employment and Social Development Canada, and Revenu Québec.
+- Copyright in a work that the Crown or a government department prepares or
+  publishes, or directs or controls, belongs to the Crown, subject to any
+  agreement with the author (Copyright Act, R.S.C. 1985, c. C-42, s.12).
+- Canada.ca allows reproduction of its materials for non-commercial purposes
+  on conditions, and requires prior written permission for commercial
+  redistribution, unless otherwise specified
+  (https://www.canada.ca/en/transparency/terms.html).
+- Revenu Québec states that it owns its content and that, unless otherwise
+  indicated and subject to the exceptions in copyright law, copying,
+  reproducing, adapting, or indexing that content requires its authorization
+  (https://www.revenuquebec.ca/en/policies-and-instructions/copyrights-use-or-reproduction-of-our-content/).
