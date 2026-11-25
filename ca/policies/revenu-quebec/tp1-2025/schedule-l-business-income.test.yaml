@@ -1,4 +1,26 @@
-- name: schedule_l_business_income_aggregation
+- name: schedule_l_gross_partnership_instruction_nonmember_control
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_is_member_of_partnership: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_cryptoassets_gross_income_line_16_1: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_rl15_box_14_7_amount: 1400
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_reported_cryptoassets_gross_income_line_16_1: 1000
+- name: schedule_l_gross_partnership_instruction_member
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_is_member_of_partnership: true
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_cryptoassets_gross_income_line_16_1: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_rl15_box_14_7_amount: 1400
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_reported_cryptoassets_gross_income_line_16_1: 1400
+- name: schedule_l_nonpartner_completed_amounts
   period:
     period_kind: tax_year
     start: '2025-01-01'
@@ -9,17 +31,74 @@
     ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_fishing_net_income_line_24: 3000
     ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_profession_net_income_line_25: 4000
     ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_commission_net_income_line_26: 5000
-    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_cryptoassets_net_income_line_26_1: 600
-    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_retiring_partner_or_physician_allowance_line_28: 700
+    ? ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_retiring_partner_or_physician_allowance_line_28
+    : 700
     ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_specified_member_partnership_income_line_29: 800
     ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_post_operation_commissions_line_30: 900
-    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_lm53_line_8_family_resource_qpip_qpp_earnings: 12000
+    ? ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_lm53_line_8_family_resource_qpip_qpp_earnings
+    : 12000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_is_member_of_partnership: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_cryptoassets_net_income_line_26_1: 600
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_cryptoassets_gross_income_line_16_1: 1000
   output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_reported_cryptoassets_gross_income_line_16_1: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_reported_cryptoassets_net_income_line_26_1: 600
     ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_primary_net_business_income_line_27: 24600
     ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_net_business_income_line_164: 27000
     ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_family_resource_qpip_qpp_earnings_line_40: 12000
-
-- name: schedule_l_business_loss_and_earnings_floor
+- name: schedule_l_partner_slip_transfers
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_business_other_net_income_line_22: 10000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_farming_net_income_line_23: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_fishing_net_income_line_24: 3000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_profession_net_income_line_25: 4000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_commission_net_income_line_26: 5000
+    ? ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_retiring_partner_or_physician_allowance_line_28
+    : 700
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_specified_member_partnership_income_line_29: 800
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_post_operation_commissions_line_30: 900
+    ? ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_lm53_line_8_family_resource_qpip_qpp_earnings
+    : 12000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_is_member_of_partnership: true
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_rl15_box_14_7_amount: 1400
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_rl15_box_1_12_amount: 400
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_reported_cryptoassets_gross_income_line_16_1: 1400
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_reported_cryptoassets_net_income_line_26_1: 400
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_primary_net_business_income_line_27: 24400
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_net_business_income_line_164: 26800
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_family_resource_qpip_qpp_earnings_line_40: 12000
+- name: schedule_l_gross_does_not_enter_net_total
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_business_other_net_income_line_22: 10000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_farming_net_income_line_23: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_fishing_net_income_line_24: 3000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_profession_net_income_line_25: 4000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_commission_net_income_line_26: 5000
+    ? ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_retiring_partner_or_physician_allowance_line_28
+    : 700
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_specified_member_partnership_income_line_29: 800
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_post_operation_commissions_line_30: 900
+    ? ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_lm53_line_8_family_resource_qpip_qpp_earnings
+    : 12000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_is_member_of_partnership: true
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_rl15_box_14_7_amount: 9999
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_rl15_box_1_12_amount: 400
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_reported_cryptoassets_gross_income_line_16_1: 9999
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_reported_cryptoassets_net_income_line_26_1: 400
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_primary_net_business_income_line_27: 24400
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_net_business_income_line_164: 26800
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_family_resource_qpip_qpp_earnings_line_40: 12000
+- name: schedule_l_net_business_loss
   period:
     period_kind: tax_year
     start: '2025-01-01'
@@ -30,12 +109,70 @@
     ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_fishing_net_income_line_24: 0
     ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_profession_net_income_line_25: 0
     ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_commission_net_income_line_26: 0
-    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_cryptoassets_net_income_line_26_1: 0
-    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_retiring_partner_or_physician_allowance_line_28: -100
+    ? ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_retiring_partner_or_physician_allowance_line_28
+    : 0
     ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_specified_member_partnership_income_line_29: 0
     ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_post_operation_commissions_line_30: 0
-    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_lm53_line_8_family_resource_qpip_qpp_earnings: -1
+    ? ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_lm53_line_8_family_resource_qpip_qpp_earnings
+    : 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_is_member_of_partnership: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_cryptoassets_net_income_line_26_1: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_cryptoassets_gross_income_line_16_1: 0
   output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_reported_cryptoassets_gross_income_line_16_1: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_reported_cryptoassets_net_income_line_26_1: 0
     ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_primary_net_business_income_line_27: -1000
-    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_net_business_income_line_164: -1100
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_net_business_income_line_164: -1000
     ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_family_resource_qpip_qpp_earnings_line_40: 0
+- name: schedule_l_special_income_excluded_from_line27
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_business_other_net_income_line_22: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_farming_net_income_line_23: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_fishing_net_income_line_24: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_profession_net_income_line_25: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_commission_net_income_line_26: 0
+    ? ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_retiring_partner_or_physician_allowance_line_28
+    : 700
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_specified_member_partnership_income_line_29: 800
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_post_operation_commissions_line_30: 900
+    ? ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_lm53_line_8_family_resource_qpip_qpp_earnings
+    : 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_is_member_of_partnership: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_cryptoassets_net_income_line_26_1: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_cryptoassets_gross_income_line_16_1: 0
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_reported_cryptoassets_gross_income_line_16_1: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_reported_cryptoassets_net_income_line_26_1: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_primary_net_business_income_line_27: 0
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_net_business_income_line_164: 2400
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_family_resource_qpip_qpp_earnings_line_40: 0
+- name: schedule_l_lm53_direct_transfer
+  period:
+    period_kind: tax_year
+    start: '2025-01-01'
+    end: '2025-12-31'
+  input:
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_business_other_net_income_line_22: 10000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_farming_net_income_line_23: 2000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_fishing_net_income_line_24: 3000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_profession_net_income_line_25: 4000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_commission_net_income_line_26: 5000
+    ? ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_retiring_partner_or_physician_allowance_line_28
+    : 700
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_specified_member_partnership_income_line_29: 800
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_post_operation_commissions_line_30: 900
+    ? ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_lm53_line_8_family_resource_qpip_qpp_earnings
+    : 12345
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_is_member_of_partnership: false
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_cryptoassets_net_income_line_26_1: 600
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#input.schedule_l_cryptoassets_gross_income_line_16_1: 1000
+  output:
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_reported_cryptoassets_gross_income_line_16_1: 1000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_reported_cryptoassets_net_income_line_26_1: 600
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_primary_net_business_income_line_27: 24600
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_net_business_income_line_164: 27000
+    ca:policies/revenu-quebec/tp1-2025/schedule-l-business-income#schedule_l_family_resource_qpip_qpp_earnings_line_40: 12345

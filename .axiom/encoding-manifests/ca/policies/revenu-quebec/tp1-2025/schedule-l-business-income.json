@@ -1,0 +1,111 @@
+{
+  "applied_files": [
+    {
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-l-business-income.yaml",
+      "sha256": "04f2b4380addb560dd1e19bcce4e2aad31a6b8783617f9e0245fe8cd47e4ca5b"
+    },
+    {
+      "path": "ca/policies/revenu-quebec/tp1-2025/schedule-l-business-income.test.yaml",
+      "sha256": "43f8bb1d8ea3d0ee7926f7fb487b191b300e27e5dd3ef771753376cea7168c09"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "b7aa1686b4cb409c0d9e0943253e72b204718d55",
+    "dirty_tracked": false,
+    "identity_source": "trusted-runtime-attestation",
+    "root": "/opt/axiom-verification/python/runtime-attestation.json",
+    "version": "0.2.2259",
+    "version_commit": "b7aa1686b4cb409c0d9e0943253e72b204718d55"
+  },
+  "axiom_encode_version": "0.2.2259",
+  "backend": "openai",
+  "citation": "ca/policy/revenu-quebec/tp1-2025/schedule-l-business-income",
+  "context_manifest_file": null,
+  "context_manifest_sha256": null,
+  "generated_at": "2026-10-29T20:02:47.246215+00:00",
+  "generated_output_file": "/tmp/tmp9mpf43rb/openai-gpt-6-sol/policies/revenu-quebec/tp1-2025/schedule-l-business-income.yaml",
+  "generated_output_root": "/tmp/tmp9mpf43rb",
+  "generated_output_sha256": "04f2b4380addb560dd1e19bcce4e2aad31a6b8783617f9e0245fe8cd47e4ca5b",
+  "generation_prompt_sha256": "9aafdac2b9317ac851b59de54eb66e8fc9ea3a403daa03966d98f22f36c614e3",
+  "model": "gpt-6-sol",
+  "run_id": "40944833137",
+  "runner": "openai-gpt-6-sol",
+  "schema_version": "axiom-encode/applied-rulespec/v5",
+  "signature": {
+    "algorithm": "ed25519-domain-v1",
+    "key_id": "sha256:24a78725a23b1c83cfc38bdc22f75401d8008e7a8477796b55179d1fc79c4d9a",
+    "value": "tY8YZCb9mizfruKlfK/f8dwuuTGt/QjloDeO0fBBPgfSRxXHdg6Ikk+clg+s812Nuysv2fg8fvyYhYf6s88mBQ=="
+  },
+  "source_attestation": {
+    "component_rows": [
+      {
+        "body_sha256": "f7b28ea5c9165298525778083733a762e41ced2180eca8b413a9c34637507ec9",
+        "citation_path": "ca/policy/revenu-quebec/tp1-2025/schedule-l-business-income/primary-document",
+        "document_class": "policy",
+        "expression_date": "2025-01-01",
+        "jurisdiction": "ca",
+        "line_number": 450,
+        "provision_file": "data/corpus/provisions/ca/policy/2026-07-21-ca-rulespec-oracle-complete-v2.jsonl",
+        "provision_file_sha256": "e6de7777ae00634cf4dc60d37f3d0b018b367759146e89f42f96cd76ae59075a",
+        "record_id": "6531e979-8d5d-5c0b-8b43-68e0177cba74",
+        "source_as_of": "2026-07-04",
+        "source_path": "sources/ca/policy/2026-07-21-ca-rulespec-oracle-complete-v2/2026-07-21-ca-rulespec-oracle-complete/2026-07-21-ca-rulespec-source-complete/2026-07-04-revenu-quebec-2025-schedule-l-business-income/official-documents/tp-1-d-l-v-2025.txt",
+        "version": "2026-07-21-ca-rulespec-oracle-complete-v2"
+      }
+    ],
+    "corpus_release": "ca-rulespec-2026-07-21-oracle-complete-v2",
+    "corpus_release_content_sha256": "5acdb15ce948857a13baf9088c2179951716edd47a0327c078b4e97be6eb0ef4",
+    "corpus_release_selector_sha256": "4b4f9723c443aa4e7e4ef3b867786713eec408338e4b55aa28811dd69aadf693",
+    "corpus_source": "local",
+    "expression_date": "2025-01-01",
+    "generation_input_sha256": "e426bc36e2a04bcc99d70c82f3cc72b288a1b915f35c98700aa91a8296542d12",
+    "provision_file": "data/corpus/provisions/ca/policy/2026-07-21-ca-rulespec-oracle-complete-v2.jsonl",
+    "provision_file_sha256": "e6de7777ae00634cf4dc60d37f3d0b018b367759146e89f42f96cd76ae59075a",
+    "requested_corpus_citation_path": "ca/policy/revenu-quebec/tp1-2025/schedule-l-business-income",
+    "resolved_corpus_citation_path": "ca/policy/revenu-quebec/tp1-2025/schedule-l-business-income",
+    "resolved_text_sha256": "e426bc36e2a04bcc99d70c82f3cc72b288a1b915f35c98700aa91a8296542d12",
+    "row": {
+      "body_sha256": null,
+      "citation_path": "ca/policy/revenu-quebec/tp1-2025/schedule-l-business-income",
+      "document_class": "policy",
+      "expression_date": "2025-01-01",
+      "jurisdiction": "ca",
+      "line_number": 449,
+      "provision_file": "data/corpus/provisions/ca/policy/2026-07-21-ca-rulespec-oracle-complete-v2.jsonl",
+      "provision_file_sha256": "e6de7777ae00634cf4dc60d37f3d0b018b367759146e89f42f96cd76ae59075a",
+      "record_id": "59179756-1f02-5b18-9bb7-af671e3ae2f7",
+      "source_as_of": "2026-07-04",
+      "source_path": "sources/ca/policy/2026-07-21-ca-rulespec-oracle-complete-v2/2026-07-21-ca-rulespec-oracle-complete/2026-07-21-ca-rulespec-source-complete/2026-07-04-revenu-quebec-2025-schedule-l-business-income/official-documents/tp-1-d-l-v-2025.txt",
+      "version": "2026-07-21-ca-rulespec-oracle-complete-v2"
+    },
+    "rulespec_root": "rulespec-ca/ca",
+    "source_as_of": "2026-07-04",
+    "source_sha256": "e426bc36e2a04bcc99d70c82f3cc72b288a1b915f35c98700aa91a8296542d12"
+  },
+  "tool": "axiom-encode encode --apply",
+  "trace_file": null,
+  "trace_sha256": null,
+  "validation_execution": {
+    "axiom_encode": {
+      "commit": "b7aa1686b4cb409c0d9e0943253e72b204718d55",
+      "identity_source": "trusted-runtime-attestation",
+      "repository": "github.com/TheAxiomFoundation/axiom-encode",
+      "version": "0.2.2259"
+    },
+    "axiom_rules_engine": {
+      "commit": "89571cc2a938707fd60a5489b951135345697296",
+      "repository": "github.com/TheAxiomFoundation/axiom-rules-engine"
+    },
+    "policy_pre_apply": {
+      "pre_apply_content_sha256": "980e11cfe5754916d2d5262977587e6d8087077755425aa9ec8b11f7f1473822",
+      "pre_apply_file_count": 208,
+      "rulespec_root": "rulespec-ca/ca",
+      "toolchain_contract_sha256": "60524228914560cd819902e8c5f85953fcf4d916cf06922d101d84b2139b9510",
+      "validation_waiver_set_sha256": "4c6e4e1845684b96d653d03d87ffc02260aa126695aaf2306d63a2b7be625660"
+    },
+    "rulespec_dependencies": [],
+    "rulespec_scope": "full_checkout",
+    "schema": "axiom-encode/apply-validation-execution/v2"
+  },
+  "validation_waiver_set_sha256": "4c6e4e1845684b96d653d03d87ffc02260aa126695aaf2306d63a2b7be625660"
+}
