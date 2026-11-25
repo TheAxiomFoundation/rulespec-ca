@@ -1,0 +1,9 @@
+# Unsigned verifier configuration; corpus/waiver evidence stays in toolchain.toml.
+[workflow_toolchain]
+axiom_encode_version = "0.2.1323"
+axiom_encode_ref = "b9d376684cfb5e86202daa3451b8fc716703ed19"
+encoder_verifier = "main"
+shared_workflow_ref = "03d4a673f7304681ecbca3a52e11c26208183739"
+axiom_rules_engine_ref = "89571cc2a938707fd60a5489b951135345697296"
+axiom_corpus_ref = "d24cbde7e6d125a6f859f43c188b0ffbd115b835"
+rulespec_us_ref = "044e91ad8afb28d8a3f89c451b908c199a71eb93"
