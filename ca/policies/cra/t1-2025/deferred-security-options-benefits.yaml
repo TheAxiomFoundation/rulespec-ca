@@ -1,67 +1,271 @@
 format: rulespec/v1
 module:
-  summary: |-
-    CRA Form T1212 for 2025 reports deferred security options benefits.
-    This module encodes the income inclusion, closing deferred-benefit
-    balance, and related 50% security options deduction surface.
+  proof_validation:
+    required: true
   source_verification:
     corpus_citation_path: ca/policy/cra/t1-2025/deferred-security-options-benefits
-    upstream_source_check:
-      status: official_parameter_source
-      checked_paths:
-        - ca/statute/income-tax-act
-      rationale: |-
-        CRA Form T1212 is the official 2025 form for reporting deferred
-        security options benefits.
-    source_urls:
-      - https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/t1212/t1212-25e.pdf
+    source_sha256: 8e9a25cf0ac26f30829be917e6419d7f86d3405c3737d318aa47c1fb9d6fa8e8
 rules:
-  - name: federal_2025_t1212_security_options_deduction_rate
-    kind: parameter
-    dtype: Rate
-    source: CRA T1212 2025 note 1 says to enter 50% of line 2 on line 24900 for the security options deduction, encoded as 0.50
-    versions:
-      - effective_from: '2025-01-01'
-        formula: |-
-          0.50
+- name: t1212_benefits_no_longer_deferred_line_number
+  kind: parameter
+  dtype: Integer
+  source: CRA Form T1212 2025 benefits that can no longer be deferred, line 2
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/deferred-security-options-benefits
+          excerpt: 'Benefits that can no longer be deferred.
 
-  - name: deferred_security_options_benefits_income_line_10100
-    kind: derived
-    entity: Person
-    dtype: Money
-    period: Year
-    source: CRA T1212 2025 line 2 enters benefits that can no longer be deferred on line 10100
-    versions:
-      - effective_from: '2025-01-01'
-        formula: |-
-          min(
-            max(0, t1212_opening_balance_deferred_security_options_benefits_line_1),
-            max(0, t1212_benefits_that_can_no_longer_be_deferred_line_2)
-          )
+            Enter this amount on line 10100 of your return (1) 65210 2'
+  versions:
+  - effective_from: '2025-01-01'
+    formula: 2
+- name: federal_2025_t1212_security_options_deduction_rate
+  kind: parameter
+  dtype: Rate
+  source: CRA Form T1212 2025 note (1)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/deferred-security-options-benefits
+          excerpt: enter 50% of the amount from line 2 on line 24900
+  versions:
+  - effective_from: '2025-01-01'
+    formula: '0.50'
+- name: deferred_security_options_benefit_inclusion_required
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Year
+  source: CRA Form T1212 2025 deferred-benefit income-inclusion instruction
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/deferred-security-options-benefits
+          excerpt: The deferred benefits must be included in your employment income
+            in the year that you dispose of the security, become a non-resident, or
+            die.
+  versions:
+  - effective_from: '2025-01-01'
+    formula: 'disposed_of_security_with_deferred_security_option_benefit
 
-  - name: deferred_security_options_closing_balance_line_65220
-    kind: derived
-    entity: Person
-    dtype: Money
-    period: Year
-    source: CRA T1212 2025 line 3 subtracts line 2 from line 1 for the closing balance
-    versions:
-      - effective_from: '2025-01-01'
-        formula: |-
-          max(
-            0,
-            max(0, t1212_opening_balance_deferred_security_options_benefits_line_1)
-            - deferred_security_options_benefits_income_line_10100
-          )
+      or became_non_resident
 
-  - name: deferred_security_options_deduction_line_24900
-    kind: derived
-    entity: Person
-    dtype: Money
-    period: Year
-    source: CRA T1212 2025 note 1 says to enter 50% of line 2 on line 24900
-    versions:
-      - effective_from: '2025-01-01'
-        formula: |-
-          deferred_security_options_benefits_income_line_10100
-          * federal_2025_t1212_security_options_deduction_rate
+      or died'
+- name: t1212_annual_filing_required
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Year
+  source: CRA Form T1212 2025 annual filing instruction
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/deferred-security-options-benefits
+          excerpt: You must file this form with your return each year that you have
+            an outstanding balance of deferred security options benefits
+  versions:
+  - effective_from: '2025-01-01'
+    formula: has_outstanding_balance_of_deferred_security_options_benefits
+- name: deferred_security_options_benefits_income_line_10100
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Year
+  source: CRA Form T1212 2025 line 2 instruction
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/deferred-security-options-benefits
+          excerpt: Benefits that can no longer be deferred. Enter this amount on line
+            10100 of your return
+  versions:
+  - effective_from: '2025-01-01'
+    formula: t1212_benefits_that_can_no_longer_be_deferred_line_2
+- name: deferred_security_options_closing_balance_line_65220
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Year
+  source: CRA Form T1212 2025 closing-balance line 3
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/deferred-security-options-benefits
+          excerpt: 'Closing balance of deferred security options benefits: line 1
+            minus line 2'
+      - path: versions[0].formula
+        kind: import
+        import:
+          target: ca:policies/cra/t1-2025/deferred-security-options-benefits#deferred_security_options_benefits_income_line_10100
+          output: deferred_security_options_benefits_income_line_10100
+          hash: sha256:local
+  versions:
+  - effective_from: '2025-01-01'
+    formula: 't1212_opening_balance_deferred_security_options_benefits_line_1
+
+      - deferred_security_options_benefits_income_line_10100'
+- name: deferred_security_options_closing_balance_shown_on_notice
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Year
+  source: CRA Form T1212 2025 notice-of-assessment instruction following line 3
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/deferred-security-options-benefits
+          excerpt: If the amount on line 3 is more than "0," the Canada Revenue Agency
+            will show it on your notice of assessment.
+      - path: versions[0].formula
+        kind: import
+        import:
+          target: ca:policies/cra/t1-2025/deferred-security-options-benefits#deferred_security_options_closing_balance_line_65220
+          output: deferred_security_options_closing_balance_line_65220
+          hash: sha256:local
+  versions:
+  - effective_from: '2025-01-01'
+    formula: deferred_security_options_closing_balance_line_65220 > 0
+- name: deferred_security_options_deduction_line_24900
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Year
+  source: CRA Form T1212 2025 note (1)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/deferred-security-options-benefits
+          excerpt: To claim your security options deduction on this amount, enter
+            50% of the amount from line 2 on line 24900 of your return.
+      - path: versions[0].formula
+        kind: import
+        import:
+          target: ca:policies/cra/t1-2025/deferred-security-options-benefits#deferred_security_options_benefits_income_line_10100
+          output: deferred_security_options_benefits_income_line_10100
+          hash: sha256:local
+      - path: versions[0].formula
+        kind: import
+        import:
+          target: ca:policies/cra/t1-2025/deferred-security-options-benefits#federal_2025_t1212_security_options_deduction_rate
+          output: federal_2025_t1212_security_options_deduction_rate
+          hash: sha256:local
+  versions:
+  - effective_from: '2025-01-01'
+    formula: 'deferred_security_options_benefits_income_line_10100
+
+      * federal_2025_t1212_security_options_deduction_rate'
+- name: t1212_opening_balance_line_number
+  kind: parameter
+  dtype: Integer
+  source: CRA Form T1212 2025 opening balance, line 1
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/deferred-security-options-benefits
+          excerpt: 'Opening balance of deferred security options benefits:
+
+            (from your previous year''s notice of assessment or reassessment) 1
+
+            Benefits that can no longer be deferred.'
+  versions:
+  - effective_from: '2025-01-01'
+    formula: 1
+- name: t1212_closing_balance_line_number
+  kind: parameter
+  dtype: Integer
+  source: CRA Form T1212 2025 closing balance, line 3
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/deferred-security-options-benefits
+          excerpt: 'Closing balance of deferred security options benefits: line 1
+            minus line 2 65220 = 3'
+  versions:
+  - effective_from: '2025-01-01'
+    formula: 3
+- name: t1212_exercise_deadline_eastern_hour
+  kind: parameter
+  dtype: Integer
+  source: CRA Form T1212 2025 eligible-exercise deadline
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/deferred-security-options-benefits
+          excerpt: no later than 4 pm Eastern time, March 4, 2010
+  versions:
+  - effective_from: '2025-01-01'
+    formula: 4
+- name: t1212_benefits_no_longer_deferred_line_code
+  kind: parameter
+  dtype: Integer
+  source: CRA Form T1212 2025 line 2 code
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: ca/policy/cra/t1-2025/deferred-security-options-benefits
+          excerpt: Enter this amount on line 10100 of your return (1) 65210 2
+  versions:
+  - effective_from: '2025-01-01'
+    formula: 65210
+inputs:
+- name: t1212_opening_balance_deferred_security_options_benefits_line_1
+  entity: Person
+  dtype: Money
+  period: Year
+- name: t1212_benefits_that_can_no_longer_be_deferred_line_2
+  entity: Person
+  dtype: Money
+  period: Year
+- name: disposed_of_security_with_deferred_security_option_benefit
+  entity: Person
+  dtype: Boolean
+  period: Year
+- name: became_non_resident
+  entity: Person
+  dtype: Boolean
+  period: Year
+- name: died
+  entity: Person
+  dtype: Boolean
+  period: Year
+- name: has_outstanding_balance_of_deferred_security_options_benefits
+  entity: Person
+  dtype: Boolean
+  period: Year
