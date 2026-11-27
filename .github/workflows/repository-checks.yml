@@ -13,7 +13,7 @@ jobs:
     with:
       # axiom-encode 0.2.1323; protected TD1 regeneration (axiom-encode#1226).
       axiom-encode-ref: b9d376684cfb5e86202daa3451b8fc716703ed19
-      axiom-rules-engine-ref: de0efdc73b469132ee268e1c832e8f7148b91431
+      axiom-rules-engine-ref: 363c6a6c56f7ad130996b63f7a09cfd4c3d9b021
       axiom-corpus-ref: d24cbde7e6d125a6f859f43c188b0ffbd115b835
       rulespec-us-ref: 044e91ad8afb28d8a3f89c451b908c199a71eb93
       corpus-release-registry-url: ${{ vars.AXIOM_SUPABASE_URL }}
